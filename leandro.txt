@@ -1,0 +1,27 @@
+normatizacao dda resolucao e extensao 236-2014 cepe
+
+pessoas mandam um programa, projeto, evento ou prestacao de servico
+- possuem formularios proprios
+- tem no site da pro-reitoria
+- eh protocolo para cada comissao, que cada centro tem um
+- preenche o formulario e encaminha para a comissao, que eles entao verificam se esta tudo de acordo
+- ao final eh realizado um relaorio, com lista de presenca, foto, etc
+- ao inicio tramita no proprio centro e depois vai para a reitoria
+- inicio: professor envia para a comissao->centro->pro-reitoria
+- fim: ate dias depois do termino o professor encaminha para pro-reitoria->emite CR->volta para a comissao avaliar e passar para o centro e emitir os certificados
+- modalidades
+   - projetos, cursos, eventos, prestacao de servico, programas
+- certificado mostra a frequeci da participacao, horas, em que participou
+
+-se junta um conjnto de projetos de extensao, lista dos membros do comite de extensao sendo dois de cada curso do centro e um de cada mestrado, elege um presidente e um vice, com isso eh feita uma lista do aprovados e nao aprovados e aprovado com adequacoes (volta pro proessor adequar) e entao repassado para o centro para aprovacao
+- toda reuniao gera ata que vira memorando e vai para o centro, ja possuem um documento so para colocar ¨X¨
+- o professor envia o relatorio final direto pro PROEX (pro-reitoria de extensao)
+- a parte informatizada ocorre apenas na PROEX para consulta de projetos
+
+PROEX(site unioeste) pro-reitoria de extensao
+
+
+
+- visualizar os proetos que chegarm e que estao em andamento, quando comeca um e quando acaba outro
+- controle de certificados
+- fazer um historico de atas

@@ -1,0 +1,67 @@
+comissao de extensao
+comissao de ensino
+	formada por professores
+
+cada curso indica 2 representantes (professores: oficial e suplente)
+	representantes tem mandato (2 anos)
+
+reuniao de colegiado determina seus representantes (candidatos)
+
+comissao de extensao: presidente, vice, secretario e outros professores
+	presidente: representa todos os projetos de extensao de seu curso. representa a comissao no campus
+	secretario: professor elegido
+
+* cada centro tem sua propria comissao de extensao
+presidente sao subordinados a pro reitoria de extensao de cascavel
+
+professor preenche um formulario para criar um projeto de extensao (nome, instituicao, data inicio/termino, alunos envolvidos, pessoas externas)
+	formulario é protocolado e encaminhado à comissao de extensao
+
+comissao avalia projeto
+
+junta-se +- 3 ou 4 projetos, e convoca reuniao da comissao
+membros recebem convide por e-mail, com data, hora, local e pauta
+
+na comissao, professores votam para aprovacao
+
+ao ser aprovado o projeto, o documento é enviado à pro reitoria de cascavel para registro na unioeste
+
+ao terminar o projeto, apresenta-se um relatorio (formulário padrão) à comissao
+relatorio é protocolado, chega ao presidente que convoca outra reuniao para ser aprovado. ao ser aprovado, é encaminhado para cascavel para emitir certificados
+
+=============
+projeto de pesquisa
+=============
+processo é parecido
+com comissao de pesquisa
+mas formulario/relatorio proprio
+
+
+===========
+colegiado
+===========
+conjunto de professores voluntarios
+
+tem mandato, que diz quais sao os professores do colegiado
+
+tem presidente, vice e secretario
+
+presidente: o cordenador do curso
+secretario: (cargo contratado de secretario) agenda e programa a reuniao de colegiado. define data, local e hora. ele comunica os participantes com os dados (hora, data, local) e a pauta
+
+professores podem dar justificativa de ausencia para nao comparecer à reuniao
+
+quorum: 50%+1 para poder ocorrer
+representnte dos alunos (por mandato) (1 por ano + representante do centro academico)
+
+na convocacao dos membros, eles recebem a ata anterior, para validarem ela na reuniao posterior
+durante a reuniao é feita a ata da reuniao das decisoes tomadas nela pelo secretario
+no comeco do ano é feita um calendaio de reunioes, sendo elas ordinarias (ja marcadas) ou extraordinarios as quais sao marcadas ao decorrer do ano
+
+
+o calendario deve conter as reunioes do colegiado, da comissao de extensao e a de ensino
+problema de emitir relatorios, sobre quantitivs (quem participou, o conteudo das reunioes, atas)
+nao ha um lugar onde há uma consulta simples para encontrar atas de reunioes anteriores e proximas reunioes
+
+os projetos de ensino e extensao podem ser reprovados, aprovados ou em ajuste
+nao ha relatorios que indicam quais os projetos (ensino ou extensao ou pesquisa) aprovados, reprovados ou em ajuste em determinado periodo de tempo, relatorios de quais projetos pertencem a determinado professor, quais ele já participou

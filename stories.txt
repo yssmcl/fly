@@ -1,0 +1,27 @@
+1) Como professor, gostaria de cadastrar um projeto de extensão da modalidade evento, para formalizar o projeto.
+
+2) Como professor, gostaria de cadastrar um projeto de extensão da modalidade curso, para formalizar o projeto.
+
+3) Como professor, gostaria de cadastrar um projeto de extensão da modalidade prestacão de servico, para formalizar o projeto.
+
+4) Como professor, gostaria de cadastrar um projeto de extensão da modalidade programa, para formalizar o projeto.
+
+5) Como professor, gostaria de cadastrar um projeto de extensão da modalidade projeto, para formalizar o projeto.
+
+6) Como professor, gostaria de cadastrar o relatório final junto de seus dados complementares (data de envio, número de protocolo, participantes, etc), para geracão de um pdf para envio à PROEX.
+
+7) Como comissão de extencão, gostaria de avaliar o projeto, para dar o encaminhamento necessário (aprovar, reprovar ou aprovar com ajustes).
+
+8) Como comissão de extensão, gostaria de anexar o CR* do relatório final ao projeto correspondente, para poder dar um parecer.
+
+9) Como comissão de extencão, gostaria de avaliar o relatório final, para dar o encaminhamento necessário (aprovar ou reprovar).
+
+10) Como presidente da comissão de extencão, gostaria de agendar a reunião, facilitar a organizacão da mesma.
+
+11) Como presidente da comissão de extencão, gostaria de cadastrar um mandato, selecionando os professores do mesmo, para facilitar o controle.
+
+12) Como presidente da comissão de enstencão, gostaria de incluir uma ata para a reunião realizada, para melhorar o armazenamento de atas.
+
+13) Como CECE, gostaria de homologar relatórios finais, para liberar a emissão de certificados.
+
+14) Como professor, gostaria de submeter um projeto cadastrado à comissão de extensao, para ser validado.
