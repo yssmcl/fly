@@ -1,28 +1,5 @@
 from django.db import models
 
-# Create your models here.
-class Servidor(models.Model):
-    TIPOS = (
-        (0, 'Docente Efetivo'),
-        (1, 'Docente Temporário'),
-        (2, 'Agente Universitário')
-    )
-
-    nome_completo = models.CharField(max_length=200)
-    tipo = models.IntegerField(choices=TIPOS)
-    email = models.EmailField()
-    telefone = models.CharField(max_length=200)
-
-    pais = models.CharField(max_length=200)
-    estado = models.CharField(max_length=200)
-    cidade = models.CharField(max_length=200)
-    logradouro = models.CharField(max_length=200)
-    complemento = models.IntegerField()
-    cep = models.IntegerField()
-
-    def __str__(self):
-        return self.nome_completo
-
 class MembrosComunidade(models.Model):
     nome = models.CharField(max_length=200)
 
@@ -76,6 +53,41 @@ class CursoUnioeste(models.Model):
 
     def __str__(self):
         return self.nome
+
+class Servidor(models.Model):
+    TIPOS = (
+        (0, 'Docente Efetivo'),
+        (1, 'Docente Temporário'),
+        (2, 'Agente Universitário')
+    )
+
+    nome_completo = models.CharField(max_length=200)
+    tipo = models.IntegerField(choices=TIPOS)
+
+    regime_trabalho = models.IntegerField()
+
+    #TODO: que tipo de campo é esse??
+    #TODO: é um curso :D
+    #TODO: pode ser nulo
+    colegiado = models.CharField(max_length=200)
+    centro = models.ForeignKey(Centro)
+
+    # Deve conter ou Unidade Administrativa ou Campus.
+    unidade_administrativa = models.ForeignKey(UnidadeAdministrativa, blank=True, null=True)
+    campus = models.ForeignKey(Campus, blank=True, null=True)
+
+    email = models.EmailField()
+    telefone = models.CharField(max_length=200)
+
+    pais = models.CharField(max_length=200)
+    estado = models.CharField(max_length=200)
+    cidade = models.CharField(max_length=200)
+    logradouro = models.CharField(max_length=200)
+    complemento = models.IntegerField()
+    cep = models.IntegerField()
+
+    def __str__(self):
+        return self.nome_completo
 
 class PrevisaoOrcamentaria(models.Model):
     # Receitas.
@@ -179,18 +191,11 @@ class Servidor_CursoExtensao(models.Model):
     curso_extensao = models.ForeignKey(CursoExtensao)
 
     #TODO: pertence a Servidor ou Servidor_CursoExtensao?
-    regime_trabalho = models.IntegerField()
 
     carga_horaria_dedicada = models.IntegerField()
 
-    #TODO: que tipo de campo é esse??
-    colegiado = models.CharField(max_length=200)
-
-    # Deve conter ou Unidade Administrativa ou Campus.
-    unidade_administrativa = models.ForeignKey(UnidadeAdministrativa, blank=True, null=True)
-    campus = models.ForeignKey(Campus, blank=True, null=True)
-
     #TODO: Apenas 1 coordenador, e apenas 1 subcoordenador
+    #TODO: tabela externa
     funcao = models.IntegerField(choices=FUNCOES)
 
 class Discente_CursoExtensao(models.Model):
@@ -205,6 +210,7 @@ class Discente_CursoExtensao(models.Model):
 
     curso_extensao = models.ForeignKey(CursoExtensao)
 
+    #TODO: buscar do CSV
     nome = models.CharField(max_length=200)
     curso = models.ForeignKey(CursoUnioeste)
 
