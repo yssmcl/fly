@@ -1,0 +1,22 @@
+<html lang="en">
+	<head>
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+		<title>{% block title %}FLY{% endblock %}</title>
+	</head>
+
+	<body>
+		<div id="sidebar">
+			{% block sidebar %}
+			<!-- <ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="/blog/">Blog</a></li>
+			</ul> -->
+			{% endblock %}
+		</div>
+
+		<div id="content">
+			{% block content %}{% endblock %}
+		</div>
+	</body>
+</html>
