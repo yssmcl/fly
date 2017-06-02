@@ -102,3 +102,6 @@ ENV/
 
 # Sqlite database
 *.sqlite3
+
+# Swap file
+*.swp
