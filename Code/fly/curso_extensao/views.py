@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import F
 from django.views import View, generic
@@ -5,9 +6,9 @@ from django.views import View, generic
 from .models import CursoExtensao
 # from .forms import CursoExtensaoForm, PrevisaoOrcamentariaFormSet
 
-class IndexView(View):
+class IndexView(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, 'presenca/index.html', {})
+        return render(request, 'curso_extensao/index.html', {})
 
 class NovoCursoExtensao(generic.CreateView):
     model = CursoExtensao
