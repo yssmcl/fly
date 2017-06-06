@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %} Curso Extensao {% endblock%}
+{% block title %} Login {% endblock%}
 
 {% block content %}
-	<h1 style="text-align:center;">Curso Extensao</h1>
+	<h1 style="text-align:center;">Login</h1>
 
 	<form data-abide novalidate method="post">
 		{% csrf_token %}
@@ -15,6 +15,6 @@
 				{{ form }}
 			</div>
 		</div>
-		<input type="submit" value="Cadastrar">
+		<input type="submit" value="Login">
 	</form>
 {% endblock %}
