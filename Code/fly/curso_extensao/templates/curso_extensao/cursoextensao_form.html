@@ -5,9 +5,10 @@
 {% block content %}
 	<h1 style="text-align:center;">Curso Extensao</h1>
 
-	<form data-abide novalidate>
+	<form data-abide novalidate method="post">
+		{% csrf_token %}
 		<div data-abide-error class="alert callout" style="display: none;">
-			<p><i class="fi-alert"></i> There are some errors in your form.</p>
+			<p><i class="fi-alert"></i>There are some errors in your form.</p>
 		</div>
 		<div class="row">
 			<div class="small-12 columns">

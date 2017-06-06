@@ -6,7 +6,7 @@ from django.views import View, generic
 from .models import CursoExtensao
 # from .forms import CursoExtensaoForm, PrevisaoOrcamentariaFormSet
 
-class IndexView(LoginRequiredMixin, View):
+class IndexView(View):
     def get(self, request):
         return render(request, 'curso_extensao/index.html', {})
 
