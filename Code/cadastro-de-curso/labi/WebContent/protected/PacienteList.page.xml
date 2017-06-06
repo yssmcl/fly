@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd">
+
+   <param name="firstResult" value="#{pacienteList.firstResult}"/>
+   <param name="sort" value="#{pacienteList.orderColumn}"/>
+   <param name="dir" value="#{pacienteList.orderDirection}"/>
+   <param name="logic" value="#{pacienteList.restrictionLogicOperator}"/>
+
+   <param name="from"/>
+   <param name="nome" value="#{pacienteList.paciente.nome}"/>
+   <param name="cpf" value="#{pacienteList.paciente.cpf}"/>
+   <param name="rg" value="#{pacienteList.paciente.rg}"/>
+   <param name="telefone" value="#{pacienteList.paciente.telefone}"/>
+   <param name="celular" value="#{pacienteList.paciente.celular}"/>
+   <param name="email" value="#{pacienteList.paciente.email}"/>
+   <param name="bairro" value="#{pacienteList.paciente.bairro}"/>
+   <param name="rua" value="#{pacienteList.paciente.rua}"/>
+   <param name="complemento" value="#{pacienteList.paciente.complemento}"/>
+   <param name="cep" value="#{pacienteList.paciente.cep}"/>
+   <param name="mae" value="#{pacienteList.paciente.mae}"/>
+
+</page>

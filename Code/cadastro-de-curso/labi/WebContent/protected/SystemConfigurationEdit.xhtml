@@ -1,0 +1,90 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="systemConfiguration" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{systemConfigurationHome.managed ? 'Edit' : 'Add'} System configuration</f:facet>
+
+
+
+            <s:decorate id="defaultMediaDirectoryField" template="/layout/edit.xhtml">
+                <ui:define name="label">Default media directory</ui:define>
+                <h:inputTextarea id="defaultMediaDirectory"
+                               cols="80"
+                               rows="3"
+                              value="#{systemConfigurationHome.instance.defaultMediaDirectory}"/>
+            </s:decorate>
+
+
+            <s:decorate id="defaultFilesDirectoryField" template="/layout/edit.xhtml">
+                <ui:define name="label">Default files directory</ui:define>
+                <h:inputTextarea id="defaultFilesDirectory"
+                               cols="80"
+                               rows="3"
+                              value="#{systemConfigurationHome.instance.defaultFilesDirectory}"/>
+            </s:decorate>
+
+
+            <s:decorate id="streamingServerField" template="/layout/edit.xhtml">
+                <ui:define name="label">Streaming server</ui:define>
+                <h:inputTextarea id="streamingServer"
+                               cols="80"
+                               rows="3"
+                              value="#{systemConfigurationHome.instance.streamingServer}"/>
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{systemConfigurationHome.persist}"
+                       disabled="#{!systemConfigurationHome.wired}"
+                       rendered="#{!systemConfigurationHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{systemConfigurationHome.update}"
+                       rendered="#{systemConfigurationHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{systemConfigurationHome.remove}"
+                      immediate="true"
+                       rendered="#{systemConfigurationHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/protected/SystemConfiguration.xhtml"
+                rendered="#{systemConfigurationHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/protected/#{empty systemConfigurationFrom ? 'SystemConfigurationList' : systemConfigurationFrom}.xhtml"
+                rendered="#{!systemConfigurationHome.managed}"/>
+
+        </div>
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

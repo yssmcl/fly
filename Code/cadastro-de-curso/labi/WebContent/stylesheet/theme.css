@@ -1,0 +1,433 @@
+html {
+
+}
+
+.optionList {
+  height:22px;
+}
+.vertical-menu-cell {
+    padding:0px 4px 0px 4px;
+}
+
+#formdiv {
+    margin: 0 auto;
+}
+
+#body {
+	position:fixed;
+	top: 40px;
+	right: 0;
+	bottom: 30px;
+	left: 0px;
+	bottom: 30px;
+	padding: 30px 20px;
+	overflow: auto;
+    -moz-box-shadow: -2px 0 5px #aaa;
+    -webkit-box-shadow: -2px 0 5px #aaa;	
+	box-shadow: -2px 0 5px #aaa;
+	z-index:0;
+	background:#fff;
+}
+
+#sidebar {
+	position: fixed;
+	top: 0px;
+	bottom: 30px;
+	left: 0;
+	width: 0px;
+	padding: 0;
+	margin: 0;
+	border-left: 0px solid #666;
+	background: #eef4f8;
+	z-index:999;
+	
+}
+
+.rich-ddmenu-label-select{    
+    
+	background: #1768A8;	
+	font-family:
+	
+}
+
+#menu{
+	z-index:999;
+	position: absolute;
+	top: 0px;	
+	padding: 0;
+	left 0;
+	width: 0px;
+	display: block;
+}
+
+#menu h{
+        .pic {
+        margin-bottom: -4px;
+        margin-right: 2px;
+        }
+ 
+        .search .rf-ddm-itm-sel {
+        background-color: transparent;
+        background-image:none;
+        border-color: transparent;
+        cursor: default;
+        }
+ }
+  
+
+#sidebar a {
+    text-decoration: none;
+    display: block;
+}
+
+#sidebar > ul > li > a.current {
+    color: #FFF;
+}
+
+#sidebar > ul > li ul a.current {
+    color: #013173;
+    font-weight: bold;
+}
+
+#sidebar ul {
+    list-style: none;
+    margin: 0;
+    text-decoration:overline;
+    text-decoration: blink;
+    width: 100%;
+    left: 40;
+    border-top: 1px solid #ccc;
+}
+
+#sidebar > ul {
+    padding: 0;
+}
+
+#sidebar > ul > li > a {
+    color: #206CAA;
+    font-size: 1.4em;
+    height: 35px;
+    padding-top: 5px;
+    border: 1px solid #ddd;
+    background: #dde9f1; /* Old browsers */
+    background: -moz-linear-gradient(top, #dde9f1 0%, #cee1ee 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #dde9f1), color-stop(100%, #cee1ee)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #dde9f1 0%, #cee1ee 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #dde9f1 0%, #cee1ee 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #dde9f1 0%, #cee1ee 100%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#dde9f1', endColorstr = '#cee1ee', GradientType = 0); /* IE6-9 */
+    background: linear-gradient(top, #dde9f1 0%, #cee1ee 100%); /* W3C */
+}
+
+#sidebar > ul > li > a.current, #sidebar > ul > li > a:hover {
+    color: #FFF;
+    background: #a7c7dc; /* Old browsers */
+    background: -moz-linear-gradient(top, #a7c7dc 0%, #85b2d3 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #a7c7dc), color-stop(100%, #85b2d3)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #a7c7dc 0%, #85b2d3 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #a7c7dc 0%, #85b2d3 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #a7c7dc 0%, #85b2d3 100%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#a7c7dc', endColorstr = '#85b2d3', GradientType = 0); /* IE6-9 */
+    background: linear-gradient(top, #a7c7dc 0%, #85b2d3 100%); /* W3C */
+}
+
+#sidebar > ul > li > a:active {
+    color: #FFF;
+    background: #85b2d3; /* Old browsers */
+    background: -moz-linear-gradient(top, #85b2d3 0%, #a7c7dc 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #85b2d3), color-stop(100%, #a7c7dc)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #85b2d3 0%, #a7c7dc 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #85b2d3 0%, #a7c7dc 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #85b2d3 0%, #a7c7dc 100%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#85b2d3', endColorstr = '#a7c7dc', GradientType = 0); /* IE6-9 */
+    background: linear-gradient(top, #85b2d3 0%, #a7c7dc 100%); /* W3C */
+}
+
+#sidebar > ul > li > ul > li {
+    font-size: 0.8em;
+}
+
+#header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width:100%;
+	height: 40px;
+	text-align: center;
+	z-index: 12;
+	background: #206caa; /* Old browsers */
+	background: -moz-linear-gradient(top, #206caa 0%, #1e5799 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#206caa), color-stop(100%,#1e5799)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #206caa 0%,#1e5799 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #206caa 0%,#1e5799 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, #206caa 0%,#1e5799 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#206caa', endColorstr='#1e5799',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, #206caa 0%,#1e5799 100%); /* W3C */
+	color: #eee;
+}
+#header a, #header a:visited {
+	color: #eee;
+	text-decoration: none;	
+}
+
+#header a:hover {
+	color: #73c0ff;
+}
+
+#header .nav {
+	position: absolute;
+	right: 8px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size: 14px;
+} 
+
+h1.title {
+	
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding: 5px 80px;
+	color: #eee;
+	font-size: 2em;
+	z-index: 999;
+}
+
+#footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width:100%;
+	height: 30px;
+	text-align: right;
+	z-index: 12;
+	background: #206caa; /* Old browsers */
+	background: -moz-linear-gradient(top, #206caa 0%, #1e5799 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#206caa), color-stop(100%,#1e5799)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #206caa 0%,#1e5799 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #206caa 0%,#1e5799 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, #206caa 0%,#1e5799 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#206caa', endColorstr='#1e5799',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, #206caa 0%,#1e5799 100%); /* W3C */
+	color: #eee;
+}
+
+body {
+	font-size: 14px;
+	margin-bottom: 30px;
+	margin-top: 40px;
+}
+
+a img {
+	border: none;
+}
+
+h1 {
+	font-size: 1.5em;
+	margin-top: 0;
+}
+
+input[type=submit], input[type=button] {
+	font-size: 1.1em;
+	margin: 5px 5px 5px 0;
+	cursor: pointer;
+}
+
+input[type=text], input[type=password], textarea {
+	font-size: 1em;
+	padding-left: 1px;
+}
+
+select {
+	font-size: 1em;
+}
+
+.tableControl, .actionButtons {
+	width: 100%;
+}
+
+.tableControl a {
+	padding-left: 10px;
+}
+
+.tableControl {
+	text-align: right;
+}
+
+.footer {
+	text-align: center;
+	font-size: 1.2em;
+	margin-bottom: 10px;
+}
+
+.rich-table {
+	width: 100%;
+}
+
+.body {
+	padding: 30px;
+}
+.message {
+	padding: 5px;
+	list-style: none;
+	border: 0;
+	background: none;
+	padding: 0;
+	color: #000000;
+	margin: 5px 0 8px 0;
+	font-size: 1em;
+}
+
+.message li {
+	background: no-repeat left center;
+	padding-top: 1px;
+	padding-left: 20px;
+	margin-left: 3px;
+}
+
+.message li.infomsg {
+	background-image: url(../img/msginfo.png);
+}
+
+.message li.errormsg {
+	background-image: url(../img/msgerror.png);
+}
+
+.message li.warnmsg {
+	background-image: url(../img/msgwarn.png);
+}
+
+.name {
+	vertical-align: top;
+	font-weight: bold;
+	width: 115px;
+	float: left;
+	padding: 5px;
+	margin-top: 3px;
+	clear: left;
+}
+
+.value {
+	float: left;
+	padding: 5px;
+}
+
+.error {
+	float: left;
+	padding: 5px;
+}
+
+.errors {
+	color: #FF0000;
+	vertical-align: middle;
+}
+
+img.errors {
+	padding-right: 5px;
+}
+
+.errors input, .errors textarea, .errors select {
+	border: 1px solid red !important;
+}
+
+.required {
+	color: #FF0000;
+	padding-left: 2px;
+}
+
+.rich-stglpanel-body {
+	overflow: auto;
+} 
+
+/* the specificity here is necessary to override the defaults */
+/*
+.rich-panel .rich-panel-header,
+.rich-stglpanel .rich-stglpanel-header {
+	padding: 2px 3px;
+}*/
+
+.rich-panel input[type=submit], .rich-panel input[type=button],
+.rich-tabpanel input[type=submit], .rich-tabpanel input[type=button] {
+	margin-bottom: 0;
+}
+
+.tableControl input[type=submit], .tableControl input[type=button], .tableControl select {
+	margin: 5px 0 5px 5px;
+}
+
+/* I don't know why this is necessary, but the select is off by a pixel on the top and is padding too much on the left */
+.tableControl select {
+	margin-left: 2px;
+	position: relative;
+	top: 1px;
+}
+
+.actionButtons {
+	padding-left: 1px;
+}
+
+.actionButtons select {
+	margin: 5px 5px 5px 0;
+	vertical-align: bottom;
+}
+
+.rich-toolbar-item a {
+	text-decoration: none;
+}
+
+.rich-toolbar-item a:hover, .rich-ddmenu-label-select {
+	text-decoration: underline;
+}
+
+.rich-toolbar-item .rich-menu-item a:hover {
+	text-decoration: none;
+}
+
+.rich-datalist {
+	list-style: square;
+	margin: 6px 0 1px 0;
+	padding-left: 18px;
+}
+
+.rich-list-item {
+	padding-bottom: 4px;
+}
+
+div.info {
+	font-size: 1.2em;
+}
+
+ul.bullets {
+	list-style: square;
+}
+
+ul.bullets li {
+	padding-bottom: 2px;
+}
+
+td.action {
+	text-align: center;
+	width: 8em;
+	white-space: nowrap;
+}
+
+td.action a {
+	padding-left: 1px;
+	padding-right: 1px;
+}
+
+table.radio {
+   border: 0;
+}
+
+table.radio td {
+   padding: 0 2px;
+}
+
+table.radio input[type=radio] {
+   vertical-align: bottom;
+}
+
+.panelGridCenter {
+    margin: 0 auto;
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+    
+ <ui:param name="pageTitle" value="Cadastro de Marcas de Equipamentos Hospitalares" />
+
+<ui:define name="body">
+
+    <h:form id="marcaEquipamento" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{marcaEquipamentoHome.managed ? 'Editar' : 'Adicionar'} Marca de Equipamentos Hospitalares</f:facet>
+            <s:decorate id="descMarcaEquipamentoField" template="/layout/edit.xhtml">
+                <ui:define name="label">Descri&#231;&#227;o da Marca de Equipamentos</ui:define>
+                <h:inputText id="descMarcaEquipamento"
+                       required="true"
+                           size="100"
+                      maxlength="100"
+                          value="#{marcaEquipamentoHome.instance.descMarcaEquipamento}">
+                    <a:support event="onblur" reRender="descMarcaEquipamentoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                <h:outputText value="Campos obrigat&#243;rios"/>
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Salvar"
+                         action="#{marcaEquipamentoHome.persist}"
+                       disabled="#{!marcaEquipamentoHome.wired}"
+                       rendered="#{!marcaEquipamentoHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Atualizar"
+                         action="#{marcaEquipamentoHome.update}"
+                       rendered="#{marcaEquipamentoHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Excluir"
+                         action="#{marcaEquipamentoHome.remove}"
+                      immediate="true"
+                       rendered="#{marcaEquipamentoHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancelar"
+             propagation="end"
+                    view="/protected/MarcaEquipamento.xhtml"
+                rendered="#{marcaEquipamentoHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancelar"
+             propagation="end"
+                    view="/protected/#{empty marcaEquipamentoFrom ? 'MarcaEquipamentoList' : marcaEquipamentoFrom}.xhtml"
+                rendered="#{!marcaEquipamentoHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Modelos">
+        <h:form styleClass="association" id="modeloEquipamentosChildren">
+
+            <h:outputText value="N&#227;o h&#225; modelos de equipamentos associados a esta marca."
+                       rendered="#{empty marcaEquipamentoHome.modeloEquipamentos}"/>
+
+            <rich:dataTable value="#{marcaEquipamentoHome.modeloEquipamentos}"
+                           var="_modeloEquipamento"
+                      rendered="#{not empty marcaEquipamentoHome.modeloEquipamentos}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="modeloEquipamentosTable">
+                <rich:column sortBy="#{_modeloEquipamento.descModeloEquipamento}">
+                    <f:facet name="header">Descri&#231;&#227;do Modelo de Equipamento</f:facet>
+                    <h:outputText value="#{_modeloEquipamento.descModeloEquipamento}"/>
+                </rich:column>
+                <rich:column sortBy="#{_modeloEquipamento.nmManual}">
+                    <f:facet name="header">Manual</f:facet>
+                    <h:outputText value="#{_modeloEquipamento.nmManual}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{marcaEquipamentoHome.managed}" id="modeloEquipamentos">
+        <div class="actionButtons">
+            <s:button id="addmodeloEquipamento"
+                   value="Adicionar Novo Modelo"
+                    view="/protected/ModeloEquipamentoEdit.xhtml"
+             propagation="none">
+                 <f:param name="marcaEquipamentoIdMarcaEquipamento"
+                         value="#{marcaEquipamentoHome.instance.idMarcaEquipamento}"/>
+                 <f:param name="modeloEquipamentoFrom" value="MarcaEquipamento"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

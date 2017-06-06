@@ -1,0 +1,163 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+
+
+<ui:param name="pageTitle" value="Detalhes sobre os Tipos de Exames" />
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Detalhes sobre os Tipos de Exames</f:facet>
+
+
+        <s:decorate id="descTipoExame" template="/layout/display.xhtml">
+            <ui:define name="label">Descri&#231;&#227;o do Tipo de Exame</ui:define>
+            <h:outputText value="#{tipoExameHome.instance.descTipoExame}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/protected/TipoExameEdit.xhtml"
+                    id="edit"
+                 value="Editar"/>
+
+        <s:button view="/protected/#{empty tipoExameFrom ? 'TipoExameList' : tipoExameFrom}.xhtml"
+                    id="done"
+                 value="Voltar"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Exames</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="examesChildren">
+
+        <h:outputText value="N&#227;o h&#225; Exames associados a este Tipo de Exame."
+                   rendered="#{empty tipoExameHome.exames}"/>
+
+        <rich:dataTable value="#{tipoExameHome.exames}"
+                       var="_exame"
+                  rendered="#{not empty tipoExameHome.exames}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="examesTable">
+                        
+                  <rich:column sortBy="#{_exame.dtExame}">
+                <f:facet name="header">Paciente</f:facet>
+                <h:outputText value="#{_exame.paciente.nome}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            
+            <rich:column sortBy="#{_exame.dtExame}">
+                <f:facet name="header">Data do exame</f:facet>
+                <h:outputText value="#{_exame.dtExame}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_exame.serie}">
+                <f:facet name="header">S&#233;rie</f:facet>
+                <h:outputText value="#{_exame.serie}"/>
+            </rich:column>
+            <rich:column sortBy="#{_exame.dtEstudo}">
+                <f:facet name="header">Data do estudo</f:facet>
+                <h:outputText value="#{_exame.dtEstudo}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_exame.descEstudo}">
+                <f:facet name="header">Descri&#231;&#227;o do estudo</f:facet>
+                <h:outputText value="#{_exame.descEstudo}"/>
+            </rich:column>
+            <rich:column sortBy="#{_exame.motivoExame}">
+                <f:facet name="header">Motivo do exame</f:facet>
+                <h:outputText value="#{_exame.motivoExame}"/>
+            </rich:column>
+            <rich:column sortBy="#{_exame.procedenciaPaciente}">
+                <f:facet name="header">Proced&#234;ncia do paciente</f:facet>
+                <h:outputText value="#{_exame.procedenciaPaciente}"/>
+            </rich:column>
+                        
+                        
+                        
+                        
+            <!--<rich:column sortBy="#{_exame.idExame}">
+                <f:facet name="header">Id exame</f:facet>
+                <h:outputText value="#{_exame.idExame}"/>
+            </rich:column>
+            <rich:column sortBy="#{_exame.dtExame}">
+                <f:facet name="header">Dt exame</f:facet>
+                <h:outputText value="#{_exame.dtExame}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_exame.serie}">
+                <f:facet name="header">Serie</f:facet>
+                <h:outputText value="#{_exame.serie}"/>
+            </rich:column>
+            <rich:column sortBy="#{_exame.descSerie}">
+                <f:facet name="header">Desc serie</f:facet>
+                <h:outputText value="#{_exame.descSerie}"/>
+            </rich:column>
+            <rich:column sortBy="#{_exame.dtEstudo}">
+                <f:facet name="header">Dt estudo</f:facet>
+                <h:outputText value="#{_exame.dtEstudo}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_exame.descEstudo}">
+                <f:facet name="header">Desc estudo</f:facet>
+                <h:outputText value="#{_exame.descEstudo}"/>
+            </rich:column>
+            <rich:column sortBy="#{_exame.comentEstudo}">
+                <f:facet name="header">Coment estudo</f:facet>
+                <h:outputText value="#{_exame.comentEstudo}"/>
+            </rich:column>
+            <rich:column sortBy="#{_exame.motivoExame}">
+                <f:facet name="header">Motivo exame</f:facet>
+                <h:outputText value="#{_exame.motivoExame}"/>
+            </rich:column>
+            <rich:column sortBy="#{_exame.procedenciaPaciente}">
+                <f:facet name="header">Procedencia paciente</f:facet>
+                <h:outputText value="#{_exame.procedenciaPaciente}"/>
+            </rich:column>
+            --><h:column>
+                <f:facet name="header">A&#231;&#227;o</f:facet>
+                <s:link id="selectexame"
+                     value="Selecionar"
+                      view="/protected/Exame.xhtml">
+                    <f:param name="exameIdExame"
+                            value="#{_exame.idExame}"/>
+                    <f:param name="exameFrom" value="TipoExame"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Adicionar Novo Exame"
+                view="/protected/ExameEdit.xhtml">
+            <f:param name="tipoExameIdTipoExame"
+                    value="#{tipoExameHome.instance.idTipoExame}"/>
+            <f:param name="exameFrom" value="TipoExame"/>
+        </s:button>
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

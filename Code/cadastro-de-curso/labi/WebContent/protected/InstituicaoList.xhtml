@@ -1,0 +1,253 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+    
+<ui:param name="pageTitle" value="Gerenciamento de Institui&#231;&#245;es" />
+
+<ui:define name="body">
+
+    <h:form id="instituicaoSearch" styleClass="edit">
+
+        <rich:simpleTogglePanel label="Institui&#231;&#227;o - Filtros de Pesquisa" switchType="client">
+
+            <s:decorate template="/layout/display.xhtml">
+                <ui:define name="label">Nome</ui:define>
+                <h:inputText id="nmInstituicao" value="#{instituicaoList.instituicao.nmInstituicao}"/>
+            </s:decorate>
+
+            <s:decorate template="/layout/display.xhtml">
+                <ui:define name="label">Descri&#231;&#227;o</ui:define>
+                <h:inputText id="descInstituicao" value="#{instituicaoList.instituicao.descInstituicao}"/>
+            </s:decorate>
+
+            <s:decorate template="/layout/display.xhtml">
+                <ui:define name="label">CNPJ</ui:define>
+                <h:inputText id="cnpj" value="#{instituicaoList.instituicao.cnpj}"/>
+            </s:decorate>
+
+            <s:decorate template="/layout/display.xhtml">
+                <ui:define name="label">Combinar</ui:define>
+                <h:selectOneRadio id="logic" value="#{instituicaoList.restrictionLogicOperator}" styleClass="radio">
+                    <f:selectItem itemLabel="Todos os campos" itemValue="and"/>
+                    <f:selectItem itemLabel="Qualquer campo" itemValue="or"/>
+                </h:selectOneRadio>
+            </s:decorate>
+
+        </rich:simpleTogglePanel>
+
+        <div class="actionButtons">
+            <h:commandButton id="search" value="Pesquisar" action="/protected/InstituicaoList.xhtml"/>
+            <s:button id="reset" value="Pesquisar" includePageParams="false"/>
+        </div>
+
+    </h:form>
+
+    <rich:panel>
+        <f:facet name="header">Institui&#231;&#227;o - Resultados de Pesquisa (#{empty instituicaoList.resultList ? 0 : (instituicaoList.paginated ? instituicaoList.resultCount : instituicaoList.resultList.size)})</f:facet>
+    <div class="results" id="instituicaoList">
+
+    <h:outputText value="A consulta de Institui&#231;&#227;o n&#227;o retornou resultados."
+               rendered="#{empty instituicaoList.resultList}"/>
+
+    <rich:dataTable id="instituicaoList"
+                var="_instituicao"
+              value="#{instituicaoList.resultList}"
+           rendered="#{not empty instituicaoList.resultList}">
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="/layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{instituicaoList}"/>
+                    <ui:param name="propertyLabel" value="Nome"/>
+                    <ui:param name="propertyPath" value="instituicao.nmInstituicao"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_instituicao.nmInstituicao}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="/layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{instituicaoList}"/>
+                    <ui:param name="propertyLabel" value="Descri&#231;&#227;o"/>
+                    <ui:param name="propertyPath" value="instituicao.descInstituicao"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_instituicao.descInstituicao}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="/layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{instituicaoList}"/>
+                    <ui:param name="propertyLabel" value="CNPJ"/>
+                    <ui:param name="propertyPath" value="instituicao.cnpj"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_instituicao.cnpj}"/>
+        </h:column>
+        
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="/layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{instituicaoList}"/>
+                    <ui:param name="propertyLabel" value="Telefone"/>
+                    <ui:param name="propertyPath" value="instituicao.telefone"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_instituicao.telefone}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="/layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{instituicaoList}"/>
+                    <ui:param name="propertyLabel" value="Fax"/>
+                    <ui:param name="propertyPath" value="instituicao.fax"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_instituicao.fax}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="/layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{instituicaoList}"/>
+                    <ui:param name="propertyLabel" value="Website"/>
+                    <ui:param name="propertyPath" value="instituicao.website"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_instituicao.website}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="/layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{instituicaoList}"/>
+                    <ui:param name="propertyLabel" value="Email"/>
+                    <ui:param name="propertyPath" value="instituicao.email"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_instituicao.email}"/>
+        </h:column>
+        <!--<h:column>
+            <f:facet name="header">
+                <ui:include src="/layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{instituicaoList}"/>
+                    <ui:param name="propertyLabel" value="Bairro"/>
+                    <ui:param name="propertyPath" value="instituicao.bairro"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_instituicao.bairro}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="/layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{instituicaoList}"/>
+                    <ui:param name="propertyLabel" value="Rua"/>
+                    <ui:param name="propertyPath" value="instituicao.rua"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_instituicao.rua}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="/layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{instituicaoList}"/>
+                    <ui:param name="propertyLabel" value="N&#250;mero"/>
+                    <ui:param name="propertyPath" value="instituicao.numero"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_instituicao.numero}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="/layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{instituicaoList}"/>
+                    <ui:param name="propertyLabel" value="Complemento"/>
+                    <ui:param name="propertyPath" value="instituicao.complemento"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_instituicao.complemento}"/>
+        </h:column>
+        --><!--<h:column>
+            <f:facet name="header">
+                <ui:include src="/layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{instituicaoList}"/>
+                    <ui:param name="propertyLabel" value="CEP"/>
+                    <ui:param name="propertyPath" value="instituicao.cep"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_instituicao.cep}"/>
+        </h:column>
+        --><rich:column styleClass="action">
+            <f:facet name="header">A&#231;&#227;o</f:facet>
+            <s:link view="/protected/#{empty from ? 'Instituicao' : from}.xhtml"
+                   value="#{empty from ? 'Visualizar' : 'Selecionar'}"
+             propagation="#{empty from ? 'none' : 'default'}"
+                      id="instituicaoViewId">
+                <f:param name="instituicaoIdInstituicao"
+                        value="#{_instituicao.idInstituicao}"/>
+            </s:link>
+            #{' '}
+            <s:link view="/protected/InstituicaoEdit.xhtml"
+                   value="Editar"
+             propagation="none"
+                      id="instituicaoEdit"
+                rendered="#{empty from}">
+                <f:param name="instituicaoIdInstituicao"
+                        value="#{_instituicao.idInstituicao}"/>
+            </s:link>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <div class="tableControl">
+
+        <s:link view="/protected/InstituicaoList.xhtml"
+            rendered="#{instituicaoList.previousExists}"
+               value="#{messages.left}#{messages.left} Primeira P&#225;gina"
+                  id="firstPage">
+          <f:param name="firstResult" value="0"/>
+        </s:link>
+
+        <s:link view="/protected/InstituicaoList.xhtml"
+            rendered="#{instituicaoList.previousExists}"
+               value="#{messages.left} P&#225;gina Anterior"
+                  id="previousPage">
+            <f:param name="firstResult"
+                    value="#{instituicaoList.previousFirstResult}"/>
+        </s:link>
+
+        <s:link view="/protected/InstituicaoList.xhtml"
+            rendered="#{instituicaoList.nextExists}"
+               value="Pr&#243;xima P&#225;gina #{messages.right}"
+                  id="nextPage">
+            <f:param name="firstResult"
+                    value="#{instituicaoList.nextFirstResult}"/>
+        </s:link>
+
+        <s:link view="/protected/InstituicaoList.xhtml"
+            rendered="#{instituicaoList.nextExists}"
+               value="&#218;ltima P&#225;gina #{messages.right}#{messages.right}"
+                  id="lastPage">
+            <f:param name="firstResult"
+                    value="#{instituicaoList.lastFirstResult}"/>
+        </s:link>
+
+    </div>
+
+    <s:div styleClass="actionButtons" rendered="#{empty from}">
+        <s:button view="/protected/InstituicaoEdit.xhtml"
+                    id="create"
+           propagation="none"
+                 value="Inserir Institui&#231;&#227;o">
+            <f:param name="instituicaoIdInstituicao"/>
+        </s:button>
+    </s:div>
+
+</ui:define>
+
+</ui:composition>

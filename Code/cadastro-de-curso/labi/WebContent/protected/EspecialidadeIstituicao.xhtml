@@ -1,0 +1,215 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+
+
+<ui:param name="pageTitle" value="Gerenciamento de Especialidades" />
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Detalhes sobre Especialidades da Institui&#231;&#227;o</f:facet>
+
+
+        <s:decorate id="descEspecialidade" template="/layout/display.xhtml">
+            <ui:define name="label">Descri&#231;&#227;o</ui:define>
+            <h:outputText value="#{especialidadeIstituicaoHome.instance.descEspecialidade}"/>
+        </s:decorate>
+
+        <s:decorate id="localEspecialidade" template="/layout/display.xhtml">
+            <ui:define name="label">Local</ui:define>
+            <h:outputText value="#{especialidadeIstituicaoHome.instance.localEspecialidade}"/>
+        </s:decorate>
+
+        <s:decorate id="salaEspecialidade" template="/layout/display.xhtml">
+            <ui:define name="label">Sala</ui:define>
+            <h:outputText value="#{especialidadeIstituicaoHome.instance.salaEspecialidade}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/protected/EspecialidadeIstituicaoEdit.xhtml"
+                    id="edit"
+                 value="Editar"/>
+
+        <s:button view="/protected/#{empty especialidadeIstituicaoFrom ? 'EspecialidadeIstituicaoList' : especialidadeIstituicaoFrom}.xhtml"
+                    id="done"
+                 value="Voltar"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Institui&#231;&#227;o</h:panelGroup>
+        </f:facet>
+    <div class="association" id="instituicaoParent">
+
+        <h:outputText value="N&#227;o h&#225; institui&#231;&#227;o associada a esta especialidade institui&#231;&#227;o."
+                   rendered="#{especialidadeIstituicaoHome.instance.instituicao == null}"/>
+
+        <rich:dataTable var="_instituicao"
+                   value="#{especialidadeIstituicaoHome.instance.instituicao}"
+                rendered="#{especialidadeIstituicaoHome.instance.instituicao != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="instituicaoTable">
+            <h:column>
+                <f:facet name="header">Nome da Institui&#231;&#227;o</f:facet>
+                <h:outputText value="#{_instituicao.nmInstituicao}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Descri&#231;&#227;o</f:facet>
+                <h:outputText value="#{_instituicao.descInstituicao}"/>
+            </h:column><!--
+            <h:column>
+                <f:facet name="header">CNPJ</f:facet>
+                <h:outputText value="#{_instituicao.cnpj}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Website</f:facet>
+                <h:outputText value="#{_instituicao.website}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Email</f:facet>
+                <h:outputText value="#{_instituicao.email}"/>
+            </h:column>
+                        
+                -->
+            <h:column>
+                <f:facet name="header">Telefone</f:facet>
+                <h:outputText value="#{_instituicao.telefone}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Fax</f:facet>
+                <h:outputText value="#{_instituicao.fax}"/>
+            </h:column>
+            <!--<h:column>
+                <f:facet name="header">Bairro</f:facet>
+                <h:outputText value="#{_instituicao.bairro}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Rua</f:facet>
+                <h:outputText value="#{_instituicao.rua}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Numero</f:facet>
+                <h:outputText value="#{_instituicao.numero}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Complemento</f:facet>
+                <h:outputText value="#{_instituicao.complemento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">CEP</f:facet>
+                <h:outputText value="#{_instituicao.cep}"/>
+            </h:column>
+            --><h:column styleClass="action">
+                <f:facet name="header">A&#231;&#227;o</f:facet>
+                <s:link id="viewinstituicao"
+                     value="Visualizar"
+                      view="/protected/Instituicao.xhtml">
+                    <f:param name="instituicaoIdInstituicao"
+                           value="#{_instituicao.idInstituicao}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Exames</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="examesChildren">
+
+        <h:outputText value="N&#227;o h&#225; Exames associados a esta  especialidade institui&#231;&#227;o."
+                   rendered="#{empty especialidadeIstituicaoHome.exames}"/>
+
+        <rich:dataTable value="#{especialidadeIstituicaoHome.exames}"
+                       var="_exame"
+                  rendered="#{not empty especialidadeIstituicaoHome.exames}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="examesTable">
+                        
+           <rich:column sortBy="#{_exame.dtExame}">
+                <f:facet name="header">Paciente</f:facet>
+                <h:outputText value="#{_exame.paciente.nome}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            
+            <rich:column sortBy="#{_exame.dtExame}">
+                <f:facet name="header">Data do Exame</f:facet>
+                <h:outputText value="#{_exame.dtExame}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <!--<rich:column sortBy="#{_exame.serie}">
+                <f:facet name="header">S&#233;rie do Exame</f:facet>
+                <h:outputText value="#{_exame.serie}"/>
+            </rich:column>
+            <rich:column sortBy="#{_exame.descSerie}">
+                <f:facet name="header">Descri&#231;&#227;o da S&#233;rie</f:facet>
+                <h:outputText value="#{_exame.descSerie}"/>
+            </rich:column>
+            --><!--<rich:column sortBy="#{_exame.dtEstudo}">
+                <f:facet name="header">Data do Estudo</f:facet>
+                <h:outputText value="#{_exame.dtEstudo}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_exame.descEstudo}">
+                <f:facet name="header">Descri&#231;&#227;o do Estudo</f:facet>
+                <h:outputText value="#{_exame.descEstudo}"/>
+            </rich:column>
+            <rich:column sortBy="#{_exame.comentEstudo}">
+                <f:facet name="header">Coment&#225;rio do Estudo</f:facet>
+                <h:outputText value="#{_exame.comentEstudo}"/>
+            </rich:column>
+            --><rich:column sortBy="#{_exame.motivoExame}">
+                <f:facet name="header">Motivo do Exame</f:facet>
+                <h:outputText value="#{_exame.motivoExame}"/>
+            </rich:column>
+            <rich:column sortBy="#{_exame.procedenciaPaciente}">
+                <f:facet name="header">Proced&#234;ncia do Paciente</f:facet>
+                <h:outputText value="#{_exame.procedenciaPaciente}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">A&#231;&#227;o</f:facet>
+                <s:link id="selectexame"
+                     value="Selecionar"
+                      view="/protected/Exame.xhtml">
+                    <f:param name="exameIdExame"
+                            value="#{_exame.idExame}"/>
+                    <f:param name="exameFrom" value="EspecialidadeIstituicao"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Adicionar exame"
+                view="/protected/ExameEdit.xhtml">
+            <f:param name="especialidadeIstituicaoIdEspecialidadeIstituicao"
+                    value="#{especialidadeIstituicaoHome.instance.idEspecialidadeIstituicao}"/>
+            <f:param name="exameFrom" value="EspecialidadeIstituicao"/>
+        </s:button>
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

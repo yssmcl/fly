@@ -1,0 +1,133 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+
+<ui:param name="pageTitle" value="Detalhes do Modelo de Equipamentos Hospitalares" />
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Detalhes do Modelo de Equipamentos Hospitalares</f:facet>
+
+
+        <s:decorate id="descModeloEquipamento" template="/layout/display.xhtml">
+            <ui:define name="label">Descri&#231;&#227;o do Modelo</ui:define>
+            <h:outputText value="#{modeloEquipamentoHome.instance.descModeloEquipamento}"/>
+        </s:decorate>
+
+        <s:decorate id="nmManual" template="/layout/display.xhtml">
+            <ui:define name="label">Nome do Manual</ui:define>
+            <h:outputText value="#{modeloEquipamentoHome.instance.nmManual}"/>
+        </s:decorate>
+
+        <s:decorate id="diretorioManual" template="/layout/display.xhtml">
+            <ui:define name="label">Local onde est&#225; armazenado o manual</ui:define>
+            <h:outputText value="#{modeloEquipamentoHome.instance.diretorioManual}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/protected/ModeloEquipamentoEdit.xhtml"
+                    id="edit"
+                 value="Editar"/>
+
+        <s:button view="/protected/#{empty modeloEquipamentoFrom ? 'ModeloEquipamentoList' : modeloEquipamentoFrom}.xhtml"
+                    id="done"
+                 value="Voltar"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Marcas de Equipamentos Hospitalares</h:panelGroup>
+        </f:facet>
+    <div class="association" id="marcaEquipamentoParent">
+
+        <h:outputText value="N&#227;o h&#225; marcas de equipamentos associadas a este modelo."
+                   rendered="#{modeloEquipamentoHome.instance.marcaEquipamento == null}"/>
+
+        <rich:dataTable var="_marcaEquipamento"
+                   value="#{modeloEquipamentoHome.instance.marcaEquipamento}"
+                rendered="#{modeloEquipamentoHome.instance.marcaEquipamento != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="marcaEquipamentoTable">
+            <h:column>
+                <f:facet name="header">Descri&#231;&#227;o da Marca</f:facet>
+                <h:outputText value="#{_marcaEquipamento.descMarcaEquipamento}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">A&#231;&#227;o</f:facet>
+                <s:link id="viewmarcaEquipamento"
+                     value="Visualizar"
+                      view="/protected/MarcaEquipamento.xhtml">
+                    <f:param name="marcaEquipamentoIdMarcaEquipamento"
+                           value="#{_marcaEquipamento.idMarcaEquipamento}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Equipamentos Hospitalares</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="equipamentosChildren">
+
+        <h:outputText value="N&#227;o h&#225; equipamentos associados a este modelo."
+                   rendered="#{empty modeloEquipamentoHome.equipamentos}"/>
+
+        <rich:dataTable value="#{modeloEquipamentoHome.equipamentos}"
+                       var="_equipamento"
+                  rendered="#{not empty modeloEquipamentoHome.equipamentos}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="equipamentosTable">
+	            	<rich:column sortBy="#{_equipamento.nmEquipamento}">
+	                    <f:facet name="header">Nome do Equipamento</f:facet>
+	                    <h:outputText value="#{_equipamento.nmEquipamento}"/>
+	                </rich:column>
+	                <rich:column sortBy="#{_equipamento.descEquipamento}">
+	                    <f:facet name="header">Descri&#231;&#227;o do Equipamento</f:facet>
+	                    <h:outputText value="#{_equipamento.descEquipamento}"/>
+	                </rich:column>
+            <h:column>
+                <f:facet name="header">A&#231;&#227;o</f:facet>
+                <s:link id="selectequipamento"
+                     value="Selecionar"
+                      view="/protected/Equipamento.xhtml">
+                    <f:param name="equipamentoIdEquipamento"
+                            value="#{_equipamento.idEquipamento}"/>
+                    <f:param name="equipamentoFrom" value="ModeloEquipamento"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Adicionar Novo Equipamento Hospitalar"
+                view="/protected/EquipamentoEdit.xhtml">
+            <f:param name="modeloEquipamentoIdModeloEquipamento"
+                    value="#{modeloEquipamentoHome.instance.idModeloEquipamento}"/>
+            <f:param name="equipamentoFrom" value="ModeloEquipamento"/>
+        </s:button>
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

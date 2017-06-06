@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd">
+
+   <param name="firstResult" value="#{systemConfigurationList.firstResult}"/>
+   <param name="sort" value="#{systemConfigurationList.orderColumn}"/>
+   <param name="dir" value="#{systemConfigurationList.orderDirection}"/>
+   <param name="logic" value="#{systemConfigurationList.restrictionLogicOperator}"/>
+
+   <param name="from"/>
+   <param name="defaultMediaDirectory" value="#{systemConfigurationList.systemConfiguration.defaultMediaDirectory}"/>
+   <param name="defaultFilesDirectory" value="#{systemConfigurationList.systemConfiguration.defaultFilesDirectory}"/>
+   <param name="streamingServer" value="#{systemConfigurationList.systemConfiguration.streamingServer}"/>
+
+</page>

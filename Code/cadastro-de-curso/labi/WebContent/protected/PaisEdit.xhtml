@@ -1,0 +1,89 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+
+<ui:param name="pageTitle" value="Cadastro de Pa&#237;ses" />
+<ui:define name="body">
+
+    <h:form id="pais" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{paisHome.managed ? 'Editar' : 'Adicionar'} Pa&#237;ses</f:facet>
+
+
+
+            <s:decorate id="nmPaisField" template="/layout/edit.xhtml">
+                <ui:define name="label">Nome do Pa&#237;s</ui:define>
+                <h:inputText id="nmPais"
+                       required="true"
+                           size="25"
+                      maxlength="25"
+                          value="#{paisHome.instance.nmPais}">
+                    <a:support event="onblur" reRender="nmPaisField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="sgPaisField" template="/layout/edit.xhtml">
+                <ui:define name="label">Sigla do Pa&#237;s</ui:define>
+                <h:inputText id="sgPais"
+                       required="true"
+                           size="5"
+                      maxlength="5"
+                          value="#{paisHome.instance.sgPais}">
+                    <a:support event="onblur" reRender="sgPaisField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                Campos obrigat&#243;rios
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Salvar"
+                         action="#{paisHome.persist}"
+                       disabled="#{!paisHome.wired}"
+                       rendered="#{!paisHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Atualizar"
+                         action="#{paisHome.update}"
+                       rendered="#{paisHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Excluir"
+                         action="#{paisHome.remove}"
+                      immediate="true"
+                       rendered="#{paisHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancelar"
+             propagation="end"
+                    view="/protected/Pais.xhtml"
+                rendered="#{paisHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancelar"
+             propagation="end"
+                    view="/protected/#{empty paisFrom ? 'PaisList' : paisFrom}.xhtml"
+                rendered="#{!paisHome.managed}"/>
+
+        </div>
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

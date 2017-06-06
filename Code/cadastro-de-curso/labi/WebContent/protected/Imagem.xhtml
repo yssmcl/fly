@@ -1,0 +1,250 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Imagem Details</f:facet>
+
+
+        <s:decorate id="nmImagem" template="/layout/display.xhtml">
+            <ui:define name="label">Nm imagem</ui:define>
+            <h:outputText value="#{imagemHome.instance.nmImagem}"/>
+        </s:decorate>
+
+        <s:decorate id="diretorio" template="/layout/display.xhtml">
+            <ui:define name="label">Diretorio</ui:define>
+            <h:outputText value="#{imagemHome.instance.diretorio}"/>
+        </s:decorate>
+
+        <s:decorate id="descImagem" template="/layout/display.xhtml">
+            <ui:define name="label">Desc imagem</ui:define>
+            <h:outputText value="#{imagemHome.instance.descImagem}"/>
+        </s:decorate>
+
+        <s:decorate id="dtImagem" template="/layout/display.xhtml">
+            <ui:define name="label">Dt imagem</ui:define>
+            <h:outputText value="#{imagemHome.instance.dtImagem}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </s:decorate>
+
+        <s:decorate id="size" template="/layout/display.xhtml">
+            <ui:define name="label">Size</ui:define>
+            <h:outputText value="#{imagemHome.instance.size}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/protected/ImagemEdit.xhtml"
+                    id="edit"
+                 value="Edit"/>
+
+        <s:button view="/protected/#{empty imagemFrom ? 'ImagemList' : imagemFrom}.xhtml"
+                    id="done"
+                 value="Done"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Exame</h:panelGroup>
+        </f:facet>
+    <div class="association" id="exameParent">
+
+        <h:outputText value="There is no exame associated with this imagem."
+                   rendered="#{imagemHome.instance.exame == null}"/>
+
+        <rich:dataTable var="_exame"
+                   value="#{imagemHome.instance.exame}"
+                rendered="#{imagemHome.instance.exame != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="exameTable">
+            <h:column>
+                <f:facet name="header">Id exame</f:facet>
+                <h:outputText value="#{_exame.idExame}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Tipo exame id tipo exame</f:facet>
+                <h:outputText value="#{_exame.tipoExame.idTipoExame}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Paciente id paciente</f:facet>
+                <h:outputText value="#{_exame.paciente.idPaciente}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Equipamento id equipamento</f:facet>
+                <h:outputText value="#{_exame.equipamento.idEquipamento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Especialidade istituicao id especialidade istituicao</f:facet>
+                <h:outputText value="#{_exame.especialidadeIstituicao.idEspecialidadeIstituicao}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Convenio id convenio</f:facet>
+                <h:outputText value="#{_exame.convenio.idConvenio}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Profissional id profissional</f:facet>
+                <h:outputText value="#{_exame.profissional.idProfissional}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Dt exame</f:facet>
+                <h:outputText value="#{_exame.dtExame}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Serie</f:facet>
+                <h:outputText value="#{_exame.serie}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Desc serie</f:facet>
+                <h:outputText value="#{_exame.descSerie}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Dt estudo</f:facet>
+                <h:outputText value="#{_exame.dtEstudo}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Desc estudo</f:facet>
+                <h:outputText value="#{_exame.descEstudo}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Coment estudo</f:facet>
+                <h:outputText value="#{_exame.comentEstudo}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Motivo exame</f:facet>
+                <h:outputText value="#{_exame.motivoExame}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Procedencia paciente</f:facet>
+                <h:outputText value="#{_exame.procedenciaPaciente}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">Action</f:facet>
+                <s:link id="viewexame"
+                     value="View"
+                      view="/protected/Exame.xhtml">
+                    <f:param name="exameIdExame"
+                           value="#{_exame.idExame}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Paciente</h:panelGroup>
+        </f:facet>
+    <div class="association" id="pacienteParent">
+
+        <h:outputText value="There is no paciente associated with this imagem."
+                   rendered="#{imagemHome.instance.paciente == null}"/>
+
+        <rich:dataTable var="_paciente"
+                   value="#{imagemHome.instance.paciente}"
+                rendered="#{imagemHome.instance.paciente != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="pacienteTable">
+            <h:column>
+                <f:facet name="header">Id paciente</f:facet>
+                <h:outputText value="#{_paciente.idPaciente}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Cidade id cidade</f:facet>
+                <h:outputText value="#{_paciente.cidade.idCidade}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nome</f:facet>
+                <h:outputText value="#{_paciente.nome}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Identificacao</f:facet>
+                <h:outputText value="#{_paciente.identificacao}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Cpf</f:facet>
+                <h:outputText value="#{_paciente.cpf}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Rg</f:facet>
+                <h:outputText value="#{_paciente.rg}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Dt nascimento</f:facet>
+                <h:outputText value="#{_paciente.dtNascimento}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Telefone</f:facet>
+                <h:outputText value="#{_paciente.telefone}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Celular</f:facet>
+                <h:outputText value="#{_paciente.celular}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Email</f:facet>
+                <h:outputText value="#{_paciente.email}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Sexo</f:facet>
+                <h:outputText value="#{_paciente.sexo}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Bairro</f:facet>
+                <h:outputText value="#{_paciente.bairro}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Rua</f:facet>
+                <h:outputText value="#{_paciente.rua}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Numero</f:facet>
+                <h:outputText value="#{_paciente.numero}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Complemento</f:facet>
+                <h:outputText value="#{_paciente.complemento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Cep</f:facet>
+                <h:outputText value="#{_paciente.cep}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">Action</f:facet>
+                <s:link id="viewpaciente"
+                     value="View"
+                      view="/protected/Paciente.xhtml">
+                    <f:param name="pacienteIdPaciente"
+                           value="#{_paciente.idPaciente}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

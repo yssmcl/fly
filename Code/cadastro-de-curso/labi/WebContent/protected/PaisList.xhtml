@@ -1,0 +1,146 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+
+<ui:param name="pageTitle" value="Gerenciamento de Pa&#237;ses"/>
+<ui:define name="body">
+
+    <h:form id="paisSearch" styleClass="edit">
+
+        <rich:simpleTogglePanel label="Pa&#237;s - Filtros de Pesquisa" switchType="client">
+
+            <s:decorate template="/layout/display.xhtml">
+                <ui:define name="label">Nome do Pa&#237;s</ui:define>
+                <h:inputText id="nmPais" value="#{paisList.pais.nmPais}"/>
+            </s:decorate>
+
+            <s:decorate template="/layout/display.xhtml">
+                <ui:define name="label">Sigla do Pa&#237;s</ui:define>
+                <h:inputText id="sgPais" value="#{paisList.pais.sgPais}"/>
+            </s:decorate>
+
+            <s:decorate template="/layout/display.xhtml">
+                <ui:define name="label">Combinar</ui:define>
+                <h:selectOneRadio id="logic" value="#{paisList.restrictionLogicOperator}" styleClass="radio">
+                    <f:selectItem itemLabel="Todos os campos" itemValue="and"/>
+                    <f:selectItem itemLabel="Qualquer campo" itemValue="or"/>
+                </h:selectOneRadio>
+            </s:decorate>
+
+        </rich:simpleTogglePanel>
+
+        <div class="actionButtons">
+            <h:commandButton id="search" value="Pesquisar" action="/protected/PaisList.xhtml"/>
+            <s:button id="reset" value="Limpar" includePageParams="false"/>
+        </div>
+
+    </h:form>
+
+    <rich:panel>
+        <f:facet name="header">Pa&#237;s - Resultados de pesquisa (#{empty paisList.resultList ? 0 : (paisList.paginated ? paisList.resultCount : paisList.resultList.size)})</f:facet>
+    <div class="results" id="paisList">
+
+    <h:outputText value="A consulta de pa&#237;ses n&#227;o retornou resultados."
+               rendered="#{empty paisList.resultList}"/>
+
+    <rich:dataTable id="paisList"
+                var="_pais"
+              value="#{paisList.resultList}"
+           rendered="#{not empty paisList.resultList}">
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="/layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{paisList}"/>
+                    <ui:param name="propertyLabel" value="Nome do Pa&#237;s"/>
+                    <ui:param name="propertyPath" value="pais.nmPais"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_pais.nmPais}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="/layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{paisList}"/>
+                    <ui:param name="propertyLabel" value="Sigla do Pa&#237;s"/>
+                    <ui:param name="propertyPath" value="pais.sgPais"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_pais.sgPais}"/>
+        </h:column>
+        <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <s:link view="/protected/#{empty from ? 'Pais' : from}.xhtml"
+                   value="#{empty from ? 'Visualizar' : 'Selecionar'}"
+             propagation="#{empty from ? 'none' : 'default'}"
+                      id="paisViewId">
+                <f:param name="paisIdPais"
+                        value="#{_pais.idPais}"/>
+            </s:link>
+            #{' '}
+            <s:link view="/protected/PaisEdit.xhtml"
+                   value="Editar"
+             propagation="none"
+                      id="paisEdit"
+                rendered="#{empty from}">
+                <f:param name="paisIdPais"
+                        value="#{_pais.idPais}"/>
+            </s:link>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <div class="tableControl">
+
+        <s:link view="/protected/PaisList.xhtml"
+            rendered="#{paisList.previousExists}"
+               value="#{messages.left}#{messages.left} Primeira P&#225;gina"
+                  id="firstPage">
+          <f:param name="firstResult" value="0"/>
+        </s:link>
+
+        <s:link view="/protected/PaisList.xhtml"
+            rendered="#{paisList.previousExists}"
+               value="#{messages.left} P&#225;gina Anterior"
+                  id="previousPage">
+            <f:param name="firstResult"
+                    value="#{paisList.previousFirstResult}"/>
+        </s:link>
+
+        <s:link view="/protected/PaisList.xhtml"
+            rendered="#{paisList.nextExists}"
+               value="Pr&#243;xima P&#225;gina #{messages.right}"
+                  id="nextPage">
+            <f:param name="firstResult"
+                    value="#{paisList.nextFirstResult}"/>
+        </s:link>
+
+        <s:link view="/protected/PaisList.xhtml"
+            rendered="#{paisList.nextExists}"
+               value="&#218;ltima P&#225;gina #{messages.right}#{messages.right}"
+                  id="lastPage">
+            <f:param name="firstResult"
+                    value="#{paisList.lastFirstResult}"/>
+        </s:link>
+
+    </div>
+
+    <s:div styleClass="actionButtons" rendered="#{empty from}">
+        <s:button view="/protected/PaisEdit.xhtml"
+                    id="create"
+           propagation="none"
+                 value="Adicionar Pa&#237;ses">
+            <f:param name="paisIdPais"/>
+        </s:button>
+    </s:div>
+
+</ui:define>
+
+</ui:composition>

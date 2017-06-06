@@ -1,0 +1,168 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+
+<ui:param name="pageTitle" value="Cadastro de Especialidades" />
+<ui:define name="body">
+
+    <h:form id="especialidadeIstituicao" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{especialidadeIstituicaoHome.managed ? 'Editar' : 'Adicionar'} Especialidade da Institui&#231;&#227;o</f:facet>
+
+            <s:decorate id="descEspecialidadeField" template="/layout/edit.xhtml">
+                <ui:define name="label">Descri&#231;&#227;o</ui:define>
+                <h:inputTextarea id="descEspecialidade"
+                               cols="80"
+                               rows="2"
+                           required="true"
+                              value="#{especialidadeIstituicaoHome.instance.descEspecialidade}"/>
+            </s:decorate>
+
+
+            <s:decorate id="localEspecialidadeField" template="/layout/edit.xhtml">
+                <ui:define name="label">Local</ui:define>
+                <h:inputText id="localEspecialidade"
+                       required="true"
+                           size="100"
+                      maxlength="100"
+                          value="#{especialidadeIstituicaoHome.instance.localEspecialidade}">
+                    <a:support event="onblur" reRender="localEspecialidadeField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="salaEspecialidadeField" template="/layout/edit.xhtml">
+                <ui:define name="label">Sala</ui:define>
+                <h:inputText id="salaEspecialidade"
+                           size="100"
+                      maxlength="100"
+                          value="#{especialidadeIstituicaoHome.instance.salaEspecialidade}">
+                    <a:support event="onblur" reRender="salaEspecialidadeField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="instituicaoField" template="/layout/edit.xhtml">
+      				<ui:define name="label">Institui&#231;&#227;o</ui:define>
+      				<h:selectOneMenu value="#{especialidadeIstituicaoHome.instance.instituicao}">
+						<s:selectItems value="#{instituicaoList.selectList}"
+							var="_instituicao" label="#{_instituicao.nmInstituicao}"
+							noSelectionLabel="Selecione">
+						</s:selectItems>
+						<s:convertEntity />
+						<a:support event="onchange" reRender="save" ajaxSingle="true" />
+					</h:selectOneMenu>
+      			</s:decorate>
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                Campos Obrigat&#243;rios
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Salvar"
+                         action="#{especialidadeIstituicaoHome.persist}"
+                       disabled="#{!especialidadeIstituicaoHome.wired}"
+                       rendered="#{!especialidadeIstituicaoHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Atualizar"
+                         action="#{especialidadeIstituicaoHome.update}"
+                       rendered="#{especialidadeIstituicaoHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Excluir"
+                         action="#{especialidadeIstituicaoHome.remove}"
+                      immediate="true"
+                       rendered="#{especialidadeIstituicaoHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancelar"
+             propagation="end"
+                    view="/protected/EspecialidadeIstituicao.xhtml"
+                rendered="#{especialidadeIstituicaoHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancelar"
+             propagation="end"
+                    view="/protected/#{empty especialidadeIstituicaoFrom ? 'EspecialidadeIstituicaoList' : especialidadeIstituicaoFrom}.xhtml"
+                rendered="#{!especialidadeIstituicaoHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    
+    <rich:tab label="Exames">
+        <h:form styleClass="association" id="examesChildren">
+
+            <h:outputText value="N&#227;o h&#225; exames associados a esta Especialidade Istituicao."
+                       rendered="#{empty especialidadeIstituicaoHome.exames}"/>
+
+            <rich:dataTable value="#{especialidadeIstituicaoHome.exames}"
+                           var="_exame"
+                      rendered="#{not empty especialidadeIstituicaoHome.exames}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="examesTable">
+                <rich:column sortBy="#{_exame.dtExame}">
+                    <f:facet name="header">Data do exame</f:facet>
+                    <h:outputText value="#{_exame.dtExame}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_exame.serie}">
+                    <f:facet name="header">S&#233;rie do Exame </f:facet>
+                    <h:outputText value="#{_exame.serie}"/>
+                </rich:column>
+                <rich:column sortBy="#{_exame.dtEstudo}">
+                    <f:facet name="header">Data do estudo</f:facet>
+                    <h:outputText value="#{_exame.dtEstudo}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_exame.descEstudo}">
+                    <f:facet name="header">Descri&#231;&#227;o do estudo</f:facet>
+                    <h:outputText value="#{_exame.descEstudo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_exame.motivoExame}">
+                    <f:facet name="header">Motivo do exame</f:facet>
+                    <h:outputText value="#{_exame.motivoExame}"/>
+                </rich:column>
+                <rich:column sortBy="#{_exame.procedenciaPaciente}">
+                    <f:facet name="header">Proced&#234;ncia do paciente</f:facet>
+                    <h:outputText value="#{_exame.procedenciaPaciente}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{especialidadeIstituicaoHome.managed}" id="exames">
+        <div class="actionButtons">
+            <s:button id="addexame"
+                   value="Adicionar Exame"
+                    view="/protected/ExameEdit.xhtml"
+             propagation="none">
+                 <f:param name="especialidadeIstituicaoIdEspecialidadeIstituicao"
+                         value="#{especialidadeIstituicaoHome.instance.idEspecialidadeIstituicao}"/>
+                 <f:param name="exameFrom" value="EspecialidadeIstituicao"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

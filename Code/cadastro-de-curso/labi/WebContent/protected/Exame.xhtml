@@ -1,0 +1,419 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+
+<ui:param name="pageTitle" value="Detalhes do Exame" />
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Detalhes Exame</f:facet>
+
+        <s:decorate id="paciente" template="/layout/display.xhtml">
+            <ui:define name="label">Paciente</ui:define>
+            <h:outputText value="#{exameHome.instance.paciente}"/>
+        </s:decorate>
+    
+        <s:decorate id="profissional" template="/layout/display.xhtml">
+            <ui:define name="label">M&#233;dico</ui:define>
+            <h:outputText value="#{exameHome.instance.profissional}"/>
+        </s:decorate>
+
+        <s:decorate id="marcaEquipamento" template="/layout/display.xhtml">
+            <ui:define name="label">Marca do equipamento</ui:define>
+            <h:outputText value="#{exameHome.marcaEquipamentoAux}"/>
+        </s:decorate>
+
+        <s:decorate id="modeloEquipamento" template="/layout/display.xhtml">
+            <ui:define name="label">Modelo do equipamento</ui:define>
+            <h:outputText value="#{exameHome.marcaEquipamentoAux.modeloEquipamentos}"/>
+        </s:decorate>
+
+        <s:decorate id="equipamento" template="/layout/display.xhtml">
+            <ui:define name="label">Local do exame</ui:define>
+            <h:outputText value="#{exameHome.instance.equipamento}"/>
+        </s:decorate>
+
+        <s:decorate id="tipoExame" template="/layout/display.xhtml">
+            <ui:define name="label">Tipo do exame</ui:define>
+            <h:outputText value="#{exameHome.instance.tipoExame}"/>
+        </s:decorate>
+
+        <s:decorate id="dtExame" template="/layout/display.xhtml">
+            <ui:define name="label">Data do exame</ui:define>
+            <h:outputText value="#{exameHome.instance.dtExame}" datePattern="dd/MM/yyyy"> <!-- HH:mm -->
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </s:decorate>
+
+        <s:decorate id="convenio" template="/layout/display.xhtml">
+            <ui:define name="label">Conv&#234;nio</ui:define>
+            <h:outputText value="#{exameHome.instance.convenio}"/>
+        </s:decorate>
+
+        <s:decorate id="motivoExame" template="/layout/display.xhtml">
+            <ui:define name="label">Motivo do exame</ui:define>
+            <h:outputText value="#{exameHome.instance.motivoExame}"/>
+        </s:decorate>
+
+        <s:decorate id="observacoesExame" template="/layout/display.xhtml">
+            <ui:define name="label">Observa&#231;&#245;es</ui:define>
+            <h:outputText value="#{exameHome.instance.observacoesExame}"/>
+        </s:decorate>
+                
+        <s:decorate id="procedenciaPaciente" template="/layout/display.xhtml">
+            <ui:define name="label">Encaminhado por</ui:define>
+            <h:outputText value="#{exameHome.instance.procedenciaPaciente}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+    
+
+    <div class="actionButtons">
+
+        <s:button view="/protected/ExameEdit.xhtml"
+                    id="edit"
+                 value="Editar"/>
+
+        <s:button view="/protected/#{empty exameFrom ? 'ExameList' : exameFrom}.xhtml"
+                    id="done"
+                 value="Voltar"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Tipo do Exame</h:panelGroup>
+        </f:facet>
+    <div class="association" id="tipoExameParent">
+
+        <h:outputText value="N&#227;o h&#225; tipoExame associado a este exame."
+                   rendered="#{exameHome.instance.tipoExame == null}"/>
+
+        <rich:dataTable var="_tipoExame"
+                   value="#{exameHome.instance.tipoExame}"
+                rendered="#{exameHome.instance.tipoExame != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="tipoExameTable">
+            <h:column>
+                <f:facet name="header">Descri&#231;&#227;o do tipo exame</f:facet>
+                <h:outputText value="#{_tipoExame.descTipoExame}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">A&#231;&#227;o</f:facet>
+                <s:link id="viewtipoExame"
+                     value="Visualizar"
+                      view="/protected/TipoExame.xhtml">
+                    <f:param name="tipoExameIdTipoExame"
+                           value="#{_tipoExame.idTipoExame}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Paciente</h:panelGroup>
+        </f:facet>
+    <div class="association" id="pacienteParent">
+
+        <h:outputText value="N&#227;o h&#225; paciente associados a este exame."
+                   rendered="#{exameHome.instance.paciente == null}"/>
+
+        <rich:dataTable var="_paciente"
+                   value="#{exameHome.instance.paciente}"
+                rendered="#{exameHome.instance.paciente != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="pacienteTable">
+            <h:column>
+                <f:facet name="header">Nome do Paciente</f:facet>
+                <h:outputText value="#{_paciente.nome}"/>
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">CPF</f:facet>
+                <h:outputText value="#{_paciente.cpf}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">RG</f:facet>
+                <h:outputText value="#{_paciente.rg}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">A&#231;&#227;o</f:facet>
+                <s:link id="viewpaciente"
+                     value="Visualizar"
+                      view="/protected/Paciente.xhtml">
+                    <f:param name="pacienteIdPaciente"
+                           value="#{_paciente.idPaciente}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Equipamento</h:panelGroup>
+        </f:facet>
+    <div class="association" id="equipamentoParent">
+
+        <h:outputText value="N&#227;o h&#225; equipamento associados a este exame."
+                   rendered="#{exameHome.instance.equipamento == null}"/>
+
+        <rich:dataTable var="_equipamento"
+                   value="#{exameHome.instance.equipamento}"
+                rendered="#{exameHome.instance.equipamento != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="equipamentoTable">                      
+            <h:column>
+                <f:facet name="header">Nome do Equipamento</f:facet>
+                <h:outputText value="#{_equipamento.nmEquipamento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Descri&#231;&#227;o do equipamento</f:facet>
+                <h:outputText value="#{_equipamento.descEquipamento}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">A&#231;&#227;o</f:facet>
+                <s:link id="viewequipamento"
+                     value="Visualizar"
+                      view="/protected/Equipamento.xhtml">
+                    <f:param name="equipamentoIdEquipamento"
+                           value="#{_equipamento.idEquipamento}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Conv&#234;nio</h:panelGroup>
+        </f:facet>
+    <div class="association" id="convenioParent">
+
+        <h:outputText value="N&#227;o h&#225; Conv&#234;nios associados a este exame."
+                   rendered="#{exameHome.instance.convenio == null}"/>
+
+        <rich:dataTable var="_convenio"
+                   value="#{exameHome.instance.convenio}"
+                rendered="#{exameHome.instance.convenio != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="convenioTable">
+            <h:column>
+                <f:facet name="header">Descri&#231;&#227;o do Conv&#234;nio</f:facet>
+                <h:outputText value="#{_convenio.descConvenio}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">A&#231;&#227;o</f:facet>
+                <s:link id="viewconvenio"
+                     value="Visualizar"
+                      view="/protected/Convenio.xhtml">
+                    <f:param name="convenioIdConvenio"
+                           value="#{_convenio.idConvenio}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Profissional</h:panelGroup>
+        </f:facet>
+    <div class="association" id="profissionalParent">
+
+        <h:outputText value="N&#227;o h&#225; profissional associados a este exame."
+                   rendered="#{exameHome.instance.profissional == null}"/>
+
+        <rich:dataTable var="_profissional"
+                   value="#{exameHome.instance.profissional}"
+                rendered="#{exameHome.instance.profissional != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="profissionalTable">
+            <h:column>
+                <f:facet name="header">Nome</f:facet>
+                <h:outputText value="#{_profissional.nome}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Identifica&#231;&#227;o</f:facet>
+                <h:outputText value="#{_profissional.identificacao}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">CPF</f:facet>
+                <h:outputText value="#{_profissional.cpf}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">RG</f:facet>
+                <h:outputText value="#{_profissional.rg}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">CRM</f:facet>
+                <h:outputText value="#{_profissional.crm}"/>
+            </h:column>                     
+            <h:column styleClass="action">
+                <f:facet name="header">A&#231;&#227;o</f:facet>
+                <s:link id="viewprofissional"
+                     value="Visualizar"
+                      view="/protected/Profissional.xhtml">
+                    <f:param name="profissionalIdProfissional"
+                           value="#{_profissional.idProfissional}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>V&#237;deos</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="videosChildren">
+
+        <h:outputText value="N&#227;o h&#225; V&#237;deos associados a este exame."
+                   rendered="#{empty exameHome.videos}"/>
+
+        <rich:dataTable value="#{exameHome.videos}"
+                       var="_video"
+                  rendered="#{not empty exameHome.videos}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="videosTable">
+            <rich:column sortBy="#{_video.nmVideo}">
+                <f:facet name="header">Nome do V&#237;deo</f:facet>
+                <h:outputText value="#{_video.nmVideo}"/>
+            </rich:column>
+            <rich:column sortBy="#{_video.dtVideo}">
+                <f:facet name="header">Data do V&#237;deos</f:facet>
+                <h:outputText value="#{_video.dtVideo}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_video.size}">
+                <f:facet name="header">Tamanho do V&#237;deo</f:facet>
+                <h:outputText value="#{_video.size}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">A&#231;&#227;o</f:facet>
+                <s:download src="C:\Programas\Base_Exames\#{_paciente.id}#{_paciente.nome}\videos\#{_video.nmVideo}">
+                     <h:outputText value="Download"/>
+                </s:download>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Imagems</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="imagemsChildren">
+
+        <h:outputText value="N&#227;o h&#225; imagens associadas a este exame."
+                   rendered="#{empty exameHome.imagems}"/>
+
+        <rich:dataTable value="#{exameHome.imagems}"
+                       var="_imagem"
+                  rendered="#{not empty exameHome.imagems}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="imagemsTable">
+            <rich:column sortBy="#{_imagem.nmImagem}">
+                <f:facet name="header">Nome da Imagem</f:facet>
+                <h:outputText value="#{_imagem.nmImagem}"/>
+            </rich:column>
+            <rich:column sortBy="#{_imagem.dtImagem}">
+                <f:facet name="header">Data da imagem</f:facet>
+                <h:outputText value="#{_imagem.dtImagem}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_imagem.size}">
+                <f:facet name="header">Tamanho da Imagem</f:facet>
+                <h:outputText value="#{_imagem.size}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">A&#231;&#227;o</f:facet>
+                <s:download src="C:\Programas\Base_Exames\#{_paciente.nome}#{_paciente.id}\imagens\#{_imagem.nmImagem}">
+                     <h:outputText value="Download"/>
+                </s:download>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Laudos</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="laudosChildren">
+
+        <h:outputText value="N&#227;o h&#225; laudos associados a este exame."
+                   rendered="#{empty exameHome.laudos}"/>
+
+        <rich:dataTable value="#{exameHome.laudos}"
+                       var="_laudo"
+                  rendered="#{not empty exameHome.laudos}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="laudosTable">
+            <rich:column sortBy="#{_laudo.resultado}">
+                <f:facet name="header">Resultado</f:facet>
+                <h:outputText value="#{_laudo.resultado}"/>
+            </rich:column>
+            <rich:column sortBy="#{_laudo.dtLaudo}">
+                <f:facet name="header">Data do Laudo</f:facet>
+                <h:outputText value="#{_laudo.dtLaudo}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_laudo.indicacao}">
+                <f:facet name="header">Indica&#231;&#227;o</f:facet>
+                <h:outputText value="#{_laudo.indicacao}"/>
+            </rich:column>
+            <rich:column sortBy="#{_laudo.nmArquivo}">
+                <f:facet name="header">Nome do Arquivo</f:facet>
+                <h:outputText value="#{_laudo.nmArquivo}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">A&#231;&#227;o</f:facet>
+                <s:download src="C:\Programas\Base_Exames\#{_paciente.nome}#{_paciente.id}\laudos\#{_laudo.nmArquivo}">
+                     <h:outputText value="Download"/>
+                </s:download>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Adicionar Laudo"
+               style="width:100px;"
+                view="/protected/LaudoEdit.xhtml">
+            <f:param name="exameIdExame"
+                    value="#{exameHome.instance.idExame}"/>
+            <f:param name="laudoFrom" value="Exame"/>
+        </s:button>
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

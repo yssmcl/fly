@@ -1,0 +1,440 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+
+<ui:param name="pageTitle" value="Cadastro de Profissionais" />
+<ui:define name="body">
+
+    <h1 class="title">Cadastro de Profissionais</h1>
+	<h:panelGroup id="messagesArea">
+        <h:messages globalOnly="true" styleClass="message" id="globalMessages"/>
+    </h:panelGroup>
+    
+    <h:form id="profissional" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{profissionalHome.managed ? 'Editar' : 'Adicionar'} Profissional</f:facet>
+
+            <s:decorate id="nomeField" template="/layout/edit.xhtml">
+                <ui:define name="label">Nome</ui:define>
+                <h:inputText id="nome"
+                       required="true"
+                           size="50"
+                      maxlength="150"
+                          value="#{profissionalHome.instance.nome}">
+                    <a:support event="onblur" reRender="nomeField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+			<s:decorate id="crmField" template="/layout/edit.xhtml">
+                <ui:define name="label">CRM</ui:define>
+                <h:inputText id="crm"
+                	   required= "true"
+                           size="50"
+                      maxlength="100"
+                          value="#{profissionalHome.instance.crm}">
+                    <a:support event="onblur" reRender="crmField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="cpfField" template="/layout/edit.xhtml">
+                <ui:define name="label">CPF</ui:define>
+                <h:inputText
+                	id="cpf"
+                    required="true"
+                    size="15"
+                    maxlength="15"
+                    value="#{profissionalHome.instance.cpf}"
+                    >
+                                                
+                    <a:support event="onblur" reRender="cpfField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+                <h:outputText value=" (Somente N&#250;meros)"/>
+            </s:decorate>
+
+
+            <s:decorate id="rgField" template="/layout/edit.xhtml">
+                <ui:define name="label">RG</ui:define>
+                <h:inputText id="rg"
+                       required="true"
+                           size="12"
+                      maxlength="12"
+                          value="#{profissionalHome.instance.rg}">
+                    <a:support event="onblur" reRender="rgField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="dtNascimentoField" template="/layout/edit.xhtml">
+                <ui:define name="label">Data de Nascimento</ui:define>
+                <rich:calendar id="dtNascimento"
+                       required="true"
+                          value="#{profissionalHome.instance.dtNascimento}" datePattern="dd/MM/yyyy"/>
+            </s:decorate>
+            
+            <s:decorate id="sexoField" template="/layout/edit.xhtml">
+            <ui:define name="label">Sexo</ui:define>
+	            <h:selectOneRadio value="#{profissionalHome.instance.sexo}" required="true">
+					<s:selectItems value="#{profissionalHome.sexos}" var="sexo" label="#{sexo.nmSexo}" />
+					<s:convertEnum />
+				</h:selectOneRadio>
+			</s:decorate>
+
+
+            <s:decorate id="telefoneField" template="/layout/edit.xhtml">
+                <ui:define name="label">Telefone</ui:define>
+                <h:inputText id="telefone"
+                           size="30"
+                      maxlength="30"
+                          value="#{profissionalHome.instance.telefone}">
+                    <a:support event="onblur" reRender="telefoneField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="celularField" template="/layout/edit.xhtml">
+                <ui:define name="label">Celular</ui:define>
+                <h:inputText id="celular"
+                           size="30"
+                      maxlength="30"
+                          value="#{profissionalHome.instance.celular}">
+                    <a:support event="onblur" reRender="celularField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="emailField" template="/layout/edit.xhtml">
+                <ui:define name="label">Email</ui:define>
+                <h:inputText id="email"
+                           size="50"
+                      maxlength="100"
+                          value="#{profissionalHome.instance.email}">
+                    <a:support event="onblur" reRender="emailField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="loginField" template="/layout/edit.xhtml">
+                <ui:define name="label">Login</ui:define>
+                <h:inputText id="login"
+                       required="true"
+                           size="50"
+                      maxlength="80"
+                          value="#{profissionalHome.instance.login}">
+                    <a:support event="onblur" reRender="loginField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="senhaField" template="/layout/edit.xhtml">
+                <ui:define name="label">Senha</ui:define>
+                <h:inputSecret id="senha"
+                			size="50"
+                			maxlength="250"
+                           required="#{!profissionalHome.managed}"
+                              value="#{profissionalHome.password}">
+               		<a:support event="onblur" reRender="messagesArea,save,update" ajaxSingle="true"/>
+               </h:inputSecret>
+            </s:decorate>
+            
+            <s:decorate id="verificaSenhaField" template="/layout/edit.xhtml">
+                <ui:define name="label">Confirmar Senha</ui:define>
+                <h:inputSecret id="verificaSenha"
+                			size="50"
+                			maxlength="250"
+                           required="#{!profissionalHome.managed}"
+                              value="#{profissionalHome.verifyP}"
+                              validator="#{profissionalHome.verifyPassword}">
+               		<a:support event="onblur" reRender="messagesArea,save,update" ajaxSingle="true"/>
+               </h:inputSecret>
+            </s:decorate>
+
+
+            <s:decorate id="ruaField" template="/layout/edit.xhtml">
+                <ui:define name="label">Rua</ui:define>
+                <h:inputText id="rua"
+                       required="true"
+                           size="50"
+                      maxlength="100"
+                          value="#{profissionalHome.instance.rua}">
+                    <a:support event="onblur" reRender="ruaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="numeroField" template="/layout/edit.xhtml">
+                <ui:define name="label">N&#250;mero</ui:define>
+                <h:inputText id="numero"
+                       required="true"
+                          value="#{profissionalHome.instance.numero}">
+                    <a:support event="onblur" reRender="numeroField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="bairroField" template="/layout/edit.xhtml">
+                <ui:define name="label">Bairro</ui:define>
+                <h:inputText id="bairro"
+                       required="true"
+                           size="50"
+                      maxlength="100"
+                          value="#{profissionalHome.instance.bairro}">
+                    <a:support event="onblur" reRender="bairroField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="complementoField" template="/layout/edit.xhtml">
+                <ui:define name="label">Complemento</ui:define>
+                <h:inputText id="complemento"
+                           size="50"
+                      maxlength="100"
+                          value="#{profissionalHome.instance.complemento}">
+                    <a:support event="onblur" reRender="complementoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <s:decorate id="cepField" template="/layout/edit.xhtml">
+                <ui:define name="label">CEP</ui:define>
+                <h:inputText id="cep"
+                       required="true"
+                           size="12"
+                      maxlength="12"
+                          value="#{profissionalHome.instance.cep}">
+                    <a:support event="onblur" reRender="cepField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+	   		<s:decorate id="paisField" template="/layout/edit.xhtml">
+	               <ui:define name="label">Pa&#237;s</ui:define>
+	               <h:inputText id="searchPais" required="true" size="20" value="#{profissionalHome.nmPaisAux}"/>
+	               <rich:suggestionbox height="100" width="200" for="searchPais"
+	               suggestionAction="#{profissionalHome.obterListaPais}" var="_pais"
+	               fetchValue="#{_pais.sgPais} - #{_pais.nmPais}">
+	                   <h:column>
+	                       <h:outputText value="#{_pais.nmPais}"/>
+	                   </h:column>
+	                   <a:support event="onselect" action="#{profissionalHome.addPais(_pais)}" reRender="estadoField,cidadeField" ajaxSingle="true" />
+	               </rich:suggestionbox>
+	           </s:decorate>
+	
+	          <s:decorate id="estadoField" template="/layout/edit.xhtml">
+	          <ui:define name="label">Estado</ui:define>     
+	          	<h:inputText id="searchEstado" required="true" value="#{profissionalHome.nmEstadoAux}" disabled="#{!profissionalHome.paisAdicionado}"  size="20" />
+	          	<rich:suggestionbox height="100" width="200" for="searchEstado"
+	               suggestionAction="#{profissionalHome.obterListaEstado}" var="_cidade"
+	               fetchValue="#{_cidade.uf} - #{_cidade.nmEstado}">
+	                   <h:column>
+	                       <h:outputText value="#{_cidade.nmEstado}"/>
+	                   </h:column>
+	                   <a:support event="onselect" action="#{profissionalHome.addEstado(_cidade)}" reRender="cidadeField" ajaxSingle="true"/>
+	               </rich:suggestionbox>
+	          </s:decorate>
+	          
+	          <s:decorate id="cidadeField" template="/layout/edit.xhtml">
+	          <ui:define name="label">Cidade</ui:define>     
+	          	<h:inputText id="searchCidade" required="true" value="#{profissionalHome.nmCidadeAux}" disabled="#{!profissionalHome.estadoAdicionado}"  size="20" />
+	          	<rich:suggestionbox height="100" width="200" for="searchCidade"
+	               suggestionAction="#{profissionalHome.obterListaCidade}" var="_cidade"
+	               fetchValue="#{_cidade.nmCidade}">
+	                   <h:column>
+	                       <h:outputText value="#{_cidade.nmCidade}"/>
+	                   </h:column>
+	                   <a:support event="onselect" action="#{profissionalHome.addCidade(_cidade)}" reRender="save" ajaxSingle="true"/>
+	             </rich:suggestionbox>
+      			</s:decorate>
+      			
+      			<s:decorate id="vinculoField" template="/layout/edit.xhtml">
+      				<ui:define name="label">Especialidade</ui:define>
+      				<h:selectOneMenu value="#{profissionalHome.instance.vinculo}" required="true">
+						<s:selectItems value="#{vinculoList.selectList}"
+							var="_vinculo" label="#{_vinculo.descVinculo}"
+							noSelectionLabel="Selecione">
+						</s:selectItems>
+						<s:convertEntity />
+						<a:support event="onchange" reRender="save" ajaxSingle="true" />
+					</h:selectOneMenu>
+      			</s:decorate>
+
+           
+			
+            <div style="clear:both">
+                <span class="required">*</span>
+                <h:outputText value="Campos Obrigat&#243;rios"/>
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Salvar"
+                          style="width:100px;"
+                         action="#{profissionalHome.persist}"
+                         disabled="#{!profissionalHome.wired}"
+                       rendered="#{!profissionalHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Atualizar"
+                          style="width:100px;"
+                          propagation="end"
+                         action="#{profissionalHome.update}"
+                         disabled="#{!profissionalHome.wired}"
+                        view="/protected/Profissional.xhtml" 
+                       rendered="#{profissionalHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Excluir"
+                          style="width:100px;"
+                         action="#{profissionalHome.remove}"
+                      immediate="true"
+                       rendered="#{profissionalHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancelar"
+                   style="width:100px;"
+             propagation="end"
+                    view="/protected/Profissional.xhtml"
+                rendered="#{profissionalHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancelar"
+                   style="width:100px;"
+             propagation="end"
+                    view="/protected/#{empty profissionalFrom ? 'ProfissionalList' : profissionalFrom}.xhtml"
+                rendered="#{!profissionalHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<!-- <rich:tabPanel switchType="ajax">
+
+
+    <rich:tab label="Laudos">
+        <h:form styleClass="association" id="laudosChildren">
+
+            <h:outputText value="N&#227;o h&#225; Laudos associados a este Profissional."
+                       rendered="#{empty profissionalHome.laudos}"/>
+
+            <rich:dataTable value="#{profissionalHome.laudos}"
+                           var="_laudo"
+                      rendered="#{not empty profissionalHome.laudos}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="laudosTable">
+                <rich:column sortBy="#{_laudo.resultado}">
+                    <f:facet name="header">Resultado</f:facet>
+                    <h:outputText value="#{_laudo.resultado}"/>
+                </rich:column>
+                <rich:column sortBy="#{_laudo.observacao}">
+                    <f:facet name="header">Observa&#231;&#227;o</f:facet>
+                    <h:outputText value="#{_laudo.observacao}"/>
+                </rich:column>
+                <rich:column sortBy="#{_laudo.dtLaudo}">
+                    <f:facet name="header">Data laudo</f:facet>
+                    <h:outputText value="#{_laudo.dtLaudo}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_laudo.indicacao}">
+                    <f:facet name="header">Indica&#231;&#227;o</f:facet>
+                    <h:outputText value="#{_laudo.indicacao}"/>
+                </rich:column>
+                <rich:column sortBy="#{_laudo.nmArquivo}">
+                    <f:facet name="header">Nome arquivo</f:facet>
+                    <h:outputText value="#{_laudo.nmArquivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_laudo.diretorioArquivo}">
+                    <f:facet name="header">Diret&#243;rio arquivo</f:facet>
+                    <h:outputText value="#{_laudo.diretorioArquivo}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{profissionalHome.managed}" id="laudos">
+        <div class="actionButtons">
+            <s:button id="addlaudo"
+                   value="Adicionar Laudo"
+                    view="/protected/LaudoEdit.xhtml"
+             propagation="none">
+                 <f:param name="profissionalIdProfissional"
+                         value="#{profissionalHome.instance.idProfissional}"/>
+                 <f:param name="laudoFrom" value="Profissional"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Exames">
+        <h:form styleClass="association" id="examesChildren">
+
+            <h:outputText value="N&#227;o h&#225; Exames associados a este Profissional."
+                       rendered="#{empty profissionalHome.exames}"/>
+
+            <rich:dataTable value="#{profissionalHome.exames}"
+                           var="_exame"
+                      rendered="#{not empty profissionalHome.exames}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="examesTable">
+                 <rich:column sortBy="#{_exame.dtExame}">
+                <f:facet name="header">Paciente</f:facet>
+                <h:outputText value="#{_exame.paciente.nome}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            
+            <rich:column sortBy="#{_exame.dtExame}">
+                <f:facet name="header">Data do exame</f:facet>
+                <h:outputText value="#{_exame.dtExame}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_exame.serie}">
+                <f:facet name="header">S&#233;rie</f:facet>
+                <h:outputText value="#{_exame.serie}"/>
+            </rich:column>
+            <rich:column sortBy="#{_exame.dtEstudo}">
+                <f:facet name="header">Data do estudo</f:facet>
+                <h:outputText value="#{_exame.dtEstudo}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </rich:column>
+            <rich:column sortBy="#{_exame.descEstudo}">
+                <f:facet name="header">Descri&#231;&#227;o do estudo</f:facet>
+                <h:outputText value="#{_exame.descEstudo}"/>
+            </rich:column>
+            <rich:column sortBy="#{_exame.motivoExame}">
+                <f:facet name="header">Motivo do exame</f:facet>
+                <h:outputText value="#{_exame.motivoExame}"/>
+            </rich:column>
+            <rich:column sortBy="#{_exame.procedenciaPaciente}">
+                <f:facet name="header">Proced&#234;ncia do paciente</f:facet>
+                <h:outputText value="#{_exame.procedenciaPaciente}"/>
+            </rich:column>            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{profissionalHome.managed}" id="exames">
+        <div class="actionButtons">
+            <s:button id="addexame"
+                   value="Adicionar Exame"
+                    view="/protected/ExameEdit.xhtml"
+             propagation="none">
+                 <f:param name="profissionalIdProfissional"
+                         value="#{profissionalHome.instance.idProfissional}"/>
+                 <f:param name="exameFrom" value="Profissional"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel> -->
+</ui:define>
+
+</ui:composition>

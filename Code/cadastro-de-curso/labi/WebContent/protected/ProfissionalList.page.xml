@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd">
+
+   <param name="firstResult" value="#{profissionalList.firstResult}"/>
+   <param name="sort" value="#{profissionalList.orderColumn}"/>
+   <param name="dir" value="#{profissionalList.orderDirection}"/>
+   <param name="logic" value="#{profissionalList.restrictionLogicOperator}"/>
+
+   <param name="from"/>
+   <param name="nome" value="#{profissionalList.profissional.nome}"/>
+   <param name="cpf" value="#{profissionalList.profissional.cpf}"/>
+   <param name="rg" value="#{profissionalList.profissional.rg}"/>
+   <param name="telefone" value="#{profissionalList.profissional.telefone}"/>
+   <param name="celular" value="#{profissionalList.profissional.celular}"/>
+   <param name="email" value="#{profissionalList.profissional.email}"/>
+   <param name="crm" value="#{profissionalList.profissional.crm}"/>
+   <param name="login" value="#{profissionalList.profissional.login}"/>
+   <param name="senha" value="#{profissionalList.profissional.senha}"/>
+   <param name="bairro" value="#{profissionalList.profissional.bairro}"/>
+   <param name="rua" value="#{profissionalList.profissional.rua}"/>
+   <param name="complemento" value="#{profissionalList.profissional.complemento}"/>
+   <param name="cep" value="#{profissionalList.profissional.cep}"/>
+
+</page>

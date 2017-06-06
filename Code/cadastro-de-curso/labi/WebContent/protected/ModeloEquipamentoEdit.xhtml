@@ -1,0 +1,147 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+    
+<ui:param name="pageTitle" value="Cadastro de Modelos de Equipamentos Hospitalares" />    
+
+<ui:define name="body">
+
+    <h:form id="modeloEquipamento" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{modeloEquipamentoHome.managed ? 'Editar' : 'Adicionar'} Modelo de Equipamento Hospitalar</f:facet>
+
+
+
+
+            <s:decorate id="descModeloEquipamentoField" template="/layout/edit.xhtml">
+                <ui:define name="label">Descri&#231;&#227;o do Modelo</ui:define>
+                <h:inputTextarea id="descModeloEquipamento"
+                               cols="80"
+                               rows="2"
+                           required="true"
+                              value="#{modeloEquipamentoHome.instance.descModeloEquipamento}"/>
+            </s:decorate>
+            
+            <s:decorate id="marcaEquipamentoField" template="/layout/edit.xhtml">
+   				<ui:define name="label">Marca do Equipamento</ui:define>
+   				<h:selectOneMenu value="#{modeloEquipamentoHome.instance.marcaEquipamento}">
+				<s:selectItems value="#{marcaEquipamentoList.selectList}"
+						var="_marcaEquipamento" label="#{_marcaEquipamento.descMarcaEquipamento}"
+						noSelectionLabel="Selecione">
+					</s:selectItems>
+					<s:convertEntity />
+					<a:support event="onchange" reRender="save" ajaxSingle="true" />
+				</h:selectOneMenu>
+  			</s:decorate>
+
+            <s:decorate id="nmManualField" template="/layout/edit.xhtml">
+                <ui:define name="label">Nome do Manual</ui:define>
+                <h:inputText id="nmManual"
+                           size="100"
+                      maxlength="100"
+                          value="#{modeloEquipamentoHome.instance.nmManual}">
+                    <a:support event="onblur" reRender="nmManualField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="diretorioManualField" template="/layout/edit.xhtml">
+                <ui:define name="label">Local onde est&#225; armazenado o manual</ui:define>
+                <h:inputTextarea id="diretorioManual"
+                               cols="80"
+                               rows="3"
+                              value="#{modeloEquipamentoHome.instance.diretorioManual}"/>
+            </s:decorate>
+            
+            
+            <div style="clear:both">
+                <span class="required">*</span>
+                <h:outputText value="Campos obrigat&#243;rios"/>
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Salvar"
+                         action="#{modeloEquipamentoHome.persist}"
+                       disabled="#{!modeloEquipamentoHome.wired}"
+                       rendered="#{!modeloEquipamentoHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Atualizar"
+                         action="#{modeloEquipamentoHome.update}"
+                       rendered="#{modeloEquipamentoHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Excluir"
+                         action="#{modeloEquipamentoHome.remove}"
+                      immediate="true"
+                       rendered="#{modeloEquipamentoHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancelar"
+             propagation="end"
+                    view="/protected/ModeloEquipamento.xhtml"
+                rendered="#{modeloEquipamentoHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancelar"
+             propagation="end"
+                    view="/protected/#{empty modeloEquipamentoFrom ? 'ModeloEquipamentoList' : modeloEquipamentoFrom}.xhtml"
+                rendered="#{!modeloEquipamentoHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Equipamentos">
+        <h:form styleClass="association" id="equipamentosChildren">
+
+            <h:outputText value="N&#227;o h&#225; equipamentos associados a este modelo."
+                       rendered="#{empty modeloEquipamentoHome.equipamentos}"/>
+
+            <rich:dataTable value="#{modeloEquipamentoHome.equipamentos}"
+                           var="_equipamento"
+                      rendered="#{not empty modeloEquipamentoHome.equipamentos}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="equipamentosTable">
+                <rich:column sortBy="#{_equipamento.nmEquipamento}">
+                    <f:facet name="header">Nome do Equipamento Hospitalar</f:facet>
+                    <h:outputText value="#{_equipamento.nmEquipamento}"/>
+                </rich:column>
+                <rich:column sortBy="#{_equipamento.descEquipamento}">
+                    <f:facet name="header">Descri&#231;&#227;o do Equipamento</f:facet>
+                    <h:outputText value="#{_equipamento.descEquipamento}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{modeloEquipamentoHome.managed}" id="equipamentos">
+        <div class="actionButtons">
+            <s:button id="addequipamento"
+                   value="Adicionar Novo Equipamento Hospitalar"
+                    view="/protected/EquipamentoEdit.xhtml"
+             propagation="none">
+                 <f:param name="modeloEquipamentoIdModeloEquipamento"
+                         value="#{modeloEquipamentoHome.instance.idModeloEquipamento}"/>
+                 <f:param name="equipamentoFrom" value="ModeloEquipamento"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

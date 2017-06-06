@@ -1,0 +1,116 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+    
+<ui:param name="pageTitle" value="Cadastro de Cidades" />
+<ui:define name="body">
+
+    <h:form id="cidade" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{cidadeHome.managed ? 'Editar' : 'Adicionar'} Cidade</f:facet>
+
+
+
+
+            <s:decorate id="nmCidadeField" template="/layout/edit.xhtml">
+                <ui:define name="label">Nome da Cidade</ui:define>
+                <h:inputText id="nmCidade"
+                       required="true"
+                           size="100"
+                      maxlength="100"
+                          value="#{cidadeHome.instance.nmCidade}">
+                    <a:support event="onblur" reRender="nmCidadeField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="ufField" template="/layout/edit.xhtml">
+                <ui:define name="label">UF</ui:define>
+                <h:inputText id="uf"
+                       required="true"
+                           size="5"
+                      maxlength="5"
+                          value="#{cidadeHome.instance.uf}">
+                    <a:support event="onblur" reRender="ufField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="nmEstadoField" template="/layout/edit.xhtml">
+                <ui:define name="label">Estado</ui:define>
+                <h:inputText id="nmEstado"
+                       required="true"
+                           size="25"
+                      maxlength="25"
+                          value="#{cidadeHome.instance.nmEstado}">
+                    <a:support event="onblur" reRender="nmEstadoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="paisField" template="/layout/edit.xhtml">
+	               <ui:define name="label">Pa&#237;s</ui:define>
+	               <h:inputText id="searchPais" size="20" value="#{cidadeHome.nmPaisAux}"/>
+	               <rich:suggestionbox height="100" width="200" for="searchPais"
+	               suggestionAction="#{paisList.getSuggestionList}" var="_pais"
+	               fetchValue="#{_pais.sgPais} - #{_pais.nmPais}">
+	                   <h:column>
+	                       <h:outputText value="#{_pais.nmPais}"/>
+	                   </h:column>
+	                   <a:support event="onselect" action="#{cidadeHome.addPais(_pais)}" reRender="save" ajaxSingle="true" />
+	               </rich:suggestionbox>
+	           </s:decorate>
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                Campos obrigat&#243;rios
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Salvar"
+                         action="#{cidadeHome.persist}"
+                       disabled="#{!cidadeHome.wired}"
+                       rendered="#{!cidadeHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Atualizar"
+                         action="#{cidadeHome.update}"
+                       rendered="#{cidadeHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Excluir"
+                         action="#{cidadeHome.remove}"
+                      immediate="true"
+                       rendered="#{cidadeHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancelar"
+             propagation="end"
+                    view="/protected/Cidade.xhtml"
+                rendered="#{cidadeHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancelar"
+             propagation="end"
+                    view="/protected/#{empty cidadeFrom ? 'CidadeList' : cidadeFrom}.xhtml"
+                rendered="#{!cidadeHome.managed}"/>
+
+        </div>
+    </h:form>
+
+
+</ui:define>
+
+</ui:composition>

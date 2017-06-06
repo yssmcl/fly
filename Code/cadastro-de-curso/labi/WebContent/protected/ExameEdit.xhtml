@@ -1,0 +1,216 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+
+<ui:param name="pageTitle" value="Adicionar/Editar Exames" />
+<ui:define name="body">
+
+    <h:form id="exame" styleClass="edit">
+
+        <rich:panel>
+        
+            <f:facet name="header">#{exameHome.managed ? 'Editar' : 'Adicionar'} Exame</f:facet>
+
+            <s:decorate id="pacienteField" template="/layout/edit.xhtml">
+	               <ui:define name="label">Paciente</ui:define>
+	               <h:inputText id="searchPaciente" required="true" size="40" value="#{exameHome.nomePacienteAux}"/>
+	               <rich:suggestionbox height="100" width="500" for="searchPaciente"
+	               suggestionAction="#{pacienteList.getSuggestionList}" var="_paciente"
+	               fetchValue="#{_paciente.nome}">
+	                   <h:column>
+	                       <h:outputText value="#{_paciente.nome} - CPF: #{_paciente.cpf}"/>
+	                   </h:column>
+	                   <a:support event="onselect" action="#{exameHome.addPaciente(_paciente)}" reRender="save" ajaxSingle="true"/>
+	               </rich:suggestionbox>
+                 <h:column>
+                     <h:outputText value=" (Digite o nome e escolha o paciente/CPF na lista que aparecer)" style="font-size:80%;font-weight:italic;color:gray"/>
+                 </h:column>
+                 
+	           </s:decorate>
+	           
+	           <s:decorate id="profissionalField" template="/layout/edit.xhtml">
+	               <ui:define name="label">M&#233;dico</ui:define>
+	               <h:inputText id="searchProfissional" required="true" size="40" value="#{exameHome.nomeProfissionalAux}"/>
+	               <rich:suggestionbox height="100" width="500" for="searchProfissional"
+	               suggestionAction="#{profissionalList.getSuggestionList}" var="_profissional"
+	               fetchValue="#{_profissional.nome}">
+	                   <h:column>
+	                       <h:outputText value="#{_profissional.nome} - CRM: #{_profissional.crm}"/>
+	                   </h:column>
+                     
+	                   <a:support event="onselect" action="#{exameHome.addProfissional(_profissional)}" reRender="save" ajaxSingle="true"/>
+	               </rich:suggestionbox>
+                 <h:column>
+                     <h:outputText value=" (Digite o nome e escolha o profissional/CRM na lista que aparecer)" style="font-size:80%;font-weight:italic;color:gray"/>
+                 </h:column>
+	           </s:decorate>
+	           
+	           <s:decorate id="marcaEquipamentoField" template="/layout/edit.xhtml">
+   				<ui:define name="label">Marca do Equipamento</ui:define>
+   				<h:selectOneMenu value="#{exameHome.marcaEquipamentoAux}" required="true">
+				<s:selectItems value="#{marcaEquipamentoList.selectList}"
+						var="_marcaEquipamento" label="#{_marcaEquipamento.descMarcaEquipamento}"
+						noSelectionLabel="Selecione">
+					</s:selectItems>
+					<s:convertEntity />
+					<a:support event="onchange" action="#{exameHome.limparEquipamento}" reRender="modeloEquipamentoField,equipamentoField" ajaxSingle="true" />
+				</h:selectOneMenu>
+  			</s:decorate>
+  			
+  			 <s:decorate id="modeloEquipamentoField" template="/layout/edit.xhtml">
+   				<ui:define name="label">Modelo do Equipamento</ui:define>
+   				<h:selectOneMenu value="#{exameHome.modeloEquipamentoAux}" disabled="#{exameHome.marcaEquipamentoAux ==null || empty exameHome.marcaEquipamentoAux.modeloEquipamentos}" 
+          required="true">
+				<s:selectItems value="#{exameHome.marcaEquipamentoAux.modeloEquipamentos}"
+						var="_modeloEquipamento" label="#{_modeloEquipamento.descModeloEquipamento}"
+						noSelectionLabel="Selecione">
+					</s:selectItems>
+					<s:convertEntity />
+					<a:support event="onchange" reRender="equipamentoField" ajaxSingle="true" />
+				</h:selectOneMenu>
+  			</s:decorate>
+  			
+  			<s:decorate id="equipamentoField" template="/layout/edit.xhtml">
+   				<ui:define name="label">Local do Exame</ui:define>
+   				<h:selectOneMenu value="#{exameHome.instance.equipamento}" disabled="#{exameHome.modeloEquipamentoAux ==null || empty exameHome.modeloEquipamentoAux.equipamentos}" 
+          required="true">
+				<s:selectItems value="#{exameHome.modeloEquipamentoAux.equipamentos}"
+						var="_equipamento" label="#{_equipamento.nmEquipamento}"
+						noSelectionLabel="Selecione">
+					</s:selectItems>
+					<s:convertEntity />
+					<a:support event="onchange" reRender="save" ajaxSingle="true" />
+				</h:selectOneMenu>
+  			</s:decorate>
+  			
+  			<!-- Alterado por Thiago -->
+  			<s:decorate id="tipoExameField" template="/layout/edit.xhtml">
+   				<ui:define name="label">Tipo do Exame</ui:define>
+   				<h:selectOneMenu value="#{exameHome.instance.tipoExame}"
+   				required="true">
+				<s:selectItems value="#{tipoExameList.selectList}"
+						var="_tipoExame" label="#{_tipoExame.descTipoExame}"
+						noSelectionLabel="Selecione">
+					</s:selectItems>
+					<s:convertEntity />
+					<a:support event="onchange" reRender="save" ajaxSingle="true" />
+				</h:selectOneMenu>
+  			</s:decorate>
+  			<!-- Fim -->
+  			
+  			<!-- Alterado por Thiago --> 
+            <s:decorate id="dtExameField" template="/layout/edit.xhtml">
+                <ui:define name="label">Data do Exame</ui:define>
+                <rich:calendar id="dtExame"
+                          required="true"
+                          value="#{exameHome.instance.dtExame}" 
+                          datePattern="dd/MM/yyyy"
+                          />
+            </s:decorate>
+        <!-- Fim -->
+
+  			<!-- Alterado por Thiago -->
+  			<s:decorate id="convenioField" template="/layout/edit.xhtml">
+   				<ui:define name="label">Conv&#234;nio</ui:define>
+   				<h:selectOneMenu value="#{exameHome.instance.convenio}"
+   				required="true">
+				<s:selectItems value="#{convenioList.selectList}"
+						var="_convenio" label="#{_convenio.descConvenio}"
+						noSelectionLabel="Selecione">
+					</s:selectItems>
+					<s:convertEntity />
+					<a:support event="onchange" reRender="save" ajaxSingle="true" />
+				</h:selectOneMenu>
+  			</s:decorate>
+      		<!-- Fim -->
+      			
+      		
+          <s:decorate id="motivoExameField" template="/layout/edit.xhtml">
+                <ui:define name="label">Motivo do Exame</ui:define>
+                <h:inputText id="motivoExame"
+                           size="50"
+                      maxlength="100"
+                          value="#{exameHome.instance.motivoExame}">
+                    <a:support event="onblur" reRender="motivoExameField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="observacoesExameField" template="/layout/edit.xhtml">
+                <ui:define name="label">Observa&#231;&#245;es</ui:define>                
+                <h:inputTextarea id="observacoesExame"
+                               cols="50"
+                               rows="5"
+                              value="#{exameHome.instance.observacoesExame}"/>
+            </s:decorate>
+
+            <s:decorate id="procedenciaPacienteField" template="/layout/edit.xhtml">
+                <ui:define name="label">Encaminhado Por</ui:define>
+                <h:inputText id="procedenciaPaciente"
+                           size="50"
+                      maxlength="100"
+                          value="#{exameHome.instance.procedenciaPaciente}">
+                    <a:support event="onblur" reRender="procedenciaPacienteField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <div style="clear:both">
+                <span class="required">*</span>
+                <h:outputText value="Campos Obrigat&#243;rios"/>
+            </div>
+
+        </rich:panel>
+        
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Salvar"
+                          style="width:100px;"
+                         action="#{exameHome.persist}"
+                       disabled="#{!exameHome.wired}"
+                       rendered="#{!exameHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Atualizar"
+                          style="width:100px;"
+                         action="#{exameHome.update}"
+                       rendered="#{exameHome.managed}"/>
+                       
+            <!-- <s:button value="Realizar Exame" view="/protected/ExameAcompanhamento.xhtml" rendered="#{!exameHome.instance.finalizado}" />-->
+
+            <h:commandButton id="delete"
+                          value="Excluir"
+                          style="width:100px;"
+                         action="#{exameHome.remove}"
+                      immediate="true"
+                       rendered="#{exameHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancelar"
+                   style="width:100px;"
+             propagation="end"
+                    view="/protected/ExameList.xhtml"
+                rendered="#{exameHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancelar"
+                   style="width:100px;"
+             propagation="end"
+                    view="/protected/#{empty exameFrom ? 'ExameList' : exameFrom}.xhtml"
+                rendered="#{!exameHome.managed}"/>
+
+            
+        </div>
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

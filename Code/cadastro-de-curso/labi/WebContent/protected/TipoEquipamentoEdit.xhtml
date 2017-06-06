@@ -1,0 +1,115 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+
+<ui:param name="pageTitle" value="Cadastro de Tipos de Equipamentos Hospitalares" />
+
+<ui:define name="body">
+
+    <h:form id="tipoEquipamento" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{tipoEquipamentoHome.managed ? 'Editar' : 'Adicionar'} Tipo de Equipamento Hospitalar</f:facet>
+
+
+
+            <s:decorate id="descTipoEquipamentoField" template="/layout/edit.xhtml">
+                <ui:define name="label">Descri&#231;&#227;o</ui:define>
+                <h:inputTextarea id="descTipoEquipamento"
+                               cols="80"
+                               rows="2"
+                           required="true"
+                              value="#{tipoEquipamentoHome.instance.descTipoEquipamento}"/>
+            </s:decorate>
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                Campos Obrigat&#243;rios
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Salvar"
+                         action="#{tipoEquipamentoHome.persist}"
+                       disabled="#{!tipoEquipamentoHome.wired}"
+                       rendered="#{!tipoEquipamentoHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Atualizar"
+                         action="#{tipoEquipamentoHome.update}"
+                       rendered="#{tipoEquipamentoHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Excluir"
+                         action="#{tipoEquipamentoHome.remove}"
+                      immediate="true"
+                       rendered="#{tipoEquipamentoHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancelar"
+             propagation="end"
+                    view="/protected/TipoEquipamento.xhtml"
+                rendered="#{tipoEquipamentoHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancelar"
+             propagation="end"
+                    view="/protected/#{empty tipoEquipamentoFrom ? 'TipoEquipamentoList' : tipoEquipamentoFrom}.xhtml"
+                rendered="#{!tipoEquipamentoHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Equipamentos">
+        <h:form styleClass="association" id="equipamentosChildren">
+
+            <h:outputText value="N&#227;o h&#225; equipamentos associados a este tipo de equipamento hospitalar."
+                       rendered="#{empty tipoEquipamentoHome.equipamentos}"/>
+
+            <rich:dataTable value="#{tipoEquipamentoHome.equipamentos}"
+                           var="_equipamento"
+                      rendered="#{not empty tipoEquipamentoHome.equipamentos}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="equipamentosTable">
+                <rich:column sortBy="#{_equipamento.nmEquipamento}">
+                    <f:facet name="header">Nome do Equipamento Hospitlar</f:facet>
+                    <h:outputText value="#{_equipamento.nmEquipamento}"/>
+                </rich:column>
+                <rich:column sortBy="#{_equipamento.descEquipamento}">
+                    <f:facet name="header">Descri&#231;&#227;o</f:facet>
+                    <h:outputText value="#{_equipamento.descEquipamento}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{tipoEquipamentoHome.managed}" id="equipamentos">
+        <div class="actionButtons">
+            <s:button id="addequipamento"
+                   value="Adicionar Novo Equipamento Hospitalar"
+                    view="/protected/EquipamentoEdit.xhtml"
+             propagation="none">
+                 <f:param name="tipoEquipamentoIdTipoEquipamento"
+                         value="#{tipoEquipamentoHome.instance.idTipoEquipamento}"/>
+                 <f:param name="equipamentoFrom" value="TipoEquipamento"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

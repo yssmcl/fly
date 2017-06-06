@@ -1,0 +1,185 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+
+<ui:param name="pageTitle" value="Dados da Institui&#231;&#227;o" />
+<ui:define name="body">
+
+    <rich:panel>
+        <f:facet name="header">Detalhes da Institui&#231;&#227;o</f:facet>
+
+
+        <s:decorate id="nmInstituicao" template="/layout/display.xhtml">
+            <ui:define name="label">Nome</ui:define>
+            <h:outputText value="#{instituicaoHome.instance.nmInstituicao}"/>
+        </s:decorate>
+
+        <s:decorate id="descInstituicao" template="/layout/display.xhtml">
+            <ui:define name="label">Descri&#231;&#227;o</ui:define>
+            <h:outputText value="#{instituicaoHome.instance.descInstituicao}"/>
+        </s:decorate>
+
+        <s:decorate id="cnpj" template="/layout/display.xhtml">
+            <ui:define name="label">CNPJ</ui:define>
+            <h:outputText value="#{instituicaoHome.instance.cnpj}"/>
+        </s:decorate>
+        
+         <s:decorate id="website" template="/layout/display.xhtml">
+            <ui:define name="label">Website</ui:define>
+            <h:outputText value="#{instituicaoHome.instance.website}"/>
+        </s:decorate>
+
+        <s:decorate id="email" template="/layout/display.xhtml">
+            <ui:define name="label">Email</ui:define>
+            <h:outputText value="#{instituicaoHome.instance.email}"/>
+        </s:decorate>
+
+        <s:decorate id="telefone" template="/layout/display.xhtml">
+            <ui:define name="label">Telefone</ui:define>
+            <h:outputText value="#{instituicaoHome.instance.telefone}"/>
+        </s:decorate>
+
+        <s:decorate id="fax" template="/layout/display.xhtml">
+            <ui:define name="label">Fax</ui:define>
+            <h:outputText value="#{instituicaoHome.instance.fax}"/>
+        </s:decorate>
+
+           <s:decorate id="bairro" template="/layout/display.xhtml">
+            <ui:define name="label">Bairro</ui:define>
+            <h:outputText value="#{instituicaoHome.instance.bairro}"/>
+        </s:decorate>
+
+        <s:decorate id="rua" template="/layout/display.xhtml">
+            <ui:define name="label">Rua</ui:define>
+            <h:outputText value="#{instituicaoHome.instance.rua}"/>
+        </s:decorate>
+
+        <s:decorate id="numero" template="/layout/display.xhtml">
+            <ui:define name="label">N&#250;mero</ui:define>
+            <h:outputText value="#{instituicaoHome.instance.numero}"/>
+        </s:decorate>
+
+        <s:decorate id="complemento" template="/layout/display.xhtml">
+            <ui:define name="label">Complemento</ui:define>
+            <h:outputText value="#{instituicaoHome.instance.complemento}"/>
+        </s:decorate>
+
+        <s:decorate id="cep" template="/layout/display.xhtml">
+            <ui:define name="label">CEP</ui:define>
+            <h:outputText value="#{instituicaoHome.instance.cep}"/>
+        </s:decorate>
+
+        <div style="clear:both"/>
+
+    </rich:panel>
+
+    <div class="actionButtons">
+
+        <s:button view="/protected/InstituicaoEdit.xhtml"
+                    id="edit"
+                 value="Editar"/>
+
+        <s:button view="/protected/#{empty instituicaoFrom ? 'InstituicaoList' : instituicaoFrom}.xhtml"
+                    id="done"
+                 value="Voltar"/>
+
+    </div>
+
+    <rich:tabPanel switchType="ajax">
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/manytoone.gif" style="vertical-align: middle; padding-right: 4px;"/>Cidade</h:panelGroup>
+        </f:facet>
+    <div class="association" id="cidadeParent">
+
+        <h:outputText value="N&#227;o h&#225; cidade associated a esta instituicao."
+                   rendered="#{instituicaoHome.instance.cidade == null}"/>
+
+        <rich:dataTable var="_cidade"
+                   value="#{instituicaoHome.instance.cidade}"
+                rendered="#{instituicaoHome.instance.cidade != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="cidadeTable">
+            <h:column>
+                <f:facet name="header">Cidade</f:facet>
+                <h:outputText value="#{_cidade.nmCidade}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Estado</f:facet>
+                <h:outputText value="#{_cidade.nmEstado}"/>
+            </h:column>
+            <h:column styleClass="action">
+                <f:facet name="header">A&#231;&#227;o</f:facet>
+                <s:link id="viewcidade"
+                     value="Visualizar"
+                      view="/protected/Cidade.xhtml">
+                    <f:param name="cidadeIdCidade"
+                           value="#{_cidade.idCidade}"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab>
+        <f:facet name="label">
+            <h:panelGroup><h:graphicImage value="/img/onetomany.gif" style="vertical-align: middle; padding-right: 4px;"/>Especialidade Institui&#231;&#227;o</h:panelGroup>
+        </f:facet>
+    <h:form styleClass="association" id="especialidadeIstituicaosChildren">
+
+        <h:outputText value="N&#227;o h&#225; Especialidade Institui&#231;&#227;o associadas a esta Institui&#231;&#227;o."
+                   rendered="#{empty instituicaoHome.especialidadeIstituicaos}"/>
+
+        <rich:dataTable value="#{instituicaoHome.especialidadeIstituicaos}"
+                       var="_especialidadeIstituicao"
+                  rendered="#{not empty instituicaoHome.especialidadeIstituicaos}"
+                rowClasses="rvgRowOne,rvgRowTwo"
+                        id="especialidadeIstituicaosTable">
+            <rich:column sortBy="#{_especialidadeIstituicao.descEspecialidade}">
+                <f:facet name="header">Descri&#231;&#227;o</f:facet>
+                <h:outputText value="#{_especialidadeIstituicao.descEspecialidade}"/>
+            </rich:column>
+            <rich:column sortBy="#{_especialidadeIstituicao.localEspecialidade}">
+                <f:facet name="header">Local</f:facet>
+                <h:outputText value="#{_especialidadeIstituicao.localEspecialidade}"/>
+            </rich:column>
+            <rich:column sortBy="#{_especialidadeIstituicao.salaEspecialidade}">
+                <f:facet name="header">Sala</f:facet>
+                <h:outputText value="#{_especialidadeIstituicao.salaEspecialidade}"/>
+            </rich:column>
+            <h:column>
+                <f:facet name="header">A&#231;&#227;o</f:facet>
+                <s:link id="selectespecialidadeIstituicao"
+                     value="Selecionar"
+                      view="/protected/EspecialidadeIstituicao.xhtml">
+                    <f:param name="especialidadeIstituicaoIdEspecialidadeIstituicao"
+                            value="#{_especialidadeIstituicao.idEspecialidadeIstituicao}"/>
+                    <f:param name="especialidadeIstituicaoFrom" value="Instituicao"/>
+                </s:link>
+            </h:column>
+        </rich:dataTable>
+
+    </h:form>
+
+    <div class="actionButtons">
+        <s:button
+               value="Adicionar especialidadeIstituicao"
+                view="/protected/EspecialidadeIstituicaoEdit.xhtml">
+            <f:param name="instituicaoIdInstituicao"
+                    value="#{instituicaoHome.instance.idInstituicao}"/>
+            <f:param name="especialidadeIstituicaoFrom" value="Instituicao"/>
+        </s:button>
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

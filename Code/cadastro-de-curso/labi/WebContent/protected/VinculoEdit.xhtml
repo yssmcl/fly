@@ -1,0 +1,129 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+
+ <ui:param name="pageTitle" value="Adicionar/Editar Especialidade" />
+<ui:define name="body">
+
+    <h:form id="vinculo" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{vinculoHome.managed ? 'Editar' : 'Adicionar'} Especialidade</f:facet>
+
+
+
+            <s:decorate id="descVinculoField" template="/layout/edit.xhtml">
+                <ui:define name="label">Descri&#231;&#227;o</ui:define>
+                <h:inputText id="descVinculo"
+                       required="true"
+                           size="50"
+                      maxlength="100"
+                          value="#{vinculoHome.instance.descVinculo}">
+                    <a:support event="onblur" reRender="descVinculoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                <h:outputText value="Campos Obrigat&#243;rios"/>
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Salvar"
+                          style="width:100px;"
+                         action="#{vinculoHome.persist}"
+                       disabled="#{!vinculoHome.wired}"
+                       rendered="#{!vinculoHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Atualizar"
+                          style="width:100px;"
+                         action="#{vinculoHome.update}"
+                       rendered="#{vinculoHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Excluir"
+                          style="width:100px;"
+                         action="#{vinculoHome.remove}"
+                      immediate="true"
+                       rendered="#{vinculoHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancelar"
+                   style="width:100px;"
+             propagation="end"
+                    view="/protected/Vinculo.xhtml"
+                rendered="#{vinculoHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancelar"
+                   style="width:100px;"
+             propagation="end"
+                    view="/protected/#{empty vinculoFrom ? 'VinculoList' : vinculoFrom}.xhtml"
+                rendered="#{!vinculoHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Profissionals">
+        <h:form styleClass="association" id="profissionalsChildren">
+
+            <h:outputText value="N&#227;o h&#225; Profissionais associados a esta especialidade."
+                       rendered="#{empty vinculoHome.profissionals}"/>
+
+            <rich:dataTable value="#{vinculoHome.profissionals}"
+                           var="_profissional"
+                      rendered="#{not empty vinculoHome.profissionals}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="profissionalsTable">
+                <rich:column sortBy="#{_profissional.nome}">
+                    <f:facet name="header">Nome</f:facet>
+                    <h:outputText value="#{_profissional.nome}"/>
+                </rich:column>
+                <rich:column sortBy="#{_profissional.cpf}">
+                    <f:facet name="header">CPF</f:facet>
+                    <h:outputText value="#{_profissional.cpf}"/>
+                </rich:column>
+                <rich:column sortBy="#{_profissional.rg}">
+                    <f:facet name="header">RG</f:facet>
+                    <h:outputText value="#{_profissional.rg}"/>
+                </rich:column>
+                <rich:column sortBy="#{_profissional.crm}">
+                    <f:facet name="header">CRM</f:facet>
+                    <h:outputText value="#{_profissional.crm}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{vinculoHome.managed}" id="profissionals">
+        <div class="actionButtons">
+            <s:button id="addprofissional"
+                   value="Adicionar profissional"
+                    view="/protected/ProfissionalEdit.xhtml"
+             propagation="none">
+                 <f:param name="vinculoIdVinculo"
+                         value="#{vinculoHome.instance.idVinculo}"/>
+                 <f:param name="profissionalFrom" value="Vinculo"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

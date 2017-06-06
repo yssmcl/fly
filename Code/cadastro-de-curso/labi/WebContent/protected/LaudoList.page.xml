@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd">
+
+   <param name="firstResult" value="#{laudoList.firstResult}"/>
+   <param name="sort" value="#{laudoList.orderColumn}"/>
+   <param name="dir" value="#{laudoList.orderDirection}"/>
+   <param name="logic" value="#{laudoList.restrictionLogicOperator}"/>
+
+   <param name="from"/>
+   <param name="resultado" value="#{laudoList.laudo.resultado}"/>
+   <param name="observacao" value="#{laudoList.laudo.observacao}"/>
+   <param name="indicacao" value="#{laudoList.laudo.indicacao}"/>
+   <param name="nmArquivo" value="#{laudoList.laudo.nmArquivo}"/>
+   <param name="diretorioArquivo" value="#{laudoList.laudo.diretorioArquivo}"/>
+
+</page>

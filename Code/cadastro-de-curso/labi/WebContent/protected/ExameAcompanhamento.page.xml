@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd">
+
+   
+   <param name="exameFrom"/>
+   <param name="exameIdExame" value="#{exameHome.exameIdExame}"/>
+   <param name="tipoExameFrom"/>
+   <param name="tipoExameIdTipoExame" value="#{tipoExameHome.tipoExameIdTipoExame}"/>
+
+   <param name="pacienteFrom"/>
+   <param name="pacienteIdPaciente" value="#{pacienteHome.pacienteIdPaciente}"/>
+   <param name="cidadeFrom"/>
+   <param name="cidadeIdCidade" value="#{cidadeHome.cidadeIdCidade}"/>
+   <param name="paisFrom"/>
+   <param name="paisIdPais" value="#{paisHome.paisIdPais}"/>
+
+
+
+   <param name="equipamentoFrom"/>
+   <param name="equipamentoIdEquipamento" value="#{equipamentoHome.equipamentoIdEquipamento}"/>
+   <param name="modeloEquipamentoFrom"/>
+   <param name="modeloEquipamentoIdModeloEquipamento" value="#{modeloEquipamentoHome.modeloEquipamentoIdModeloEquipamento}"/>
+   <param name="marcaEquipamentoFrom"/>
+   <param name="marcaEquipamentoIdMarcaEquipamento" value="#{marcaEquipamentoHome.marcaEquipamentoIdMarcaEquipamento}"/>
+
+
+   <param name="tipoEquipamentoFrom"/>
+   <param name="tipoEquipamentoIdTipoEquipamento" value="#{tipoEquipamentoHome.tipoEquipamentoIdTipoEquipamento}"/>
+
+
+   <param name="especialidadeIstituicaoFrom"/>
+   <param name="especialidadeIstituicaoIdEspecialidadeIstituicao" value="#{especialidadeIstituicaoHome.especialidadeIstituicaoIdEspecialidadeIstituicao}"/>
+   <param name="instituicaoFrom"/>
+   <param name="instituicaoIdInstituicao" value="#{instituicaoHome.instituicaoIdInstituicao}"/>
+
+
+   <param name="convenioFrom"/>
+   <param name="convenioIdConvenio" value="#{convenioHome.convenioIdConvenio}"/>
+
+   <param name="profissionalFrom"/>
+   <param name="profissionalIdProfissional" value="#{profissionalHome.profissionalIdProfissional}"/>
+   <param name="vinculoFrom"/>
+   <param name="vinculoIdVinculo" value="#{vinculoHome.vinculoIdVinculo}"/>
+
+	<action execute="#{exameHome.criarDiretorio()}"/>
+	<action execute="#{exameHome.readExameSubDirectoryFromXML}"/>
+	<action execute="#{exameHome.carregarImageMetaInformation}"/>
+   <action execute="#{exameHome.carregarVideoMetaInformation}"/> 
+
+	<navigation from-action="#{exameHome.finalizarExame}">
+      <rule if-outcome="updated">
+         <end-conversation/>
+         <redirect view-id="/protected/ExameAcompanhamentoView.xhtml" />
+      </rule>
+   </navigation>
+
+
+</page>

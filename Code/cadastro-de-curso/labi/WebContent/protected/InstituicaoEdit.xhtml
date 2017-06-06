@@ -1,0 +1,280 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/layout/template.xhtml">
+
+
+ <ui:param name="pageTitle" value="Cadastro de Institui&#231;&#245;es"/>
+<ui:define name="body">
+
+    <h:form id="instituicao" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{instituicaoHome.managed ? 'Editar' : 'Adicionar'} Institui&#231;&#227;o</f:facet>
+
+
+
+
+            <s:decorate id="nmInstituicaoField" template="/layout/edit.xhtml">
+                <ui:define name="label">Nome</ui:define>
+                <h:inputText id="nmInstituicao"
+                       required="true"
+                           size="100"
+                      maxlength="150"
+                          value="#{instituicaoHome.instance.nmInstituicao}">
+                    <a:support event="onblur" reRender="nmInstituicaoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="descInstituicaoField" template="/layout/edit.xhtml">
+                <ui:define name="label">Descri&#231;&#227;o</ui:define>
+                <h:inputTextarea id="descInstituicao"
+                               cols="80"
+                               rows="10"
+                              value="#{instituicaoHome.instance.descInstituicao}"/>
+            </s:decorate>
+
+
+            <s:decorate id="cnpjField" template="/layout/edit.xhtml">
+                <ui:define name="label">CNPJ</ui:define>
+                <h:inputText id="cnpj"
+                           size="20"
+                      maxlength="20"
+                          value="#{instituicaoHome.instance.cnpj}">
+                    <a:support event="onblur" reRender="cnpjField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="telefoneField" template="/layout/edit.xhtml">
+                <ui:define name="label">Telefone</ui:define>
+                <h:inputText id="telefone"
+                           size="30"
+                      maxlength="30"
+                          value="#{instituicaoHome.instance.telefone}">
+                    <a:support event="onblur" reRender="telefoneField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="faxField" template="/layout/edit.xhtml">
+                <ui:define name="label">Fax</ui:define>
+                <h:inputText id="fax"
+                           size="30"
+                      maxlength="30"
+                          value="#{instituicaoHome.instance.fax}">
+                    <a:support event="onblur" reRender="faxField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="websiteField" template="/layout/edit.xhtml">
+                <ui:define name="label">Website</ui:define>
+                <h:inputText id="website"
+                           size="100"
+                      maxlength="100"
+                          value="#{instituicaoHome.instance.website}">
+                    <a:support event="onblur" reRender="websiteField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="emailField" template="/layout/edit.xhtml">
+                <ui:define name="label">Email</ui:define>
+                <h:inputText id="email"
+                           size="100"
+                      maxlength="100"
+                          value="#{instituicaoHome.instance.email}">
+                    <a:support event="onblur" reRender="emailField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="bairroField" template="/layout/edit.xhtml">
+                <ui:define name="label">Bairro</ui:define>
+                <h:inputText id="bairro"
+                           size="100"
+                      maxlength="100"
+                          value="#{instituicaoHome.instance.bairro}">
+                    <a:support event="onblur" reRender="bairroField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="ruaField" template="/layout/edit.xhtml">
+                <ui:define name="label">Rua</ui:define>
+                <h:inputText id="rua"
+                           size="100"
+                      maxlength="100"
+                          value="#{instituicaoHome.instance.rua}">
+                    <a:support event="onblur" reRender="ruaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="numeroField" template="/layout/edit.xhtml">
+                <ui:define name="label">N&#250;mero</ui:define>
+                <h:inputText id="numero"
+                          value="#{instituicaoHome.instance.numero}">
+                    <a:support event="onblur" reRender="numeroField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="complementoField" template="/layout/edit.xhtml">
+                <ui:define name="label">Complemento</ui:define>
+                <h:inputText id="complemento"
+                           size="100"
+                      maxlength="100"
+                          value="#{instituicaoHome.instance.complemento}">
+                    <a:support event="onblur" reRender="complementoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="cepField" template="/layout/edit.xhtml">
+                <ui:define name="label">CEP</ui:define>
+                <h:inputText id="cep"
+                           size="12"
+                      maxlength="12"
+                          value="#{instituicaoHome.instance.cep}">
+                    <a:support event="onblur" reRender="cepField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+            
+            <s:decorate id="paisField" template="/layout/edit.xhtml">
+	               <ui:define name="label">Pa&#237;s</ui:define>
+	               <h:inputText id="searchPais" size="20" value="#{instituicaoHome.nmPaisAux}"/>
+	               <rich:suggestionbox height="100" width="200" for="searchPais"
+	               suggestionAction="#{instituicaoHome.obterListaPais}" var="_pais"
+	               fetchValue="#{_pais.sgPais} - #{_pais.nmPais}">
+	                   <h:column>
+	                       <h:outputText value="#{_pais.nmPais}"/>
+	                   </h:column>
+	                   <a:support event="onselect" action="#{instituicaoHome.addPais(_pais)}" reRender="estadoField,cidadeField" ajaxSingle="true" />
+	               </rich:suggestionbox>
+	           </s:decorate>
+	
+	          <s:decorate id="estadoField" template="/layout/edit.xhtml">
+	          <ui:define name="label">Estado</ui:define>     
+	          	<h:inputText id="searchEstado" value="#{instituicaoHome.nmEstadoAux}" disabled="#{!instituicaoHome.paisAdicionado}"  size="20" />
+	          	<rich:suggestionbox height="100" width="200" for="searchEstado"
+	               suggestionAction="#{instituicaoHome.obterListaEstado}" var="_cidade"
+	               fetchValue="#{_cidade.uf} - #{_cidade.nmEstado}">
+	                   <h:column>
+	                       <h:outputText value="#{_cidade.nmEstado}"/>
+	                   </h:column>
+	                   <a:support event="onselect" action="#{instituicaoHome.addEstado(_cidade)}" reRender="cidadeField" ajaxSingle="true"/>
+	               </rich:suggestionbox>
+	          </s:decorate>
+	          
+	          <s:decorate id="cidadeField" template="/layout/edit.xhtml">
+	          <ui:define name="label">Cidade</ui:define>     
+	          	<h:inputText id="searchCidade" value="#{instituicaoHome.nmCidadeAux}" disabled="#{!instituicaoHome.estadoAdicionado}"  size="20" />
+	          	<rich:suggestionbox height="100" width="200" for="searchCidade"
+	               suggestionAction="#{instituicaoHome.obterListaCidade}" var="_cidade"
+	               fetchValue="#{_cidade.nmCidade}">
+	                   <h:column>
+	                       <h:outputText value="#{_cidade.nmCidade}"/>
+	                   </h:column>
+	                   <a:support event="onselect" action="#{instituicaoHome.addCidade(_cidade)}" reRender="save" ajaxSingle="true"/>
+	             </rich:suggestionbox>
+      			</s:decorate>
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                <h:outputText value="Campos obrigat&#243;rios"/>
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Salvar"
+                         action="#{instituicaoHome.persist}"
+                       disabled="#{!instituicaoHome.wired}"
+                       rendered="#{!instituicaoHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Atualizar"
+                         action="#{instituicaoHome.update}"
+                       rendered="#{instituicaoHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Excluir"
+                         action="#{instituicaoHome.remove}"
+                      immediate="true"
+                       rendered="#{instituicaoHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancelar"
+             propagation="end"
+                    view="/protected/Instituicao.xhtml"
+                rendered="#{instituicaoHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancelar"
+             propagation="end"
+                    view="/protected/#{empty instituicaoFrom ? 'InstituicaoList' : instituicaoFrom}.xhtml"
+                rendered="#{!instituicaoHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    
+
+    <rich:tab label="Especialidade Institui&#231;&#227;o">
+        <h:form styleClass="association" id="especialidadeIstituicaosChildren">
+
+            <h:outputText value="N&#227;o h&#225; especialidade institui&#231;&#227;o associadas a esta instituicao."
+                       rendered="#{empty instituicaoHome.especialidadeIstituicaos}"/>
+
+            <rich:dataTable value="#{instituicaoHome.especialidadeIstituicaos}"
+                           var="_especialidadeIstituicao"
+                      rendered="#{not empty instituicaoHome.especialidadeIstituicaos}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="especialidadeIstituicaosTable">
+                <rich:column sortBy="#{_especialidadeIstituicao.descEspecialidade}">
+                    <f:facet name="header">Descri&#231;&#227;o</f:facet>
+                    <h:outputText value="#{_especialidadeIstituicao.descEspecialidade}"/>
+                </rich:column>
+                <rich:column sortBy="#{_especialidadeIstituicao.localEspecialidade}">
+                    <f:facet name="header">Local</f:facet>
+                    <h:outputText value="#{_especialidadeIstituicao.localEspecialidade}"/>
+                </rich:column>
+                <rich:column sortBy="#{_especialidadeIstituicao.salaEspecialidade}">
+                    <f:facet name="header">Sala</f:facet>
+                    <h:outputText value="#{_especialidadeIstituicao.salaEspecialidade}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{instituicaoHome.managed}" id="especialidadeIstituicaos">
+        <div class="actionButtons">
+            <s:button id="addespecialidadeIstituicao"
+                   value="Adicionar Especialidade Istituicao"
+                    view="/protected/EspecialidadeIstituicaoEdit.xhtml"
+             propagation="none">
+                 <f:param name="instituicaoIdInstituicao"
+                         value="#{instituicaoHome.instance.idInstituicao}"/>
+                 <f:param name="especialidadeIstituicaoFrom" value="Instituicao"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>
