@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth import models as auth_models
 
 class MembrosComunidade(models.Model):
     nome = models.CharField(max_length=200)
@@ -126,6 +127,8 @@ class GestaoRecursosFinanceiros(models.Model):
     outros = models.CharField(max_length=200, blank=True, null=True)
 
 class CursoExtensao(models.Model):
+    user = models.ForeignKey(auth_models.User)
+    
     data = models.DateTimeField()
 
     titulo = models.CharField(max_length=200)
