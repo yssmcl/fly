@@ -3,8 +3,17 @@
 {% block title %} Login {% endblock%}
 
 {% block content %}
-	<form action="" method="post">{% csrf_token %}
-		<table class="form"> {{ form.as_table }} </table>
-		<input type="submit" value="Adicionar" />
+	<h1 style="text-align:center;">Login</h1>
+
+	<form data-abide novalidate>
+		<div data-abide-error class="alert callout" style="display: none;">
+			<p><i class="fi-alert"></i> There are some errors in your form.</p>
+		</div>
+		<div class="row">
+			<div class="small-12 columns">
+				{{ form }}
+			</div>
+		</div>
+		<input type="submit" value="Login">
 	</form>
 {% endblock %}
