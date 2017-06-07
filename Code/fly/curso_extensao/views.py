@@ -18,10 +18,15 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
     def get(self, request):
         # Initialize empty forms and formsets.
         main_form = CursoExtensaoForm(prefix='main')
+        palavras_form = PalavraChave_CursoExtensaoFormSet(prefix='palavras')
         discentes_form = Discente_CursoExtensaoFormSet(prefix='discentes')
         servidores_form = Servidor_CursoExtensaoFormSet(prefix='servidores')
-        palavras_form = PalavraChave_CursoExtensaoFormSet(prefix='palavras')
         membros_comunidade_form = MembroComunidade_CursoExtensaoFormSet(prefix='membros')
+
+        palavras_form.can_delete = False
+        discentes_form.can_delete = False
+        servidores_form.can_delete = False
+        membros_comunidade_form.can_delete = False
 
         return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_form': servidores_form, 'palavras_form': palavras_form, 'discentes_form': discentes_form, 'membros_comunidade_form': membros_comunidade_form})
 
@@ -56,4 +61,9 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
 
             return redirect('curso_extensao:index')
         else:
+            palavras_form.can_delete = False
+            discentes_form.can_delete = False
+            servidores_form.can_delete = False
+            membros_comunidade_form.can_delete = False
+
             return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_form': servidores_form, 'palavras_form': palavras_form, 'discentes_form': discentes_form, 'membros_comunidade_form': membros_comunidade_form})
