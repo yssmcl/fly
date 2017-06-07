@@ -10,7 +10,7 @@
 	<script src="{% static 'js/jquery.js' %}"></script>
 	<script src="{% static 'js/jquery.formset.js' %}"></script>
 
-	<h1 style="text-align:center;">Curso Extensao</h1>
+	<h1 style="text-align:center;">Curso de Extensão</h1>
 
 	<form data-abide novalidate method="post">
 		{% csrf_token %}
@@ -19,7 +19,152 @@
 		</div>
 		<div class="row">
 			<div class="small-12 columns">
-				{{ main_form }}
+
+				<div class="medium-1 columns">
+					<label>Título</label>
+				</div>
+				<div class="medium-11 columns">
+					{{ main_form.titulo }}
+				</div>
+
+
+
+				<div class="medium-2 columns">
+					<label>Coordenador(a)</label>
+				</div>
+				<div class="medium-4 columns">
+					{{ main_form.coordenador }}
+				</div>
+				<div class="medium-3 columns">
+					<label>Período de realização</label>
+				</div>
+				<div class="medium-3 columns">
+					{{ main_form.periodo_de_realizacao }}
+				</div>
+
+
+
+				<div class="medium-3 columns">
+					<label>Programa de extensão</label>
+				</div>
+				<div class="medium-9 columns">
+					{{ main_form.programa_extensao }}
+				</div>
+
+
+
+				<div class="medium-3 columns">
+					<label>Unidade administrativa</label>
+				</div>
+				<div class="medium-2 columns">
+					{{ main_form.unidade_administrativa }}
+				</div>
+				<div class="medium-1 columns">
+					<label>Campus</label>
+				</div>
+				<div class="medium-3 columns">
+					{{ main_form.campus }}
+				</div>
+				<div class="medium-1 columns">
+					<label>Centro</label>
+				</div>
+				<div class="medium-2 columns">
+					{{ main_form.centro }}
+				</div>
+
+
+
+				<div class="medium-2 columns">
+					<label>Grande área</label>
+				</div>
+				<div class="medium-3 columns">
+					{{ main_form.grande_area }}
+				</div>
+				<div class="medium-2 columns">
+					<label>Linha de extensão</label>
+				</div>
+				<div class="medium-5 columns">
+					{{ main_form.linha_extensao }}
+				</div>
+
+
+
+				<div class="medium-3 columns">
+					<label>Área temática principal</label>
+				</div>
+				<div class="medium-3 columns">
+					{{ main_form.area_tematica_principal }}
+				</div>
+				<div class="medium-3 columns">
+					<label>Área temática secundária</label>
+				</div>
+				<div class="medium-3 columns">
+					{{ main_form.area_tematica_secundaria }}
+				</div>
+				
+
+
+				<div class="medium-2 columns">
+					<label>Público alvo</label>
+				</div>
+				<div class="medium-10 columns">
+					{{ main_form.publico_alvo }}
+				</div>
+
+
+
+				<div class="medium-4 columns">
+					<label>Número de pessoas beneficiadas</label>
+				</div>
+				<div class="medium-2 columns">
+					{{ main_form.numero_pessoas_beneficiadas }}
+				</div>
+				<div class="medium-2 columns">
+					<label>C/H total</label>
+				</div>
+				<div class="medium-1 columns">
+					{{ main_form.carga_horaria_total }}
+				</div>
+				<div class="medium-2 columns">
+					<label>Número de vagas</label>
+				</div>
+				<div class="medium-1 columns">
+					{{ main_form.numero_vagas }}
+				</div>
+
+
+
+				<div class="medium-2 columns">
+					<label>Local de inscrição</label>
+				</div>
+				<div class="medium-10 columns">
+					{{ main_form.local_inscricao }}
+				</div>
+
+
+
+				<div class="medium-1 columns">
+					<label>Resumo</label>
+				</div>
+				<div class="medium-11 columns">
+					{{ main_form.resumo }}
+				</div>
+
+
+
+				<div class="medium-2 columns">
+					<label>Programação</label>
+				</div>
+				<div class="medium-10 columns">
+					{{ main_form.programacao }}
+				</div>
+
+
+
+
+
+
+
 				<hr/>
 				<h3>Palavras-Chave</h3>
 				<div class="medium-3 columns">
@@ -391,7 +536,7 @@
 						{% endescapescript %}
 					</script>
 					<div class="medium-12 columns">
-						<input class="button" type="button" value="Adicionar membro da comunidade" style="width:300px;" data-formset-add>
+						<input class="button" type="button" value="Adicionar membro da comunidade" style="width:350px;" data-formset-add>
 					</div>
 				</div>
 			</div>
