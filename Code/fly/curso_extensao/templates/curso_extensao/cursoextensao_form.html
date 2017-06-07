@@ -12,9 +12,17 @@
 		</div>
 		<div class="row">
 			<div class="small-12 columns">
-				{{ form }}
+				{{ main_form }}
+				<h3>Palavras-Chave</h3>
+				{{ palavras_form }}
+				<h3>Servidores</h3>
+				{{ servidores_form }}
+				<h3>Discentes</h3>
+				{{ discentes_form }}
+				<h3>Membros da Comunidade</h3>
+				{{ membros_comunidade_form }}
 			</div>
 		</div>
-		<input type="submit" value="Cadastrar">
+		<input type="submit" value="Salvar">
 	</form>
 {% endblock %}

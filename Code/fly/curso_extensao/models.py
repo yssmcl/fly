@@ -55,12 +55,6 @@ class CursoUnioeste(models.Model):
     def __str__(self):
         return self.nome
 
-class PalavraChave(models.Model):
-    nome = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.nome
-        
 class TipoServidor(models.Model):
     # (0, 'Docente Efetivo'),
     # (1, 'Docente Temporário'),
@@ -94,7 +88,7 @@ class Servidor(models.Model):
     estado = models.CharField(max_length=200)
     cidade = models.CharField(max_length=200)
     logradouro = models.CharField(max_length=200)
-    complemento = models.IntegerField()
+    complemento = models.CharField(max_length=200)
     cep = models.IntegerField()
 
     def __str__(self):
@@ -163,7 +157,6 @@ class CursoExtensao(models.Model):
     grande_area = models.ForeignKey(GrandeArea)
 
     # Palavras Chave (ForeignKey)
-    palavras_chave = models.ManyToManyField(PalavraChave)
 
     area_tematica_principal = models.ForeignKey(AreaTematica, related_name='area_tematica_principal')
     area_tematica_secundaria = models.ForeignKey(AreaTematica, related_name='area_tematica_secundaria', blank=True, null=True)
@@ -188,6 +181,13 @@ class CursoExtensao(models.Model):
     #21 é opcional caso #20 seja Null
     previsao_orcamentaria = models.ForeignKey(PrevisaoOrcamentaria, blank=True, null=True)
 
+    def __str__(self):
+        return self.titulo
+
+
+class PalavraChave_CursoExtensao(models.Model):
+    curso_extensao = models.ForeignKey(CursoExtensao)
+    nome = models.CharField(max_length=200)
 
 class FuncaoServidor(models.Model):
     # (0, 'Coordenador(a)'),
