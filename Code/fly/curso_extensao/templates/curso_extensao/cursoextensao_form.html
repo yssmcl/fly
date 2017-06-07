@@ -48,6 +48,8 @@
 				{% endif %}
 				{{ palavras_formset.management_form }}
 				{% for form in palavras_formset %}
+					{{ form.id }}
+					{{ form.curso_extensao }}
 					<div class="medium-3 columns">
 						{{ form.nome }}
 					</div>
@@ -78,6 +80,8 @@
 					{{ servidores_formset.management_form }}
 					<div data-formset-body>
 						{% for form in servidores_formset %}
+							{{ form.id }}
+							{{ form.curso_extensao }}
 							<div data-formset-form>
 								<div class="medium-4 columns">
 									{{ form.servidor }}
@@ -127,6 +131,8 @@
 					{{ discentes_formset.management_form }}
 					<div data-formset-body>
 						{% for form in discentes_formset %}
+							{{ form.id }}
+							{{ form.curso_extensao }}
 							<div data-formset-form>
 								<div class="row" style="background:#FEF; padding:10px;">
 									<div class="medium-1 columns">
@@ -254,6 +260,8 @@
 					{{ membros_comunidade_formset.management_form }}
 					<div data-formset-body>
 						{% for form in membros_comunidade_formset %}
+							{{ form.id }}
+							{{ form.curso_extensao }}
 							<div data-formset-form>
 								<div class="row" style="background:#FEF; padding:10px;">
 									<div class="medium-1 columns">
