@@ -13,8 +13,6 @@ class Command(BaseCommand):
                 print("Adicionando '{} em '{}'".format(nome, class_.__name__))
 
     def handle(self, *args, **options):
-        print(args, options)
-        
         campus_list = [
             'Cascavel',
             'Foz do Iguaçu',
