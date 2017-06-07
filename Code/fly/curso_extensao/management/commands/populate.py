@@ -220,6 +220,4 @@ class Command(BaseCommand):
             s.cep = 12345678
             s.save()
             print("Adicionando Bar em Servidor")
-
-    def __str__(self):
-        return self.nome_completo
+    
