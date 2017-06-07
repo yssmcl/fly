@@ -47,7 +47,7 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
             curso_extensao.user = request.user
             curso_extensao.data = timezone.now()
 
-            with transaction.atomic:
+            with transaction.atomic():
                 main_form.save()
                 palavras_form.save()
                 discentes_form.save()
