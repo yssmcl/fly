@@ -20,9 +20,17 @@ class Command(BaseCommand):
         ]
 
         centro_list = [
+            'CECA',
+            'CCET',
+            'CCBS',
             'CCSA',
+            'CCMF',
             'CECE',
-            'CELS',
+            'CCH',
+            'CCHEL',
+            'CCA',
+            'CCHS',
+            'CEL',
         ]
 
         unidade_administrativa_list = [
