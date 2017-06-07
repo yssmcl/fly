@@ -5,5 +5,6 @@ from . import views
 app_name = 'curso_extensao'
 urlpatterns = [
 	url(r'^$', views.IndexView.as_view(), name='index'),
-	url(r'^novo_curso_extensao/$', views.NovoCursoExtensao.as_view(), name='novo_curso_extensao')
+	url(r'^novo_curso_extensao/$', views.NovoCursoExtensao.as_view(), name='novo_curso_extensao'),
+	url(r'^consulta_curso_extensao/$', views.ConsultaCursoExtensao.as_view(), name='consulta_curso_extensao')
 ]
