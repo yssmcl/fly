@@ -54,6 +54,6 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
                 servidores_form.save()
                 membros_comunidade_form.save()
 
-                return redirect('curso_extensao:index')
+            return redirect('curso_extensao:index')
         else:
             return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_form': servidores_form, 'palavras_form': palavras_form, 'discentes_form': discentes_form, 'membros_comunidade_form': membros_comunidade_form})
