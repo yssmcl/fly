@@ -11,7 +11,7 @@ from .forms import CursoExtensaoForm, Servidor_CursoExtensaoFormSet, PalavraChav
 
 class IndexView(View):
     def get(self, request):
-        return render(request, 'curso_extensao/index.html', {})
+        return render(request, 'curso_extensao/index.html')
 
 
 class NovoCursoExtensao(LoginRequiredMixin, View):
@@ -27,6 +27,15 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
         discentes_formset.can_delete = False
         servidores_formset.can_delete = False
         membros_comunidade_formset.can_delete = False
+
+        # s = []
+
+        # # for form in palavras_formset:
+        # for field in main_form:
+        #     s.append(str(field)) 
+        # # break
+
+        # return render(request, 'debug.html', {'value':'|||||||||'.join(s)})
 
         return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_formset': servidores_formset, 'palavras_formset': palavras_formset, 'discentes_formset': discentes_formset, 'membros_comunidade_formset': membros_comunidade_formset})
 
@@ -68,17 +77,36 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
 
             return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_formset': servidores_formset, 'palavras_formset': palavras_formset, 'discentes_formset': discentes_formset, 'membros_comunidade_formset': membros_comunidade_formset})
 
-class ConsultaCursoExtensao(LoginRequiredMixin, View):
-    def get(self, request):
-        #  pk = request.POST['curso_extensao']
-        curso_extensao = CursoExtensao.objects.get(pk=pk)
+
+class ConsultaCursoExtensao(LoginRequiredMixin, generic.ListView):
+    model = CursoExtensao        
+
+    def get_queryset(self):
+        d = {
+            'user':self.request.user,
+            'titulo__contains':self.request.GET.get('titulo', '')
+        }
+
+        return CursoExtensao.objects.filter(**d)
+
+class DetalheCursoExtensao(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        curso_extensao = get_object_or_404(CursoExtensao, pk=pk)
+
+        # Initialize empty forms and formsets.
         main_form = CursoExtensaoForm(instance=curso_extensao, prefix='main')
+        palavras_formset = PalavraChave_CursoExtensaoFormSet(instance=curso_extensao, prefix='palavras')
+        discentes_formset = Discente_CursoExtensaoFormSet(instance=curso_extensao, prefix='discentes')
+        servidores_formset = Servidor_CursoExtensaoFormSet(instance=curso_extensao, prefix='servidores')
+        membros_comunidade_formset = MembroComunidade_CursoExtensaoFormSet(instance=curso_extensao, prefix='membros')
 
-        return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form})
+        return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_formset': servidores_formset, 'palavras_formset': palavras_formset, 'discentes_formset': discentes_formset, 'membros_comunidade_formset': membros_comunidade_formset})
 
-    def post(self, request):
+    def post(self, request, pk):
+        curso_extensao = get_object_or_404(CursoExtensao, pk=pk)
+
         # Initialize form with POST data.
-        main_form = CursoExtensaoForm(request.POST, prefix='main')
+        main_form = CursoExtensaoForm(request.POST, instance=curso_extensao, prefix='main')
 
         curso_extensao = main_form.instance
 

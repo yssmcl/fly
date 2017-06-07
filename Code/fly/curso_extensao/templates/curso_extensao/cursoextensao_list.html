@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% load formset_tags %}
+
+{% block title %} Curso Extensao {% endblock%}
+
+{% block content %}
+
+	<form>
+		<label>Título:</label>
+		<input type="text" placeholder="banana" name="titulo" />
+
+		<input type="submit" value="Pesquisar" class="button">
+	</form>
+
+	<ul>
+		{% for curso_extensao in object_list %}
+			<li>
+				<a href="{% url 'curso_extensao:detalhe' curso_extensao.pk %}">{{ curso_extensao }}</a>
+			</li>
+		{% endfor %}
+	</ul>
+
+{% endblock %}
