@@ -16,21 +16,25 @@ class IndexView(View):
 
 class NovoCursoExtensao(LoginRequiredMixin, View):
     def get(self, request):
+        # Initialize empty forms and formsets.
         main_form = CursoExtensaoForm(prefix='main')
+        discentes_form = Discente_CursoExtensaoFormSet(prefix='discentes')
         servidores_form = Servidor_CursoExtensaoFormSet(prefix='servidores')
         palavras_form = PalavraChave_CursoExtensaoFormSet(prefix='palavras')
-        discentes_form = Discente_CursoExtensaoFormSet(prefix='discentes')
         membros_comunidade_form = MembroComunidade_CursoExtensaoFormSet(prefix='membros')
 
-        return render(request, 'curso_extensao/cursoextensao_form.html', dict(main_form=main_form, servidores_form=servidores_form, palavras_form=palavras_form, discentes_form=discentes_form, membros_comunidade_form=membros_comunidade_form))
+        return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_form': servidores_form, 'palavras_form': palavras_form, 'discentes_form': discentes_form, 'membros_comunidade_form': membros_comunidade_form})
 
-    @transaction.atomic
     def post(self, request):
+        # Initialize form with POST data.
         main_form = CursoExtensaoForm(request.POST, prefix='main')
+
         curso_extensao = main_form.instance
+
+        # Initialize formsets with POST data and foreignKey already set.
+        discentes_form = Discente_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='discentes')
         servidores_form = Servidor_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='servidores')
         palavras_form = PalavraChave_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='palavras')
-        discentes_form = Discente_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='discentes')
         membros_comunidade_form = MembroComunidade_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='membros')
 
         if (main_form.is_valid()
@@ -39,15 +43,17 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
                 and discentes_form.is_valid()
                 and membros_comunidade_form.is_valid()):
 
+            # Set extra data
             curso_extensao.user = request.user
             curso_extensao.data = timezone.now()
 
-            main_form.save()
-            servidores_form.save()
-            palavras_form.save()
-            discentes_form.save()
-            membros_comunidade_form.save()
+            with transaction.atomic:
+                main_form.save()
+                palavras_form.save()
+                discentes_form.save()
+                servidores_form.save()
+                membros_comunidade_form.save()
 
-            return redirect('curso_extensao:index')
+                return redirect('curso_extensao:index')
         else:
-            return render(request, 'curso_extensao/cursoextensao_form.html', dict(main_form=main_form, servidores_form=servidores_form, palavras_form=palavras_form, discentes_form=discentes_form, membros_comunidade_form=membros_comunidade_form))
+            return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_form': servidores_form, 'palavras_form': palavras_form, 'discentes_form': discentes_form, 'membros_comunidade_form': membros_comunidade_form})
