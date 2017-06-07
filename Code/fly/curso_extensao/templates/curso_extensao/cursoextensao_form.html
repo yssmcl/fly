@@ -7,22 +7,217 @@
 
 	<form data-abide novalidate method="post">
 		{% csrf_token %}
+		{{ servidores_form.management_form }}
+		{{ palavras_form.management_form }}
+		{{ discentes_form.management_form }}
+		{{ membros_comunidade_form.management_form }}
 		<div data-abide-error class="alert callout" style="display: none;">
 			<p><i class="fi-alert"></i>There are some errors in your form.</p>
 		</div>
 		<div class="row">
 			<div class="small-12 columns">
 				{{ main_form }}
+				<hr/>
 				<h3>Palavras-Chave</h3>
-				{{ palavras_form }}
+				<div class="medium-3 columns">
+					<label>Palavra-chave</label>
+				</div>
+				<div class="medium-1 columns">
+					{% if palavras_form.can_delete %}
+						<label>Deletar</label>
+					{% endif %}
+				</div>
+				<div class="medium-3 columns">
+					<label>Palavra-chave</label>
+				</div>
+				<div class="medium-1 columns">
+					{% if palavras_form.can_delete %}
+						<label>Deletar</label>
+					{% endif %}
+				</div>
+				<div class="medium-3 columns">
+					<label>Palavra-chave</label>
+				</div>
+				<div class="medium-1 columns end">
+					{% if palavras_form.can_delete %}
+						<label>Deletar</label>
+					{% endif %}
+				</div>
+				{% for form in palavras_form %}
+					<div class="medium-3 columns">
+						{{ form.nome }}
+					</div>
+					<div class="medium-1 columns">
+						{% if palavras_form.can_delete %}
+							{{ form.DELETE }}
+						{% endif %}
+					</div>
+				{% endfor %}
+				<hr />
 				<h3>Servidores</h3>
-				{{ servidores_form }}
+				<div class="medium-4 columns">
+					<label>Servidor</label>
+				</div>
+				<div class="medium-4 columns">
+					<label>Função</label>
+				</div>
+				<div class="medium-3 columns">
+					<label>Carga horária dedicada</label>
+				</div>
+				<div class="medium-1 columns">
+					{% if servidores_form.can_delete %}
+						<label>Deletar</label>
+					{% endif %}
+				</div>
+				{% for form in servidores_form %}
+					<div class="medium-4 columns">
+						{{ form.servidor }}
+					</div>
+					<div class="medium-4 columns">
+						{{ form.funcao }}
+					</div>
+					<div class="medium-3 columns">
+						{{ form.carga_horaria_dedicada }}
+					</div>
+					<div class="medium-1 columns">
+						{% if servidores_form.can_delete %}
+							{{ form.DELETE }}
+						{% endif %}
+					</div>
+				{% endfor %}
+				<hr/>
 				<h3>Discentes</h3>
-				{{ discentes_form }}
-				<h3>Membros da Comunidade</h3>
-				{{ membros_comunidade_form }}
+				{% for form in discentes_form %}
+					<div class="row" style="background:#FEF; padding:10px;">
+						<div class="medium-1 columns">
+							<label>Nome</label>
+						</div>
+						<div class="medium-11 columns">
+							{{ form.nome }}
+						</div>
+						<div class="medium-1 columns">
+							<label>Curso</label>
+						</div>
+						<div class="medium-3 columns">
+							{{ form.curso }}
+						</div>
+						<div class="medium-1 columns">
+							<label>Serie</label>
+						</div>
+						<div class="medium-1 columns">
+							{{ form.serie }}
+						</div>
+						<div class="medium-1 columns">
+							<label>Turno</label>
+						</div>
+						<div class="medium-2 columns">
+							{{ form.turno }}
+						</div>
+						<div class="medium-2 columns">
+							<label>C/H semanal</label>
+						</div>
+						<div class="medium-1 columns">
+							{{ form.carga_horaria_semanal }}
+						</div>
+						<div class="medium-1 columns">
+							<label>Telefone</label>
+						</div>
+						<div class="medium-3 columns">
+							{{ form.telefone }}
+						</div>
+						<div class="medium-1 columns">
+							<label>Email</label>
+						</div>
+						<div class="medium-5 columns">
+							{{ form.email }}
+						</div>
+						<div class="medium-1 columns">
+							<label>Deletar</label>
+						</div>
+						<div class="medium-1 columns">
+							{% if discentes_form.can_delete %}
+								{{ form.DELETE }}
+							{% endif %}
+						</div>
+					</div>
+					<br/>
+				{% endfor %}
+				<hr/>
+
+
+
+
+
+
+
+
+				<h3>Membros da Comunidade / Participantes Externos</h3>
+				{% for form in membros_comunidade_form %}
+					<div class="row" style="background:#FEF; padding:10px;">
+						<div class="medium-1 columns">
+							<label>Nome</label>
+						</div>
+						<div class="medium-8 columns">
+							{{ form.nome }}
+						</div>
+						<div class="medium-2 columns">
+							<label>C/H semanal</label>
+						</div>
+						<div class="medium-1 columns">
+							{{ form.carga_horaria_semanal }}
+						</div>
+						<div class="medium-1 columns">
+							<label>Entidade</label>
+						</div>
+						<div class="medium-11 columns">
+							{{ form.entidade }}
+						</div>
+						<div class="medium-1 columns">
+							<label>Telefone</label>
+						</div>
+						<div class="medium-5 columns">
+							{{ form.telefone }}
+						</div>
+						<div class="medium-1 columns">
+							<label>Email</label>
+						</div>
+						<div class="medium-5 columns">
+							{{ form.email }}
+						</div>
+						<div class="medium-1 columns">
+							<label>CPF</label>
+						</div>
+						<div class="medium-5 columns">
+							{{ form.cpf }}
+						</div>
+						<div class="medium-3 columns">
+							<label>Data de nascimento</label>
+						</div>
+						<div class="medium-3 columns">
+							{{ form.data_nascimento }}
+						</div>
+						<div class="medium-1 columns">
+							<label>Função</label>
+						</div>
+						<div class="medium-9 columns">
+							{{ form.funcao }}
+						</div>
+						<div class="medium-1 columns">
+							<label>Deletar</label>
+						</div>
+						<div class="medium-1 columns">
+							{% if membros_comunidade_form.can_delete %}
+								{{ form.DELETE }}
+							{% endif %}
+						</div>
+					</div>
+					<br/>
+				{% endfor %}
 			</div>
 		</div>
-		<input type="submit" value="Salvar">
+		<div style="text-align:center;">
+			<input type="submit" value="Salvar" class="button">
+		</div>
+		<br />
 	</form>
 {% endblock %}
