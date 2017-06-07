@@ -6,10 +6,15 @@ class Command(BaseCommand):
 
     @staticmethod
     def saveList(class_, list_):
+        print("Iniciando insercao em '{}'".format(class_.__name__))
         for nome in list_:
-            class_(nome=nome).save()
+            if not class_.objects.filter(nome=nome).exists():
+                class_(nome=nome).save()
+                print("Adicionando '{} em '{}'".format(nome, class_.__name__))
 
     def handle(self, *args, **options):
+        print(args, options)
+        
         campus_list = [
             'Cascavel',
             'Foz do Iguaçu',
@@ -177,23 +182,46 @@ class Command(BaseCommand):
         self.saveList(FuncaoServidor, funcao_servidor_list)
         self.saveList(TurnoCurso, turno_curso_list)
 
-        #TODO: remove foo
-        s = Servidor()
-        s.nome_completo = 'Foo'
-        s.tipo = TipoServidor.objects.get(pk=1)
-        s.regime_trabalho = 1
-        s.colegiado = 'colegiado_foo'
-        s.centro = Centro.objects.get(pk=1)
-        s.campus = Campus.objects.get(pk=1)
-        s.email = 'foo@foo.com'
-        s.telefone = '12345678'
-        s.pais = 'foo'
-        s.estado = 'foo'
-        s.cidade = 'foo'
-        s.logradouro = 'foo'
-        s.complemento = 'foo'
-        s.cep = 12345678
-        s.save()
+        #TODO: remove
+        print("Iniciando insercao em 'Servidor'")
+
+        if not Servidor.objects.filter(nome_completo='Foo').exists():
+            s = Servidor()
+            s.nome_completo = 'Foo'
+            s.tipo = TipoServidor.objects.all().first()
+            s.regime_trabalho = 1
+            s.colegiado = 'colegiado_foo'
+            s.centro = Centro.objects.all().first()
+            s.campus = Campus.objects.all().first()
+            s.email = 'foo@foo.com'
+            s.telefone = '12345678'
+            s.pais = 'foo'
+            s.estado = 'foo'
+            s.cidade = 'foo'
+            s.logradouro = 'foo'
+            s.complemento = 'foo'
+            s.cep = 12345678
+            s.save()
+            print("Adicionando Foo em Servidor")
+
+        if not Servidor.objects.filter(nome_completo='Bar').exists():
+            s = Servidor()
+            s.nome_completo = 'Bar'
+            s.tipo = TipoServidor.objects.all().first()
+            s.regime_trabalho = 1
+            s.colegiado = 'colegiado_bar'
+            s.centro = Centro.objects.all().first()
+            s.campus = Campus.objects.all().first()
+            s.email = 'bar@bar.com'
+            s.telefone = '12345678'
+            s.pais = 'bar'
+            s.estado = 'bar'
+            s.cidade = 'bar'
+            s.logradouro = 'bar'
+            s.complemento = 'bar'
+            s.cep = 12345678
+            s.save()
+            print("Adicionando Bar em Servidor")
 
     def __str__(self):
         return self.nome_completo
