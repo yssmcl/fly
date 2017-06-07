@@ -18,17 +18,17 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
     def get(self, request):
         # Initialize empty forms and formsets.
         main_form = CursoExtensaoForm(prefix='main')
-        palavras_form = PalavraChave_CursoExtensaoFormSet(prefix='palavras')
-        discentes_form = Discente_CursoExtensaoFormSet(prefix='discentes')
-        servidores_form = Servidor_CursoExtensaoFormSet(prefix='servidores')
-        membros_comunidade_form = MembroComunidade_CursoExtensaoFormSet(prefix='membros')
+        palavras_formset = PalavraChave_CursoExtensaoFormSet(prefix='palavras')
+        discentes_formset = Discente_CursoExtensaoFormSet(prefix='discentes')
+        servidores_formset = Servidor_CursoExtensaoFormSet(prefix='servidores')
+        membros_comunidade_formset = MembroComunidade_CursoExtensaoFormSet(prefix='membros')
 
-        palavras_form.can_delete = False
-        discentes_form.can_delete = False
-        servidores_form.can_delete = False
-        membros_comunidade_form.can_delete = False
+        palavras_formset.can_delete = False
+        discentes_formset.can_delete = False
+        servidores_formset.can_delete = False
+        membros_comunidade_formset.can_delete = False
 
-        return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_form': servidores_form, 'palavras_form': palavras_form, 'discentes_form': discentes_form, 'membros_comunidade_form': membros_comunidade_form})
+        return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_formset': servidores_formset, 'palavras_formset': palavras_formset, 'discentes_formset': discentes_formset, 'membros_comunidade_formset': membros_comunidade_formset})
 
     def post(self, request):
         # Initialize form with POST data.
@@ -37,16 +37,16 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
         curso_extensao = main_form.instance
 
         # Initialize formsets with POST data and foreignKey already set.
-        discentes_form = Discente_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='discentes')
-        servidores_form = Servidor_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='servidores')
-        palavras_form = PalavraChave_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='palavras')
-        membros_comunidade_form = MembroComunidade_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='membros')
+        palavras_formset = PalavraChave_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='palavras')
+        discentes_formset = Discente_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='discentes')
+        servidores_formset = Servidor_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='servidores')
+        membros_comunidade_formset = MembroComunidade_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='membros')
 
         if (main_form.is_valid()
-                and servidores_form.is_valid()
-                and palavras_form.is_valid()
-                and discentes_form.is_valid()
-                and membros_comunidade_form.is_valid()):
+                and palavras_formset.is_valid()
+                and discentes_formset.is_valid()
+                and servidores_formset.is_valid()
+                and membros_comunidade_formset.is_valid()):
 
             # Set extra data
             curso_extensao.user = request.user
@@ -54,19 +54,19 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
 
             with transaction.atomic():
                 main_form.save()
-                palavras_form.save()
-                discentes_form.save()
-                servidores_form.save()
-                membros_comunidade_form.save()
+                palavras_formset.save()
+                discentes_formset.save()
+                servidores_formset.save()
+                membros_comunidade_formset.save()
 
             return redirect('curso_extensao:index')
         else:
-            palavras_form.can_delete = False
-            discentes_form.can_delete = False
-            servidores_form.can_delete = False
-            membros_comunidade_form.can_delete = False
+            palavras_formset.can_delete = False
+            discentes_formset.can_delete = False
+            servidores_formset.can_delete = False
+            membros_comunidade_formset.can_delete = False
 
-            return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_form': servidores_form, 'palavras_form': palavras_form, 'discentes_form': discentes_form, 'membros_comunidade_form': membros_comunidade_form})
+            return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_formset': servidores_formset, 'palavras_formset': palavras_formset, 'discentes_formset': discentes_formset, 'membros_comunidade_formset': membros_comunidade_formset})
 
 class ConsultaCursoExtensao(LoginRequiredMixin, View):
     def get(self, request):
@@ -83,16 +83,16 @@ class ConsultaCursoExtensao(LoginRequiredMixin, View):
         curso_extensao = main_form.instance
 
         # Initialize formsets with POST data and foreignKey already set.
-        discentes_form = Discente_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='discentes')
-        servidores_form = Servidor_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='servidores')
-        palavras_form = PalavraChave_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='palavras')
-        membros_comunidade_form = MembroComunidade_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='membros')
+        palavras_formset = PalavraChave_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='palavras')
+        discentes_formset = Discente_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='discentes')
+        servidores_formset = Servidor_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='servidores')
+        membros_comunidade_formset = MembroComunidade_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='membros')
 
         if (main_form.is_valid()
-                and servidores_form.is_valid()
-                and palavras_form.is_valid()
-                and discentes_form.is_valid()
-                and membros_comunidade_form.is_valid()):
+                and palavras_formset.is_valid()
+                and discentes_formset.is_valid()
+                and servidores_formset.is_valid()
+                and membros_comunidade_formset.is_valid()):
 
             # Set extra data
             curso_extensao.user = request.user
@@ -100,11 +100,11 @@ class ConsultaCursoExtensao(LoginRequiredMixin, View):
 
             with transaction.atomic():
                 main_form.save()
-                palavras_form.save()
-                discentes_form.save()
-                servidores_form.save()
-                membros_comunidade_form.save()
+                palavras_formset.save()
+                discentes_formset.save()
+                servidores_formset.save()
+                membros_comunidade_formset.save()
 
             return redirect('curso_extensao:index')
         else:
-            return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_form': servidores_form, 'palavras_form': palavras_form, 'discentes_form': discentes_form, 'membros_comunidade_form': membros_comunidade_form})
+            return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_formset': servidores_formset, 'palavras_formset': palavras_formset, 'discentes_formset': discentes_formset, 'membros_comunidade_formset': membros_comunidade_formset})
