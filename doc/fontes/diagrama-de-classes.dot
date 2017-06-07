@@ -1,6 +1,6 @@
 digraph model_graph {
   // Dotfile by Django-Extensions graph_models
-  // Created: 2017-06-06 23:17
+  // Created: 2017-06-07 01:09
   // Cli Options: curso_extensao
 
   fontname = "Helvetica"
@@ -219,28 +219,6 @@ digraph model_graph {
     </TABLE>
     >]
 
-  curso_extensao_models_PalavraChave [label=<
-    <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
-    <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="olivedrab4">
-    <FONT FACE="Helvetica Bold" COLOR="white">
-    PalavraChave
-    </FONT></TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica Bold">id</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica Bold">AutoField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">nome</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">CharField</FONT>
-    </TD></TR>
-  
-    </TABLE>
-    >]
-
   curso_extensao_models_TipoServidor [label=<
     <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
     <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="olivedrab4">
@@ -321,7 +299,7 @@ digraph model_graph {
     <TR><TD ALIGN="LEFT" BORDER="0">
     <FONT FACE="Helvetica ">complemento</FONT>
     </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">IntegerField</FONT>
+    <FONT FACE="Helvetica ">CharField</FONT>
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
@@ -667,6 +645,34 @@ digraph model_graph {
     </TABLE>
     >]
 
+  curso_extensao_models_PalavraChave_CursoExtensao [label=<
+    <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="olivedrab4">
+    <FONT FACE="Helvetica Bold" COLOR="white">
+    PalavraChave_CursoExtensao
+    </FONT></TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">id</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">AutoField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">curso_extensao</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">ForeignKey (id)</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">nome</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    </TABLE>
+    >]
+
   curso_extensao_models_FuncaoServidor [label=<
     <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
     <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="olivedrab4">
@@ -944,8 +950,8 @@ digraph model_graph {
   curso_extensao_models_CursoExtensao -> curso_extensao_models_PrevisaoOrcamentaria
   [label="previsao_orcamentaria (cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
 
-  curso_extensao_models_CursoExtensao -> curso_extensao_models_PalavraChave
-  [label="palavras_chave (cursoextensao)"] [arrowhead=dot arrowtail=open, dir=both];
+  curso_extensao_models_PalavraChave_CursoExtensao -> curso_extensao_models_CursoExtensao
+  [label="curso_extensao (palavrachave_cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
 
   curso_extensao_models_Servidor_CursoExtensao -> curso_extensao_models_Servidor
   [label="servidor (servidor_cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
