@@ -67,3 +67,44 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
             membros_comunidade_form.can_delete = False
 
             return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_form': servidores_form, 'palavras_form': palavras_form, 'discentes_form': discentes_form, 'membros_comunidade_form': membros_comunidade_form})
+
+class ConsultaCursoExtensao(LoginRequiredMixin, View):
+    def get(self, request):
+        #  pk = request.POST['curso_extensao']
+        curso_extensao = CursoExtensao.objects.get(pk=pk)
+        main_form = CursoExtensaoForm(instance=curso_extensao, prefix='main')
+
+        return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form})
+
+    def post(self, request):
+        # Initialize form with POST data.
+        main_form = CursoExtensaoForm(request.POST, prefix='main')
+
+        curso_extensao = main_form.instance
+
+        # Initialize formsets with POST data and foreignKey already set.
+        discentes_form = Discente_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='discentes')
+        servidores_form = Servidor_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='servidores')
+        palavras_form = PalavraChave_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='palavras')
+        membros_comunidade_form = MembroComunidade_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='membros')
+
+        if (main_form.is_valid()
+                and servidores_form.is_valid()
+                and palavras_form.is_valid()
+                and discentes_form.is_valid()
+                and membros_comunidade_form.is_valid()):
+
+            # Set extra data
+            curso_extensao.user = request.user
+            curso_extensao.data = timezone.now()
+
+            with transaction.atomic():
+                main_form.save()
+                palavras_form.save()
+                discentes_form.save()
+                servidores_form.save()
+                membros_comunidade_form.save()
+
+            return redirect('curso_extensao:index')
+        else:
+            return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_form': servidores_form, 'palavras_form': palavras_form, 'discentes_form': discentes_form, 'membros_comunidade_form': membros_comunidade_form})

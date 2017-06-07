@@ -12,6 +12,6 @@ class CursoExtensaoForm(forms.ModelForm):
 
 
 Servidor_CursoExtensaoFormSet = inlineformset_factory(CursoExtensao, Servidor_CursoExtensao, extra=2, fields=['servidor', 'carga_horaria_dedicada', 'funcao'])
-PalavraChave_CursoExtensaoFormSet = inlineformset_factory(CursoExtensao, PalavraChave_CursoExtensao, extra=2, fields=['nome'])
+PalavraChave_CursoExtensaoFormSet = inlineformset_factory(CursoExtensao, PalavraChave_CursoExtensao, extra=3, min_num=1, max_num=3, fields=['nome'])
 Discente_CursoExtensaoFormSet = inlineformset_factory(CursoExtensao, Discente_CursoExtensao, extra=2, fields=['nome', 'curso', 'serie', 'turno', 'carga_horaria_semanal', 'telefone', 'email'])
 MembroComunidade_CursoExtensaoFormSet = inlineformset_factory(CursoExtensao, MembroComunidade_CursoExtensao, extra=2, fields=['nome', 'carga_horaria_semanal', 'entidade', 'telefone', 'email', 'cpf', 'data_nascimento', 'funcao'])
