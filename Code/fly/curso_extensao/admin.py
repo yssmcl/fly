@@ -14,9 +14,8 @@ class LinhaExtensaoAdmin(admin.ModelAdmin): pass
 class CursoUnioesteAdmin(admin.ModelAdmin): pass
 class TipoServidorAdmin(admin.ModelAdmin): pass
 class ServidorAdmin(admin.ModelAdmin): pass
-class PrevisaoOrcamentariaAdmin(admin.ModelAdmin): pass
+class PrevisaoOrcamentaria_CursoExtensaoAdmin(admin.ModelAdmin): pass
 class TipoGestaoRecursosFinanceirosAdmin(admin.ModelAdmin): pass
-class GestaoRecursosFinanceirosAdmin(admin.ModelAdmin): pass
 class CursoExtensaoAdmin(admin.ModelAdmin): pass
 class PalavraChave_CursoExtensaoAdmin(admin.ModelAdmin): pass
 class FuncaoServidorAdmin(admin.ModelAdmin): pass
@@ -37,9 +36,8 @@ admin.site.register(LinhaExtensao, LinhaExtensaoAdmin)
 admin.site.register(CursoUnioeste, CursoUnioesteAdmin)
 admin.site.register(TipoServidor, TipoServidorAdmin)
 admin.site.register(Servidor, ServidorAdmin)
-admin.site.register(PrevisaoOrcamentaria, PrevisaoOrcamentariaAdmin)
+admin.site.register(PrevisaoOrcamentaria_CursoExtensao, PrevisaoOrcamentaria_CursoExtensaoAdmin)
 admin.site.register(TipoGestaoRecursosFinanceiros, TipoGestaoRecursosFinanceirosAdmin)
-admin.site.register(GestaoRecursosFinanceiros, GestaoRecursosFinanceirosAdmin)
 admin.site.register(CursoExtensao, CursoExtensaoAdmin)
 admin.site.register(PalavraChave_CursoExtensao, PalavraChave_CursoExtensaoAdmin)
 admin.site.register(FuncaoServidor, FuncaoServidorAdmin)

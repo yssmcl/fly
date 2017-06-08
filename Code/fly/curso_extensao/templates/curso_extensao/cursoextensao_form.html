@@ -17,10 +17,26 @@
 {% endblock %}
 
 {% block content %}
+	{% if main_form.errors %} main_form: {{ main_form.errors }} <br /> {% endif %}
+	{% if palavras_formset.errors %} palavras_formset: {{ palavras_formset.errors }} <br /> {% endif %}
+	{% if discentes_formset.errors %} discentes_formset: {{ discentes_formset.errors }} <br /> {% endif %}
+	{% if servidores_formset.errors %} servidores_formset: {{ servidores_formset.errors }} <br /> {% endif %}
+	{% if membros_comunidade_formset.errors %} membros_comunidade_formset: {{ membros_comunidade_formset.errors }} <br /> {% endif %}
+	{% if previsao_orcamentaria_formset.errors %} previsao_orcamentaria_formset: {{ previsao_orcamentaria_formset.errors }} <br /> {% endif %}
+
 	<h1 style="text-align:center;">Curso de Extensão</h1>
 
 	<form data-abide novalidate method="post">
 		{% csrf_token %}
+
+		{% if main_form.errors %}
+			<div data-abide-error class="alert callout">
+				{% for field, error in main_form.errors.items %}
+					<p><a class="fi-alert" href="#id_{{ main_form.prefix }}-{{ field }}">{{ error|escape }}</a></p>
+				{% endfor %}
+			</div>
+		{% endif %}
+
 		<div data-abide-error class="alert callout" style="display: none;">
 			<p><i class="fi-alert"></i>Campos obrigatórios não preenchidos!</p>
 		</div>
@@ -36,14 +52,22 @@
 			<div class="medium-2 columns">
 				<label>Coordenador(a)*</label>
 			</div>
-			<div class="medium-4 columns">
+			<div class="medium-10 columns">
 				{{ main_form.coordenador }}
 			</div>
-			<div class="medium-3 columns">
-				<label>Período de realização*</label>
+		</div>
+		<div class="row">
+			<div class="medium-2 columns">
+				<label>Início*</label>
 			</div>
-			<div class="medium-3 columns">
-				{{ main_form.periodo_de_realizacao }}
+			<div class="medium-4 columns">
+				{{ main_form.periodo_realizacao_inicio }}
+			</div>
+			<div class="medium-2 columns">
+				<label>Fim*</label>
+			</div>
+			<div class="medium-4 columns">
+				{{ main_form.periodo_realizacao_fim }}
 			</div>
 		</div>
 		<div class="row">
@@ -154,7 +178,7 @@
 			<hr/>
 			<h3>Palavras-Chave</h3>
 			<div class="medium-3 columns">
-				<label>Palavra-chave</label>
+				<label>Palavra-chave*</label>
 			</div>
 			<div class="medium-1 columns">
 				{% if palavras_formset.can_delete %}
@@ -582,6 +606,170 @@
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<hr/>
+			<h3>Previsão Orçamentária</h3>
+		</div>
+		{{ previsao_orcamentaria_formset.management_form }}
+		{% for previsao_orcamentaria in previsao_orcamentaria_formset %}
+			{{ previsao_orcamentaria.id }}
+			<div class="row">
+				<h4>Receitas</h3>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Inscrições</label>
+				</div>
+				<div class="medium-9 columns">
+					{{ previsao_orcamentaria.inscricoes }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Convênios</label>
+				</div>
+				<div class="medium-9 columns">
+					{{ previsao_orcamentaria.convenios }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Patrocínios</label>
+				</div>
+				<div class="medium-9 columns">
+					{{ previsao_orcamentaria.patrocinios }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Fonte(s) de Financiamento(s)</label>
+				</div>
+				<div class="medium-9 columns">
+					{{ previsao_orcamentaria.fonte_financiamento }}
+				</div>
+			</div>
+			<div class="row">
+				<h4>Despesas</h3>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Honorários</label>
+				</div>
+				<div class="medium-9 columns">
+					{{ previsao_orcamentaria.honorarios }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Passagens</label>
+				</div>
+				<div class="medium-9 columns">
+					{{ previsao_orcamentaria.passagens }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Alimentação</label>
+				</div>
+				<div class="medium-9 columns">
+					{{ previsao_orcamentaria.alimentacao }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Hospedagem</label>
+				</div>
+				<div class="medium-9 columns">
+					{{ previsao_orcamentaria.hospedagem }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Divulgação</label>
+				</div>
+				<div class="medium-9 columns">
+					{{ previsao_orcamentaria.divulgacao }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Materiais de consumo</label>
+				</div>
+				<div class="medium-9 columns">
+					{{ previsao_orcamentaria.material_consumo }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Xerox</label>
+				</div>
+				<div class="medium-9 columns">
+					{{ previsao_orcamentaria.xerox }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Certificados</label>
+				</div>
+				<div class="medium-9 columns">
+					{{ previsao_orcamentaria.certificados }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Outros</label>
+				</div>
+				<div class="medium-9 columns">
+					{{ previsao_orcamentaria.outros }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Especificar</label>
+				</div>
+				<div class="medium-9 columns">
+					{{ previsao_orcamentaria.outros_especificacao }}
+				</div>
+			</div>
+			<div class="row">
+				<h4>Gestão dos Recursos Financeiros</h3>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Identificação</label>
+				</div>
+				<div class="medium-9 columns">
+					{{ previsao_orcamentaria.identificacao }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Fundação</label>
+				</div>
+				<div class="medium-9 columns">
+					{{ previsao_orcamentaria.fundacao }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Outro Órgão Gestor</label>
+				</div>
+				<div class="medium-9 columns">
+					{{ previsao_orcamentaria.outro_orgao_gestor }}
+				</div>
+			</div>
+			{% if previsao_orcamentaria_formset.can_delete %}
+				<div class="row">
+					<div class="medium-3 columns">
+						<label>Deletar</label>
+					</div>
+					<div class="medium-9 columns">
+						{{ previsao_orcamentaria.DELETE }}
+					</div>
+				</div>
+			{% endif %}
+		{% endfor %}
+		<br />
 		<div class="row">
 			<span><b>* Campos obrigatórios</b></span>
 		</div>

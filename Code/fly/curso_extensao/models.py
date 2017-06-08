@@ -94,28 +94,6 @@ class Servidor(models.Model):
     def __str__(self):
         return self.nome_completo
 
-class PrevisaoOrcamentaria(models.Model):
-    # Receitas.
-    inscricoes = models.DecimalField(max_digits=10, decimal_places=2)
-    convenios = models.DecimalField(max_digits=10, decimal_places=2)
-    patrocinios = models.DecimalField(max_digits=10, decimal_places=2)
-
-    #TODO: tipo dos campos??
-    fonte_financiamento = models.DecimalField(max_digits=10, decimal_places=2)
-
-    # Despesas.
-    honorarios = models.DecimalField(max_digits=10, decimal_places=2)
-    passagens = models.DecimalField(max_digits=10, decimal_places=2)
-    alimentacao = models.DecimalField(max_digits=10, decimal_places=2)
-    hospedagem = models.DecimalField(max_digits=10, decimal_places=2)
-    divulgacao = models.DecimalField(max_digits=10, decimal_places=2)
-    material_de_consumo = models.DecimalField(max_digits=10, decimal_places=2)
-    xerox = models.DecimalField(max_digits=10, decimal_places=2)
-    certificados = models.DecimalField(max_digits=10, decimal_places=2)
-    
-    outros = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    outros_especificacao = models.CharField(max_length=200, blank=True, null=True)
-
 class TipoGestaoRecursosFinanceiros(models.Model):
     # (0, 'Unioeste'),
     # (1, 'PRAP'),
@@ -128,12 +106,6 @@ class TipoGestaoRecursosFinanceiros(models.Model):
     def __str__(self):
         return self.nome
 
-class GestaoRecursosFinanceiros(models.Model):
-    identificacao = models.ForeignKey(TipoGestaoRecursosFinanceiros)
-
-    fundacao = models.CharField(max_length=200, blank=True, null=True)
-    outros = models.CharField(max_length=200, blank=True, null=True)
-
 class CursoExtensao(models.Model):
     user = models.ForeignKey(auth_models.User)
     
@@ -143,7 +115,8 @@ class CursoExtensao(models.Model):
 
     # Docente efetivo ou Agente Universitario
     coordenador = models.ForeignKey(Servidor, related_name='coordenador')
-    periodo_de_realizacao = models.CharField(max_length=200)
+    periodo_realizacao_inicio = models.DateTimeField()
+    periodo_realizacao_fim = models.DateTimeField()
 
     programa_extensao = models.ForeignKey(Programa, blank=True, null=True)
 
@@ -178,12 +151,38 @@ class CursoExtensao(models.Model):
 
     servidores = models.ManyToManyField(Servidor, related_name='servidores', through='Servidor_CursoExtensao')
 
-    #21 é opcional caso #20 seja Null
-    previsao_orcamentaria = models.ForeignKey(PrevisaoOrcamentaria, blank=True, null=True)
-
     def __str__(self):
         return self.titulo
 
+class PrevisaoOrcamentaria_CursoExtensao(models.Model):
+    curso_extensao = models.ForeignKey(CursoExtensao)
+
+    # Receitas.
+    inscricoes = models.DecimalField(max_digits=10, decimal_places=2)
+    convenios = models.DecimalField(max_digits=10, decimal_places=2)
+    patrocinios = models.DecimalField(max_digits=10, decimal_places=2)
+
+    fonte_financiamento = models.DecimalField(max_digits=10, decimal_places=2)
+
+    # Despesas.
+    honorarios = models.DecimalField(max_digits=10, decimal_places=2)
+    passagens = models.DecimalField(max_digits=10, decimal_places=2)
+    alimentacao = models.DecimalField(max_digits=10, decimal_places=2)
+    hospedagem = models.DecimalField(max_digits=10, decimal_places=2)
+    divulgacao = models.DecimalField(max_digits=10, decimal_places=2)
+    material_consumo = models.DecimalField(max_digits=10, decimal_places=2)
+    xerox = models.DecimalField(max_digits=10, decimal_places=2)
+    certificados = models.DecimalField(max_digits=10, decimal_places=2)
+    
+    #TODO: validar:
+    outros = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    outros_especificacao = models.CharField(max_length=200, blank=True, null=True)
+
+    # Gestao dos recursos financeiros
+    #TODO: validar:
+    identificacao = models.ForeignKey(TipoGestaoRecursosFinanceiros, blank=True, null=True)
+    fundacao = models.CharField(max_length=200, blank=True, null=True)
+    outro_orgao_gestor = models.CharField(max_length=200, blank=True, null=True)
 
 class PalavraChave_CursoExtensao(models.Model):
     curso_extensao = models.ForeignKey(CursoExtensao)
