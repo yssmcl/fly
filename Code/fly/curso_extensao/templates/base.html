@@ -13,11 +13,13 @@
 		<div class="off-canvas-wrapper">
 			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper> <!-- Essa div e a de cima servem para fazer a parte do menu lateral -->
 				<div class="off-canvas position-left" id="mobile-menu" data-off-canvas>
-					<ul>
-						<li><a href="#">Sobre</a></li>
-						<li><a href="#">Serviços</a></li>
-						<li><a href="#">Contato</a></li>
-					</ul>
+					<li><a href="{% url 'curso_extensao:index' %}">Home</a></li>
+					<div class="menu-mobile-opcao">Curso</div>
+		  			<ul>
+		  				<li><a href="{% url 'curso_extensao:novo' %}">Cadastro de Curso</a></li>
+		  				<hr></hr>
+			            <li><a href="{% url 'curso_extensao:consulta' %}">Consulta de Curso</a></li>
+		  			</ul>
 				</div>
 
 				<!-- MOBILE NAVIGATION -->
@@ -35,16 +37,14 @@
 					 <div class="wrap">
 							<div class="top-bar-left">
 								<ul class="dropdown menu menu-desktop" data-dropdown-menu>
+									<li><a href="{% url 'curso_extensao:index' %}">Home</a></li>
 									<li>
-										<a href="#">Opção 1</a>
+										<a href="#">Curso</a>
 										<ul class="menu">
-											<li><a href="#">Submenu 1</a></li>
-											<li><a href="#">Submenu 2</a></li>
-											<li><a href="#">Submenu 3</a></li>
+											<li><a href="{% url 'curso_extensao:novo' %}">Cadastro de Curso</a></li>
+											<li><a href="{% url 'curso_extensao:consulta' %}">Consulta de Curso</a></li>
 										</ul>
 									</li>
-									<li><a href="#">Opção 2</a></li>
-									<li><a href="#">Opção 3</a></li>
 								</ul>
 							</div>
 							<div class="top-bar-right">
