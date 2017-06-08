@@ -1,3 +1,5 @@
+{% load static %}
+
 <!doctype html>
 <html class="no-js" lang="en" dir="ltr">
 	<head>
@@ -5,49 +7,41 @@
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>{% block title %} Projeto {% endblock %}</title>
-		{% load static %}
 
 		<link rel="apple-touch-icon" sizes="57x57" href="{% static 'favicon/apple-icon-57x57.png' %}">
-        <link rel="apple-touch-icon" sizes="60x60" href="{% static 'favicon/apple-icon-60x60.png' %}">
-        <link rel="apple-touch-icon" sizes="72x72" href="{% static 'favicon/apple-icon-72x72.png' %}">
-        <link rel="apple-touch-icon" sizes="76x76" href="{% static 'favicon/apple-icon-76x76.png' %}">
-        <link rel="apple-touch-icon" sizes="114x114" href="{% static 'favicon/apple-icon-114x114.png' %}">
-        <link rel="apple-touch-icon" sizes="120x120" href="{% static 'favicon/apple-icon-120x120.png' %}">
-        <link rel="apple-touch-icon" sizes="144x144" href="{% static 'favicon/apple-icon-144x144.png' %}">
-        <link rel="apple-touch-icon" sizes="152x152" href="{% static 'favicon/apple-icon-152x152.png' %}">
-        <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-icon-180x180.png' %}">
-        <link rel="icon" type="image/png" sizes="192x192"  href="{% static 'favicon/android-icon-192x192.png' %}">
-        <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
-        <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon/favicon-96x96.png' %}">
-        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
-        <link rel="manifest" href="{% static 'favicon/manifest.json' %}">
-        <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="msapplication-TileImage" content="{% static 'favicon/ms-icon-144x144.png' %}">
-        <meta name="theme-color" content="#ffffff">
+		<link rel="apple-touch-icon" sizes="60x60" href="{% static 'favicon/apple-icon-60x60.png' %}">
+		<link rel="apple-touch-icon" sizes="72x72" href="{% static 'favicon/apple-icon-72x72.png' %}">
+		<link rel="apple-touch-icon" sizes="76x76" href="{% static 'favicon/apple-icon-76x76.png' %}">
+		<link rel="apple-touch-icon" sizes="114x114" href="{% static 'favicon/apple-icon-114x114.png' %}">
+		<link rel="apple-touch-icon" sizes="120x120" href="{% static 'favicon/apple-icon-120x120.png' %}">
+		<link rel="apple-touch-icon" sizes="144x144" href="{% static 'favicon/apple-icon-144x144.png' %}">
+		<link rel="apple-touch-icon" sizes="152x152" href="{% static 'favicon/apple-icon-152x152.png' %}">
+		<link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-icon-180x180.png' %}">
+		<link rel="icon" type="image/png" sizes="192x192"  href="{% static 'favicon/android-icon-192x192.png' %}">
+		<link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+		<link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon/favicon-96x96.png' %}">
+		<link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+		<link rel="manifest" href="{% static 'favicon/manifest.json' %}">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="{% static 'favicon/ms-icon-144x144.png' %}">
+		<meta name="theme-color" content="#ffffff">
 
 		<link rel="stylesheet" href="{% static 'css/foundation.css' %}">
 		<link rel="stylesheet" href="{% static 'css/app.css' %} ">
-		<script language="JavaScript" type="text/javascript">
-
-	     	function cancelar_cadastro(){
-	     		decisao = confirm("Ao sair, todos os dados do formulário serão perdidos. Deseja continuar?");
-	     		if(decisao){
-					location.href = "{% url 'curso_extensao:index' %}";
-	         	}
-	        }
-        </script>
 	</head>
 	<body>
+		{% block body_begin_scripts %}{% endblock %}
+
 		<div class="off-canvas-wrapper">
 			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper> <!-- Essa div e a de cima servem para fazer a parte do menu lateral -->
 				<div class="off-canvas position-left" id="mobile-menu" data-off-canvas>
 					<li><a href="{% url 'curso_extensao:index' %}">Home</a></li>
 					<div class="menu-mobile-opcao">Curso</div>
-		  			<ul>
-		  				<li><a href="{% url 'curso_extensao:novo' %}">Cadastro de Curso</a></li>
-		  				<hr></hr>
-			            <li><a href="{% url 'curso_extensao:consulta' %}">Consulta de Curso</a></li>
-		  			</ul>
+					<ul>
+						<li><a href="{% url 'curso_extensao:novo' %}">Cadastro de Curso</a></li>
+						<hr></hr>
+						<li><a href="{% url 'curso_extensao:consulta' %}">Consulta de Curso</a></li>
+					</ul>
 				</div>
 
 				<!-- MOBILE NAVIGATION -->
@@ -92,12 +86,11 @@
 				</div>
 			</div>
 		</div>
-
 		<script src="{% static 'js/vendor/jquery.js' %}"></script>
-		<script src="{% static 'js/vendor/jquery.maskedinput.js' %}"></script>
 		<script src="{% static 'js/vendor/what-input.js' %}"></script>
 		<script src="{% static 'js/vendor/foundation.js' %}"></script>
 		<script src="{% static 'js/app.js' %}"></script>
-		<script src="{% static 'js/mascaras.js' %}"></script>
+
+		{% block body_end_scripts %}{% endblock %}
 	</body>
 </html>

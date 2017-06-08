@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
-{% block title %} Curso Extensão {% endblock%}
+{% load static %}
 
+{% block title %} Curso Extensão {% endblock%}
 
 {% block content %}
 	<br />
 	<br />
 	<br />
 	<div class="row" style="text-align:center;">
-		<img src="./static/img/logo_extensao.jpg" alt="Extensão Unioeste" height="400" width="900">
+		<img src="{% static 'img/logo_extensao.jpg' %}" alt="Extensão Unioeste" height="400" width="900">
 	</div>
-	
 {% endblock %}
