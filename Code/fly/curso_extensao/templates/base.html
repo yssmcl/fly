@@ -8,6 +8,15 @@
 		{% load static %}
 		<link rel="stylesheet" href="{% static 'css/foundation.css' %}">
 		<link rel="stylesheet" href="{% static 'css/app.css' %} ">
+		<script language="JavaScript" type="text/javascript">
+
+	     	function cancelar_cadastro(){
+	     		decisao = confirm("Ao sair, todos os dados do formulário serão perdidos. Deseja continuar?");
+	     		if(decisao){
+					location.href = "{% url 'curso_extensao:index' %}";
+	         	}
+	        }
+        </script>
 	</head>
 	<body>
 		<div class="off-canvas-wrapper">
