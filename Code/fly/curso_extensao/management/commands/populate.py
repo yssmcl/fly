@@ -16,8 +16,7 @@ class Command(BaseCommand):
         campus_list = [
             'Cascavel',
             'Foz do Iguaçu',
-            'Francisco',
-            'Beltrão',
+            'Francisco Beltrão',
             'Marechal Cândido Rondon',
             'Toledo',
         ]
@@ -220,4 +219,4 @@ class Command(BaseCommand):
             s.cep = 12345678
             s.save()
             print("Adicionando Bar em Servidor")
-    
+
