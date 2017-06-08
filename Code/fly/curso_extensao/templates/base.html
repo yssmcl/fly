@@ -58,8 +58,12 @@
 							</div>
 							<div class="top-bar-right">
 								<ul class="menu menu-desktop">
-									<li><span>Usuário</span></li>
-									<li><a href="#">Sair</a></li>                  
+									{% if user.is_authenticated %}
+										<li>{{ user }}</li>
+										<li><a href="{% url 'accounts:logout' %}">Sair</a></li>                  
+									{% else %}
+										<li><a href="{% url 'accounts:login' %}">Entrar</a></li>                  
+									{% endif%}
 								</ul>
 							</div>
 						</div>
