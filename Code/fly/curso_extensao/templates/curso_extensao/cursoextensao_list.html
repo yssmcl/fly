@@ -2,7 +2,7 @@
 
 {% load formset_tags %}
 
-{% block title %} Curso Extensao {% endblock%}
+{% block title %} Curso Extensão {% endblock %}
 
 {% block content %}
 
@@ -25,11 +25,14 @@
 		<table>
 			<thead>
 				<th>Cursos de extensão</th>
-			</thead>
+				<th>Coordenador(a)</th>
+				<th>Ação</th>
 			<tbody>
 				{% for curso_extensao in object_list %}
 				<tr>
-					<td><a href="{% url 'curso_extensao:detalhe' curso_extensao.pk %}">{{ curso_extensao }}</a></td>
+					<td>{{ curso_extensao }}</td>
+					<td>{{ curso_extensao.coordenador }}</td>
+					<td><a href="{% url 'curso_extensao:detalhe' curso_extensao.pk %}" class="button">Visualizar</a></td>
 				</tr>
 			{% endfor %}
 			</tbody>
