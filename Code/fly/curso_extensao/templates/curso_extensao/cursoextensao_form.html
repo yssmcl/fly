@@ -17,25 +17,12 @@
 {% endblock %}
 
 {% block content %}
-	{% if main_form.errors %} main_form: {{ main_form.errors }} <br /> {% endif %}
-	{% if palavras_formset.errors %} palavras_formset: {{ palavras_formset.errors }} <br /> {% endif %}
-	{% if discentes_formset.errors %} discentes_formset: {{ discentes_formset.errors }} <br /> {% endif %}
-	{% if servidores_formset.errors %} servidores_formset: {{ servidores_formset.errors }} <br /> {% endif %}
-	{% if membros_comunidade_formset.errors %} membros_comunidade_formset: {{ membros_comunidade_formset.errors }} <br /> {% endif %}
-	{% if previsao_orcamentaria_formset.errors %} previsao_orcamentaria_formset: {{ previsao_orcamentaria_formset.errors }} <br /> {% endif %}
-
 	<h1 style="text-align:center;">Curso de Extensão</h1>
 
 	<form data-abide novalidate method="post">
 		{% csrf_token %}
 
-		{% if main_form.errors %}
-			<div data-abide-error class="alert callout">
-				{% for field, error in main_form.errors.items %}
-					<p><a class="fi-alert" href="#id_{{ main_form.prefix }}-{{ field }}">{{ error|escape }}</a></p>
-				{% endfor %}
-			</div>
-		{% endif %}
+		{{ main_form.non_field_errors }}
 
 		<div data-abide-error class="alert callout" style="display: none;">
 			<p><i class="fi-alert"></i>Campos obrigatórios não preenchidos!</p>
@@ -45,6 +32,7 @@
 				<label>Título*</label>
 			</div>
 			<div class="medium-11 columns">
+				{% if main_form.titulo.errors %}<div data-abide-error class="alert callout">{{ main_form.titulo.errors }}</div> {% endif %}
 				{{ main_form.titulo }}
 			</div>
 		</div>
@@ -53,6 +41,7 @@
 				<label>Coordenador(a)*</label>
 			</div>
 			<div class="medium-10 columns">
+				{% if main_form.coordenador.errors %}<div data-abide-error class="alert callout">{{ main_form.coordenador.errors }}</div> {% endif %}
 				{{ main_form.coordenador }}
 			</div>
 		</div>
@@ -61,12 +50,14 @@
 				<label>Início*</label>
 			</div>
 			<div class="medium-4 columns">
+				{% if main_form.periodo_realizacao_inicio.errors %}<div data-abide-error class="alert callout">{{ main_form.periodo_realizacao_inicio.errors }}</div> {% endif %}
 				{{ main_form.periodo_realizacao_inicio }}
 			</div>
 			<div class="medium-2 columns">
 				<label>Fim*</label>
 			</div>
 			<div class="medium-4 columns">
+				{% if main_form.periodo_realizacao_fim.errors %}<div data-abide-error class="alert callout">{{ main_form.periodo_realizacao_fim.errors }}</div> {% endif %}
 				{{ main_form.periodo_realizacao_fim }}
 			</div>
 		</div>
@@ -75,6 +66,7 @@
 				<label>Programa de extensão</label>
 			</div>
 			<div class="medium-9 columns">
+				{% if main_form.programa_extensao.errors %}<div data-abide-error class="alert callout">{{ main_form.programa_extensao.errors }}</div> {% endif %}
 				{{ main_form.programa_extensao }}
 			</div>
 		</div>
@@ -83,18 +75,21 @@
 				<label>Unidade administrativa*</label>
 			</div>
 			<div class="medium-2 columns">
+				{% if main_form.unidade_administrativa.errors %}<div data-abide-error class="alert callout">{{ main_form.unidade_administrativa.errors }}</div> {% endif %}
 				{{ main_form.unidade_administrativa }}
 			</div>
 			<div class="medium-1 columns">
 				<label>Campus*</label>
 			</div>
 			<div class="medium-3 columns">
+				{% if main_form.campus.errors %}<div data-abide-error class="alert callout">{{ main_form.campus.errors }}</div> {% endif %}
 				{{ main_form.campus }}
 			</div>
 			<div class="medium-1 columns">
 				<label>Centro*</label>
 			</div>
 			<div class="medium-2 columns">
+				{% if main_form.centro.errors %}<div data-abide-error class="alert callout">{{ main_form.centro.errors }}</div> {% endif %}
 				{{ main_form.centro }}
 			</div>
 		</div>
@@ -103,12 +98,14 @@
 				<label>Grande área*</label>
 			</div>
 			<div class="medium-3 columns">
+				{% if main_form.grande_area.errors %}<div data-abide-error class="alert callout">{{ main_form.grande_area.errors }}</div> {% endif %}
 				{{ main_form.grande_area }}
 			</div>
 			<div class="medium-2 columns">
 				<label>Linha de extensão*</label>
 			</div>
 			<div class="medium-5 columns">
+				{% if main_form.linha_extensao.errors %}<div data-abide-error class="alert callout">{{ main_form.linha_extensao.errors }}</div> {% endif %}
 				{{ main_form.linha_extensao }}
 			</div>
 		</div>
@@ -117,12 +114,14 @@
 				<label>Área temática principal*</label>
 			</div>
 			<div class="medium-3 columns">
+				{% if main_form.area_tematica_principal.errors %}<div data-abide-error class="alert callout">{{ main_form.area_tematica_principal.errors }}</div> {% endif %}
 				{{ main_form.area_tematica_principal }}
 			</div>
 			<div class="medium-3 columns">
 				<label>Área temática secundária*</label>
 			</div>
 			<div class="medium-3 columns">
+				{% if main_form.area_tematica_secundaria.errors %}<div data-abide-error class="alert callout">{{ main_form.area_tematica_secundaria.errors }}</div> {% endif %}
 				{{ main_form.area_tematica_secundaria }}
 			</div>
 		</div>
@@ -131,6 +130,7 @@
 				<label>Público alvo*</label>
 			</div>
 			<div class="medium-10 columns">
+				{% if main_form.publico_alvo.errors %}<div data-abide-error class="alert callout">{{ main_form.publico_alvo.errors }}</div> {% endif %}
 				{{ main_form.publico_alvo }}
 			</div>
 		</div>
@@ -139,18 +139,21 @@
 				<label>Número de pessoas beneficiadas*</label>
 			</div>
 			<div class="medium-2 columns">
+				{% if main_form.numero_pessoas_beneficiadas.errors %}<div data-abide-error class="alert callout">{{ main_form.numero_pessoas_beneficiadas.errors }}</div> {% endif %}
 				{{ main_form.numero_pessoas_beneficiadas }}
 			</div>
 			<div class="medium-2 columns">
 				<label>C/H total*</label>
 			</div>
 			<div class="medium-1 columns">
+				{% if main_form.carga_horaria_total.errors %}<div data-abide-error class="alert callout">{{ main_form.carga_horaria_total.errors }}</div> {% endif %}
 				{{ main_form.carga_horaria_total }}
 			</div>
 			<div class="medium-2 columns">
 				<label>Número de vagas*</label>
 			</div>
 			<div class="medium-1 columns">
+				{% if main_form.numero_vagas.errors %}<div data-abide-error class="alert callout">{{ main_form.numero_vagas.errors }}</div> {% endif %}
 				{{ main_form.numero_vagas }}
 			</div>
 		</div>
@@ -159,18 +162,21 @@
 				<label>Local de inscrição*</label>
 			</div>
 			<div class="medium-10 columns">
+				{% if main_form.local_inscricao.errors %}<div data-abide-error class="alert callout">{{ main_form.local_inscricao.errors }}</div> {% endif %}
 				{{ main_form.local_inscricao }}
 			</div>
 		</div>
 		<div class="row">
 			<div class="medium-12 columns">
 				<label>Resumo*</label>
+				{% if main_form.resumo.errors %}<div data-abide-error class="alert callout">{{ main_form.resumo.errors }}</div> {% endif %}
 				{{ main_form.resumo }}
 			</div>
 		</div>
 		<div class="row">
 			<div class="medium-12 columns">
 				<label>Programação*</label>
+				{% if main_form.programacao.errors %}<div data-abide-error class="alert callout">{{ main_form.programacao.errors }}</div> {% endif %}
 				{{ main_form.programacao }}
 			</div>
 		</div>
@@ -208,6 +214,7 @@
 				{{ form.id }}
 				{{ form.curso_extensao }}
 				<div class="medium-3 columns">
+					{% if form.nome.errors %}<div data-abide-error class="alert callout">{{ form.nome.errors }}</div> {% endif %}
 					{{ form.nome }}
 				</div>
 				<div class="medium-1 columns">
@@ -246,12 +253,15 @@
 							{{ form.id }}
 							{{ form.curso_extensao }}
 							<div class="medium-4 columns">
+								{% if form.servidor.errors %}<div data-abide-error class="alert callout">{{ form.servidor.errors }}</div> {% endif %}
 								{{ form.servidor }}
 							</div>
 							<div class="medium-4 columns">
+								{% if form.funcao.errors %}<div data-abide-error class="alert callout">{{ form.funcao.errors }}</div> {% endif %}
 								{{ form.funcao }}
 							</div>
 							<div class="medium-3 columns">
+								{% if form.carga_horaria_dedicada.errors %}<div data-abide-error class="alert callout">{{ form.carga_horaria_dedicada.errors }}</div> {% endif %}
 								{{ form.carga_horaria_dedicada }}
 							</div>
 							<div class="medium-1 columns">
@@ -270,12 +280,15 @@
 							{{ servidores_formset.empty_form.id }}
 							{{ servidores_formset.empty_form.curso_extensao }}
 							<div class="medium-4 columns">
+								{% if servidores_formset.empty_form.servidor.errors %}<div data-abide-error class="alert callout">{{ servidores_formset.empty_form.servidor.errors }}</div> {% endif %}
 								{{ servidores_formset.empty_form.servidor }}
 							</div>
 							<div class="medium-4 columns">
+								{% if servidores_formset.empty_form.funcao.errors %}<div data-abide-error class="alert callout">{{ servidores_formset.empty_form.funcao.errors }}</div> {% endif %}
 								{{ servidores_formset.empty_form.funcao }}
 							</div>
 							<div class="medium-3 columns">
+								{% if servidores_formset.empty_form.carga_horaria_dedicada.errors %}<div data-abide-error class="alert callout">{{ servidores_formset.empty_form.carga_horaria_dedicada.errors }}</div> {% endif %}
 								{{ servidores_formset.empty_form.carga_horaria_dedicada }}
 							</div>
 							<div class="medium-1 columns">
@@ -310,6 +323,7 @@
 									<label>Nome</label>
 								</div>
 								<div class="medium-11 columns">
+									{% if form.nome.errors %}<div data-abide-error class="alert callout">{{ form.nome.errors }}</div> {% endif %}
 									{{ form.nome }}
 								</div>
 							</div>
@@ -318,24 +332,28 @@
 									<label>Curso</label>
 								</div>
 								<div class="medium-3 columns">
+									{% if form.curso.errors %}<div data-abide-error class="alert callout">{{ form.curso.errors }}</div> {% endif %}
 									{{ form.curso }}
 								</div>
 								<div class="medium-1 columns">
 									<label>Série</label>
 								</div>
 								<div class="medium-1 columns">
+									{% if form.serie.errors %}<div data-abide-error class="alert callout">{{ form.serie.errors }}</div> {% endif %}
 									{{ form.serie }}
 								</div>
 								<div class="medium-1 columns">
 									<label>Turno</label>
 								</div>
 								<div class="medium-2 columns">
+									{% if form.turno.errors %}<div data-abide-error class="alert callout">{{ form.turno.errors }}</div> {% endif %}
 									{{ form.turno }}
 								</div>
 								<div class="medium-2 columns">
 									<label>C/H semanal</label>
 								</div>
 								<div class="medium-1 columns">
+									{% if form.carga_horaria_semanal.errors %}<div data-abide-error class="alert callout">{{ form.carga_horaria_semanal.errors }}</div> {% endif %}
 									{{ form.carga_horaria_semanal }}
 								</div>
 							</div>
@@ -344,12 +362,14 @@
 									<label>Telefone</label>
 								</div>	
 								<div class="medium-3 columns">
+									{% if form.telefone.errors %}<div data-abide-error class="alert callout">{{ form.telefone.errors }}</div> {% endif %}
 									{{ form.telefone }}
 								</div>
 								<div class="medium-1 columns">
 									<label>Email</label>
 								</div>
 								<div class="medium-5 columns">
+									{% if form.email.errors %}<div data-abide-error class="alert callout">{{ form.email.errors }}</div> {% endif %}
 									{{ form.email }}
 								</div>
 								{% if discentes_formset.can_delete %}
@@ -377,6 +397,7 @@
 									<label>Nome</label>
 								</div>
 								<div class="medium-11 columns">
+									{% if discentes_formset.empty_form.nome.errors %}<div data-abide-error class="alert callout">{{ discentes_formset.empty_form.nome.errors }}</div> {% endif %}
 									{{ discentes_formset.empty_form.nome }}
 								</div>
 							</div>
@@ -385,24 +406,28 @@
 									<label>Curso</label>
 								</div>
 								<div class="medium-3 columns">
+									{% if discentes_formset.empty_form.curso.errors %}<div data-abide-error class="alert callout">{{ discentes_formset.empty_form.curso.errors }}</div> {% endif %}
 									{{ discentes_formset.empty_form.curso }}
 								</div>
 								<div class="medium-1 columns">
 									<label>Série</label>
 								</div>
 								<div class="medium-1 columns">
+									{% if discentes_formset.empty_form.serie.errors %}<div data-abide-error class="alert callout">{{ discentes_formset.empty_form.serie.errors }}</div> {% endif %}
 									{{ discentes_formset.empty_form.serie }}
 								</div>
 								<div class="medium-1 columns">
 									<label>Turno</label>
 								</div>
 								<div class="medium-2 columns">
+									{% if discentes_formset.empty_form.turno.errors %}<div data-abide-error class="alert callout">{{ discentes_formset.empty_form.turno.errors }}</div> {% endif %}
 									{{ discentes_formset.empty_form.turno }}
 								</div>
 								<div class="medium-2 columns">
 									<label>C/H semanal</label>
 								</div>
 								<div class="medium-1 columns">
+									{% if discentes_formset.empty_form.carga_horaria_semanal.errors %}<div data-abide-error class="alert callout">{{ discentes_formset.empty_form.carga_horaria_semanal.errors }}</div> {% endif %}
 									{{ discentes_formset.empty_form.carga_horaria_semanal }}
 								</div>
 							</div>
@@ -411,12 +436,14 @@
 									<label>Telefone</label>
 								</div>	
 								<div class="medium-3 columns">
+									{% if discentes_formset.empty_form.telefone.errors %}<div data-abide-error class="alert callout">{{ discentes_formset.empty_form.telefone.errors }}</div> {% endif %}
 									{{ discentes_formset.empty_form.telefone }}
 								</div>
 								<div class="medium-1 columns">
 									<label>Email</label>
 								</div>
 								<div class="medium-5 columns">
+									{% if discentes_formset.empty_form.email.errors %}<div data-abide-error class="alert callout">{{ discentes_formset.empty_form.email.errors }}</div> {% endif %}
 									{{ discentes_formset.empty_form.email }}
 								</div>
 								{% if discentes_formset.can_delete %}
@@ -456,12 +483,14 @@
 									<label>Nome</label>
 								</div>
 								<div class="medium-8 columns">
+									{% if form.nome.errors %}<div data-abide-error class="alert callout">{{ form.nome.errors }}</div> {% endif %}
 									{{ form.nome }}
 								</div>
 								<div class="medium-2 columns">
 									<label>C/H semanal</label>
 								</div>
 								<div class="medium-1 columns">
+									{% if form.carga_horaria_semanal.errors %}<div data-abide-error class="alert callout">{{ form.carga_horaria_semanal.errors }}</div> {% endif %}
 									{{ form.carga_horaria_semanal }}
 								</div>
 							</div>
@@ -470,6 +499,7 @@
 									<label>Entidade</label>
 								</div>
 								<div class="medium-11 columns">
+									{% if form.entidade.errors %}<div data-abide-error class="alert callout">{{ form.entidade.errors }}</div> {% endif %}
 									{{ form.entidade }}
 								</div>
 							</div>
@@ -478,12 +508,14 @@
 									<label>Telefone</label>
 								</div>
 								<div class="medium-5 columns">
+									{% if form.telefone.errors %}<div data-abide-error class="alert callout">{{ form.telefone.errors }}</div> {% endif %}
 									{{ form.telefone }}
 								</div>
 								<div class="medium-1 columns">
 									<label>Email</label>
 								</div>
 								<div class="medium-5 columns">
+									{% if form.email.errors %}<div data-abide-error class="alert callout">{{ form.email.errors }}</div> {% endif %}
 									{{ form.email }}
 								</div>
 							</div>
@@ -492,12 +524,14 @@
 									<label>CPF</label>
 								</div>
 								<div class="medium-5 columns">
+									{% if form.cpf.errors %}<div data-abide-error class="alert callout">{{ form.cpf.errors }}</div> {% endif %}
 									{{ form.cpf }}
 								</div>
 								<div class="medium-3 columns">
 									<label>Data de nascimento</label>
 								</div>
 								<div class="medium-3 columns">
+									{% if form.data_nascimento.errors %}<div data-abide-error class="alert callout">{{ form.data_nascimento.errors }}</div> {% endif %}
 									{{ form.data_nascimento }}
 								</div>
 							</div>
@@ -506,6 +540,7 @@
 									<label>Função</label>
 								</div>
 								<div class="medium-9 columns">
+									{% if form.funcao.errors %}<div data-abide-error class="alert callout">{{ form.funcao.errors }}</div> {% endif %}
 									{{ form.funcao }}
 								</div>
 								{% if membros_comunidade_formset.can_delete %}
@@ -533,12 +568,14 @@
 									<label>Nome</label>
 								</div>
 								<div class="medium-8 columns">
+									{% if membros_comunidade_formset.empty_form.nome.errors %}<div data-abide-error class="alert callout">{{ membros_comunidade_formset.empty_form.nome.errors }}</div> {% endif %}
 									{{ membros_comunidade_formset.empty_form.nome }}
 								</div>
 								<div class="medium-2 columns">
 									<label>C/H semanal</label>
 								</div>
 								<div class="medium-1 columns">
+									{% if membros_comunidade_formset.empty_form.carga_horaria_semanal.errors.errors %}<div data-abide-error class="alert callout">{{ membros_comunidade_formset.empty_form.carga_horaria_semanal.errors }}</div> {% endif %}
 									{{ membros_comunidade_formset.empty_form.carga_horaria_semanal }}
 								</div>
 							</div>
@@ -547,6 +584,7 @@
 									<label>Entidade</label>
 								</div>
 								<div class="medium-11 columns">
+									{% if membros_comunidade_formset.empty_form.entidade.errors %}<div data-abide-error class="alert callout">{{ membros_comunidade_formset.empty_form.entidade.errors }}</div> {% endif %}
 									{{ membros_comunidade_formset.empty_form.entidade }}
 								</div>
 							</div>
@@ -555,12 +593,14 @@
 									<label>Telefone</label>
 								</div>
 								<div class="medium-5 columns">
+									{% if membros_comunidade_formset.empty_form.telefone.errors %}<div data-abide-error class="alert callout">{{ membros_comunidade_formset.empty_form.telefone.errors }}</div> {% endif %}
 									{{ membros_comunidade_formset.empty_form.telefone }}
 								</div>
 								<div class="medium-1 columns">
 									<label>Email</label>
 								</div>
 								<div class="medium-5 columns">
+									{% if membros_comunidade_formset.empty_form.email.errors %}<div data-abide-error class="alert callout">{{ membros_comunidade_formset.empty_form.email.errors }}</div> {% endif %}
 									{{ membros_comunidade_formset.empty_form.email }}
 								</div>
 							</div>
@@ -569,12 +609,14 @@
 									<label>CPF</label>
 								</div>
 								<div class="medium-5 columns">
+									{% if membros_comunidade_formset.empty_form.cpf.errors %}<div data-abide-error class="alert callout">{{ membros_comunidade_formset.empty_form.cpf.errors }}</div> {% endif %}
 									{{ membros_comunidade_formset.empty_form.cpf }}
 								</div>
 								<div class="medium-3 columns">
 									<label>Data de nascimento</label>
 								</div>
 								<div class="medium-3 columns">
+									{% if membros_comunidade_formset.empty_form.data_nascimento.errors %}<div data-abide-error class="alert callout">{{ membros_comunidade_formset.empty_form.data_nascimento.errors }}</div> {% endif %}
 									{{ membros_comunidade_formset.empty_form.data_nascimento }}
 								</div>
 							</div>
@@ -583,6 +625,7 @@
 									<label>Função</label>
 								</div>
 								<div class="medium-9 columns">
+									{% if membros_comunidade_formset.empty_form.funcao.errors %}<div data-abide-error class="alert callout">{{ membros_comunidade_formset.empty_form.funcao.errors }}</div> {% endif %}
 									{{ membros_comunidade_formset.empty_form.funcao }}
 								</div>
 								{% if membros_comunidade_formset.can_delete %}
@@ -621,6 +664,7 @@
 					<label>Inscrições</label>
 				</div>
 				<div class="medium-9 columns">
+					{% if previsao_orcamentaria.inscricoes.errors %}<div data-abide-error class="alert callout">{{ previsao_orcamentaria.inscricoes.errors }}</div> {% endif %}
 					{{ previsao_orcamentaria.inscricoes }}
 				</div>
 			</div>
@@ -629,6 +673,7 @@
 					<label>Convênios</label>
 				</div>
 				<div class="medium-9 columns">
+					{% if previsao_orcamentaria.convenios.errors %}<div data-abide-error class="alert callout">{{ previsao_orcamentaria.convenios.errors }}</div> {% endif %}
 					{{ previsao_orcamentaria.convenios }}
 				</div>
 			</div>
@@ -637,6 +682,7 @@
 					<label>Patrocínios</label>
 				</div>
 				<div class="medium-9 columns">
+					{% if previsao_orcamentaria.patrocinios.errors %}<div data-abide-error class="alert callout">{{ previsao_orcamentaria.patrocinios.errors }}</div> {% endif %}
 					{{ previsao_orcamentaria.patrocinios }}
 				</div>
 			</div>
@@ -645,6 +691,7 @@
 					<label>Fonte(s) de Financiamento(s)</label>
 				</div>
 				<div class="medium-9 columns">
+					{% if previsao_orcamentaria.fonte_financiamento.errors %}<div data-abide-error class="alert callout">{{ previsao_orcamentaria.fonte_financiamento.errors }}</div> {% endif %}
 					{{ previsao_orcamentaria.fonte_financiamento }}
 				</div>
 			</div>
@@ -656,6 +703,7 @@
 					<label>Honorários</label>
 				</div>
 				<div class="medium-9 columns">
+					{% if previsao_orcamentaria.honorarios.errors %}<div data-abide-error class="alert callout">{{ previsao_orcamentaria.honorarios.errors }}</div> {% endif %}
 					{{ previsao_orcamentaria.honorarios }}
 				</div>
 			</div>
@@ -664,6 +712,7 @@
 					<label>Passagens</label>
 				</div>
 				<div class="medium-9 columns">
+					{% if previsao_orcamentaria.passagens.errors %}<div data-abide-error class="alert callout">{{ previsao_orcamentaria.passagens.errors }}</div> {% endif %}
 					{{ previsao_orcamentaria.passagens }}
 				</div>
 			</div>
@@ -672,6 +721,7 @@
 					<label>Alimentação</label>
 				</div>
 				<div class="medium-9 columns">
+					{% if previsao_orcamentaria.alimentacao.errors %}<div data-abide-error class="alert callout">{{ previsao_orcamentaria.alimentacao.errors }}</div> {% endif %}
 					{{ previsao_orcamentaria.alimentacao }}
 				</div>
 			</div>
@@ -680,6 +730,7 @@
 					<label>Hospedagem</label>
 				</div>
 				<div class="medium-9 columns">
+					{% if previsao_orcamentaria.hospedagem.errors %}<div data-abide-error class="alert callout">{{ previsao_orcamentaria.hospedagem.errors }}</div> {% endif %}
 					{{ previsao_orcamentaria.hospedagem }}
 				</div>
 			</div>
@@ -688,6 +739,7 @@
 					<label>Divulgação</label>
 				</div>
 				<div class="medium-9 columns">
+					{% if previsao_orcamentaria.divulgacao.errors %}<div data-abide-error class="alert callout">{{ previsao_orcamentaria.divulgacao.errors }}</div> {% endif %}
 					{{ previsao_orcamentaria.divulgacao }}
 				</div>
 			</div>
@@ -696,6 +748,7 @@
 					<label>Materiais de consumo</label>
 				</div>
 				<div class="medium-9 columns">
+					{% if previsao_orcamentaria.material_consumo.errors %}<div data-abide-error class="alert callout">{{ previsao_orcamentaria.material_consumo.errors }}</div> {% endif %}
 					{{ previsao_orcamentaria.material_consumo }}
 				</div>
 			</div>
@@ -704,6 +757,7 @@
 					<label>Xerox</label>
 				</div>
 				<div class="medium-9 columns">
+					{% if previsao_orcamentaria.xerox.errors %}<div data-abide-error class="alert callout">{{ previsao_orcamentaria.xerox.errors }}</div> {% endif %}
 					{{ previsao_orcamentaria.xerox }}
 				</div>
 			</div>
@@ -712,6 +766,7 @@
 					<label>Certificados</label>
 				</div>
 				<div class="medium-9 columns">
+					{% if previsao_orcamentaria.certificados.errors %}<div data-abide-error class="alert callout">{{ previsao_orcamentaria.certificados.errors }}</div> {% endif %}
 					{{ previsao_orcamentaria.certificados }}
 				</div>
 			</div>
@@ -720,6 +775,7 @@
 					<label>Outros</label>
 				</div>
 				<div class="medium-9 columns">
+					{% if previsao_orcamentaria.outros.errors %}<div data-abide-error class="alert callout">{{ previsao_orcamentaria.outros.errors }}</div> {% endif %}
 					{{ previsao_orcamentaria.outros }}
 				</div>
 			</div>
@@ -728,6 +784,7 @@
 					<label>Especificar</label>
 				</div>
 				<div class="medium-9 columns">
+					{% if previsao_orcamentaria.outros_especificacao.errors %}<div data-abide-error class="alert callout">{{ previsao_orcamentaria.outros_especificacao.errors }}</div> {% endif %}
 					{{ previsao_orcamentaria.outros_especificacao }}
 				</div>
 			</div>
@@ -739,6 +796,7 @@
 					<label>Identificação</label>
 				</div>
 				<div class="medium-9 columns">
+					{% if previsao_orcamentaria.identificacao.errors %}<div data-abide-error class="alert callout">{{ previsao_orcamentaria.identificacao.errors }}</div> {% endif %}
 					{{ previsao_orcamentaria.identificacao }}
 				</div>
 			</div>
@@ -747,6 +805,7 @@
 					<label>Fundação</label>
 				</div>
 				<div class="medium-9 columns">
+					{% if previsao_orcamentaria.fundacao.errors %}<div data-abide-error class="alert callout">{{ previsao_orcamentaria.fundacao.errors }}</div> {% endif %}
 					{{ previsao_orcamentaria.fundacao }}
 				</div>
 			</div>
@@ -755,6 +814,7 @@
 					<label>Outro Órgão Gestor</label>
 				</div>
 				<div class="medium-9 columns">
+					{% if previsao_orcamentaria.outro_orgao_gestor.errors %}<div data-abide-error class="alert callout">{{ previsao_orcamentaria.outro_orgao_gestor.errors }}</div> {% endif %}
 					{{ previsao_orcamentaria.outro_orgao_gestor }}
 				</div>
 			</div>
