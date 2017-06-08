@@ -6,19 +6,34 @@
 
 {% block content %}
 
-	<form>
-		<label>Título:</label>
-		<input type="text" name="titulo" />
+	<br />
 
-		<input type="submit" value="Pesquisar" class="button">
+	<form>
+		<div class="row">
+			
+			<label>Título:</label>
+			
+			<input type="text" name="titulo" />
+			
+			<div style="text-align:center;">
+				<input type="submit" value="Pesquisar" class="button">	
+			</div>
+		</div>		
 	</form>
 
-	<ul>
-		{% for curso_extensao in object_list %}
-			<li>
-				<a href="{% url 'curso_extensao:detalhe' curso_extensao.pk %}">{{ curso_extensao }}</a>
-			</li>
-		{% endfor %}
-	</ul>
+	<div class="row">
+		<table>
+			<thead>
+				<th>Cursos de extensão</th>
+			</thead>
+			<tbody>
+				{% for curso_extensao in object_list %}
+				<tr>
+					<td><a href="{% url 'curso_extensao:detalhe' curso_extensao.pk %}">{{ curso_extensao }}</a></td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
 
 {% endblock %}
