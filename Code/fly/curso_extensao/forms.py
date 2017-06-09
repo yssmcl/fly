@@ -1,8 +1,7 @@
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 from .models import CursoExtensao, Servidor_CursoExtensao, PalavraChave_CursoExtensao, Discente_CursoExtensao, MembroComunidade_CursoExtensao, PrevisaoOrcamentaria_CursoExtensao
-
-from django.utils.translation import ugettext_lazy as _
 
 class CursoExtensaoForm(forms.ModelForm):
     class Meta:
@@ -27,6 +26,14 @@ class CursoExtensaoForm(forms.ModelForm):
             error = _("This field is required.")
             self.add_error('unidade_administrativa', error)
             self.add_error('campus', error)
+
+
+        # Validar data de início e fim.
+        inicio = cleaned_data.get('periodo_realizacao_inicio')
+        fim = cleaned_data.get('periodo_realizacao_fim')
+
+        if inicio and fim and inicio >= fim:
+            self.add_error('periodo_realizacao_fim', "Data de fim deve ser após a data de início.")
 
 
 Servidor_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, Servidor_CursoExtensao, extra=1, fields=['servidor', 'carga_horaria_dedicada', 'funcao'])
