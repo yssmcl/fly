@@ -21,102 +21,126 @@
 
 	<form data-abide novalidate method="post">
 		{% csrf_token %}
+
+		{{ main_form.non_field_errors }}
+
 		<div data-abide-error class="alert callout" style="display: none;">
 			<p><i class="fi-alert"></i>Campos obrigatórios não preenchidos!</p>
 		</div>
-		<div class="row medium-12 columns"> <!-- ??? -->
-			<div class="medium-12 rows">
+		<div class="row">
+			<div class="medium-12 columns">
 				<label>Título*</label>
-			</div>
-			<div class="medium-12 rows">
+				{{ main_form.titulo.errors }}
 				{{ main_form.titulo }}
 			</div>
 		</div>
 		<div class="row">
-			<div class="medium-6 columns">
+			<div class="medium-12 columns">
 				<label>Coordenador(a)*</label>
+				{{ main_form.coordenador.errors }}
 				{{ main_form.coordenador }}
 			</div>
+		</div>
+		<div class="row">
 			<div class="medium-6 columns">
-				<label>Período de realização*</label>
-				{{ main_form.periodo_de_realizacao }}
+				<label>Início*</label>
+				{{ main_form.periodo_realizacao_inicio.errors }}
+				{{ main_form.periodo_realizacao_inicio }}
+			</div>
+			<div class="medium-6 columns">
+				<label>Fim*</label>
+				{{ main_form.periodo_realizacao_fim.errors }}
+				{{ main_form.periodo_realizacao_fim }}
 			</div>
 		</div>
 		<div class="row">
 			<div class="medium-12 columns">
 				<label>Programa de extensão</label>
-				{{ main_form.programa_extensao }}
 			</div>
 		</div>
 		<div class="row">
 			<div class="medium-4 columns">
 				<label>Unidade administrativa*</label>
+				{{ main_form.unidade_administrativa.errors }}
 				{{ main_form.unidade_administrativa }}
 			</div>
 			<div class="medium-4 columns">
 				<label>Campus*</label>
+				{{ main_form.campus.errors }}
 				{{ main_form.campus }}
 			</div>
 			<div class="medium-4 columns">
 				<label>Centro*</label>
+				{{ main_form.centro.errors }}
 				{{ main_form.centro }}
 			</div>
 		</div>
 		<div class="row">
 			<div class="medium-6 columns">
 				<label>Grande área*</label>
+				{{ main_form.grande_area.errors }}
 				{{ main_form.grande_area }}
 			</div>
 			<div class="medium-6 columns">
 				<label>Linha de extensão*</label>
+				{{ main_form.linha_extensao.errors }}
 				{{ main_form.linha_extensao }}
 			</div>
 		</div>
 		<div class="row">
 			<div class="medium-6 columns">
 				<label>Área temática principal*</label>
+				{{ main_form.area_tematica_principal.errors }}
 				{{ main_form.area_tematica_principal }}
 			</div>
 			<div class="medium-6 columns">
 				<label>Área temática secundária*</label>
+				{{ main_form.area_tematica_secundaria.errors }}
 				{{ main_form.area_tematica_secundaria }}
 			</div>
 		</div>
 		<div class="row">
 			<div class="medium-12 columns">
 				<label>Público alvo*</label>
+				{{ main_form.publico_alvo.errors }}
 				{{ main_form.publico_alvo }}
 			</div>
 		</div>
 		<div class="row">
 			<div class="medium-4 columns">
 				<label>Número de pessoas beneficiadas*</label>
+				{{ main_form.numero_pessoas_beneficiadas.errors }}
 				{{ main_form.numero_pessoas_beneficiadas }}
 			</div>
 			<div class="medium-4 columns">
 				<label>C/H total*</label>
+				{{ main_form.carga_horaria_total.errors }}
 				{{ main_form.carga_horaria_total }}
 			</div>
 			<div class="medium-4 columns">
 				<label>Número de vagas*</label>
+				{{ main_form.numero_vagas.errors }}
 				{{ main_form.numero_vagas }}
 			</div>
 		</div>
 		<div class="row">
 			<div class="medium-12 columns">
 				<label>Local de inscrição*</label>
+				{{ main_form.local_inscricao.errors }}
 				{{ main_form.local_inscricao }}
 			</div>
 		</div>
 		<div class="row">
 			<div class="medium-12 columns">
 				<label>Resumo*</label>
+				{{ main_form.resumo.errors }}
 				{{ main_form.resumo }}
 			</div>
 		</div>
 		<div class="row">
 			<div class="medium-12 columns">
 				<label>Programação*</label>
+				{{ main_form.programacao.errors }}
 				{{ main_form.programacao }}
 			</div>
 		</div>
@@ -128,6 +152,7 @@
 				{{ form.curso_extensao }}
 				<div class="medium-3 columns">
 					<label>Palavra-chave</label>
+					{{ form.nome.errors }}
 					{{ form.nome }}
 				</div>
 				<div class="medium-1 columns">
@@ -152,14 +177,17 @@
 							{{ form.curso_extensao }}
 							<div class="medium-4 columns">
 								<label>Servidor</label>
+								{{ form.servidor.errors }}
 								{{ form.servidor }}
 							</div>
 							<div class="medium-4 columns">
 								<label>Função</label>
+								{{ form.funcao.errors }}
 								{{ form.funcao }}
 							</div>
 							<div class="medium-3 columns">
 								<label>Carga horária dedicada</label>
+								{{ form.carga_horaria_dedicada.errors }}
 								{{ form.carga_horaria_dedicada }}
 							</div>
 							<div class="medium-1 columns">
@@ -179,16 +207,23 @@
 							{{ servidores_formset.empty_form.id }}
 							{{ servidores_formset.empty_form.curso_extensao }}
 							<div class="medium-4 columns">
+								<label>Servidor</label>
+								{{ servidores_formset.empty_form.servidor.errors }}
 								{{ servidores_formset.empty_form.servidor }}
 							</div>
 							<div class="medium-4 columns">
+								<label>Função</label>
+								{{ servidores_formset.empty_form.funcao.errors }}
 								{{ servidores_formset.empty_form.funcao }}
 							</div>
 							<div class="medium-3 columns">
+								<label>Carga horária dedicada</label>
+								{{ servidores_formset.empty_form.carga_horaria_dedicada.errors }}
 								{{ servidores_formset.empty_form.carga_horaria_dedicada }}
 							</div>
 							<div class="medium-1 columns">
 								{% if servidores_formset.can_delete %}
+									<label>Deletar</label>
 									{{ servidores_formset.empty_form.DELETE }}
 								{% endif %}
 							</div>
@@ -217,34 +252,41 @@
 							<div class="row">
 								<div class="medium-10 columns">
 									<label>Nome</label>
+									{{ form.nome.errors }}
 									{{ form.nome }}
 								</div>
 								<div class="medium-2 columns">
 									<label>C/H semanal</label>
+									{{ form.carga_horaria_semanal.errors }}
 									{{ form.carga_horaria_semanal }}
 								</div>
 							</div>
 							<div class="row">
 								<div class="medium-4 columns">
 									<label>Curso</label>
+									{{ form.curso.errors }}
 									{{ form.curso }}
 								</div>
 								<div class="medium-4 columns">
 									<label>Série</label>
+									{{ form.serie.errors }}
 									{{ form.serie }}
 								</div>
 								<div class="medium-4 columns">
 									<label>Turno</label>
+									{{ form.turno.errors }}
 									{{ form.turno }}
 								</div>
 							</div>
 							<div class="row">
 								<div class="medium-6 columns">
 									<label>Telefone</label>
+									{{ form.telefone.errors }}
 									{{ form.telefone }}
 								</div>
 								<div class="medium-6 columns">
 									<label>Email</label>
+									{{ form.email.errors }}
 									{{ form.email }}
 								</div>
 								{% if discentes_formset.can_delete %}
@@ -268,34 +310,41 @@
 							<div class="row">
 								<div class="medium-10 columns">
 									<label>Nome</label>
+									{{ discentes_formset.empty_form.nome.errors }}
 									{{ discentes_formset.empty_form.nome }}
 								</div>
 								<div class="medium-2 columns">
 									<label>C/H semanal</label>
+									{{ discentes_formset.empty_form.carga_horaria_semanal.errors }}
 									{{ discentes_formset.empty_form.carga_horaria_semanal }}
 								</div>
 							</div>
 							<div class="row">
 								<div class="medium-4 columns">
 									<label>Curso</label>
+									{{ discentes_formset.empty_form.curso.errors }}
 									{{ discentes_formset.empty_form.curso }}
 								</div>
 								<div class="medium-4 columns">
 									<label>Série</label>
+									{{ discentes_formset.empty_form.serie.errors }}
 									{{ discentes_formset.empty_form.serie }}
 								</div>
 								<div class="medium-4 columns">
 									<label>Turno</label>
+									{{ discentes_formset.empty_form.turno.errors }}
 									{{ discentes_formset.empty_form.turno }}
 								</div>
 							</div>
 							<div class="row">
 								<div class="medium-6 columns">
 									<label>Telefone</label>
+									{{ discentes_formset.empty_form.telefone.errors }}
 									{{ discentes_formset.empty_form.telefone }}
 								</div>
 								<div class="medium-6 columns">
 									<label>Email</label>
+									{{ discentes_formset.empty_form.email.errors }}
 									{{ discentes_formset.empty_form.email }}
 								</div>
 								{% if discentes_formset.can_delete %}
@@ -331,42 +380,50 @@
 							<div class="row">
 								<div class="medium-10 columns">
 									<label>Nome</label>
+									{{ form.nome.errors }}
 									{{ form.nome }}
 								</div>
 								<div class="medium-2 columns">
 									<label>C/H semanal</label>
+									{{ form.carga_horaria_semanal.errors }}
 									{{ form.carga_horaria_semanal }}
 								</div>
 							</div>
 							<div class="row">
 								<div class="medium-12 columns">
 									<label>Entidade</label>
+									{{ form.entidade.errors }}
 									{{ form.entidade }}
 								</div>
 							</div>
 							<div class="row">
 								<div class="medium-6 columns">
 									<label>Telefone</label>
+									{{ form.telefone.errors }}
 									{{ form.telefone }}
 								</div>
 								<div class="medium-6 columns">
 									<label>Email</label>
+									{{ form.email.errors }}
 									{{ form.email }}
 								</div>
 							</div>
 							<div class="row">
 								<div class="medium-6 columns">
 									<label>CPF</label>
+									{{ form.cpf.errors }}
 									{{ form.cpf }}
 								</div>
 								<div class="medium-6 columns">
 									<label>Data de nascimento</label>
+									{{ form.data_nascimento.errors }}
 									{{ form.data_nascimento }}
 								</div>
 							</div>
 							<div class="row">
 								<div class="medium-12 columns">
 									<label>Função</label>
+									{{ form.funcao.errors }}
 									{{ form.funcao }}
 								</div>
 								{% if membros_comunidade_formset.can_delete %}
@@ -390,42 +447,50 @@
 							<div class="row">
 								<div class="medium-10 columns">
 									<label>Nome</label>
+									{{ membros_comunidade_formset.empty_form.nome.errors }}
 									{{ membros_comunidade_formset.empty_form.nome }}
 								</div>
 								<div class="medium-2 columns">
 									<label>C/H semanal</label>
+									{{ membros_comunidade_formset.empty_form.carga_horaria_semanal.errors }}
 									{{ membros_comunidade_formset.empty_form.carga_horaria_semanal }}
 								</div>
 							</div>
 							<div class="row">
 								<div class="medium-12 columns">
 									<label>Entidade</label>
+									{{ membros_comunidade_formset.empty_form.entidade.errors }}
 									{{ membros_comunidade_formset.empty_form.entidade }}
 								</div>
 							</div>
 							<div class="row">
 								<div class="medium-6 columns">
 									<label>Telefone</label>
+									{{ membros_comunidade_formset.empty_form.telefone.errors }}
 									{{ membros_comunidade_formset.empty_form.telefone }}
 								</div>
 								<div class="medium-6 columns">
 									<label>Email</label>
+									{{ membros_comunidade_formset.empty_form.email.errors }}
 									{{ membros_comunidade_formset.empty_form.email }}
 								</div>
 							</div>
 							<div class="row">
 								<div class="medium-6 columns">
 									<label>CPF</label>
+									{{ membros_comunidade_formset.empty_form.cpf.errors }}
 									{{ membros_comunidade_formset.empty_form.cpf }}
 								</div>
 								<div class="medium-6 columns">
 									<label>Data de nascimento</label>
+									{{ membros_comunidade_formset.empty_form.data_nascimento.errors }}
 									{{ membros_comunidade_formset.empty_form.data_nascimento }}
 								</div>
 							</div>
 							<div class="row">
 								<div class="medium-12 columns">
 									<label>Função</label>
+									{{ membros_comunidade_formset.empty_form.funcao.errors }}
 									{{ membros_comunidade_formset.empty_form.funcao }}
 								</div>
 								{% if membros_comunidade_formset.can_delete %}
@@ -447,6 +512,153 @@
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<hr/>
+			<h3>Previsão Orçamentária</h3>
+		</div>
+		{{ previsao_orcamentaria_formset.management_form }}
+		{% for form in previsao_orcamentaria_formset %}
+			{{ form.id }}
+			<div class="row">
+				<h4>Receitas</h3>
+			</div>
+			<div class="row">
+				<div class="medium-12 columns">
+					<label>Inscrições</label>
+					{{ form.inscricoes.errors }}
+					{{ form.inscricoes }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-12 columns">
+					<label>Convênios</label>
+					{{ form.convenios.errors }}
+					{{ form.convenios }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-12 columns">
+					<label>Patrocínios</label>
+					{{ form.patrocinios.errors }}
+					{{ form.patrocinios }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-12 columns">
+					<label>Fonte(s) de Financiamento(s)</label>
+					{{ form.fonte_financiamento.errors }}
+					{{ form.fonte_financiamento }}
+				</div>
+			</div>
+			<div class="row">
+				<h4>Despesas</h3>
+			</div>
+			<div class="row">
+				<div class="medium-12 columns">
+					<label>Honorários</label>
+					{{ form.honorarios.errors }}
+					{{ form.honorarios }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-12 columns">
+					<label>Passagens</label>
+					{{ form.passagens.errors }}
+					{{ form.passagens }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-12 columns">
+					<label>Alimentação</label>
+					{{ form.alimentacao.errors }}
+					{{ form.alimentacao }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-12 columns">
+					<label>Hospedagem</label>
+					{{ form.hospedagem.errors }}
+					{{ form.hospedagem }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-12 columns">
+					<label>Divulgação</label>
+					{{ form.divulgacao.errors }}
+					{{ form.divulgacao }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-12 columns">
+					<label>Materiais de consumo</label>
+					{{ form.material_consumo.errors }}
+					{{ form.material_consumo }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-12 columns">
+					<label>Xerox</label>
+					{{ form.xerox.errors }}
+					{{ form.xerox }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-12 columns">
+					<label>Certificados</label>
+					{{ form.certificados.errors }}
+					{{ form.certificados }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-12 columns">
+					<label>Outros</label>
+					{{ form.outros.errors }}
+					{{ form.outros }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-12 columns">
+					<label>Especificar</label>
+					{{ form.outros_especificacao.errors }}
+					{{ form.outros_especificacao }}
+				</div>
+			</div>
+			<div class="row">
+				<h4>Gestão dos Recursos Financeiros</h3>
+			</div>
+			<div class="row">
+				<div class="medium-12 columns">
+					<label>Identificação</label>
+					{{ form.identificacao.errors }}
+					{{ form.identificacao }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-12 columns">
+					<label>Fundação</label>
+					{{ form.fundacao.errors }}
+					{{ form.fundacao }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-12 columns">
+					<label>Outro Órgão Gestor</label>
+					{{ form.outro_orgao_gestor.errors }}
+					{{ form.outro_orgao_gestor }}
+				</div>
+			</div>
+			{% if previsao_orcamentaria_formset.can_delete %}
+				<div class="row">
+					<div class="medium-3 columns">
+						<label>Deletar</label>
+					</div>
+					<div class="medium-9 columns">
+						{{ form.DELETE }}
+					</div>
+				</div>
+			{% endif %}
+		{% endfor %}
+		<br />
 		<div class="row">
 			<span><b>* Campos obrigatórios</b></span>
 		</div>
