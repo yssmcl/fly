@@ -155,7 +155,7 @@ class CursoExtensao(models.Model):
         return self.titulo
 
 class PrevisaoOrcamentaria_CursoExtensao(models.Model):
-    curso_extensao = models.ForeignKey(CursoExtensao)
+    curso_extensao = models.OneToOneField(CursoExtensao)
 
     # Receitas.
     inscricoes = models.DecimalField(max_digits=10, decimal_places=2)
@@ -180,7 +180,7 @@ class PrevisaoOrcamentaria_CursoExtensao(models.Model):
 
     # Gestao dos recursos financeiros
     #TODO: validar:
-    identificacao = models.ForeignKey(TipoGestaoRecursosFinanceiros, blank=True, null=True)
+    identificacao = models.ForeignKey(TipoGestaoRecursosFinanceiros)
     fundacao = models.CharField(max_length=200, blank=True, null=True)
     outro_orgao_gestor = models.CharField(max_length=200, blank=True, null=True)
 
