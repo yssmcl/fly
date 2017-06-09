@@ -68,7 +68,6 @@ class PrevisaoOrcamentaria_CursoExtensaoForm(forms.ModelForm):
             self.add_error('outros_especificacao', _("This field is required."))
 
         # Validar gestor de recursos.
-
         identificacao = cleaned_data.get('identificacao')
         fundacao = cleaned_data.get('fundacao')
         outro_orgao_gestor = cleaned_data.get('outro_orgao_gestor')
@@ -82,6 +81,7 @@ class PrevisaoOrcamentaria_CursoExtensaoForm(forms.ModelForm):
                     self.add_error('outro_orgao_gestor', _("This field is required."))
 
         return cleaned_data
+
 
 Servidor_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, Servidor_CursoExtensao, extra=1, fields=['servidor', 'carga_horaria_dedicada', 'funcao'])
 Discente_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, Discente_CursoExtensao, extra=1, fields=['nome', 'curso', 'serie', 'turno', 'carga_horaria_semanal', 'telefone', 'email'])
