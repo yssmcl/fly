@@ -2,6 +2,7 @@ from django import forms
 
 from .models import CursoExtensao, Servidor_CursoExtensao, PalavraChave_CursoExtensao, Discente_CursoExtensao, MembroComunidade_CursoExtensao, PrevisaoOrcamentaria_CursoExtensao
 
+from django.utils.translation import ugettext_lazy as _
 
 class CursoExtensaoForm(forms.ModelForm):
     class Meta:
@@ -10,6 +11,22 @@ class CursoExtensaoForm(forms.ModelForm):
 
     resumo = forms.CharField(max_length=CursoExtensao._meta.get_field('resumo').max_length, widget=forms.Textarea)
     programacao = forms.CharField(max_length=CursoExtensao._meta.get_field('programacao').max_length, widget=forms.Textarea)
+
+    def clean(self):
+        cleaned_data = super(CursoExtensaoForm, self).clean()
+
+        # Obrigar existir pelo menos 1 dos 2, mas não os 2 ao mesmo tempo.
+        unidade_administrativa = cleaned_data.get('unidade_administrativa')
+        campus = cleaned_data.get('campus')
+
+        if unidade_administrativa and campus:
+            error = "Preencher somente um."
+            self.add_error('unidade_administrativa', error)
+            self.add_error('campus', error)
+        if not unidade_administrativa and not campus:
+            error = _("This field is required.")
+            self.add_error('unidade_administrativa', error)
+            self.add_error('campus', error)
 
 
 Servidor_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, Servidor_CursoExtensao, extra=1, fields=['servidor', 'carga_horaria_dedicada', 'funcao'])
