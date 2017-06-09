@@ -150,7 +150,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<h3>Palavras-Chave</h3>
+			<h3><b>Palavras-Chave</b></h3>
 			{{ palavras_formset.management_form }}
 			{% for form in palavras_formset %}
 				{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
@@ -169,7 +169,7 @@
 		</div>
 		<div class="row">
 			<hr />
-			<h3>Servidores</h3>
+			<h3><b>Servidores</b></h3>
 		</div>
 		<div id="servidores_formset" data-formset-prefix="{{ servidores_formset.prefix }}">
 			{{ servidores_formset.management_form }}
@@ -242,7 +242,7 @@
 		</div>
 		<div class="row">
 			<hr/>
-			<h3>Discentes</h3>
+			<h3><b>Discentes</b></h3>
 		</div>
 		<div id="discentes_formset" data-formset-prefix="{{ discentes_formset.prefix }}">
 			{{ discentes_formset.management_form }}
@@ -369,7 +369,7 @@
 		</div>
 		<div class="row">
 			<hr/>
-			<h3>Membros da Comunidade / Participantes Externos</h3>
+			<h3><b>Membros da Comunidade / Participantes Externos</b></h3>
 		</div>
 		<div id="membros_comunidade_formset" data-formset-prefix="{{ membros_comunidade_formset.prefix }}">
 			{{ membros_comunidade_formset.management_form }}
@@ -515,138 +515,120 @@
 		</div>
 		<div class="row">
 			<hr/>
-			<h3>Previsão Orçamentária</h3>
+			<h3><b>Previsão Orçamentária</b></h3>
 		</div>
 		{{ previsao_orcamentaria_formset.management_form }}
 		{% for form in previsao_orcamentaria_formset %}
 			{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
 			<div class="row">
-				<h4>Receitas</h3>
+				<h4>Receitas</h4>
 			</div>
 			<div class="row">
-				<div class="medium-12 columns">
+				<div class="medium-3 columns">
 					<label>Inscrições</label>
 					{{ form.inscricoes }}
 					{{ form.inscricoes.errors }}
 				</div>
-			</div>
-			<div class="row">
-				<div class="medium-12 columns">
+				<div class="medium-3 columns">
 					<label>Convênios</label>
 					{{ form.convenios }}
 					{{ form.convenios.errors }}
 				</div>
-			</div>
-			<div class="row">
-				<div class="medium-12 columns">
+				<div class="medium-3 columns">
 					<label>Patrocínios</label>
 					{{ form.patrocinios }}
 					{{ form.patrocinios.errors }}
 				</div>
-			</div>
-			<div class="row">
-				<div class="medium-12 columns">
-					<label>Fonte(s) de Financiamento(s)</label>
+				<div class="medium-3 columns">
+					<label>Fonte(s) de financiamento(s)</label>
 					{{ form.fonte_financiamento }}
 					{{ form.fonte_financiamento.errors }}
 				</div>
 			</div>
 			<div class="row">
-				<h4>Despesas</h3>
+				<h4>Despesas</h4>
 			</div>
 			<div class="row">
-				<div class="medium-12 columns">
+				<div class="medium-3 columns">
 					<label>Honorários</label>
 					{{ form.honorarios }}
 					{{ form.honorarios.errors }}
 				</div>
-			</div>
-			<div class="row">
-				<div class="medium-12 columns">
+				<div class="medium-3 columns">
 					<label>Passagens</label>
 					{{ form.passagens }}
 					{{ form.passagens.errors }}
 				</div>
-			</div>
-			<div class="row">
-				<div class="medium-12 columns">
+				<div class="medium-3 columns">
 					<label>Alimentação</label>
 					{{ form.alimentacao }}
 					{{ form.alimentacao.errors }}
 				</div>
-			</div>
-			<div class="row">
-				<div class="medium-12 columns">
+				<div class="medium-3 columns">
 					<label>Hospedagem</label>
 					{{ form.hospedagem }}
 					{{ form.hospedagem.errors }}
 				</div>
 			</div>
 			<div class="row">
-				<div class="medium-12 columns">
+				<div class="medium-3 columns">
 					<label>Divulgação</label>
 					{{ form.divulgacao }}
 					{{ form.divulgacao.errors }}
 				</div>
-			</div>
-			<div class="row">
-				<div class="medium-12 columns">
+				<div class="medium-3 columns">
 					<label>Materiais de consumo</label>
 					{{ form.material_consumo }}
 					{{ form.material_consumo.errors }}
 				</div>
-			</div>
-			<div class="row">
-				<div class="medium-12 columns">
+				<div class="medium-3 columns">
 					<label>Xerox</label>
 					{{ form.xerox }}
 					{{ form.xerox.errors }}
 				</div>
-			</div>
-			<div class="row">
-				<div class="medium-12 columns">
+				<div class="medium-3 columns">
 					<label>Certificados</label>
 					{{ form.certificados }}
 					{{ form.certificados.errors }}
 				</div>
 			</div>
 			<div class="row">
-				<div class="medium-12 columns">
+				<div class="medium-3 columns">
 					<label>Outros</label>
 					{{ form.outros }}
 					{{ form.outros.errors }}
 				</div>
-			</div>
-			<div class="row">
-				<div class="medium-12 columns">
+				<div class="medium-9 columns">
 					<label>Especificar</label>
 					{{ form.outros_especificacao }}
 					{{ form.outros_especificacao.errors }}
 				</div>
 			</div>
 			<div class="row">
-				<h4>Gestão dos Recursos Financeiros</h3>
+				<h4>Gestão dos Recursos Financeiros</h4>
 			</div>
 			<div class="row">
-				<div class="medium-12 columns">
+				<div class="medium-3 columns">
 					<label>Identificação</label>
 					{{ form.identificacao }}
 					{{ form.identificacao.errors }}
 				</div>
-			</div>
-			<div class="row">
-				<div class="medium-12 columns">
+				<div class="medium-5 columns">
 					<label>Fundação</label>
 					{{ form.fundacao }}
 					{{ form.fundacao.errors }}
 				</div>
-			</div>
-			<div class="row">
-				<div class="medium-12 columns">
-					<label>Outro Órgão Gestor</label>
+				<div class="medium-4 columns">
+					<label>Outro órgão gestor</label>
 					{{ form.outro_orgao_gestor }}
 					{{ form.outro_orgao_gestor.errors }}
 				</div>
+			</div>
+			<div class="row">
+				
+			</div>
+			<div class="row">
+				
 			</div>
 			{% if previsao_orcamentaria_formset.can_delete %}
 				<div class="row">
