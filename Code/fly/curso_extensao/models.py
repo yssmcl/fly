@@ -115,8 +115,8 @@ class CursoExtensao(models.Model):
 
     # Docente efetivo ou Agente Universitario
     coordenador = models.ForeignKey(Servidor, related_name='coordenador')
-    periodo_realizacao_inicio = models.DateTimeField()
-    periodo_realizacao_fim = models.DateTimeField()
+    periodo_realizacao_inicio = models.DateField()
+    periodo_realizacao_fim = models.DateField()
 
     programa_extensao = models.ForeignKey(Programa, blank=True, null=True)
 
