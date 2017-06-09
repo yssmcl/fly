@@ -7,9 +7,9 @@
 
 {% block body_begin_scripts %}
 	<script language="JavaScript" type="text/javascript">
-		function cancelar_cadastro(){
+		function cancelar_cadastro() {
 			decisao = confirm("Ao sair, todos os dados do formulário serão perdidos. Deseja continuar?");
-			if(decisao){
+			if (decisao) {
 				location.href = "{% url 'curso_extensao:index' %}";
 			}
 		}
@@ -151,7 +151,7 @@
 				{{ form.id }}
 				{{ form.curso_extensao }}
 				<div class="medium-3 columns">
-					<label>Palavra-chave</label>
+					<label>Palavra-chave{% if not form.empty_permitted %}*{% endif %}</label>
 					{{ form.nome.errors }}
 					{{ form.nome }}
 				</div>
