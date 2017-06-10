@@ -4,7 +4,7 @@
 {% load formset_tags %}
 {% load i18n %}
 
-{% block title %} Curso Extensão {% endblock%}
+{% block title %} Curso de Extensão {% endblock%}
 
 {% block body_begin_scripts %}
 	<script language="JavaScript" type="text/javascript">
@@ -29,8 +29,10 @@
 		{{ main_form.non_field_errors }}
 		{% for hidden in main_form.hidden_fields %}{{ hidden }}{% endfor %}
 
-		<div data-abide-error class="alert callout" style="display: none;">
-			<p><i class="fi-alert"></i>Campos obrigatórios não preenchidos!</p>
+		<div class="row">
+			<div data-abide-error class="alert callout" style="display: none;">
+				<p><i class="fi-alert"></i>Campos obrigatórios não preenchidos!</p>
+			</div>
 		</div>
 		<div class="row">
 			<div class="medium-12 columns">
