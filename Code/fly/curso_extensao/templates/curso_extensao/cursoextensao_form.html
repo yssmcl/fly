@@ -158,6 +158,7 @@
 			{{ palavras_formset.management_form }}
 			{% for form in palavras_formset %}
 				{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+				{{ form.non_field_errors }}
 				<div class="medium-3 columns">
 					<label>Palavra-chave{% if not form.empty_permitted %}{{ campo_obrigatorio }}{% endif %}</label>
 					{{ form.nome }}
@@ -182,6 +183,7 @@
 					<div data-formset-form>
 						<div class="row">
 							{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+							{{ form.non_field_errors }}
 							<div class="medium-4 columns">
 								<label>Servidor</label>
 								{{ form.servidor }}
@@ -253,7 +255,10 @@
 			<div data-formset-body>
 				{% for form in discentes_formset %}
 					<div data-formset-form>
-						{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+						{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}		
+						<div class="row"><div class="medium-12">
+							{{ form.non_field_errors }}
+						</div></div>
 						<div class="row" style="background:#E2EEFA; padding:10px;">
 							<div class="row">
 								<div class="medium-10 columns">
@@ -380,7 +385,10 @@
 			<div data-formset-body>
 				{% for form in membros_comunidade_formset %}
 					<div data-formset-form>
-						{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+						{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}		
+						<div class="row"><div class="medium-12">
+							{{ form.non_field_errors }}
+						</div></div>
 						<div class="row" style="background:#E2EEFA; padding:10px;">
 							<div class="row">
 								<div class="medium-10 columns">
@@ -524,6 +532,9 @@
 		{{ previsao_orcamentaria_formset.management_form }}
 		{% for form in previsao_orcamentaria_formset %}
 			{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+			<div class="row"><div class="medium-12">
+				{{ form.non_field_errors }}
+			</div></div>
 			<div class="row">
 				<h4>Receitas</h4>
 			</div>
