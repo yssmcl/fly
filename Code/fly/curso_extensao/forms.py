@@ -103,9 +103,6 @@ class BaseServidor_CursoExtensaoFormSet(forms.BaseInlineFormSet):
                             form.add_error('funcao', "Somente um subcoordenador é permitido.")
                         subcoordenador = True
 
-        if not coordenador:
-            form.add_error('funcao', "É necessário ter um coordenador.")
-
 
 Servidor_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, Servidor_CursoExtensao, formset=BaseServidor_CursoExtensaoFormSet, extra=1, min_num=1, fields=['servidor', 'carga_horaria_dedicada', 'funcao'])
 Discente_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, Discente_CursoExtensao, extra=1, fields=['nome', 'curso', 'serie', 'turno', 'carga_horaria_semanal', 'telefone', 'email'])
