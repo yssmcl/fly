@@ -1,6 +1,6 @@
 digraph model_graph {
   // Dotfile by Django-Extensions graph_models
-  // Created: 2017-06-07 01:09
+  // Created: 2017-06-13 14:44
   // Cli Options: curso_extensao
 
   fontname = "Helvetica"
@@ -347,106 +347,6 @@ digraph model_graph {
     </TABLE>
     >]
 
-  curso_extensao_models_PrevisaoOrcamentaria [label=<
-    <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
-    <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="olivedrab4">
-    <FONT FACE="Helvetica Bold" COLOR="white">
-    PrevisaoOrcamentaria
-    </FONT></TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica Bold">id</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica Bold">AutoField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">alimentacao</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">DecimalField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">certificados</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">DecimalField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">convenios</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">DecimalField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">divulgacao</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">DecimalField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">fonte_financiamento</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">DecimalField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">honorarios</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">DecimalField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">hospedagem</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">DecimalField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">inscricoes</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">DecimalField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">material_de_consumo</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">DecimalField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica ">outros</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica ">DecimalField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica ">outros_especificacao</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica ">CharField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">passagens</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">DecimalField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">patrocinios</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">DecimalField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">xerox</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">DecimalField</FONT>
-    </TD></TR>
-  
-    </TABLE>
-    >]
-
   curso_extensao_models_TipoGestaoRecursosFinanceiros [label=<
     <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
     <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="olivedrab4">
@@ -464,40 +364,6 @@ digraph model_graph {
     <FONT FACE="Helvetica ">nome</FONT>
     </TD><TD ALIGN="LEFT">
     <FONT FACE="Helvetica ">CharField</FONT>
-    </TD></TR>
-  
-    </TABLE>
-    >]
-
-  curso_extensao_models_GestaoRecursosFinanceiros [label=<
-    <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
-    <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="olivedrab4">
-    <FONT FACE="Helvetica Bold" COLOR="white">
-    GestaoRecursosFinanceiros
-    </FONT></TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica Bold">id</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica Bold">AutoField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica Bold">identificacao</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica Bold">ForeignKey (id)</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica ">fundacao</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica ">CharField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica ">outros</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica ">CharField</FONT>
     </TD></TR>
   
     </TABLE>
@@ -559,12 +425,6 @@ digraph model_graph {
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica Bold">previsao_orcamentaria</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica Bold">ForeignKey (id)</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
     <FONT COLOR="#7B7B7B" FACE="Helvetica Bold">programa_extensao</FONT>
     </TD><TD ALIGN="LEFT">
     <FONT COLOR="#7B7B7B" FACE="Helvetica Bold">ForeignKey (id)</FONT>
@@ -613,9 +473,15 @@ digraph model_graph {
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">periodo_de_realizacao</FONT>
+    <FONT FACE="Helvetica ">periodo_realizacao_fim</FONT>
     </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">CharField</FONT>
+    <FONT FACE="Helvetica ">DateField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">periodo_realizacao_inicio</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">DateField</FONT>
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
@@ -640,6 +506,130 @@ digraph model_graph {
     <FONT FACE="Helvetica ">titulo</FONT>
     </TD><TD ALIGN="LEFT">
     <FONT FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    </TABLE>
+    >]
+
+  curso_extensao_models_PrevisaoOrcamentaria_CursoExtensao [label=<
+    <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="olivedrab4">
+    <FONT FACE="Helvetica Bold" COLOR="white">
+    PrevisaoOrcamentaria_CursoExtensao
+    </FONT></TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">id</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">AutoField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">curso_extensao</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">OneToOneField (id)</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">identificacao</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">ForeignKey (id)</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">alimentacao</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">DecimalField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">certificados</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">DecimalField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">convenios</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">DecimalField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">divulgacao</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">DecimalField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">fonte_financiamento</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">DecimalField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">fundacao</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">honorarios</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">DecimalField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">hospedagem</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">DecimalField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">inscricoes</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">DecimalField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">material_consumo</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">DecimalField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">outro_orgao_gestor</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">outros</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">DecimalField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">outros_especificacao</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">passagens</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">DecimalField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">patrocinios</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">DecimalField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">xerox</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">DecimalField</FONT>
     </TD></TR>
   
     </TABLE>
@@ -907,9 +897,6 @@ digraph model_graph {
 
   curso_extensao_models_Servidor -> curso_extensao_models_Campus
   [label="campus (servidor)"] [arrowhead=none, arrowtail=open, dir=both];
-
-  curso_extensao_models_GestaoRecursosFinanceiros -> curso_extensao_models_TipoGestaoRecursosFinanceiros
-  [label="identificacao (gestaorecursosfinanceiros)"] [arrowhead=none, arrowtail=open, dir=both];
   django_contrib_auth_models_User [label=<
   <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
   <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="olivedrab4">
@@ -947,8 +934,11 @@ digraph model_graph {
   curso_extensao_models_CursoExtensao -> curso_extensao_models_LinhaExtensao
   [label="linha_extensao (cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
 
-  curso_extensao_models_CursoExtensao -> curso_extensao_models_PrevisaoOrcamentaria
-  [label="previsao_orcamentaria (cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
+  curso_extensao_models_PrevisaoOrcamentaria_CursoExtensao -> curso_extensao_models_CursoExtensao
+  [label="curso_extensao (previsaoorcamentaria_cursoextensao)"] [arrowhead=none, arrowtail=none, dir=both];
+
+  curso_extensao_models_PrevisaoOrcamentaria_CursoExtensao -> curso_extensao_models_TipoGestaoRecursosFinanceiros
+  [label="identificacao (previsaoorcamentaria_cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
 
   curso_extensao_models_PalavraChave_CursoExtensao -> curso_extensao_models_CursoExtensao
   [label="curso_extensao (palavrachave_cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
