@@ -1,0 +1,27 @@
+Sprint #2
+
+Pontos Fortes
+	- Obtenção dos formulários;
+	- Horas adequadas para a sprint;
+	- Cumprimento de todas as tarefas;
+	- Esclarecimento de dúvidas com José Ricardo.
+
+Pontos Fracos
+	- Muita dependência do José Ricardo;
+	- Demora para realizar o planejamento da sprint.
+
+Entregues:
+	- Classes de negócio;
+	- Interface da tela de cadastro;
+	- Documento Word do formulário;
+	- Formulário preenchido.
+
+Notas:
+	- Todos os dados com CPF são obrigatórios
+	- Plano de trabalho é geral
+	- Melhorar as consultas comparado a que já existe no site do PROEX 
+	- Deverá ser criada uma história para ter consultas para as pessoas 
+	- Buscar os dados dos alunos na secretaria
+	- Começar o planejamento da sprint na quinta
+	- Colocar menos tarefas que dependem do PO 
+	- A capacidade de trabalho está entre 13.5 h e 56 h
