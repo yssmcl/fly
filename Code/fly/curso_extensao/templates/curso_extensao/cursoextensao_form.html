@@ -35,10 +35,14 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="medium-12 columns">
+			<div class="medium-10 columns">
 				<label>Título{{ campo_obrigatorio }}</label>
 				{{ main_form.titulo }}
 				{{ main_form.titulo.errors }}
+			</div>
+			<div class="medium-2 columns">
+				<label>Estado</label>
+				{{ main_form.instance.estado }}
 			</div>
 		</div>
 		<div class="row">

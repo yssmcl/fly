@@ -79,10 +79,16 @@ class ConsultaCursoExtensao(LoginRequiredMixin, generic.ListView):
     model = CursoExtensao        
 
     def get_queryset(self):
-        d = {
-            'user':self.request.user,
-            'titulo__contains':self.request.GET.get('titulo', '')
-        }
+        d = { 'user': self.request.user }
+        
+        if 'titulo' in self.request.GET:
+            d['titulo__contains'] = self.request.GET.get('titulo', '')
+
+        if 'coordenador' in self.request.GET:
+            d['coordenador__nome_completo__contains'] = self.request.GET.get('coordenador', '')
+
+        if 'estado' in self.request.GET:
+            d['estado__nome__contains'] = self.request.GET.get('estado', '')
 
         return CursoExtensao.objects.filter(**d)
 
