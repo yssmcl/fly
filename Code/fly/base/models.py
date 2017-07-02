@@ -1,10 +1,12 @@
 from django.db import models
 
+
 class MembrosComunidade(models.Model):
     nome = models.CharField(max_length=200)
 
     def __str__(self):
         return self.nome
+
 
 class Programa(models.Model):
     nome = models.CharField(max_length=200)
@@ -12,11 +14,13 @@ class Programa(models.Model):
     def __str__(self):
         return self.nome
 
+
 class UnidadeAdministrativa(models.Model):
     nome = models.CharField(max_length=200)
 
     def __str__(self):
         return self.nome
+
 
 class Campus(models.Model):
     nome = models.CharField(max_length=200)
@@ -24,11 +28,13 @@ class Campus(models.Model):
     def __str__(self):
         return self.nome
 
+
 class Centro(models.Model):
     nome = models.CharField(max_length=200)
 
     def __str__(self):
         return self.nome
+
 
 class GrandeArea(models.Model):
     nome = models.CharField(max_length=200)
@@ -36,11 +42,13 @@ class GrandeArea(models.Model):
     def __str__(self):
         return self.nome
 
+
 class AreaTematica(models.Model):
     nome = models.CharField(max_length=200)
 
     def __str__(self):
         return self.nome
+
 
 class LinhaExtensao(models.Model):
     nome = models.CharField(max_length=200)
@@ -48,17 +56,20 @@ class LinhaExtensao(models.Model):
     def __str__(self):
         return self.nome
 
+
 class CursoUnioeste(models.Model):
     nome = models.CharField(max_length=200)
 
     def __str__(self):
         return self.nome
 
+
 class TipoServidor(models.Model):
     nome = models.CharField(max_length=200)
 
     def __str__(self):
         return self.nome
+
 
 class Servidor(models.Model):
     nome_completo = models.CharField(max_length=200)
@@ -86,6 +97,7 @@ class Servidor(models.Model):
     def __str__(self):
         return self.nome_completo
 
+
 class TipoGestaoRecursosFinanceiros(models.Model):
     nome = models.CharField(max_length=200)
 
@@ -98,4 +110,10 @@ class FuncaoServidor(models.Model):
 
     def __str__(self):
         return self.nome
-    
+
+
+class EstadosProjeto(models.Model):
+    nome = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.nome
