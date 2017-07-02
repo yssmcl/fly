@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'curso_extensao.apps.CursoExtensaoConfig',
+    'base.apps.BaseConfig',
     'accounts.apps.AccountsConfig',
     'jquery',
     'djangoformsetjs',

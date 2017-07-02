@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
+from base.models import *
 from curso_extensao.models import *
 
 class Command(BaseCommand):
