@@ -181,62 +181,76 @@
 			<div data-formset-body>
 				{% for form in servidores_formset %}
 					<div data-formset-form>
-						<div class="row">
+						<div class="row" style="background:#E2EEFA; padding:10px;">
 							{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
 							{{ form.non_field_errors }}
-							<div class="medium-4 columns">
-								<label>Servidor</label>
-								{{ form.servidor }}
-								{{ form.servidor.errors }}
+							<div class="row">
+								<div class="medium-4 columns">
+									<label>Servidor</label>
+									{{ form.servidor }}
+									{{ form.servidor.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Função</label>
+									{{ form.funcao }}
+									{{ form.funcao.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Carga horária dedicada</label>
+									{{ form.carga_horaria_dedicada }}
+									{{ form.carga_horaria_dedicada.errors }}
+								</div>
 							</div>
-							<div class="medium-4 columns">
-								<label>Função</label>
-								{{ form.funcao }}
-								{{ form.funcao.errors }}
+							<div class="row">
+								<div class="medium-12 columns">
+									<label>Plano de trabalho</label>
+									{{ form.plano_trabalho }}
+									{{ form.plano_trabalho.errors }}
+								</div>
 							</div>
-							<div class="medium-3 columns">
-								<label>Carga horária dedicada</label>
-								{{ form.carga_horaria_dedicada }}
-								{{ form.carga_horaria_dedicada.errors }}
-							</div>
-							<div class="medium-1 columns">
-								{% if servidores_formset.can_delete %}
-									<label>Deletar</label>
-									{{ form.DELETE }}
-								{% endif %}
-							</div>
+							{% if servidores_formset.can_delete %}
+								<div class="row">
+									<div class="medium-12 columns">
+											<label>Deletar</label>
+											{{ form.DELETE }}
+									</div>
+								</div>
+							{% endif %}
 						</div>
+						<br />
 					</div>
 				{% endfor %}
 			</div>
 			<script type="form-template" data-formset-empty-form>
 				{% escapescript %}
 					<div data-formset-form>
-						<div class="row">
-							{{ servidores_formset.empty_form.id }}
-							{{ servidores_formset.empty_form.curso_extensao }}
-							<div class="medium-4 columns">
-								<label>Servidor</label>
-								{{ servidores_formset.empty_form.servidor }}
-								{{ servidores_formset.empty_form.servidor.errors }}
+						<div class="row" style="background:#E2EEFA; padding:10px;">
+							<div class="row">
+								<div class="medium-4 columns">
+									<label>Servidor</label>
+									{{ servidores_formset.empty_form.servidor }}
+									{{ servidores_formset.empty_form.servidor.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Função</label>
+									{{ servidores_formset.empty_form.funcao }}
+									{{ servidores_formset.empty_form.funcao.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Carga horária dedicada</label>
+									{{ servidores_formset.empty_form.carga_horaria_dedicada }}
+									{{ servidores_formset.empty_form.carga_horaria_dedicada.errors }}
+								</div>
 							</div>
-							<div class="medium-4 columns">
-								<label>Função</label>
-								{{ servidores_formset.empty_form.funcao }}
-								{{ servidores_formset.empty_form.funcao.errors }}
-							</div>
-							<div class="medium-3 columns">
-								<label>Carga horária dedicada</label>
-								{{ servidores_formset.empty_form.carga_horaria_dedicada }}
-								{{ servidores_formset.empty_form.carga_horaria_dedicada.errors }}
-							</div>
-							<div class="medium-1 columns">
-								{% if servidores_formset.can_delete %}
-									<label>Deletar</label>
-									{{ servidores_formset.empty_form.DELETE }}
-								{% endif %}
+							<div class="row">
+								<div class="medium-12 columns">
+									<label>Plano de trabalho</label>
+									{{ servidores_formset.empty_form.plano_trabalho }}
+									{{ servidores_formset.empty_form.plano_trabalho.errors }}
+								</div>
 							</div>
 						</div>
+						<br />
 					</div>
 				{% endescapescript %}
 			</script>
@@ -300,13 +314,22 @@
 									{{ form.email }}
 									{{ form.email.errors }}
 								</div>
-								{% if discentes_formset.can_delete %}
+							</div>
+							<div class="row">
+								<div class="medium-12 columns">
+									<label>Plano de trabalho</label>
+									{{ form.plano_trabalho }}
+									{{ form.plano_trabalho.errors }}
+								</div>
+							</div>
+							{% if discentes_formset.can_delete %}
+								<div class="row">
 									<div class="medium-12 columns">
 										<label>Deletar</label>
 										{{ form.DELETE }}
 									</div>
-								{% endif %}
-							</div>
+								</div>
+							{% endif %}
 						</div>
 						<br />
 					</div>
@@ -358,12 +381,13 @@
 									{{ discentes_formset.empty_form.email }}
 									{{ discentes_formset.empty_form.email.errors }}
 								</div>
-								{% if discentes_formset.can_delete %}
-									<div class="medium-12 columns">
-										<label>Deletar</label>
-										{{ discentes_formset.empty_form.DELETE }}
-									</div>
-								{% endif %}
+							</div>
+							<div class="row">
+								<div class="medium-12 columns">
+									<label>Plano de trabalho</label>
+									{{ discentes_formset.empty_form.plano_trabalho }}
+									{{ discentes_formset.empty_form.plano_trabalho.errors }}
+								</div>
 							</div>
 						</div>
 						<br />
@@ -439,13 +463,22 @@
 									{{ form.funcao }}
 									{{ form.funcao.errors }}
 								</div>
-								{% if membros_comunidade_formset.can_delete %}
+							</div>
+							<div class="row">
+								<div class="medium-12 columns">
+									<label>Plano de trabalho</label>
+									{{ form.plano_trabalho }}
+									{{ form.plano_trabalho.errors }}
+								</div>
+							</div>
+							{% if membros_comunidade_formset.can_delete %}
+							<div class="row">
 									<div class="medium-12 columns">
 										<label>Deletar</label>
 										{{ form.DELETE }}
 									</div>
-								{% endif %}
-							</div>
+								</div>
+							{% endif %}
 						</div>
 						<br />
 					</div>
@@ -506,12 +539,13 @@
 									{{ membros_comunidade_formset.empty_form.funcao }}
 									{{ membros_comunidade_formset.empty_form.funcao.errors }}
 								</div>
-								{% if membros_comunidade_formset.can_delete %}
-									<div class="medium-12 columns">
-										<label>Deletar</label>
-										{{ membros_comunidade_formset.empty_form.DELETE }}
-									</div>
-								{% endif %}
+							</div>
+							<div class="row">
+								<div class="medium-12 columns">
+									<label>Plano de trabalho</label>
+									{{ form.membros_comunidade_formset.empty_form }}
+									{{ form.membros_comunidade_formset.empty_form.errors }}
+								</div>
 							</div>
 						</div>
 						<br />
