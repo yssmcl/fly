@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 
-{% block title %} Curso Extensao {% endblock%}
+{% load static %}
+
+{% block title %} Curso de Extensão {% endblock%}
 
 {% block content %}
-	<a href="{% url 'curso_extensao:novo_curso_extensao' %}"> Novo Curso Extensao </a>
+	<br />
+	<br />
+	<br />
+	<div class="row" style="text-align:center;">
+		<img src="{% static 'img/logo_extensao.jpg' %}" alt="Extensão Unioeste" height="400" width="900">
+	</div>
 {% endblock %}

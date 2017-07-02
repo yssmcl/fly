@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load formset_tags %}
+
+{% block title %} Curso de Extensão {% endblock %}
+
+{% block content %}
+
+	<br />
+
+	<form>
+		<div class="row">
+			
+			<label>Título:</label>
+			
+			<input type="text" name="titulo" />
+			
+			<div style="text-align:center;">
+				<input type="submit" value="Pesquisar" class="button">	
+			</div>
+		</div>		
+	</form>
+
+	<div class="row">
+		<table>
+			<thead>
+				<th>Título</th>
+				<th>Coordenador(a)</th>
+				<th>Ação</th>
+			<tbody>
+				{% for curso_extensao in object_list %}
+				<tr>
+					<td>{{ curso_extensao }}</td>
+					<td>{{ curso_extensao.coordenador }}</td>
+					<td><a href="{% url 'curso_extensao:detalhe' curso_extensao.pk %}" class="button">Visualizar</a></td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}

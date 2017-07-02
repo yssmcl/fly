@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %} Login {% endblock%}
+
+{% block content %}
+	<h1 style="text-align:center;">Login</h1>
+
+	<form data-abide novalidate method="post">
+		{% csrf_token %}
+		<div data-abide-error class="alert callout" style="display: none;">
+			<p><i class="fi-alert"></i>There are some errors in your form.</p>
+		</div>
+		<div class="row">
+			<div class="small-12 columns">
+				{{ form }}
+			</div>
+		</div>
+
+		<div style="text-align:center;">
+			<input class="button" type="submit" value="Login" style="width:150px;">	
+		</div>
+		
+	</form>
+{% endblock %}

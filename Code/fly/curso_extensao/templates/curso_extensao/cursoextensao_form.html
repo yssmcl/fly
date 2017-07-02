@@ -1,20 +1,687 @@
 {% extends "base.html" %}
 
-{% block title %} Curso Extensao {% endblock%}
+{% load static %}
+{% load formset_tags %}
+{% load i18n %}
+
+{% block title %} Curso de Extensão {% endblock%}
+
+{% block body_begin_scripts %}
+	<script language="JavaScript" type="text/javascript">
+		function cancelar_cadastro() {
+			decisao = confirm("Ao sair, todos os dados do formulário serão perdidos. Deseja continuar?");
+			if (decisao) {
+				location.href = "{% url 'curso_extensao:index' %}";
+			}
+		}
+	</script>
+{% endblock %}
 
 {% block content %}
-	<h1 style="text-align:center;">Curso Extensao</h1>
+	{% trans '<sup><a href="#campo_obrigatorio">*</a></sup>' as campo_obrigatorio %}
+	{% trans '<sup><a href="#campo_mutuamente_exclusivo">**</a></sup>' as campo_mutuamente_exclusivo %}
+
+	<h1 style="text-align:center;">Curso de Extensão</h1>
 
 	<form data-abide novalidate method="post">
 		{% csrf_token %}
-		<div data-abide-error class="alert callout" style="display: none;">
-			<p><i class="fi-alert"></i>There are some errors in your form.</p>
-		</div>
+
+		{{ main_form.non_field_errors }}
+		{% for hidden in main_form.hidden_fields %}{{ hidden }}{% endfor %}
+
 		<div class="row">
-			<div class="small-12 columns">
-				{{ form }}
+			<div data-abide-error class="alert callout" style="display: none;">
+				<p><i class="fi-alert"></i>Campos obrigatórios não preenchidos!</p>
 			</div>
 		</div>
-		<input type="submit" value="Cadastrar">
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>Título{{ campo_obrigatorio }}</label>
+				{{ main_form.titulo }}
+				{{ main_form.titulo.errors }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>Coordenador(a){{ campo_obrigatorio }}</label>
+				{{ main_form.coordenador }}
+				{{ main_form.coordenador.errors }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="medium-6 columns">
+				<label>Início{{ campo_obrigatorio }}</label>
+				{{ main_form.periodo_realizacao_inicio }}
+				{{ main_form.periodo_realizacao_inicio.errors }}
+			</div>
+			<div class="medium-6 columns">
+				<label>Fim{{ campo_obrigatorio }}</label>
+				{{ main_form.periodo_realizacao_fim }}
+				{{ main_form.periodo_realizacao_fim.errors }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>Programa de extensão</label>
+				{{ main_form.programa_extensao }}
+				{{ main_form.programa_extensao.errors }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="medium-4 columns">
+				<label>Unidade administrativa{{ campo_mutuamente_exclusivo }}</label>
+				{{ main_form.unidade_administrativa }}
+				{{ main_form.unidade_administrativa.errors }}
+			</div>
+			<div class="medium-4 columns">
+				<label>Campus{{ campo_mutuamente_exclusivo }}</label>
+				{{ main_form.campus }}
+				{{ main_form.campus.errors }}
+			</div>
+			<div class="medium-4 columns">
+				<label>Centro{{ campo_obrigatorio }}</label>
+				{{ main_form.centro }}
+				{{ main_form.centro.errors }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="medium-6 columns">
+				<label>Grande área{{ campo_obrigatorio }}</label>
+				{{ main_form.grande_area }}
+				{{ main_form.grande_area.errors }}
+			</div>
+			<div class="medium-6 columns">
+				<label>Linha de extensão{{ campo_obrigatorio }}</label>
+				{{ main_form.linha_extensao }}
+				{{ main_form.linha_extensao.errors }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="medium-6 columns">
+				<label>Área temática principal{{ campo_obrigatorio }}</label>
+				{{ main_form.area_tematica_principal }}
+				{{ main_form.area_tematica_principal.errors }}
+			</div>
+			<div class="medium-6 columns">
+				<label>Área temática secundária{{ campo_obrigatorio }}</label>
+				{{ main_form.area_tematica_secundaria }}
+				{{ main_form.area_tematica_secundaria.errors }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>Público alvo{{ campo_obrigatorio }}</label>
+				{{ main_form.publico_alvo }}
+				{{ main_form.publico_alvo.errors }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="medium-4 columns">
+				<label>Número de pessoas beneficiadas{{ campo_obrigatorio }}</label>
+				{{ main_form.numero_pessoas_beneficiadas }}
+				{{ main_form.numero_pessoas_beneficiadas.errors }}
+			</div>
+			<div class="medium-4 columns">
+				<label>C/H total{{ campo_obrigatorio }}</label>
+				{{ main_form.carga_horaria_total }}
+				{{ main_form.carga_horaria_total.errors }}
+			</div>
+			<div class="medium-4 columns">
+				<label>Número de vagas{{ campo_obrigatorio }}</label>
+				{{ main_form.numero_vagas }}
+				{{ main_form.numero_vagas.errors }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>Local de inscrição{{ campo_obrigatorio }}</label>
+				{{ main_form.local_inscricao }}
+				{{ main_form.local_inscricao.errors }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>Resumo{{ campo_obrigatorio }}</label>
+				{{ main_form.resumo }}
+				{{ main_form.resumo.errors }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>Programação{{ campo_obrigatorio }}</label>
+				{{ main_form.programacao }}
+				{{ main_form.programacao.errors }}
+			</div>
+		</div>
+		<div class="row">
+			<h3><b>Palavras-Chave</b></h3>
+			{{ palavras_formset.management_form }}
+			{% for form in palavras_formset %}
+				{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+				{{ form.non_field_errors }}
+				<div class="medium-3 columns">
+					<label>Palavra-chave{% if not form.empty_permitted %}{{ campo_obrigatorio }}{% endif %}</label>
+					{{ form.nome }}
+					{{ form.nome.errors }}
+				</div>
+				<div class="medium-1 columns">
+					{% if palavras_formset.can_delete %}
+						<label>Deletar</label>
+						{{ form.DELETE }}
+					{% endif %}
+				</div>	
+			{% endfor %}
+		</div>
+		<div class="row">
+			<hr />
+			<h3><b>Servidores</b></h3>
+		</div>
+		<div id="servidores_formset" data-formset-prefix="{{ servidores_formset.prefix }}">
+			{{ servidores_formset.management_form }}
+			<div data-formset-body>
+				{% for form in servidores_formset %}
+					<div data-formset-form>
+						<div class="row">
+							{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+							{{ form.non_field_errors }}
+							<div class="medium-4 columns">
+								<label>Servidor</label>
+								{{ form.servidor }}
+								{{ form.servidor.errors }}
+							</div>
+							<div class="medium-4 columns">
+								<label>Função</label>
+								{{ form.funcao }}
+								{{ form.funcao.errors }}
+							</div>
+							<div class="medium-3 columns">
+								<label>Carga horária dedicada</label>
+								{{ form.carga_horaria_dedicada }}
+								{{ form.carga_horaria_dedicada.errors }}
+							</div>
+							<div class="medium-1 columns">
+								{% if servidores_formset.can_delete %}
+									<label>Deletar</label>
+									{{ form.DELETE }}
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			<script type="form-template" data-formset-empty-form>
+				{% escapescript %}
+					<div data-formset-form>
+						<div class="row">
+							{{ servidores_formset.empty_form.id }}
+							{{ servidores_formset.empty_form.curso_extensao }}
+							<div class="medium-4 columns">
+								<label>Servidor</label>
+								{{ servidores_formset.empty_form.servidor }}
+								{{ servidores_formset.empty_form.servidor.errors }}
+							</div>
+							<div class="medium-4 columns">
+								<label>Função</label>
+								{{ servidores_formset.empty_form.funcao }}
+								{{ servidores_formset.empty_form.funcao.errors }}
+							</div>
+							<div class="medium-3 columns">
+								<label>Carga horária dedicada</label>
+								{{ servidores_formset.empty_form.carga_horaria_dedicada }}
+								{{ servidores_formset.empty_form.carga_horaria_dedicada.errors }}
+							</div>
+							<div class="medium-1 columns">
+								{% if servidores_formset.can_delete %}
+									<label>Deletar</label>
+									{{ servidores_formset.empty_form.DELETE }}
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				{% endescapescript %}
+			</script>
+			<div class="row">
+				<div class="medium-12 columns">
+					<input class="hollow button" type="button" value="Adicionar servidor" data-formset-add>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<hr/>
+			<h3><b>Discentes</b></h3>
+		</div>
+		<div id="discentes_formset" data-formset-prefix="{{ discentes_formset.prefix }}">
+			{{ discentes_formset.management_form }}
+			<div data-formset-body>
+				{% for form in discentes_formset %}
+					<div data-formset-form>
+						{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}		
+						<div class="row"><div class="medium-12">
+							{{ form.non_field_errors }}
+						</div></div>
+						<div class="row" style="background:#E2EEFA; padding:10px;">
+							<div class="row">
+								<div class="medium-10 columns">
+									<label>Nome</label>
+									{{ form.nome }}
+									{{ form.nome.errors }}
+								</div>
+								<div class="medium-2 columns">
+									<label>C/H semanal</label>
+									{{ form.carga_horaria_semanal }}
+									{{ form.carga_horaria_semanal.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-4 columns">
+									<label>Curso</label>
+									{{ form.curso }}
+									{{ form.curso.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Série</label>
+									{{ form.serie }}
+									{{ form.serie.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Turno</label>
+									{{ form.turno }}
+									{{ form.turno.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-6 columns">
+									<label>Telefone</label>
+									{{ form.telefone }}
+									{{ form.telefone.errors }}
+								</div>
+								<div class="medium-6 columns">
+									<label>Email</label>
+									{{ form.email }}
+									{{ form.email.errors }}
+								</div>
+								{% if discentes_formset.can_delete %}
+									<div class="medium-12 columns">
+										<label>Deletar</label>
+										{{ form.DELETE }}
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<br />
+					</div>
+				{% endfor %}
+			</div>
+			<script type="form-template" data-formset-empty-form>
+				{% escapescript %}
+					<div data-formset-form>
+						{{ discentes_formset.empty_form.id }}
+						{{ discentes_formset.empty_form.curso_extensao }}
+						<div class="row" style="background:#E2EEFA; padding:10px;">
+							<div class="row">
+								<div class="medium-10 columns">
+									<label>Nome</label>
+									{{ discentes_formset.empty_form.nome }}
+									{{ discentes_formset.empty_form.nome.errors }}
+								</div>
+								<div class="medium-2 columns">
+									<label>C/H semanal</label>
+									{{ discentes_formset.empty_form.carga_horaria_semanal }}
+									{{ discentes_formset.empty_form.carga_horaria_semanal.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-4 columns">
+									<label>Curso</label>
+									{{ discentes_formset.empty_form.curso }}
+									{{ discentes_formset.empty_form.curso.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Série</label>
+									{{ discentes_formset.empty_form.serie }}
+									{{ discentes_formset.empty_form.serie.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Turno</label>
+									{{ discentes_formset.empty_form.turno }}
+									{{ discentes_formset.empty_form.turno.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-6 columns">
+									<label>Telefone</label>
+									{{ discentes_formset.empty_form.telefone }}
+									{{ discentes_formset.empty_form.telefone.errors }}
+								</div>
+								<div class="medium-6 columns">
+									<label>Email</label>
+									{{ discentes_formset.empty_form.email }}
+									{{ discentes_formset.empty_form.email.errors }}
+								</div>
+								{% if discentes_formset.can_delete %}
+									<div class="medium-12 columns">
+										<label>Deletar</label>
+										{{ discentes_formset.empty_form.DELETE }}
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<br />
+					</div>
+				{% endescapescript %}
+			</script>
+			<div class="row">
+				<div class="medium-12 columns">
+					<input class="hollow button" type="button" value="Adicionar discente" data-formset-add>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<hr/>
+			<h3><b>Membros da Comunidade / Participantes Externos</b></h3>
+		</div>
+		<div id="membros_comunidade_formset" data-formset-prefix="{{ membros_comunidade_formset.prefix }}">
+			{{ membros_comunidade_formset.management_form }}
+			<div data-formset-body>
+				{% for form in membros_comunidade_formset %}
+					<div data-formset-form>
+						{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}		
+						<div class="row"><div class="medium-12">
+							{{ form.non_field_errors }}
+						</div></div>
+						<div class="row" style="background:#E2EEFA; padding:10px;">
+							<div class="row">
+								<div class="medium-10 columns">
+									<label>Nome</label>
+									{{ form.nome }}
+									{{ form.nome.errors }}
+								</div>
+								<div class="medium-2 columns">
+									<label>C/H semanal</label>
+									{{ form.carga_horaria_semanal }}
+									{{ form.carga_horaria_semanal.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-12 columns">
+									<label>Entidade</label>
+									{{ form.entidade }}
+									{{ form.entidade.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-6 columns">
+									<label>Telefone</label>
+									{{ form.telefone }}
+									{{ form.telefone.errors }}
+								</div>
+								<div class="medium-6 columns">
+									<label>Email</label>
+									{{ form.email }}
+									{{ form.email.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-6 columns">
+									<label>CPF</label>
+									{{ form.cpf }}
+									{{ form.cpf.errors }}
+								</div>
+								<div class="medium-6 columns">
+									<label>Data de nascimento</label>
+									{{ form.data_nascimento }}
+									{{ form.data_nascimento.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-12 columns">
+									<label>Função</label>
+									{{ form.funcao }}
+									{{ form.funcao.errors }}
+								</div>
+								{% if membros_comunidade_formset.can_delete %}
+									<div class="medium-12 columns">
+										<label>Deletar</label>
+										{{ form.DELETE }}
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<br />
+					</div>
+				{% endfor %}
+			</div>
+			<script type="form-template" data-formset-empty-form>
+				{% escapescript %}
+					<div data-formset-form>
+						{{ membros_comunidade_formset.empty_form.id }}
+						{{ membros_comunidade_formset.empty_form.curso_extensao }}
+						<div class="row" style="background:#E2EEFA; padding:10px;">
+							<div class="row">
+								<div class="medium-10 columns">
+									<label>Nome</label>
+									{{ membros_comunidade_formset.empty_form.nome }}
+									{{ membros_comunidade_formset.empty_form.nome.errors }}
+								</div>
+								<div class="medium-2 columns">
+									<label>C/H semanal</label>
+									{{ membros_comunidade_formset.empty_form.carga_horaria_semanal }}
+									{{ membros_comunidade_formset.empty_form.carga_horaria_semanal.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-12 columns">
+									<label>Entidade</label>
+									{{ membros_comunidade_formset.empty_form.entidade }}
+									{{ membros_comunidade_formset.empty_form.entidade.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-6 columns">
+									<label>Telefone</label>
+									{{ membros_comunidade_formset.empty_form.telefone }}
+									{{ membros_comunidade_formset.empty_form.telefone.errors }}
+								</div>
+								<div class="medium-6 columns">
+									<label>Email</label>
+									{{ membros_comunidade_formset.empty_form.email }}
+									{{ membros_comunidade_formset.empty_form.email.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-6 columns">
+									<label>CPF</label>
+									{{ membros_comunidade_formset.empty_form.cpf }}
+									{{ membros_comunidade_formset.empty_form.cpf.errors }}
+								</div>
+								<div class="medium-6 columns">
+									<label>Data de nascimento</label>
+									{{ membros_comunidade_formset.empty_form.data_nascimento }}
+									{{ membros_comunidade_formset.empty_form.data_nascimento.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-12 columns">
+									<label>Função</label>
+									{{ membros_comunidade_formset.empty_form.funcao }}
+									{{ membros_comunidade_formset.empty_form.funcao.errors }}
+								</div>
+								{% if membros_comunidade_formset.can_delete %}
+									<div class="medium-12 columns">
+										<label>Deletar</label>
+										{{ membros_comunidade_formset.empty_form.DELETE }}
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<br />
+					</div>
+					<script src="{% static 'js/mascaras.js' %}"></script>
+				{% endescapescript %}
+			</script>
+			<div class="row">
+				<div class="medium-12 columns">
+					<input class="hollow button" type="button" value="Adicionar membro da comunidade" data-formset-add>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<hr/>
+			<h3><b>Previsão Orçamentária</b></h3>
+		</div>
+		{{ previsao_orcamentaria_formset.management_form }}
+		{% for form in previsao_orcamentaria_formset %}
+			{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+			<div class="row"><div class="medium-12">
+				{{ form.non_field_errors }}
+			</div></div>
+			<div class="row">
+				<h4>Receitas</h4>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Inscrições</label>
+					{{ form.inscricoes }}
+					{{ form.inscricoes.errors }}
+				</div>
+				<div class="medium-3 columns">
+					<label>Convênios</label>
+					{{ form.convenios }}
+					{{ form.convenios.errors }}
+				</div>
+				<div class="medium-3 columns">
+					<label>Patrocínios</label>
+					{{ form.patrocinios }}
+					{{ form.patrocinios.errors }}
+				</div>
+				<div class="medium-3 columns">
+					<label>Fonte(s) de financiamento(s)</label>
+					{{ form.fonte_financiamento }}
+					{{ form.fonte_financiamento.errors }}
+				</div>
+			</div>
+			<div class="row">
+				<h4>Despesas</h4>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Honorários</label>
+					{{ form.honorarios }}
+					{{ form.honorarios.errors }}
+				</div>
+				<div class="medium-3 columns">
+					<label>Passagens</label>
+					{{ form.passagens }}
+					{{ form.passagens.errors }}
+				</div>
+				<div class="medium-3 columns">
+					<label>Alimentação</label>
+					{{ form.alimentacao }}
+					{{ form.alimentacao.errors }}
+				</div>
+				<div class="medium-3 columns">
+					<label>Hospedagem</label>
+					{{ form.hospedagem }}
+					{{ form.hospedagem.errors }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Divulgação</label>
+					{{ form.divulgacao }}
+					{{ form.divulgacao.errors }}
+				</div>
+				<div class="medium-3 columns">
+					<label>Materiais de consumo</label>
+					{{ form.material_consumo }}
+					{{ form.material_consumo.errors }}
+				</div>
+				<div class="medium-3 columns">
+					<label>Xerox</label>
+					{{ form.xerox }}
+					{{ form.xerox.errors }}
+				</div>
+				<div class="medium-3 columns">
+					<label>Certificados</label>
+					{{ form.certificados }}
+					{{ form.certificados.errors }}
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Outros</label>
+					{{ form.outros }}
+					{{ form.outros.errors }}
+				</div>
+				<div class="medium-9 columns">
+					<label>Especificar</label>
+					{{ form.outros_especificacao }}
+					{{ form.outros_especificacao.errors }}
+				</div>
+			</div>
+			<div class="row">
+				<h4>Gestão dos Recursos Financeiros</h4>
+			</div>
+			<div class="row">
+				<div class="medium-3 columns">
+					<label>Identificação</label>
+					{{ form.identificacao }}
+					{{ form.identificacao.errors }}
+				</div>
+				<div class="medium-5 columns">
+					<label>Fundação</label>
+					{{ form.fundacao }}
+					{{ form.fundacao.errors }}
+				</div>
+				<div class="medium-4 columns">
+					<label>Outro</label>
+					{{ form.outro_orgao_gestor }}
+					{{ form.outro_orgao_gestor.errors }}
+				</div>
+			</div>
+			<div class="row">
+				
+			</div>
+			<div class="row">
+				
+			</div>
+			{% if previsao_orcamentaria_formset.can_delete %}
+				<div class="row">
+					<div class="medium-6 columns">
+						<label>Deletar</label>
+						{{ form.DELETE }}
+					</div>
+				</div>
+			{% endif %}
+		{% endfor %}
+		<br />
+		<div class="row" id="campo_obrigatorio">
+			<span><b>* Campos obrigatórios</b></span>
+		</div>
+		<div class="row" id="campo_mutuamente_exclusivo">
+			<span><b>** Campos mutuamente exclusivos</b></span>
+		</div>
+		<br />
+		<div class="row">
+			<div style="text-align:center;">
+				<input type="button" value="Cancelar" class="button secondary" style="width:100px;" onclick="cancelar_cadastro()"/>
+				<input type="submit" value="Salvar" class="button primary" style="width:100px;">
+			</div>
+		</div>
+		<br />
 	</form>
+{% endblock %}
+
+{% block body_end_scripts %}
+	<script src="{% static 'js/jquery.js' %}"></script>
+	<script src="{% static 'js/jquery.formset.js' %}"></script>
+	<script src="{% static 'js/vendor/jquery.maskedinput.js' %}"></script>
+	<script src="{% static 'js/mascaras.js' %}"></script>
+	<script>
+		jQuery(function($) {
+			$("#servidores_formset").formset({});
+			$("#discentes_formset").formset({});
+			$("#membros_comunidade_formset").formset({});
+		});
+	</script>
 {% endblock %}
