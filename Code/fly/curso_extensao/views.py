@@ -80,7 +80,7 @@ class ConsultaCursoExtensao(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         d = { 'user': self.request.user }
-        
+
         if 'titulo' in self.request.GET:
             d['titulo__contains'] = self.request.GET.get('titulo', '')
 
@@ -120,6 +120,10 @@ class DetalheCursoExtensao(LoginRequiredMixin, View):
         servidores_formset = Servidor_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='servidores')
         membros_comunidade_formset = MembroComunidade_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='membros')
         previsao_orcamentaria_formset = PrevisaoOrcamentaria_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='previsao')
+
+        #TODO:
+        if curso_extensao.estado.nome == 'B':
+            main_form.add_error(None, "Não é possível editar esse curso de extensão pois ele já foi submetido.")
 
         if (main_form.is_valid()
                 and palavras_formset.is_valid()

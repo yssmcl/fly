@@ -26,10 +26,9 @@
 	<form data-abide novalidate method="post">
 		{% csrf_token %}
 
-		{{ main_form.non_field_errors }}
-		{% for hidden in main_form.hidden_fields %}{{ hidden }}{% endfor %}
-
 		<div class="row">
+			{{ main_form.non_field_errors }}
+			{% for hidden in main_form.hidden_fields %}{{ hidden }}{% endfor %}
 			<div data-abide-error class="alert callout" style="display: none;">
 				<p><i class="fi-alert"></i>Campos obrigatórios não preenchidos!</p>
 			</div>
