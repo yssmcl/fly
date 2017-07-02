@@ -55,10 +55,6 @@ class CursoUnioeste(models.Model):
         return self.nome
 
 class TipoServidor(models.Model):
-    # (0, 'Docente Efetivo'),
-    # (1, 'Docente Temporário'),
-    # (2, 'Agente Universitário')
-    
     nome = models.CharField(max_length=200)
 
     def __str__(self):
@@ -70,10 +66,7 @@ class Servidor(models.Model):
 
     regime_trabalho = models.IntegerField()
 
-    #TODO: que tipo de campo é esse??
-    #TODO: é um curso :D
-    #TODO: pode ser nulo
-    colegiado = models.CharField(max_length=200)
+    colegiado = models.CharField(max_length=200, blank=True, null=True)
     centro = models.ForeignKey(Centro)
 
     # Deve conter ou Unidade Administrativa ou Campus.
@@ -94,12 +87,6 @@ class Servidor(models.Model):
         return self.nome_completo
 
 class TipoGestaoRecursosFinanceiros(models.Model):
-    # (0, 'Unioeste'),
-    # (1, 'PRAP'),
-    # (2, 'Secretaria Financeira'),
-    # (3, 'Fundação'),
-    # (4, 'Outros')
-
     nome = models.CharField(max_length=200)
 
     def __str__(self):
@@ -107,15 +94,6 @@ class TipoGestaoRecursosFinanceiros(models.Model):
 
 
 class FuncaoServidor(models.Model):
-    # (0, 'Coordenador(a)'),
-    # (1, 'Subcoordenador(a)'),
-    # (2, 'Supervisor(a)'),
-    # (3, 'Colaborador(a)'),
-    # (4, 'Autor(a)'),
-    # (5, 'Consultor(a)'),
-    # (6, 'Instrutor(a)'),
-    # (7, 'Ministrante(a)')
-
     nome = models.CharField(max_length=200)
 
     def __str__(self):

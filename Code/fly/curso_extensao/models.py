@@ -17,16 +17,12 @@ class CursoExtensao(models.Model):
 
     programa_extensao = models.ForeignKey(Programa, blank=True, null=True)
 
-    #TODO: item 4.2 pag 31
-
     # Deve conter ou Unidade Administrativa ou Campus.
     unidade_administrativa = models.ForeignKey(UnidadeAdministrativa, blank=True, null=True)
     campus = models.ForeignKey(Campus, blank=True, null=True)
 
     centro = models.ForeignKey(Centro)
     grande_area = models.ForeignKey(GrandeArea)
-
-    # Palavras Chave (ForeignKey)
 
     area_tematica_principal = models.ForeignKey(AreaTematica, related_name='area_tematica_principal')
     area_tematica_secundaria = models.ForeignKey(AreaTematica, related_name='area_tematica_secundaria', blank=True, null=True)
@@ -92,23 +88,14 @@ class Servidor_CursoExtensao(models.Model):
     servidor = models.ForeignKey(Servidor)
     curso_extensao = models.ForeignKey(CursoExtensao)
 
-    #TODO: pertence a Servidor ou Servidor_CursoExtensao?
-
     carga_horaria_dedicada = models.IntegerField()
 
-    #TODO: Apenas 1 coordenador, e apenas 1 subcoordenador
-    #TODO: tabela externa
     funcao = models.ForeignKey(FuncaoServidor)
 
     plano_trabalho = models.CharField(max_length=200)
 
 
 class TurnoCurso(models.Model):
-    # (0, 'Integral'),
-    # (1, 'Noturno'),
-    # (2, 'Matituno'),
-    # (3, 'Tarde'),
-
     nome = models.CharField(max_length=200)
 
     def __str__(self):
@@ -136,7 +123,6 @@ class Discente_CursoExtensao(models.Model):
 class MembroComunidade_CursoExtensao(models.Model):
     curso_extensao = models.ForeignKey(CursoExtensao)
 
-    #TODO: opcional?
     nome = models.CharField(max_length=200)
     carga_horaria_semanal = models.IntegerField()
     #TODO: instituição/entidade
@@ -145,7 +131,6 @@ class MembroComunidade_CursoExtensao(models.Model):
     telefone = models.CharField(max_length=200)
     email = models.EmailField()
 
-    #TODO: opcional?
     cpf = models.CharField(max_length=200)
     data_nascimento = models.DateField()
 
