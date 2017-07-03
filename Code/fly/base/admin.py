@@ -2,6 +2,8 @@ from django.contrib import admin
 
 from .models import *
 from curso_extensao.models import PrevisaoOrcamentaria_CursoExtensao, CursoExtensao, PalavraChave_CursoExtensao, Servidor_CursoExtensao, TurnoCurso, Discente_CursoExtensao, MembroComunidade_CursoExtensao
+from parecer.models import Parecer
+
 
 class MembrosComunidadeAdmin(admin.ModelAdmin): pass
 class ProgramaAdmin(admin.ModelAdmin): pass
@@ -24,6 +26,8 @@ class TurnoCursoAdmin(admin.ModelAdmin): pass
 class Discente_CursoExtensaoAdmin(admin.ModelAdmin): pass
 class MembroComunidade_CursoExtensaoAdmin(admin.ModelAdmin): pass
 
+class ParecerAdmin(admin.ModelAdmin): pass
+
 
 admin.site.register(MembrosComunidade, MembrosComunidadeAdmin)
 admin.site.register(Programa, ProgramaAdmin)
@@ -45,3 +49,5 @@ admin.site.register(Servidor_CursoExtensao, Servidor_CursoExtensaoAdmin)
 admin.site.register(TurnoCurso, TurnoCursoAdmin)
 admin.site.register(Discente_CursoExtensao, Discente_CursoExtensaoAdmin)
 admin.site.register(MembroComunidade_CursoExtensao, MembroComunidade_CursoExtensaoAdmin)
+
+admin.site.register(Parecer, ParecerAdmin)

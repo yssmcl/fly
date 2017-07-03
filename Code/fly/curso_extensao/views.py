@@ -7,6 +7,7 @@ from django.db import transaction
 
 from .models import CursoExtensao
 from .forms import CursoExtensaoForm, Servidor_CursoExtensaoFormSet, PalavraChave_CursoExtensaoFormSet, Discente_CursoExtensaoFormSet, MembroComunidade_CursoExtensaoFormSet, PrevisaoOrcamentaria_CursoExtensaoFormSet
+from base.models import EstadoProjeto
 
 
 class IndexView(View):
@@ -55,6 +56,7 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
             # Set extra data
             curso_extensao.user = request.user
             curso_extensao.data = timezone.now()
+            curso_extensao.estado = EstadoProjeto.objects.get(nome='A') #TODO:
 
             with transaction.atomic():
                 main_form.save()
