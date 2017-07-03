@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'curso_extensao.apps.CursoExtensaoConfig',
     'base.apps.BaseConfig',
     'parecer.apps.ParecerConfig',
+    'relatorio.apps.RelatorioConfig',
     'accounts.apps.AccountsConfig',
     'jquery',
     'djangoformsetjs',
