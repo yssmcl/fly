@@ -186,7 +186,7 @@ class Command(BaseCommand):
         self.saveList(TipoGestaoRecursosFinanceiros, tipo_gestao_recurso_financeiro_list)
         self.saveList(FuncaoServidor, funcao_servidor_list)
         self.saveList(TurnoCurso, turno_curso_list)
-        self.saveList(EstadosProjeto, estado_projeto_list)
+        self.saveList(EstadoProjeto, estado_projeto_list)
 
         #TODO: remove
         print("Iniciando insercao em 'Servidor'")
