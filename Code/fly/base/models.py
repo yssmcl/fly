@@ -112,7 +112,7 @@ class FuncaoServidor(models.Model):
         return self.nome
 
 
-class EstadosProjeto(models.Model):
+class EstadoProjeto(models.Model):
     nome = models.CharField(max_length=200)
 
     def __str__(self):

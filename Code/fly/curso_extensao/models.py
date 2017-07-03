@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth import models as auth_models
 
-from base.models import Servidor, Programa, UnidadeAdministrativa, Campus, Centro, GrandeArea, AreaTematica, LinhaExtensao, TipoGestaoRecursosFinanceiros, FuncaoServidor, CursoUnioeste, EstadosProjeto
+from base.models import Servidor, Programa, UnidadeAdministrativa, Campus, Centro, GrandeArea, AreaTematica, LinhaExtensao, TipoGestaoRecursosFinanceiros, FuncaoServidor, CursoUnioeste, EstadoProjeto
 
 class CursoExtensao(models.Model):
     user = models.ForeignKey(auth_models.User)
@@ -10,7 +10,7 @@ class CursoExtensao(models.Model):
 
     titulo = models.CharField(max_length=200)
 
-    estado = models.ForeignKey(EstadosProjeto)
+    estado = models.ForeignKey(EstadoProjeto)
 
     # Docente efetivo ou Agente Universitario
     coordenador = models.ForeignKey(Servidor, related_name='coordenador')
