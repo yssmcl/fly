@@ -37,7 +37,7 @@
 				<th>Título</th>
 				<th>Coordenador(a)</th>
 				<th>Estado</th>
-				<th>Ação</th>
+				<th style="text-align:center">Ação</th>
 			<tbody>
 				{% for curso_extensao in object_list %}
 				<tr>
@@ -45,6 +45,7 @@
 					<td>{{ curso_extensao.coordenador }}</td>
 					<td>{{ curso_extensao.estado }}</td>
 					<td><a href="{% url 'curso_extensao:detalhe' curso_extensao.pk %}" class="button">Visualizar</a></td>
+					<td><a href="{% url 'curso_extensao:gerar_pdf' curso_extensao.pk %}" class="button">Gerar PDF</a></td>
 				</tr>
 			{% endfor %}
 			</tbody>

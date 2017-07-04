@@ -8,6 +8,7 @@ from django.db import transaction
 from .models import CursoExtensao
 from .forms import CursoExtensaoForm, Servidor_CursoExtensaoFormSet, PalavraChave_CursoExtensaoFormSet, Discente_CursoExtensaoFormSet, MembroComunidade_CursoExtensaoFormSet, PrevisaoOrcamentaria_CursoExtensaoFormSet
 from base.models import EstadoProjeto
+from .geracaopdf import gerar_pdf
 
 
 class IndexView(View):
@@ -94,6 +95,7 @@ class ConsultaCursoExtensao(LoginRequiredMixin, generic.ListView):
 
         return CursoExtensao.objects.filter(**d)
 
+
 class DetalheCursoExtensao(LoginRequiredMixin, View):
     def get(self, request, pk):
         curso_extensao = get_object_or_404(CursoExtensao, pk=pk)
@@ -149,3 +151,10 @@ class DetalheCursoExtensao(LoginRequiredMixin, View):
             return redirect('curso_extensao:index')
         else:
             return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_formset': servidores_formset, 'palavras_formset': palavras_formset, 'discentes_formset': discentes_formset, 'membros_comunidade_formset': membros_comunidade_formset, 'previsao_orcamentaria_formset': previsao_orcamentaria_formset})
+
+
+class GeracaoPDFCursoExtensao(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        curso_extensao = get_object_or_404(CursoExtensao, pk=pk)
+        gerar_pdf(curso_extensao)
+        return render(request, 'curso_extensao/index.html')
