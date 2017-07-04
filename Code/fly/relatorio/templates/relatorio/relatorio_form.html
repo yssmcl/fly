@@ -20,7 +20,7 @@
 {% block content %}
 	{% trans '<sup><a href="#campo_obrigatorio">*</a></sup>' as campo_obrigatorio %}
 
-	<h1 style="text-align:center;">Relatorio</h1>
+	<h1 style="text-align:center;">Relatório</h1>
 
 	<form data-abide novalidate method="post">
 		{% csrf_token %}
@@ -42,14 +42,11 @@
 		</div>
 
 		<div class="row">
-			<div class="medium-12 columns">
-				<label>Coordenador</label>
+			<div class="medium-8 columns">
+				<label>Coordenador(a)</label>
 				{{ projeto_extensao.coordenador }}
 			</div>
-		</div>
-
-		<div class="row">
-			<div class="medium-12 columns">
+			<div class="medium-4 columns">
 				{% if projeto_extensao.unidade_administrativa %}
 					<label>Unidade Administrativa</label>
 					{{ projeto_extensao.unidade_administrativa }}
@@ -57,27 +54,21 @@
 					<label>Campus</label>
 					{{ projeto_extensao.campus }}
 				{% endif%}
-			</div>
+			</div>			
 		</div>
 
 		<div class="row">
-			<div class="medium-12 columns">
+			<div class="medium-6 columns">
 				<label>Colegiado</label>
 				{{ projeto_extensao.coordenador.colegiado }}
 			</div>
-		</div>
-
-		<div class="row">
-			<div class="medium-12 columns">
-				<label>periodo_inicio</label>
+			<div class="medium-3 columns">
+				<label>Período de Início do Relatório</label>
 				{{ main_form.periodo_inicio }}
 				{{ main_form.periodo_inicio.errors }}
 			</div>
-		</div>
-
-		<div class="row">
-			<div class="medium-12 columns">
-				<label>periodo_fim</label>
+			<div class="medium-3 columns">
+				<label>Período de Fim do Relatório</label>
 				{{ main_form.periodo_fim }}
 				{{ main_form.periodo_fim.errors }}
 			</div>
@@ -85,7 +76,7 @@
 
 		<div class="row">
 			<div class="medium-12 columns">
-				<label>publico_atingido</label>
+				<label>Público Atingido (quantidade de participantes)</label>
 				{{ main_form.publico_atingido }}
 				{{ main_form.publico_atingido.errors }}
 			</div>
@@ -93,7 +84,7 @@
 
 		<div class="row">
 			<div class="medium-12 columns">
-				<label>resumo</label>
+				<label>Resumo da Atividade Realizada</label>
 				{{ main_form.resumo }}
 				{{ main_form.resumo.errors }}
 			</div>
@@ -101,7 +92,7 @@
 
 		<div class="row">
 			<div class="medium-12 columns">
-				<label>atividades_realizadas_programacao</label>
+				<label>Relacionar as Atividades Realizadas ou Programação</label>
 				{{ main_form.atividades_realizadas_programacao }}
 				{{ main_form.atividades_realizadas_programacao.errors }}
 			</div>
@@ -109,7 +100,7 @@
 
 		<div class="row">
 			<div class="medium-12 columns">
-				<label>dificuldades</label>
+				<label>Relacionar as Dificuldades Técnicas e/ou Administrativas</label>
 				{{ main_form.dificuldades }}
 				{{ main_form.dificuldades.errors }}
 			</div>
