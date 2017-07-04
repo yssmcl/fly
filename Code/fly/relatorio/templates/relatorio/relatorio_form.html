@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load formset_tags %}
+{% load i18n %}
+
+{% block title %} Relatorio {% endblock%}
+
+{% block body_begin_scripts %}
+	<script language="JavaScript" type="text/javascript">
+		function cancelar_cadastro() {
+			decisao = confirm("Ao sair, todos os dados do formulário serão perdidos. Deseja continuar?");
+			if (decisao) {
+				location.href = "{% url 'curso_extensao:index' %}";
+			}
+		}
+	</script>
+{% endblock %}
+
+{% block content %}
+	{% trans '<sup><a href="#campo_obrigatorio">*</a></sup>' as campo_obrigatorio %}
+
+	<h1 style="text-align:center;">Relatorio</h1>
+
+	<form data-abide novalidate method="post">
+		{% csrf_token %}
+
+		<div class="row">
+			{{ main_form.non_field_errors }}
+			<div data-abide-error class="alert callout" style="display: none;">
+				<p><i class="fi-alert"></i>Campos obrigatórios não preenchidos!</p>
+			</div>
+		</div>
+
+		{% for hidden in main_form.hidden_fields %}{{ hidden }}{% endfor %}
+
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>Título</label>
+				{{ projeto_extensao }}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>Coordenador</label>
+				{{ projeto_extensao.coordenador }}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="medium-12 columns">
+				{% if projeto_extensao.unidade_administrativa %}
+					<label>Unidade Administrativa</label>
+					{{ projeto_extensao.unidade_administrativa }}
+				{% else %}
+					<label>Campus</label>
+					{{ projeto_extensao.campus }}
+				{% endif%}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>Colegiado</label>
+				{{ projeto_extensao.coordenador.colegiado }}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>periodo_inicio</label>
+				{{ main_form.periodo_inicio }}
+				{{ main_form.periodo_inicio.errors }}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>periodo_fim</label>
+				{{ main_form.periodo_fim }}
+				{{ main_form.periodo_fim.errors }}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>publico_atingido</label>
+				{{ main_form.publico_atingido }}
+				{{ main_form.publico_atingido.errors }}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>resumo</label>
+				{{ main_form.resumo }}
+				{{ main_form.resumo.errors }}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>atividades_realizadas_programacao</label>
+				{{ main_form.atividades_realizadas_programacao }}
+				{{ main_form.atividades_realizadas_programacao.errors }}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>dificuldades</label>
+				{{ main_form.dificuldades }}
+				{{ main_form.dificuldades.errors }}
+			</div>
+		</div>
+
+		<div class="row">
+			<hr/>
+			<h3><b>Certificados</b></h3>
+		</div>
+		<div id="certificados_formset" data-formset-prefix="{{ certificados_formset.prefix }}">
+			{{ certificados_formset.management_form }}
+			<div data-formset-body>
+				{% for form in certificados_formset %}
+					<div data-formset-form>
+						{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+
+						<div class="row"><div class="medium-12">
+							{{ form.non_field_errors }}
+						</div></div>
+
+						<div class="row" style="background:#E2EEFA; padding:10px;">
+							<div class="row">
+								<div class="medium-3 columns">
+									<label>Nome</label>
+									{{ form.nome }}
+									{{ form.nome.errors }}
+								</div>
+								<div class="medium-3 columns">
+									<label>Função</label>
+									{{ form.funcao }}
+									{{ form.funcao.errors }}
+								</div>
+								<div class="medium-3 columns">
+									<label>Frequência</label>
+									{{ form.frequencia }}
+									{{ form.frequencia.errors }}
+								</div>
+								<div class="medium-3 columns">
+									<label>CH Total</label>
+									{{ form.carga_horaria_total }}
+									{{ form.carga_horaria_total.errors }}
+								</div>
+							</div>
+						</div>
+						<br />
+					</div>
+				{% endfor %}
+			</div>
+			<script type="form-template" data-formset-empty-form>
+				{% escapescript %}
+					<div data-formset-form>
+						{% for hidden in certificados_formset.empty_form.hidden_fields %}{{ hidden }}{% endfor %}
+						
+						<div class="row"><div class="medium-12">
+							{{ certificados_formset.empty_form.non_field_errors }}
+						</div></div>
+
+						<div class="row" style="background:#E2EEFA; padding:10px;">
+							<div class="row">
+								<div class="medium-3 columns">
+									<label>Nome</label>
+									{{ certificados_formset.empty_form.nome }}
+									{{ certificados_formset.empty_form.nome.errors }}
+								</div>
+								<div class="medium-3 columns">
+									<label>Função</label>
+									{{ certificados_formset.empty_form.funcao }}
+									{{ certificados_formset.empty_form.funcao.errors }}
+								</div>
+								<div class="medium-3 columns">
+									<label>Frequência</label>
+									{{ certificados_formset.empty_form.frequencia }}
+									{{ certificados_formset.empty_form.frequencia.errors }}
+								</div>
+								<div class="medium-3 columns">
+									<label>CH Total</label>
+									{{ certificados_formset.empty_form.carga_horaria_total }}
+									{{ certificados_formset.empty_form.carga_horaria_total.errors }}
+								</div>
+							</div>
+						</div>
+						<br />
+					</div>
+					<script src="{% static 'js/mascaras.js' %}"></script>
+				{% endescapescript %}
+			</script>
+			<div class="row">
+				<div class="medium-12 columns">
+					<input class="hollow button" type="button" value="Adicionar certificado" data-formset-add>
+				</div>
+			</div>
+		</div>
+
+		<div class="row" id="campo_obrigatorio">
+			<span><b>* Campos obrigatórios</b></span>
+		</div>
+		<div class="row">
+			<div style="text-align:center;">
+				<input type="button" value="Cancelar" class="button secondary" style="width:100px;" onclick="cancelar_cadastro()"/>
+				<input type="submit" value="Salvar" class="button primary" style="width:100px;">
+			</div>
+		</div>
+		<br />
+	</form>
+{% endblock %}
+
+{% block body_end_scripts %}
+	<script src="{% static 'js/jquery.js' %}"></script>
+	<script src="{% static 'js/jquery.formset.js' %}"></script>
+	<script src="{% static 'js/vendor/jquery.maskedinput.js' %}"></script>
+	<script src="{% static 'js/mascaras.js' %}"></script>
+	<script>
+		jQuery(function($) {
+			$("#certificados_formset").formset({});
+		});
+	</script>
+{% endblock %}

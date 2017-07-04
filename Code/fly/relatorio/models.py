@@ -8,11 +8,9 @@ class Relatorio(models.Model):
     periodo_inicio = models.DateField()
     periodo_fim = models.DateField()
 
-    colegiado = models.CharField(max_length=200)
-
     publico_atingido = models.CharField(max_length=200)
 
-    # Inserir onde o certificado sera gerado: PROEX ou Centro de Coordenação / Órgão Promotor
+    # TODO: Item 9.2: Inserir onde o certificado sera gerado: PROEX ou Centro de Coordenação / Órgão Promotor
 
     resumo = models.CharField(max_length=200)
 
@@ -20,15 +18,23 @@ class Relatorio(models.Model):
 
     dificuldades = models.CharField(max_length=200)
 
-    local = models.CharField(max_length=200)
-
-    data = models.DateField()
+    data = models.DateTimeField(auto_now_add=True)
 
 
+class FuncaoCertificado(models.Model):
+    nome = models.CharField(max_length=200)
 
-class Certificado(models.Model):
-	nome = models.CharField(max_length=200)
-	#Para a função, conferir todos os tipos, pois os que já haviam sido cadastrados não possui o tipo participante, por exemplo
-	funcao = models.CharField(max_length=200)
-	frequencia = models.DecimalField(max_digits=10, decimal_places=2)
-	carga_horaria_total = models.DecimalField(max_digits=10, decimal_places=2)
+    def __str__(self):
+        return self.nome
+
+
+class CertificadoRelatorio(models.Model):
+    relatorio = models.ForeignKey(Relatorio)
+
+    nome = models.CharField(max_length=200)
+    #Para a função, conferir todos os tipos, pois os que já haviam sido cadastrados não possui o tipo participante, por exemplo
+    funcao = models.ForeignKey(FuncaoCertificado)
+    frequencia = models.DecimalField(max_digits=10, decimal_places=2)
+    carga_horaria_total = models.DecimalField(max_digits=10, decimal_places=2)
+
+

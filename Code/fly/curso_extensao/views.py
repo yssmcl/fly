@@ -56,7 +56,7 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
             # Set extra data
             curso_extensao.user = request.user
             curso_extensao.data = timezone.now()
-            curso_extensao.estado = EstadoProjeto.objects.get(nome='A') #TODO:
+            curso_extensao.estado = EstadoProjeto.objects.get(nome='Não submetido')
 
             with transaction.atomic():
                 main_form.save()

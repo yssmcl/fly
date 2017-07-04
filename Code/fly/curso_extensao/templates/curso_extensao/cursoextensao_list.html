@@ -44,7 +44,10 @@
 					<td>{{ curso_extensao }}</td>
 					<td>{{ curso_extensao.coordenador }}</td>
 					<td>{{ curso_extensao.estado }}</td>
-					<td><a href="{% url 'curso_extensao:detalhe' curso_extensao.pk %}" class="button">Visualizar</a></td>
+					<td>
+						<a href="{% url 'curso_extensao:detalhe' curso_extensao.pk %}" class="button">Visualizar</a>
+						<a href="{% url 'relatorio:novo' curso_extensao.pk %}" class="button">Adicionar Relatório</a>
+					</td>
 				</tr>
 			{% endfor %}
 			</tbody>
