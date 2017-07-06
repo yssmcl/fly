@@ -45,7 +45,7 @@
 						<td>{{ curso_extensao }}</td>
 						<td>{{ curso_extensao.coordenador }}</td>
 						<td>{{ curso_extensao.estado }}</td>
-						<td>
+						<td style="text-align:center;">
 							<a href="{% url 'curso_extensao:detalhe' curso_extensao.pk %}" class="button">Visualizar</a>
 							<a href="{% url 'curso_extensao:gerar_pdf' curso_extensao.pk %}" class="button">Gerar PDF</a>
 							<a href="{% url 'relatorio:novo' curso_extensao.pk %}" class="button">Adicionar Relatório</a>

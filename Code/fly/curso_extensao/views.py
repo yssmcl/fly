@@ -1,12 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect, get_object_or_404
-from django.db.models import F
-from django.views import View, generic
-from django.utils import timezone
 from django.db import transaction
+from django.db.models import F
+from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.utils import timezone
+from django.utils.encoding import smart_str
+from django.views import View, generic
 
-from .models import CursoExtensao
 from .forms import CursoExtensaoForm, Servidor_CursoExtensaoFormSet, PalavraChave_CursoExtensaoFormSet, Discente_CursoExtensaoFormSet, MembroComunidade_CursoExtensaoFormSet, PrevisaoOrcamentaria_CursoExtensaoFormSet
+from .models import CursoExtensao
 from base.models import EstadoProjeto
 from curso_extensao.pdf.geracaopdf import gerar_pdf
 
@@ -157,4 +159,11 @@ class GeracaoPDFCursoExtensao(LoginRequiredMixin, View):
     def get(self, request, pk):
         curso_extensao = get_object_or_404(CursoExtensao, pk=pk)
         gerar_pdf(curso_extensao)
-        return render(request, 'curso_extensao/index.html')
+        caminho_arquivo = 'curso_extensao/pdf/'
+        nome_arquivo = 'curso_extensao_{}.pdf'.format(str(pk))
+
+        arquivo_pdf = open(caminho_arquivo + nome_arquivo, 'rb')
+        response = HttpResponse(arquivo_pdf, content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(nome_arquivo)
+        #  response['X-Sendfile'] = smart_str(caminho_arquivo)
+        return response

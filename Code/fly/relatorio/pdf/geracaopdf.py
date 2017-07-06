@@ -152,7 +152,7 @@ def gerar_pdf(relatorio):
     flush_right.append(NoEscape('Assinatura do(a) Coordenador(a) da Atividade'))
     doc.append(flush_right)
 
-    doc.generate_pdf('relatorio_' + str(relatorio.id), clean_tex=True)
+    doc.generate_pdf('relatorio_' + str(relatorio.id))
 
 # TODO: \\, \newline ou \linebreak?
 # TODO: cabeçalho e numeração das páginas
