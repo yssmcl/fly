@@ -8,7 +8,7 @@ from django.db import transaction
 from .models import CursoExtensao
 from .forms import CursoExtensaoForm, Servidor_CursoExtensaoFormSet, PalavraChave_CursoExtensaoFormSet, Discente_CursoExtensaoFormSet, MembroComunidade_CursoExtensaoFormSet, PrevisaoOrcamentaria_CursoExtensaoFormSet
 from base.models import EstadoProjeto
-from .geracaopdf import gerar_pdf
+from curso_extensao.pdf.geracaopdf import gerar_pdf
 
 
 class IndexView(View):

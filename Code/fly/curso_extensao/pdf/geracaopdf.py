@@ -424,7 +424,7 @@ def gerar_pdf(curso):
             formulario_previsao_orcamentaria(doc)
 
     #  doc.generate_tex('exemplo-pylatex')
-    doc.generate_pdf('curso_extensao/pdfs/curso_extensao_' + str(curso.id), clean_tex=True)
+    doc.generate_pdf('curso_extensao/pdf/curso_extensao_' + str(curso.id), clean_tex=True)
 
 # TODO: \\, \newline ou \linebreak?
 # TODO: cabeçalho e numeração das páginas
