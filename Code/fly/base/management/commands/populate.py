@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from base.models import *
 from curso_extensao.models import *
+from relatorio.models import *
 
 class Command(BaseCommand):
     help = 'Populate the database with necessary information.'
@@ -158,7 +159,7 @@ class Command(BaseCommand):
             'Autor(a)',
             'Consultor(a)',
             'Instrutor(a)',
-            'Ministrante(a)',
+            'Ministrante',
         ]
 
         turno_curso_list = [
@@ -168,11 +169,19 @@ class Command(BaseCommand):
             'Tarde',
         ]
 
-        #TODO:
-        estado_projeto_list = [
-            'A',
-            'B',
-            'C',
+        estado_projeto_list = ['Não submetido', 'Atividade Concluída', 'Atividade em Andamento', 'Atividade com Interrupção Temporária', 'Arquivo PRPPG', 'Arquivado protocolo geral - Cancelado', 'Arquivado protocolo geral - Concluído', 'Projeto cancelado pela comissão de pesquisa', 'Projeto suspenso temporariamente', 'Atividade cancelada', 'Processo inadimplente', 'Em tramitação', 'Projeto cancelado por exoneração do coordenador', 'Projeto cancelado por aposentadoria do coordenador', 'Grupo de Pesquisa em Andamento', 'CR  com o docente - exonerado', 'Relatório final em tramitação', 'Atividade inadimplente - relatório final', 'Atividade inadimplente - relatório anual', 'Atividade não aprovada pela Comissão de Extensão', 'Atividade inadimplente']
+
+        funcao_certificado_list = [
+            'Coordenador(a)',
+            'Subcoordenador(a)',
+            'Supervisor(a)',
+            'Colaborador(a)',
+            'Autor(a)',
+            'Consultor(a)',
+            'Instrutor(a)',
+            'Ministrante',
+            'Palestrante',
+            'Participante',
         ]
 
         self.saveList(Campus, campus_list)
@@ -187,6 +196,7 @@ class Command(BaseCommand):
         self.saveList(FuncaoServidor, funcao_servidor_list)
         self.saveList(TurnoCurso, turno_curso_list)
         self.saveList(EstadoProjeto, estado_projeto_list)
+        self.saveList(FuncaoCertificado, funcao_certificado_list)
 
         #TODO: remove
         print("Iniciando insercao em 'Servidor'")

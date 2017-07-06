@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^accounts/', include('accounts.urls')),
     url(r'^curso_extensao/', include('curso_extensao.urls')),
     url(r'^parecer/', include('parecer.urls')),
+    url(r'^relatorio/', include('relatorio.urls')),
 ]
