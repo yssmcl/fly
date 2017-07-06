@@ -1,28 +1,33 @@
-from pylatex import Document, Enumerate, NoEscape, Package, Tabularx, FlushRight, \
-     LineBreak, NewLine, MultiColumn, MultiRow, HFill, Table
-from pylatex.base_classes import Environment
-from pylatex.utils import escape_latex, bold
-
 from relatorio.models import *
 
-width_argument = NoEscape(r'\linewidth')
-
-def tabela_participantes(doc, cabecalho, table_spec):
-    from pylatex import Tabularx, NoEscape
-
-    with doc.create(Tabularx('|' + table_spec, width_argument=width_argument)) as tab:
-        tab.add_hline()
-        tab.add_row(cabecalho)
-        tab.add_hline()
-
-        return tab
-
-def item(doc, enum, texto, dado=None):
-    enum.add_item(bold(texto))
-    if dado:
-        doc.append(escape_latex(dado))
-
 def gerar_pdf(relatorio):
+    from pylatex import Document, Enumerate, NoEscape, Package, Tabularx, FlushRight, \
+         LineBreak, NewLine, MultiColumn, MultiRow, HFill, Table, Center
+    from pylatex.base_classes import Environment
+    from pylatex.utils import escape_latex, bold
+
+    from relatorio.models import Relatorio, CertificadoRelatorio
+    from base.models import UnidadeAdministrativa, Campus, Centro
+    from curso_extensao.models import CursoExtensao
+
+    width_argument = NoEscape(r'\linewidth')
+
+    def tabela_participantes(doc, cabecalho, table_spec):
+        from pylatex import Tabularx, NoEscape
+
+        with doc.create(Tabularx('|' + table_spec, width_argument=width_argument)) as tab:
+            tab.add_hline()
+            tab.add_row(cabecalho)
+            tab.add_hline()
+
+            return tab
+
+    def item(doc, enum, texto, dado=None):
+        enum.add_item(bold(texto))
+        if dado:
+            doc.append(escape_latex(dado))
+
+
     # Pacotes e configurações
     geometry_options = {'tmargin': '2cm',
                         'bmargin': '2cm',
@@ -63,12 +68,12 @@ def gerar_pdf(relatorio):
     with doc.create(Enumerate()) as enum:
         doc.append(NoEscape(r'\footnotesize'))
 
-        item(doc, enum, 'TÍTULO DA ATIVIDADE: ', relatorio.titulo)
+        item(doc, enum, 'TÍTULO DA ATIVIDADE: ', relatorio.projeto_extensao.titulo)
         with doc.create(Enumerate()) as subenum:
             subenum.add_item(NoEscape('Vinculada a algum Programa de Extensão? '))
-            if relatorio.programa_extensao:
+            if relatorio.projeto_extensao.programa_extensao:
                 doc.append(NoEscape(r'Não () Sim ({$\times$}): Qual? '))
-                doc.append(relatorio.programa_extensao.nome)
+                doc.append(relatorio.projeto_extensao.programa_extensao.nome)
             else:
                 doc.append(NoEscape(r'Não ($\times$) Sim (): Qual? '))
 
@@ -81,7 +86,7 @@ def gerar_pdf(relatorio):
 
         item(doc, enum, 'UNIDADE ADMINISTRATIVA: ')
         for obj in UnidadeAdministrativa.objects.all():
-            if relatorio.unidade_administrativa and relatorio.unidade_administrativa.id == obj.id:
+            if relatorio.projeto_extensao.unidade_administrativa and relatorio.projeto_extensao.unidade_administrativa.id == obj.id:
                 doc.append(NoEscape(obj.nome + r' ($\times$) '))
             else:
                 doc.append(obj.nome + ' () ')
@@ -89,7 +94,7 @@ def gerar_pdf(relatorio):
 
         doc.append(bold('CAMPUS DE: '))
         for obj in Campus.objects.all():
-            if relatorio.campus and relatorio.campus.id == obj.id:
+            if relatorio.projeto_extensao.campus and relatorio.projeto_extensao.campus.id == obj.id:
                 doc.append(NoEscape(obj.nome + r' ($\times$) '))
             else:
                 doc.append(obj.nome + ' () ')
@@ -97,24 +102,24 @@ def gerar_pdf(relatorio):
         item(doc, enum, 'CENTRO: ')
         doc.append(NewLine())
         for obj in Centro.objects.all():
-            if relatorio.centro and relatorio.centro.id == obj.id:
+            if relatorio.projeto_extensao.centro and relatorio.projeto_extensao.centro.id == obj.id:
                 doc.append(NoEscape(obj.nome + r' ($\times$) '))
             else:
                 doc.append(obj.nome + ' () ')
 
         curso = CursoExtensao.objects.get(id=relatorio.projeto_extensao.id)
-        colegiado = curso.colegiado.nome
-        item(doc, enum, 'COLEGIADO: ', colegiado)
+        #  colegiado = curso.colegiado.nome
+        #  item(doc, enum, 'COLEGIADO: ', colegiado)
+        item(doc, enum, 'COLEGIADO: ')
 
         item(doc, enum, 'PÚBLICO ATINGIDO: ', relatorio.publico_atingido)
 
         item(doc, enum, 'CERTIFICADOS: ', relatorio.publico_atingido)
         with doc.create(Enumerate()) as subenum:
             subenum.add_item('Relacionar o nome dos participantes com direito a certificados.')
+            doc.append(NewLine())
             #  doc.append(NewLine())
             table_spec = NoEscape(r'''>{\centering\arraybackslash}X|
-                                  @{    }c@{    }|
-                                  @{    }c@{    }|
                                   @{    }c@{    }|
                                   @{    }c@{    }|
                                   @{    }c@{    }|
@@ -126,12 +131,14 @@ def gerar_pdf(relatorio):
 
             tab = tabela_participantes(doc, cabecalho, table_spec)
 
-            participantes = CertificadoRelatorio.objects.filter(relatorio=relatorio_id)
-            for participante in participantes:
-                linha = [participante.nome,
-                         participante.funcao,
-                         participante.frequencia,
-                         participante.carga_horaria_total]
+            # TODO: teste
+            #  certificado = CertificadoRelatorio.objects.filter(relatorio=relatorio_id)
+            certificados = CertificadoRelatorio.objects.all()
+            for certificado in certificados:
+                linha = [certificado.nome,
+                         certificado.funcao,
+                         certificado.frequencia,
+                         certificado.carga_horaria_total]
                 tab.add_row(linha)
                 tab.add_hline()
 
@@ -147,12 +154,19 @@ def gerar_pdf(relatorio):
 
         item(doc, enum, 'RELACIONAR AS DIFICULDADES TÉCNICAS E/OU ADMINISTRATIVAS (se houver): ', relatorio.dificuldades)
 
-    flush_right = FlushRight()
-    flush_right.append(NoEscape(r'Local e data \\ \\ \\ \\'))
-    flush_right.append(NoEscape('Assinatura do(a) Coordenador(a) da Atividade'))
-    doc.append(flush_right)
+    center = Center()
+    center.append(NoEscape('\hrulefill'))
+    center.append(NewLine())
+    center.append(NoEscape(r'Local e data \\'))
+    center.append(NoEscape('\hrulefill'))
+    center.append(NewLine())
+    center.append(NoEscape('Assinatura do(a) Coordenador(a) da Atividade'))
+    doc.append(center)
 
-    doc.generate_pdf('relatorio_' + str(relatorio.id))
+    doc.generate_pdf('relatorio/pdf/relatorio_' + str(relatorio.id))
+
+# TODO: teste
+gerar_pdf(Relatorio.objects.all().first())
 
 # TODO: \\, \newline ou \linebreak?
 # TODO: cabeçalho e numeração das páginas

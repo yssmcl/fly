@@ -11,6 +11,7 @@ class Relatorio(models.Model):
     publico_atingido = models.CharField(max_length=200)
 
     # TODO: Item 9.2: Inserir onde o certificado sera gerado: PROEX ou Centro de Coordenação / Órgão Promotor
+    #  orgao_gerador_certificado = models.CharField(max_length=200)
 
     resumo = models.CharField(max_length=200)
 
@@ -32,9 +33,10 @@ class CertificadoRelatorio(models.Model):
     relatorio = models.ForeignKey(Relatorio)
 
     nome = models.CharField(max_length=200)
-    #Para a função, conferir todos os tipos, pois os que já haviam sido cadastrados não possui o tipo participante, por exemplo
+    # TODO: Para a função, conferir todos os tipos, pois os que já haviam sido cadastrados não possuem o tipo participante, por exemplo
     funcao = models.ForeignKey(FuncaoCertificado)
     frequencia = models.DecimalField(max_digits=10, decimal_places=2)
     carga_horaria_total = models.DecimalField(max_digits=10, decimal_places=2)
 
-
+    def __str__(self):
+        return self.nome

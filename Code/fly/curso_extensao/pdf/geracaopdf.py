@@ -46,7 +46,7 @@ def tabela_discentes_membros(doc, cabecalho, table_spec):
 
         return tab
 
-def formulario_previsao_orcamentaria(doc):
+def formulario_previsao_orcamentaria(doc, enum, curso):
         enum.add_item(bold('PREVISÃO ORÇAMENTÁRIA: '))
         doc.append(NewLine())
         previsao_orcamentaria = PrevisaoOrcamentaria_CursoExtensao.objects.get(curso_extensao=curso.id)
@@ -163,9 +163,9 @@ def gerar_pdf(curso):
 
         item(doc, enum, 'TÍTULO: ', curso.titulo)
 
-        item(doc, enum, 'COORDENADOR(A): ', curso.coordenador.nome_completo)
+        item(doc, enum, 'COORDENADOR(a): ', curso.coordenador.nome_completo)
 
-        periodo_realizacao = 'De ' + curso.periodo_realizacao_inicio.strftime('%d/%m/%Y') + ' a ' + curso.periodo_realizacao_fim.strftime('%d/%m/%Y')
+        periodo_realizacao = 'de ' + curso.periodo_realizacao_inicio.strftime('%d/%m/%Y') + ' a ' + curso.periodo_realizacao_fim.strftime('%d/%m/%Y')
         item(doc, enum, 'PERÍODO DE REALIZAÇÃO: ', periodo_realizacao)
 
         with doc.create(MdFramed(options=mdframed_options)):
@@ -338,7 +338,7 @@ def gerar_pdf(curso):
                               @{    }c@{    }|
                               @{    }c@{    }|
                               @{    }c@{    }|
-                              @{    }c@{    }|
+                              >{\centering\arraybackslash}X|
                               ''')
         cabecalho = ['NOME COMPLETO',
                      'CURSO',
@@ -421,13 +421,11 @@ def gerar_pdf(curso):
         doc.append(NoEscape('}')) # volta com tamanho da fonte normal
 
         if PrevisaoOrcamentaria_CursoExtensao.objects.filter(curso_extensao=curso.id):
-            formulario_previsao_orcamentaria(doc)
+            formulario_previsao_orcamentaria(doc, enum, curso)
 
-    #  doc.generate_tex('exemplo-pylatex')
-    doc.generate_pdf('curso_extensao/pdf/curso_extensao_' + str(curso.id), clean_tex=True)
+    doc.generate_pdf('curso_extensao/pdf/curso_extensao_' + str(curso.id))
 
 # TODO: \\, \newline ou \linebreak?
 # TODO: cabeçalho e numeração das páginas
 # TODO: escape_latex e/ou NoEscape em tudo?
 # TODO: checar se os objetos são nulos antes de colocar no PDF
-# TODO: pasta ./pdfs/ pra armazenar os PDFs gerados

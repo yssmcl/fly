@@ -5,7 +5,7 @@ from base.models import Servidor, Programa, UnidadeAdministrativa, Campus, Centr
 
 class CursoExtensao(models.Model):
     user = models.ForeignKey(auth_models.User)
-    
+
     data = models.DateTimeField()
 
     titulo = models.CharField(max_length=200)
@@ -69,7 +69,7 @@ class PrevisaoOrcamentaria_CursoExtensao(models.Model):
     material_consumo = models.DecimalField(max_digits=10, decimal_places=2)
     xerox = models.DecimalField(max_digits=10, decimal_places=2)
     certificados = models.DecimalField(max_digits=10, decimal_places=2)
-    
+
     #TODO: validar:
     outros = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     outros_especificacao = models.CharField(max_length=200, blank=True, null=True)
@@ -83,7 +83,11 @@ class PrevisaoOrcamentaria_CursoExtensao(models.Model):
 
 class PalavraChave_CursoExtensao(models.Model):
     curso_extensao = models.ForeignKey(CursoExtensao)
+
     nome = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.nome
 
 
 class Servidor_CursoExtensao(models.Model):
@@ -102,7 +106,7 @@ class TurnoCurso(models.Model):
 
     def __str__(self):
         return self.nome
-    
+
 
 class Discente_CursoExtensao(models.Model):
     curso_extensao = models.ForeignKey(CursoExtensao)
@@ -120,6 +124,9 @@ class Discente_CursoExtensao(models.Model):
     email = models.EmailField()
 
     plano_trabalho = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.nome
 
 
 class MembroComunidade_CursoExtensao(models.Model):
@@ -139,3 +146,6 @@ class MembroComunidade_CursoExtensao(models.Model):
     funcao = models.CharField(max_length=200)
 
     plano_trabalho = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.nome
