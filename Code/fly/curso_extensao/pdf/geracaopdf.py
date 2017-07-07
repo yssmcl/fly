@@ -1,5 +1,6 @@
 from pylatex import Document, Enumerate, NoEscape, Package, Tabularx, FlushRight, \
-     LineBreak, NewLine, MultiColumn, MultiRow, HFill, Table
+     LineBreak, NewLine, MultiColumn, MultiRow, HFill, Table, PageStyle, Head, \
+     simple_page_number, Foot, Figure
 from pylatex.base_classes import Environment
 from pylatex.frames import MdFramed
 from pylatex.utils import escape_latex, bold
@@ -140,6 +141,7 @@ def gerar_pdf(curso):
     doc.packages.add(Package('helvet'))
     doc.packages.add(Package('tabularx'))
     doc.packages.add(Package('mdframed'))
+    doc.packages.add(Package('eqparbox'))
     #  doc.packages.add(Package('hyphenat', options='none')) # impede hifenização
 
     doc.append(NoEscape(r'\fontfamily{\sfdefault}\selectfont'))
@@ -150,16 +152,43 @@ def gerar_pdf(curso):
     \setlist[enumerate, 2]{label*=\textbf{.\arabic*}, leftmargin=*}
     '''))
 
+    # Cabeçalho
+    header = PageStyle('header')
+    with header.create(Head('L')):
+        #  \fontfamily{\sfdefault}\selectfont
+        #  {\tiny
+        #  }
+        #  header.append(NoEscape(r'Reitoria - CNPJ 78680337/0001-84 \\ Rua Universitária, 1619 - Fone: (45) 3220-3000 - Fax: (45) 3324-4590 \\ Jardim Universitário - Cx. P. 000701 - CEP 85819-110 - Cascavel - Paraná \\ www.unioeste.br'))
+        pass
+    with header.create(Head('R')):
+        header.append(simple_page_number())
+
+    # Rodapé
+    with header.create(Foot('R')):
+        header.append(NoEscape(r'{\footnotesize \texttt{ANEXO V DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014}}'))
+    doc.preamble.append(header)
+    doc.change_document_style('header')
+
     # Início do documento
+    doc.append(NoEscape(r'\footnotesize'))
+    doc.append(NoEscape(r'\texttt{ANEXO V DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014}'))
+
     flush_right = FlushRight()
-    flush_right.append(NoEscape(r'FORMULÁRIO ESPECÍFICO PARA ATIVIDADES DE EXTENSÃO \\'))
-    flush_right.append(NoEscape('MODALIDADE CURSO DE EXTENSÃO'))
+    flush_right.append(NoEscape(r'''
+\eqparbox{a}{\relax\ifvmode\raggedleft\fi
+    \underline{FORMULÁRIO ESPECÍFICO PARA ATIVIDADES DE EXTENSÃO} \\
+    \bigskip
+    MODALIDADE CURSO DE EXTENSÃO
+}
+\eqparbox{b}{
+    \includegraphics[width=100px]{/home/user/Downloads/logo_extensao.jpg}
+}
+    '''))
     doc.append(flush_right)
 
     doc.append(NoEscape('\hrulefill'))
 
     with doc.create(Enumerate()) as enum:
-        doc.append(NoEscape(r'\footnotesize'))
 
         item(doc, enum, 'TÍTULO: ', curso.titulo)
 
@@ -423,7 +452,7 @@ def gerar_pdf(curso):
         if PrevisaoOrcamentaria_CursoExtensao.objects.filter(curso_extensao=curso.id):
             formulario_previsao_orcamentaria(doc, enum, curso)
 
-    doc.generate_pdf('curso_extensao/pdf/curso_extensao_' + str(curso.id))
+    doc.generate_pdf('curso_extensao/pdf/curso_extensao_' + str(curso.id), clean_tex=True)
 
 # TODO: \\, \newline ou \linebreak?
 # TODO: cabeçalho e numeração das páginas

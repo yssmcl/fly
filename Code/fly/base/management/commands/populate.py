@@ -274,7 +274,6 @@ class Command(BaseCommand):
             c.data = timezone.now()
             c.titulo = 'título curso 1'
             c.estado = EstadoProjeto.objects.all().first()
-            #  c.coordenador = Servidor.objects.get(funcao=FuncaoServidor.objects.get(nome='coordenador').first()).first()
             c.coordenador = Servidor.objects.all().first()
             c.periodo_realizacao_inicio = timezone.now()
             c.periodo_realizacao_fim = timezone.now()
