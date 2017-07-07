@@ -1,11 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import transaction
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View, generic
-from django.db import transaction
 
 from curso_extensao.models import CursoExtensao
-from .models import Relatorio
 from .forms import RelatorioForm, CertificadoRelatorioFormSet
+from .models import Relatorio
 
 class NovoRelatorio(View):
     def get(self, request, pk):

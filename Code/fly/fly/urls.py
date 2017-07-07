@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^curso_extensao/', include('curso_extensao.urls')),
     url(r'^parecer/', include('parecer.urls')),
     url(r'^relatorio/', include('relatorio.urls')),
+    url(r'^docente/', include('docente.urls')),
 ]

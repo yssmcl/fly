@@ -81,7 +81,7 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
 
 
 class ConsultaCursoExtensao(LoginRequiredMixin, generic.ListView):
-    model = CursoExtensao        
+    model = CursoExtensao
 
     def get_queryset(self):
         d = { 'user': self.request.user }

@@ -22,6 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'g@xfsl+31evbzmbo*)cxp5+@4w=wy#7((jv$sw8!y7l^3*uziq'
 
+# TODO:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -31,11 +32,12 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'curso_extensao.apps.CursoExtensaoConfig',
+    'accounts.apps.AccountsConfig',
     'base.apps.BaseConfig',
+    'curso_extensao.apps.CursoExtensaoConfig',
+    'docente.apps.DocenteConfig',
     'parecer.apps.ParecerConfig',
     'relatorio.apps.RelatorioConfig',
-    'accounts.apps.AccountsConfig',
     'jquery',
     'djangoformsetjs',
     'django.contrib.admin',

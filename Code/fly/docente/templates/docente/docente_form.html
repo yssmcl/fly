@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load formset_tags %}
+{% load i18n %}
+
+{% block title %} Docente {% endblock%}
+
+{% block body_begin_scripts %}
+	<script language="JavaScript" type="text/javascript">
+		function cancelar_cadastro() {
+			decisao = confirm("Ao sair, todos os dados do formulário serão perdidos. Deseja continuar?");
+			if (decisao) {
+				location.href = "{% url 'curso_extensao:index' %}";
+			}
+		}
+	</script>
+{% endblock %}
+
+{% block content %}
+	{% trans '<sup><a href="#campo_obrigatorio">*</a></sup>' as campo_obrigatorio %}
+
+	<h1 style="text-align:center;">Cadastro de Docente</h1>
+
+	<form data-abide novalidate method="post">
+		{% csrf_token %}
+
+		<div class="row">
+			{{ main_form.non_field_errors }}
+			<div data-abide-error class="alert callout" style="display: none;">
+				<p><i class="fi-alert"></i>Campos obrigatórios não preenchidos!</p>
+			</div>
+		</div>
+
+		{% for hidden in main_form.hidden_fields %}{{ hidden }}{% endfor %}
+
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>Nome completo{{ campo_obrigatorio }}</label>
+				{{ main_form.nome_completo }}
+				{{ main_form.nome_completo.errors }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="medium-4 columns">
+				<label>CPF{{ campo_obrigatorio }}</label>
+				{{ main_form.cpf }}
+				{{ main_form.cpf.errors }}
+			</div>
+			<div class="medium-4 columns">
+				<label>Email{{ campo_obrigatorio }}</label>
+				{{ main_form.email }}
+				{{ main_form.email.errors }}
+			</div>
+			<div class="medium-4 columns">
+				<label>Telefone{{ campo_obrigatorio }}</label>
+				{{ main_form.telefone }}
+				{{ main_form.telefone.errors }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="medium-4 columns">
+				<label>Curso{{ campo_obrigatorio }}</label>
+				{{ main_form.curso }}
+				{{ main_form.curso.errors }}
+			</div>
+			<!-- TODO: autocompletar centro com base no curso selecionado -->
+			<div class="medium-4 columns">
+				<label>Centro{{ campo_obrigatorio }}</label>
+				{{ main_form.centro }}
+				{{ main_form.centro.errors }}
+			</div>
+			<div class="medium-4 columns">
+				<label>Campus{{ campo_obrigatorio }}</label>
+				{{ main_form.campus }}
+				{{ main_form.campus.errors }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>Colegiado</label>
+				{{ main_form.colegiado }}
+				{{ main_form.colegiado.errors }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="medium-4 columns">
+				<label>CEP{{ campo_obrigatorio }}</label>
+				{{ main_form.cep }}
+				{{ main_form.cep.errors }}
+			</div>
+			<div class="medium-4 columns">
+				<label>Logradouro{{ campo_obrigatorio }}</label>
+				{{ main_form.logradouro }}
+				{{ main_form.logradouro.errors }}
+			</div>
+			<div class="medium-4 columns">
+				<label>Complemento</label>
+				{{ main_form.complemento }}
+				{{ main_form.complemento.errors }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="medium-4 columns">
+				<label>Cidade{{ campo_obrigatorio }}</label>
+				{{ main_form.cidade }}
+				{{ main_form.cidade.errors }}
+			</div>
+			<div class="medium-4 columns">
+				<label>Estado{{ campo_obrigatorio }}</label>
+				{{ main_form.estado }}
+				{{ main_form.estado.errors }}
+			</div>
+			<div class="medium-4 columns">
+				<label>País{{ campo_obrigatorio }}</label>
+				{{ main_form.pais }}
+				{{ main_form.pais.errors }}
+			</div>
+		</div>
+
+		<div class="row" id="campo_obrigatorio">
+			<span><b>* Campos obrigatórios</b></span>
+		</div>
+		<div class="row">
+			<div style="text-align:center;">
+				<input type="button" value="Cancelar" class="button secondary" style="width:100px;" onclick="cancelar_cadastro()"/>
+				<input type="submit" value="Salvar" class="button primary" style="width:100px;">
+			</div>
+		</div>
+		<br />
+	</form>
+{% endblock %}
+
+{% block body_end_scripts %}
+	<script src="{% static 'js/jquery.js' %}"></script>
+	<script src="{% static 'js/jquery.formset.js' %}"></script>
+	<script src="{% static 'js/vendor/jquery.maskedinput.js' %}"></script>
+	<script src="{% static 'js/mascaras.js' %}"></script>
+{% endblock %}
