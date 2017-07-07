@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% load formset_tags %}
+
+{% block title %} Docente {% endblock %}
+
+{% block content %}
+
+	<br />
+
+	<form>
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>Nome completo</label>
+				<input type="text" name="titulo" value="{{ request.GET.nome_completo }}"/>
+			</div>
+
+			<div style="text-align:center;">
+				<input type="submit" value="Pesquisar" class="button">	
+			</div>
+		</div>
+	</form>
+
+	<div class="row">
+		<table>
+			<thead>
+				<th>Nome completo</th>
+				<th>Email</th>
+				<th>Ação</th>
+			</thead>
+			<tbody>
+				{% for docente in object_list %}
+					<tr>
+						<td>{{ docente.nome_completo }}</td>
+						<td>{{ docente.email }}</td>
+						<td><a href="{% url 'docente:detalhe' docente.pk %}" class="button">Visualizar</a></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}
