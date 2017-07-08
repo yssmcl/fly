@@ -189,6 +189,8 @@ def gerar_pdf(curso):
 \fancyfoot[L]{
     \thepage
 }
+\fancyfoot[C]{
+}
     '''))
 
     doc.append(NoEscape(r'\texttt{ANEXO V DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014}'))
@@ -297,7 +299,6 @@ def gerar_pdf(curso):
 
         item(doc, enum, 'LOCAL DA INSCRIÇÃO: ', curso.local_inscricao)
 
-        # TODO: calibri 10, justificado (?), espaçamento simples (1,5?)
         enum.add_item(bold('RESUMO: '))
         doc.append(NewLine())
         doc.append(escape_latex(curso.resumo))
@@ -306,7 +307,7 @@ def gerar_pdf(curso):
 
         enum.add_item(bold('EQUIPE DE TRABALHO: '))
         doc.append(NewLine())
-        # TODO: se curso.servidores.all() for vazio, esse item fica vazio?
+        # TODO: se curso.servidores.all() for vazio, esse item não aparece?
         for servidor in curso.servidores.all():
             servidor_cursoextensao = Servidor_CursoExtensao.objects.get(servidor_id=servidor.id)
 
@@ -358,7 +359,6 @@ def gerar_pdf(curso):
                 doc.append(escape_latex(servidor.email))
                 doc.append(NewLine())
 
-                # TODO: função pra isso: texto_livre(enunciado, dado=None, negrito=False)
                 doc.append('Telefone: ')
                 doc.append(servidor.telefone)
                 doc.append(NewLine())
@@ -475,7 +475,4 @@ def gerar_pdf(curso):
     #  doc.generate_tex('curso_extensao/pdf/curso_extensao_' + str(curso.id))
     doc.generate_pdf('curso_extensao/pdf/curso_extensao_' + str(curso.id), clean_tex=False)
 
-# TODO: \\, \newline ou \linebreak?
-# TODO: cabeçalho e numeração das páginas
-# TODO: escape_latex e/ou NoEscape em tudo?
-# TODO: checar se os objetos são nulos antes de colocar no PDF
+# TODO: checar se os objetos não são nulos antes de colocar no PDF

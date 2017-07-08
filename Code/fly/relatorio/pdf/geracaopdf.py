@@ -168,8 +168,4 @@ def gerar_pdf(relatorio):
 # TODO: teste
 gerar_pdf(Relatorio.objects.all().first())
 
-# TODO: \\, \newline ou \linebreak?
-# TODO: cabeçalho e numeração das páginas
-# TODO: escape_latex e/ou NoEscape em tudo?
 # TODO: checar se os objetos são nulos antes de colocar no PDF
-# TODO: pasta ./pdfs/ pra armazenar os PDFs gerados
