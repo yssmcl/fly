@@ -1,6 +1,6 @@
 from pylatex import Document, Enumerate, NoEscape, Package, Tabularx, FlushRight, \
      LineBreak, NewLine, MultiColumn, MultiRow, HFill, Table, PageStyle, Head, \
-     simple_page_number, Foot, Figure
+     simple_page_number, Foot, Figure, StandAloneGraphic
 from pylatex.base_classes import Environment
 from pylatex.frames import MdFramed
 from pylatex.utils import escape_latex, bold
@@ -123,10 +123,11 @@ def item(doc, enum, texto, dado):
 
 def gerar_pdf(curso):
     # Pacotes e configurações
-    geometry_options = {'tmargin': '2cm',
-                        'bmargin': '2cm',
-                        'lmargin': '2cm',
-                        'rmargin': '1.5cm'}
+    geometry_options = {'left': '3cm',
+                        'right': '2cm',
+                        'bottom': '2cm',
+                        'top': '6.5cm',
+                        'headheight': '5cm'}
     doc = Document(geometry_options=geometry_options,
             document_options=['12pt', 'a4paper', 'oneside'],
             lmodern=False)
@@ -142,35 +143,54 @@ def gerar_pdf(curso):
     doc.packages.add(Package('tabularx'))
     doc.packages.add(Package('mdframed'))
     doc.packages.add(Package('eqparbox'))
+    doc.packages.add(Package('fancyhdr'))
     #  doc.packages.add(Package('hyphenat', options='none')) # impede hifenização
 
-    doc.append(NoEscape(r'\fontfamily{\sfdefault}\selectfont'))
+    #  doc.append(NoEscape(r'\fontfamily{\sfdefault}\selectfont'))
+    doc.preamble.append(NoEscape(r'\renewcommand{\familydefault}{\sfdefault}'))
 
     # Configuração das listas
     doc.preamble.append(NoEscape(r'''
-    \setlist[enumerate, 1]{label*=\textbf{\arabic*}, leftmargin=*}
-    \setlist[enumerate, 2]{label*=\textbf{.\arabic*}, leftmargin=*}
+\setlist[enumerate, 1]{label*=\textbf{\arabic*}, leftmargin=*}
+\setlist[enumerate, 2]{label*=\textbf{.\arabic*}, leftmargin=*}
     '''))
 
-    # Cabeçalho
-    header = PageStyle('header')
-    with header.create(Head('L')):
-        #  \fontfamily{\sfdefault}\selectfont
-        #  {\tiny
-        #  }
-        #  header.append(NoEscape(r'Reitoria - CNPJ 78680337/0001-84 \\ Rua Universitária, 1619 - Fone: (45) 3220-3000 - Fax: (45) 3324-4590 \\ Jardim Universitário - Cx. P. 000701 - CEP 85819-110 - Cascavel - Paraná \\ www.unioeste.br'))
-        pass
-    with header.create(Head('R')):
-        header.append(simple_page_number())
-
-    # Rodapé
-    with header.create(Foot('R')):
-        header.append(NoEscape(r'{\footnotesize \texttt{ANEXO V DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014}}'))
-    doc.preamble.append(header)
-    doc.change_document_style('header')
+    doc.preamble.append(NoEscape('\pagestyle{fancy}'))
 
     # Início do documento
     doc.append(NoEscape(r'\footnotesize'))
+
+    # Cabeçalhos
+
+    doc.append(NoEscape(r'''
+    \renewcommand{\headrulewidth}{0pt}%
+    \renewcommand{\footrulewidth}{0pt}%
+\fancyhead[L]{%
+    \includegraphics[width=200px]{/home/user/p/es2/trabalhos/fly/Code/fly/curso_extensao/pdf/img/logo_unioeste.png}
+    \newline
+    \newline
+    {\scriptsize
+    Reitoria - CNPJ 78680337/0001-84 \\
+    Rua Universitária, 1619 - Fone: (45) 3220-3000 - Fax: (45) 3324-4590 \\
+    Jardim Universitário - Cx. P. 000701 - CEP 85819-110 - Cascavel - Paraná \\
+    www.unioeste.br
+    }
+}
+\fancyhead[R]{
+    \includegraphics[width=80px]{/home/user/p/es2/trabalhos/fly/Code/fly/curso_extensao/pdf/img/logo_governo.jpg}
+}
+    '''))
+
+    # Rodapé
+    doc.append(NoEscape(r'''
+\fancyfoot[R]{
+    {\footnotesize \texttt{ANEXO V DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014}}
+}
+\fancyfoot[L]{
+    \thepage
+}
+    '''))
+
     doc.append(NoEscape(r'\texttt{ANEXO V DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014}'))
 
     flush_right = FlushRight()
@@ -181,7 +201,7 @@ def gerar_pdf(curso):
     MODALIDADE CURSO DE EXTENSÃO
 }
 \eqparbox{b}{
-    \includegraphics[width=100px]{/home/user/Downloads/logo_extensao.jpg}
+    \includegraphics[width=100px]{./img/logo_extensao.jpg}
 }
     '''))
     doc.append(flush_right)
@@ -452,7 +472,8 @@ def gerar_pdf(curso):
         if PrevisaoOrcamentaria_CursoExtensao.objects.filter(curso_extensao=curso.id):
             formulario_previsao_orcamentaria(doc, enum, curso)
 
-    doc.generate_pdf('curso_extensao/pdf/curso_extensao_' + str(curso.id), clean_tex=True)
+    #  doc.generate_tex('curso_extensao/pdf/curso_extensao_' + str(curso.id))
+    doc.generate_pdf('curso_extensao/pdf/curso_extensao_' + str(curso.id), clean_tex=False)
 
 # TODO: \\, \newline ou \linebreak?
 # TODO: cabeçalho e numeração das páginas
