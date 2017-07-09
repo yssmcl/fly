@@ -1,14 +1,8 @@
 #!/bin/bash
 
-# Gera diagramas de classes baseado nos models.py 
-
-# echo on
-# set -x
-
 dir_fly="../Code/fly"
 dir_fontes="../doc/fontes"
 dir_doc="../doc"
-# cd ../Code/fly/ || exit 1
 
 if ! grep "'django_extensions'," "$dir_fly/fly/settings.py" > /dev/null
 then
@@ -22,16 +16,20 @@ arqv_dot="$dir_fontes/dc-$nome.dot"
 layouts=(circo dot fdp)
 
 "$dir_fly/manage.py" graph_models "$opcoes" > "$arqv_dot" &&
-sed -i 's/arrowtail=dot/arrowtail=open/g' "$arqv_dot" &&
+sed -i 's/arrowtail=dot/arrowtail=open/g' "$arqv_dot"
 
 for layout in "${layouts[@]}"
 do
-	"$layout" "$arqv_dot" -Tpng > "$dir_doc/dc-$nome-$layout.png"
+	if [ -f "$arqv_dot" ]
+	then
+		"$layout" "$arqv_dot" -Tpng > "$dir_doc/dc-$nome-$layout.png"
+	else
+		echo "Arquivo '$arqv_dot' não encontrado"
+	fi
 done
 
 # MER
-# Show One Link/Column: on
-# Links to Colums: off
+# Opções do DbVisualizer: Show One Link/Column [on], Links to Colums: [off]
 arqv_svg="$dir_fontes/mer.svg"
 if [ -f "$arqv_svg" ]
 then
