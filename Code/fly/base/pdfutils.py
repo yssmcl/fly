@@ -419,10 +419,11 @@ def tabela_previsao_orcamentaria(doc, enum, previsao_orcamentaria):
                         'Certificados', previsao_orcamentaria.certificados)
             tab.add_hline()
             tab.add_row('', '',
-                        'Outros (especificar)', str(previsao_orcamentaria.outros) + '\n' + previsao_orcamentaria.outros_especificacao)
+                        'Outros (especificar)', str(previsao_orcamentaria.outros) + '\n' + \
+                        previsao_orcamentaria.outros_especificacao)
             tab.add_hline()
             tab.add_row(bold('Total'), total_receitas,
-                        MultiRow(2, data=NoEscape(r'\hfill \textbf{Total}')), total_despesas)
+                        MultiRow(2, data=bold('Total')), MultiRow(2, data=total_despesas))
             doc.append(NoEscape('\cline{1-2}'))
             # TODO: não tem atributo para saldo previsto na classe PrevisaoOrcamentara
             tab.add_row(bold('Saldo previsto'), '', '', '')
