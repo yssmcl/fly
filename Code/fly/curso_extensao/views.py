@@ -10,7 +10,7 @@ from django.views import View, generic
 from .forms import CursoExtensaoForm, Servidor_CursoExtensaoFormSet, PalavraChave_CursoExtensaoFormSet, Discente_CursoExtensaoFormSet, MembroComunidade_CursoExtensaoFormSet, PrevisaoOrcamentaria_CursoExtensaoFormSet
 from .models import CursoExtensao
 from base.models import EstadoProjeto
-from curso_extensao.pdf.geracaopdf import gerar_pdf
+from curso_extensao.pdfs import gerar_pdf
 
 
 class IndexView(View):
