@@ -13,9 +13,8 @@ def gerar_pdf(curso):
     pdfutils.pacotes(doc)
 
     # Configurações (preâmbulo)
-    # TODO:
-    #  doc.append(NoEscape(r'\fontfamily{\sfdefault}\selectfont'))
     doc.preamble.append(NoEscape(r'\renewcommand{\familydefault}{\sfdefault}'))
+    # doc.append(NoEscape(r'\fontfamily{\sfdefault}\selectfont'))
 
     # Configuração das listas
     doc.preamble.append(NoEscape(r'''
@@ -23,6 +22,7 @@ def gerar_pdf(curso):
 \setlist[enumerate, 2]{label*=\textbf{.\arabic*}, leftmargin=*}
     '''))
 
+    # Configuração dos cabeçalhos
     doc.preamble.append(NoEscape('\pagestyle{fancy}'))
 
     # Início do documento
@@ -57,7 +57,7 @@ def gerar_pdf(curso):
 
         pdfutils.tabela_grande_area(doc, enum, id=curso.grande_area.id)
 
-        pdfutils.tabela_palavras_chave(doc, enum)
+        pdfutils.tabela_palavras_chave(doc, enum, PalavraChave_CursoExtensao)
 
         pdfutils.tabela_area_tematica_principal(doc, enum, id=curso.area_tematica_principal.id)
 

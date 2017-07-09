@@ -185,11 +185,28 @@ def tabela_grande_area(doc, enum, id=None):
     tabela_alternativas(doc, GrandeArea, '|X|X|X|', id=id)
 
 
-# TODO: arrumar
-def tabela_palavras_chave(doc, enum):
+def tabela_palavras_chave(doc, enum, model):
     item(doc, enum, 'PALAVRAS-CHAVE: ')
     doc.append(NewLine())
-    tabela_alternativas(doc, PalavraChave_CursoExtensao, '|X|X|X|')
+
+    nro_colunas = 3
+    with doc.create(Tabularx('|X|X|X|', width_argument=NoEscape('\linewidth'))) as tab:
+        tab.add_hline()
+
+        row = []
+        for i, obj in enumerate(model.objects.all(), 1):
+            row.append('{} ‒ {}'.format(str(i), obj.nome))
+
+            if i%nro_colunas == 0:
+                tab.add_row(row)
+                del row[:]
+
+        # Adiciona o resto dos itens à tabela
+        for i in range(nro_colunas-len(row)):
+            row.append('')
+        tab.add_row(row)
+
+        tab.add_hline()
 
 
 def tabela_area_tematica_principal(doc, enum, id):
