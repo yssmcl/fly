@@ -1,5 +1,5 @@
 from pylatex import NoEscape, FlushRight, NewLine, MdFramed, Enumerate, Document, \
-     NewPage, HFill, Tabularx, LineBreak, MultiColumn, MultiRow
+     NewPage, HFill, Tabularx, LineBreak, MultiColumn, MultiRow, Package
 from pylatex.utils import escape_latex, bold
 
 from base.models import *
@@ -19,6 +19,24 @@ def init_document():
     document = Document(geometry_options=geometry_options, lmodern=False, document_options=['12pt', 'a4paper', 'oneside'])
 
     return document
+
+
+def pacotes(doc):
+    doc.packages.add(Package('microtype'))
+    doc.packages.add(Package('indentfirst'))
+    doc.packages.add(Package('graphicx'))
+    doc.packages.add(Package('float'))
+    doc.packages.add(Package('titlesec'))
+    doc.packages.add(Package('parskip'))
+    doc.packages.add(Package('enumitem'))
+    doc.packages.add(Package('helvet'))
+    doc.packages.add(Package('tabularx'))
+    doc.packages.add(Package('mdframed'))
+    doc.packages.add(Package('eqparbox'))
+    doc.packages.add(Package('fancyhdr'))
+    # TODO:
+    # Impede hifenização das palavras
+    # doc.packages.add(Package('hyphenat', options='none'))
 
 
 def cabecalho(doc):
@@ -83,16 +101,16 @@ def item(doc, enum, texto, dado=None):
         doc.append(escape_latex(dado))
 
 
-def mdframed_informar(doc, enum, projeto_extensao):
+def mdframed_informar(doc, enum, programa_extensao):
     with doc.create(MdFramed(options=mdframed_options)):
         item(doc, enum, 'INFORMAR: ')
         with doc.create(Enumerate()) as subenum:
             doc.append(NoEscape('\scriptsize'))
 
             subenum.add_item(NoEscape('Esta atividade faz parte de algum Programa de Extensão? '))
-            if projeto_extensao.programa_extensao:
+            if programa_extensao:
                 doc.append(NoEscape(r'Não () Sim ({$\times$}): Qual? '))
-                doc.append(projeto_extensao.programa_extensao.nome)
+                doc.append(programa_extensao.nome)
             else:
                 doc.append(NoEscape(r'Não ($\times$) Sim (): Qual? '))
 
@@ -105,28 +123,28 @@ def mdframed_informar(doc, enum, projeto_extensao):
             subenum.add_item('Esta Atividade de Extensão está articulada (quando for o caso): ao Ensino () à Pesquisa ()')
 
 
-def tabela_unidade_administrativa(doc, enum, projeto_extensao):
+def tabela_unidade_administrativa(doc, enum, unidade_administrativa, campus):
         item(doc, enum, 'UNIDADE ADMINISTRATIVA: ')
         for ua in UnidadeAdministrativa.objects.all():
-            if projeto_extensao.unidade_administrativa and projeto_extensao.unidade_administrativa.id == ua.id:
+            if unidade_administrativa and unidade_administrativa.id == ua.id:
                 doc.append(NoEscape(ua.nome + r' ($\times$) '))
             else:
                 doc.append(ua.nome + ' () ')
         doc.append(NewLine())
 
         doc.append(bold('CAMPUS DE: '))
-        for campus in Campus.objects.all():
-            if projeto_extensao.campus and projeto_extensao.campus.id == campus.id:
+        for obj in Campus.objects.all():
+            if campus and campus.id == obj.id:
                 doc.append(NoEscape(campus.nome + r' ($\times$) '))
             else:
                 doc.append(campus.nome + ' () ')
 
 
-def tabela_centro(doc, enum, projeto_extensao):
+def tabela_centro(doc, enum, centro):
     item(doc, enum, 'CENTRO: ')
     doc.append(NewLine())
-    for centro in Centro.objects.all():
-        if projeto_extensao.centro and projeto_extensao.centro.id == centro.id:
+    for obj in Centro.objects.all():
+        if centro and centro.id == obj.id:
             doc.append(NoEscape(centro.nome + r' ($\times$) '))
         else:
             doc.append(centro.nome + ' () ')
@@ -140,7 +158,9 @@ def tabela_alternativas(doc, model, table_spec, id=None, hline=True):
     nro_colunas = sum(char.isalpha() for char in table_spec)
 
     with doc.create(Tabularx(table_spec, width_argument=NoEscape('\linewidth'))) as tab:
-        if hline: tab.add_hline()
+        if hline:
+            tab.add_hline()
+
         row = []
         for i, obj in enumerate(model.objects.all(), 1):
             if id and obj.id == id:
@@ -162,39 +182,38 @@ def tabela_alternativas(doc, model, table_spec, id=None, hline=True):
 def tabela_grande_area(doc, enum, id=None):
     item(doc, enum, 'GRANDE ÁREA: ')
     doc.append(NewLine())
-    #  if projeto_extensao.grande_area:
     tabela_alternativas(doc, GrandeArea, '|X|X|X|', id=id)
 
 
+# TODO: arrumar
 def tabela_palavras_chave(doc, enum):
     item(doc, enum, 'PALAVRAS-CHAVE: ')
     doc.append(NewLine())
     tabela_alternativas(doc, PalavraChave_CursoExtensao, '|X|X|X|')
 
 
-def tabela_area_tematica_principal(doc, enum, projeto_extensao, id):
+def tabela_area_tematica_principal(doc, enum, id):
     item(doc, enum, 'ÁREA TEMÁTICA PRINCIPAL: ')
     doc.append(NewLine())
-    if projeto_extensao.area_tematica_principal:
-        tabela_alternativas(doc, AreaTematica, '|X|X|X|', id=id)
+    tabela_alternativas(doc, AreaTematica, '|X|X|X|', id=id)
 
 
-def tabela_area_tematica_secundaria(doc, enum, projeto_extensao, id):
+def tabela_area_tematica_secundaria(doc, enum, area_tematica_secundaria, id):
     item(doc, enum, 'ÁREA TEMÁTICA SECUNDÁRIA: ')
     doc.append(NewLine())
-    if projeto_extensao.area_tematica_secundaria:
+    if area_tematica_secundaria:
         tabela_alternativas(doc, AreaTematica, '|X|X|X|', id=id)
     else:
         tabela_alternativas(doc, AreaTematica, '|X|X|X|')
 
 
-def tabela_linha_extensao(doc, enum, projeto_extensao, id):
+def tabela_linha_extensao(doc, enum, linha_extensao, id):
     doc.append(NewPage())
     item(doc, enum, 'LINHA DE EXTENSÃO: ')
     doc.append(NewLine())
     doc.append(NewLine())
     doc.append(NoEscape(r'{\tiny'))
-    if projeto_extensao.linha_extensao:
+    if linha_extensao:
         tabela_alternativas(doc, LinhaExtensao, 'X|X|X', id=id, hline=False)
     doc.append(NoEscape('}'))
 

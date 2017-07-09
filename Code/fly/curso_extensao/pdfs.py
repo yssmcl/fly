@@ -1,35 +1,18 @@
 # TODO: checar se os objetos não são nulos antes de colocar no PDF
 # TODO: limpar os imports (ou baixar plugin que limpa e adiciona sozinho)
-from pylatex import Document, Enumerate, NoEscape, Package, Tabularx, FlushRight, \
-     LineBreak, NewLine, MultiColumn, MultiRow, HFill, Table, PageStyle, Head, \
-     simple_page_number, Foot, Figure, StandAloneGraphic
-from pylatex.base_classes import Environment
-from pylatex.frames import MdFramed
-from pylatex.utils import escape_latex, bold
+from pylatex import Enumerate, NoEscape, NewLine
+from pylatex.utils import escape_latex
 
 from base.models import *
 from curso_extensao.models import *
 from base import pdfutils
 
 def gerar_pdf(curso):
-    # Pacotes e configurações
     doc = pdfutils.init_document()
 
-    doc.packages.add(Package('microtype'))
-    doc.packages.add(Package('indentfirst'))
-    doc.packages.add(Package('graphicx'))
-    doc.packages.add(Package('float'))
-    doc.packages.add(Package('titlesec'))
-    doc.packages.add(Package('parskip'))
-    doc.packages.add(Package('enumitem'))
-    doc.packages.add(Package('helvet'))
-    doc.packages.add(Package('tabularx'))
-    doc.packages.add(Package('mdframed'))
-    doc.packages.add(Package('eqparbox'))
-    doc.packages.add(Package('fancyhdr'))
-    # TODO:
-    #  doc.packages.add(Package('hyphenat', options='none')) # impede hifenização
+    pdfutils.pacotes(doc)
 
+    # Configurações (preâmbulo)
     # TODO:
     #  doc.append(NoEscape(r'\fontfamily{\sfdefault}\selectfont'))
     doc.preamble.append(NoEscape(r'\renewcommand{\familydefault}{\sfdefault}'))
@@ -66,21 +49,21 @@ def gerar_pdf(curso):
         periodo_realizacao = 'de {} a {}'.format(periodo_inicio, periodo_fim)
         pdfutils.item(doc, enum, 'PERÍODO DE REALIZAÇÃO: ', periodo_realizacao)
 
-        pdfutils.mdframed_informar(doc, enum, curso)
+        pdfutils.mdframed_informar(doc, enum, curso.programa_extensao)
 
-        pdfutils.tabela_unidade_administrativa(doc, enum, curso)
+        pdfutils.tabela_unidade_administrativa(doc, enum, curso.unidade_administrativa, curso.campus)
 
-        pdfutils.tabela_centro(doc, enum, curso)
+        pdfutils.tabela_centro(doc, enum, curso.centro)
 
         pdfutils.tabela_grande_area(doc, enum, id=curso.grande_area.id)
 
         pdfutils.tabela_palavras_chave(doc, enum)
 
-        pdfutils.tabela_area_tematica_principal(doc, enum, curso, id=curso.area_tematica_principal.id)
+        pdfutils.tabela_area_tematica_principal(doc, enum, id=curso.area_tematica_principal.id)
 
-        pdfutils.tabela_area_tematica_secundaria(doc, enum, curso, id=curso.area_tematica_secundaria.id)
+        pdfutils.tabela_area_tematica_secundaria(doc, enum, curso.area_tematica_secundaria, id=curso.area_tematica_secundaria.id)
 
-        pdfutils.tabela_linha_extensao(doc, enum, curso, id=curso.linha_extensao.id)
+        pdfutils.tabela_linha_extensao(doc, enum, curso.linha_extensao, id=curso.linha_extensao.id)
 
         pdfutils.item(doc, enum, 'PÚBLICO ALVO: ', curso.publico_alvo)
 
