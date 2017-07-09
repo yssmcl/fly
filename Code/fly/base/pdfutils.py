@@ -1,9 +1,11 @@
 from pylatex import NoEscape, FlushRight, NewLine, MdFramed, Enumerate, Document, \
-     NewPage, HFill, Tabularx, LineBreak, MultiColumn, MultiRow, Package
+     NewPage, HFill, Tabularx, LineBreak, MultiColumn, MultiRow, Package, Center, \
+     MiniPage
 from pylatex.utils import escape_latex, bold
 
 from base.models import *
 from curso_extensao.models import *
+from relatorio.models import *
 
 
 mdframed_options = ['innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt']
@@ -38,13 +40,31 @@ def pacotes(doc):
     # Impede hifenização das palavras
     # doc.packages.add(Package('hyphenat', options='none'))
 
+def configuracoes_preambulo(doc):
+    doc.preamble.append(NoEscape(r'\renewcommand{\familydefault}{\sfdefault}'))
+    # doc.append(NoEscape(r'\fontfamily{\sfdefault}\selectfont'))
+
+    # Configuração das listas
+    doc.preamble.append(NoEscape(r'''
+\setlist[enumerate, 1]{label*=\textbf{\arabic*}, leftmargin=*}
+\setlist[enumerate, 2]{label*=\textbf{.\arabic*}, leftmargin=*}
+    '''))
+
+    # Configuração dos cabeçalhos
+    doc.preamble.append(NoEscape('\pagestyle{fancy}'))
+
+    # Diretório das imagens (relativo a relatorio/pdf/)
+    doc.preamble.append(NoEscape(r'\graphicspath{{../../base/img/}}'))
+
+    # Tamanho da fonte
+    doc.append(NoEscape(r'\footnotesize'))
 
 def cabecalho(doc):
     cabecalho = r'''
 \renewcommand{\headrulewidth}{0pt}%
 \renewcommand{\footrulewidth}{0pt}%
 \fancyhead[L]{%
-    \includegraphics[width=200px]{./img/logo_unioeste.png}
+    \includegraphics[width=200px]{logo_unioeste.png}
     \newline
     \newline
     {\scriptsize
@@ -55,7 +75,7 @@ def cabecalho(doc):
     }
 }
 \fancyhead[R]{
-    \includegraphics[width=80px]{./img/logo_governo.jpg}
+    \includegraphics[width=80px]{logo_governo.jpg}
 }
     '''
 
@@ -65,7 +85,7 @@ def cabecalho(doc):
 def rodape(doc, texto):
     rodape = r'''
 \fancyfoot[R]{
-    {\footnotesize \texttt{%(texto)s}}
+    {\footnotesize %(texto)s}
 }
 \fancyfoot[L]{
     \thepage
@@ -85,7 +105,7 @@ def titulo(doc, titulo, subtitulo):
     %(subtitulo)s
 }
 \eqparbox{b}{
-    \includegraphics[width=100px]{./img/logo_extensao.jpg}
+    \includegraphics[width=100px]{logo_extensao.jpg}
 }
     '''
 
@@ -302,8 +322,9 @@ def mdframed_equipe_trabalho(doc, enum, projeto_extensao):
                 tabela_alternativas(doc, FuncaoServidor, 'XXX',
                              id=servidor_cursoextensao.funcao.id, hline=False)
 
-            # TODO: \linebreak aqui pra dar espaço pra assinatura
-            doc.append(NoEscape(r'Assinatura do participante: \hrulefill \\ \\'))
+            doc.append(NoEscape(r'\bigskip'))
+            doc.append(NoEscape(r'\bigskip'))
+            doc.append(NoEscape(r'Assinatura do participante: \hrulefill \\ \\ \\'))
             doc.append(NoEscape(r'Assinatura da chefia imediata: \hrulefill \\ \\'))
 
             doc.append(bold('PLANO DE TRABALHO: '))
@@ -482,3 +503,57 @@ def tabela_gestao_recursos_financeiros(doc, enum, previsao_orcamentaria):
                 else:
                     doc.append(('() ' + obj.nome.upper()))
                 doc.append(NewLine())
+
+
+# Relatórios
+def tabela_certificados(doc, id=None):
+    with doc.create(Enumerate()) as enum:
+        enum.add_item('Relacionar o nome dos participantes com direito a certificados.')
+        doc.append(NewLine())
+        table_spec = NoEscape(r'''>{\centering\arraybackslash}X|
+                              @{    }c@{    }|
+                              @{    }c@{    }|
+                              @{    }c@{    }|
+                              ''')
+        cabecalho = ['NOME',
+                     'FUNÇÃO',
+                     'FREQUÊNCIA (%)',
+                     'C/H TOTAL']
+
+        with doc.create(Tabularx('|' + table_spec, width_argument=width_argument)) as tab:
+            tab.add_hline()
+            tab.add_row(cabecalho)
+            tab.add_hline()
+
+            # TODO: teste
+            #  certificado = CertificadoRelatorio.objects.filter(relatorio_id=id)
+            certificados = CertificadoRelatorio.objects.all()
+            for certificado in certificados:
+                linha = [certificado.nome,
+                         certificado.funcao,
+                         certificado.frequencia,
+                         certificado.carga_horaria_total]
+                tab.add_row(linha)
+                tab.add_hline()
+
+        doc.append(LineBreak())
+
+        # TODO: Item 9.2: Inserir onde o certificado sera gerado: PROEX ou Centro de Coordenação / Órgão Promotor
+        enum.add_item(NoEscape(r'Informar se os certificados devem ser emitidos: \\'))
+        doc.append(NoEscape('() pela PROEX \hfill () pelo Centro da Coordenação ou Órgão Promotor'))
+
+
+def local_data_assinatura(doc):
+    doc.append(NoEscape(r'\raggedleft'))
+    doc.append(NoEscape(r'\bigskip'))
+    with doc.create(MiniPage(width=r'.5\textwidth')):
+        center = Center()
+        center.append(NoEscape('\hrulefill'))
+        center.append(NewLine())
+        center.append(NoEscape(r'\bigskip'))
+        center.append(NoEscape(r'Local e data \\'))
+        center.append(NoEscape('\hrulefill'))
+        center.append(NewLine())
+        center.append(NoEscape(r'\bigskip'))
+        center.append(NoEscape('Assinatura do(a) Coordenador(a) da Atividade'))
+        doc.append(center)

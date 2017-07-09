@@ -13,26 +13,13 @@ def gerar_pdf(curso):
     pdfutils.pacotes(doc)
 
     # Configurações (preâmbulo)
-    doc.preamble.append(NoEscape(r'\renewcommand{\familydefault}{\sfdefault}'))
-    # doc.append(NoEscape(r'\fontfamily{\sfdefault}\selectfont'))
-
-    # Configuração das listas
-    doc.preamble.append(NoEscape(r'''
-\setlist[enumerate, 1]{label*=\textbf{\arabic*}, leftmargin=*}
-\setlist[enumerate, 2]{label*=\textbf{.\arabic*}, leftmargin=*}
-    '''))
-
-    # Configuração dos cabeçalhos
-    doc.preamble.append(NoEscape('\pagestyle{fancy}'))
-
-    # Início do documento
-    doc.append(NoEscape(r'\footnotesize'))
+    pdfutils.configuracoes_preambulo(doc)
 
     pdfutils.cabecalho(doc)
 
-    pdfutils.rodape(doc, 'ANEXO V DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014')
-
-    doc.append(NoEscape(r'\texttt{ANEXO V DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014}'))
+    texto_anexo = NoEscape(r'\texttt{ANEXO V DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014}')
+    pdfutils.rodape(doc, texto_anexo)
+    doc.append(texto_anexo)
 
     pdfutils.titulo(doc, 'FORMULÁRIO ESPECÍFICO PARA ATIVIDADES DE EXTENSÃO', 'MODALIDADE CURSO DE EXTENSÃO')
 
