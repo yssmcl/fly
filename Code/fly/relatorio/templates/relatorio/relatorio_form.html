@@ -54,8 +54,10 @@
 					<label>Campus</label>
 					{{ projeto_extensao.campus }}
 				{% endif%}
-			</div>			
+			</div>
 		</div>
+
+		<hr>
 
 		<div class="row">
 			<div class="medium-6 columns">
@@ -63,12 +65,12 @@
 				{{ projeto_extensao.coordenador.colegiado }}
 			</div>
 			<div class="medium-3 columns">
-				<label>Período de Início do Relatório</label>
+				<label>Período de Início</label>
 				{{ main_form.periodo_inicio }}
 				{{ main_form.periodo_inicio.errors }}
 			</div>
 			<div class="medium-3 columns">
-				<label>Período de Fim do Relatório</label>
+				<label>Período de Fim</label>
 				{{ main_form.periodo_fim }}
 				{{ main_form.periodo_fim.errors }}
 			</div>
@@ -123,7 +125,7 @@
 
 						<div class="row" style="background:#E2EEFA; padding:10px;">
 							<div class="row">
-								<div class="medium-3 columns">
+								<div class="medium-4 columns">
 									<label>Nome</label>
 									{{ form.nome }}
 									{{ form.nome.errors }}
@@ -133,15 +135,21 @@
 									{{ form.funcao }}
 									{{ form.funcao.errors }}
 								</div>
-								<div class="medium-3 columns">
+								<div class="medium-2 columns">
 									<label>Frequência</label>
 									{{ form.frequencia }}
 									{{ form.frequencia.errors }}
 								</div>
-								<div class="medium-3 columns">
+								<div class="medium-2 columns">
 									<label>CH Total</label>
 									{{ form.carga_horaria_total }}
 									{{ form.carga_horaria_total.errors }}
+								</div>
+								<div class="medium-1 columns">
+									{% if certificados_formset.can_delete %}
+										<label>Deletar</label>
+										{{ form.DELETE }}
+									{% endif %}
 								</div>
 							</div>
 						</div>
@@ -153,14 +161,14 @@
 				{% escapescript %}
 					<div data-formset-form>
 						{% for hidden in certificados_formset.empty_form.hidden_fields %}{{ hidden }}{% endfor %}
-						
+
 						<div class="row"><div class="medium-12">
 							{{ certificados_formset.empty_form.non_field_errors }}
 						</div></div>
 
 						<div class="row" style="background:#E2EEFA; padding:10px;">
 							<div class="row">
-								<div class="medium-3 columns">
+								<div class="medium-4 columns">
 									<label>Nome</label>
 									{{ certificados_formset.empty_form.nome }}
 									{{ certificados_formset.empty_form.nome.errors }}
@@ -170,16 +178,17 @@
 									{{ certificados_formset.empty_form.funcao }}
 									{{ certificados_formset.empty_form.funcao.errors }}
 								</div>
-								<div class="medium-3 columns">
+								<div class="medium-2 columns">
 									<label>Frequência</label>
 									{{ certificados_formset.empty_form.frequencia }}
 									{{ certificados_formset.empty_form.frequencia.errors }}
 								</div>
-								<div class="medium-3 columns">
+								<div class="medium-2 columns">
 									<label>CH Total</label>
 									{{ certificados_formset.empty_form.carga_horaria_total }}
 									{{ certificados_formset.empty_form.carga_horaria_total.errors }}
 								</div>
+								<div class="medium-1 columns"></div>
 							</div>
 						</div>
 						<br />
