@@ -53,8 +53,7 @@ def gerar_pdf(relatorio):
 
         pdfutils.tabela_centro(doc, enum, relatorio.projeto_extensao.centro)
 
-        # TODO: colegiado do coordenador?
-        pdfutils.item(doc, enum, 'COLEGIADO: ')
+        pdfutils.item(doc, enum, 'COLEGIADO: ', relatorio.projeto_extensao.coordenador.colegiado)
 
         pdfutils.item(doc, enum, 'PÚBLICO ATINGIDO: ', relatorio.publico_atingido)
 
@@ -70,6 +69,3 @@ def gerar_pdf(relatorio):
     pdfutils.local_data_assinatura(doc)
 
     doc.generate_pdf('relatorio/pdf/relatorio_' + str(relatorio.id))
-
-# TODO: teste
-gerar_pdf(Relatorio.objects.all().first())

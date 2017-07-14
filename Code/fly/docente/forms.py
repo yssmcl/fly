@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Docente
+from base.models import Docente
 
 class DocenteForm(forms.ModelForm):
     class Meta:
@@ -13,7 +13,6 @@ class DocenteForm(forms.ModelForm):
             'curso',
             'centro',
             'campus',
-            'colegiado',
             'pais',
             'estado',
             'cidade',

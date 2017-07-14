@@ -37,7 +37,9 @@
 				<th>Título</th>
 				<th>Coordenador(a)</th>
 				<th>Estado</th>
-				<th style="text-align:center;">Ação</th>
+				<th style="text-align:center;">Projeto</th>
+				<th style="text-align:center;">Relatório</th>
+				<th style="text-align:center;">Parecer</th>
 			</thead>
 			<tbody>
 				{% for curso_extensao in object_list %}
@@ -48,8 +50,14 @@
 						<td style="text-align:center;">
 							<a href="{% url 'curso_extensao:detalhe' curso_extensao.pk %}" class="button">Visualizar</a>
 							<a href="{% url 'curso_extensao:gerar_pdf' curso_extensao.pk %}" class="button">Gerar PDF</a>
-							<a href="{% url 'relatorio:novo' curso_extensao.pk %}" class="button">Adicionar Relatório</a>
+						</td>
+						<td style="text-align:center;">
+						    <a href="{% url 'relatorio:novo' curso_extensao.pk %}" class="button">Adicionar Relatório</a>
 							<a href="{% url 'relatorio:consulta' curso_extensao.pk %}" class="button">Visualizar Relatórios</a>
+   						</td>
+						<td style="text-align:center;">
+						    <a href="{% url 'parecer:novo' curso_extensao.pk %}" class="button">Adicionar Parecer</a>
+   						    <a href="" class="button">Visualizar Pareceres</a>
 						</td>
 					</tr>
 				{% endfor %}

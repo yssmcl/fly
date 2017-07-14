@@ -40,16 +40,16 @@
 	<div class="row">
 		<table>
 			<thead>
-				<th>Projeto</th>
+				<th>Período</th>
 				<th style="text-align:center;">Ação</th>
 			</thead>
 			<tbody>
 				{% for relatorio in object_list %}
 					<tr>
-						<td>{{ relatorio.periodo_inicio }} - {{relatorio.periodo_fim}}</td>
+						<td>{{ relatorio.periodo_inicio }} — {{relatorio.periodo_fim}}</td>
 						<td style="text-align:center;">
 							<a href="{% url 'relatorio:detalhe' relatorio.pk %}" class="button">Visualizar</a>
-							<a href="{% url 'relatorio:detalhe' relatorio.pk %}" class="button">Gerar PDF</a>
+							<a href="{% url 'relatorio:gerar_pdf' relatorio.pk %}" class="button">Gerar PDF</a>
 						</td>
 					</tr>
 				{% endfor %}
