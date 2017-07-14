@@ -165,5 +165,4 @@ class GeracaoPDFCursoExtensao(LoginRequiredMixin, View):
         arquivo_pdf = open(caminho_arquivo + nome_arquivo, 'rb')
         response = HttpResponse(arquivo_pdf, content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(nome_arquivo)
-        #  response['X-Sendfile'] = smart_str(caminho_arquivo)
         return response

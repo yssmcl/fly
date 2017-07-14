@@ -522,9 +522,9 @@ def tabela_certificados(doc, id=None):
             tab.add_row(cabecalho)
             tab.add_hline()
 
-            certificado = CertificadoRelatorio.objects.filter(relatorio_id=id)
-            if certificado:
-                for certificado in certificados:
+            certificados = CertificadoRelatorio.objects.filter(relatorio_id=id)
+            for certificado in certificados:
+                if certificado:
                     linha = [certificado.nome,
                              certificado.funcao,
                              certificado.frequencia,
