@@ -153,18 +153,18 @@ def tabela_unidade_administrativa(doc, enum, unidade_administrativa, campus):
         doc.append(NewLine())
 
         doc.append(bold('CAMPUS DE: '))
-        for obj in Campus.objects.all():
-            if campus and campus.id == obj.id:
+        for c in Campus.objects.all():
+            if campus and campus.id == c.id:
                 doc.append(NoEscape(campus.nome + r' ($\times$) '))
             else:
-                doc.append(campus.nome + ' () ')
+                doc.append(c.nome + ' () ')
 
 
 def tabela_centro(doc, enum, centro):
     item(doc, enum, 'CENTRO: ')
     doc.append(NewLine())
-    for obj in Centro.objects.all():
-        if centro and centro.id == obj.id:
+    for c in Centro.objects.all():
+        if centro and centro.id == c.id:
             doc.append(NoEscape(centro.nome + r' ($\times$) '))
         else:
             doc.append(centro.nome + ' () ')
@@ -182,11 +182,11 @@ def tabela_alternativas(doc, model, table_spec, id=None, hline=True):
             tab.add_hline()
 
         row = []
-        for i, obj in enumerate(model.objects.all(), 1):
-            if id and obj.id == id:
-                row.append(NoEscape(r'($\times$) ' + obj.nome))
+        for i, model in enumerate(model.objects.all(), 1):
+            if id and model.id == id:
+                row.append(NoEscape(r'($\times$) ' + model.nome))
             else:
-                row.append('() ' + obj.nome)
+                row.append('() ' + model.nome)
 
             if i%nro_colunas == 0:
                 tab.add_row(row)
@@ -214,8 +214,8 @@ def tabela_palavras_chave(doc, enum, model):
         tab.add_hline()
 
         row = []
-        for i, obj in enumerate(model.objects.all(), 1):
-            row.append('{} ‒ {}'.format(str(i), obj.nome))
+        for i, model in enumerate(model.objects.all(), 1):
+            row.append('{} ‒ {}'.format(str(i), model.nome))
 
             if i%nro_colunas == 0:
                 tab.add_row(row)
@@ -235,13 +235,10 @@ def tabela_area_tematica_principal(doc, enum, id):
     tabela_alternativas(doc, AreaTematica, '|X|X|X|', id=id)
 
 
-def tabela_area_tematica_secundaria(doc, enum, area_tematica_secundaria, id):
+def tabela_area_tematica_secundaria(doc, enum, area_tematica_secundaria, id=None):
     item(doc, enum, 'ÁREA TEMÁTICA SECUNDÁRIA: ')
     doc.append(NewLine())
-    if area_tematica_secundaria:
-        tabela_alternativas(doc, AreaTematica, '|X|X|X|', id=id)
-    else:
-        tabela_alternativas(doc, AreaTematica, '|X|X|X|')
+    tabela_alternativas(doc, AreaTematica, '|X|X|X|', id=id)
 
 
 def tabela_linha_extensao(doc, enum, linha_extensao, id):
@@ -340,8 +337,8 @@ def mdframed_plano_trabalho(doc, models):
         doc.append(bold('PLANO DE TRABALHO: '))
 
         planos = []
-        for obj in models:
-            planos.append(obj.plano_trabalho)
+        for model in models:
+            planos.append(model.plano_trabalho)
 
         for plano in planos:
             doc.append(escape_latex(plano))
@@ -497,11 +494,11 @@ def tabela_gestao_recursos_financeiros(doc, enum, previsao_orcamentaria):
 
             doc.append(NoEscape(r'IDENTIFICAÇÃO: \\'))
 
-            for obj in TipoGestaoRecursosFinanceiros.objects.all():
-                if previsao_orcamentaria.identificacao and previsao_orcamentaria.identificacao.id == obj.id:
-                    doc.append(NoEscape(r'($\times$) ' + obj.nome.upper()))
+            for tipo_gestao in TipoGestaoRecursosFinanceiros.objects.all():
+                if previsao_orcamentaria.identificacao and previsao_orcamentaria.identificacao.id == tipo_gestao.id:
+                    doc.append(NoEscape(r'($\times$) ' + tipo_gestao.nome.upper()))
                 else:
-                    doc.append(('() ' + obj.nome.upper()))
+                    doc.append(('() ' + tipo_gestao.nome.upper()))
                 doc.append(NewLine())
 
 
@@ -525,16 +522,15 @@ def tabela_certificados(doc, id=None):
             tab.add_row(cabecalho)
             tab.add_hline()
 
-            # TODO: teste
-            #  certificado = CertificadoRelatorio.objects.filter(relatorio_id=id)
-            certificados = CertificadoRelatorio.objects.all()
+            certificados = CertificadoRelatorio.objects.filter(relatorio_id=id)
             for certificado in certificados:
-                linha = [certificado.nome,
-                         certificado.funcao,
-                         certificado.frequencia,
-                         certificado.carga_horaria_total]
-                tab.add_row(linha)
-                tab.add_hline()
+                if certificado:
+                    linha = [certificado.nome,
+                             certificado.funcao,
+                             certificado.frequencia,
+                             certificado.carga_horaria_total]
+                    tab.add_row(linha)
+                    tab.add_hline()
 
         doc.append(LineBreak())
 
