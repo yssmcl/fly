@@ -81,7 +81,6 @@ def gerar_pdf(curso):
         pdfutils.tabela_membros(doc, enum, curso)
 
         # Checa antes pois a previsão orçamentária não é obrigatório
-        # TODO: previsão orçamentária é obrigatório?
         if PrevisaoOrcamentaria_CursoExtensao.objects.filter(curso_extensao=curso.id):
             previsao_orcamentaria = PrevisaoOrcamentaria_CursoExtensao.objects.get(curso_extensao=curso.id)
 

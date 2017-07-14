@@ -525,16 +525,15 @@ def tabela_certificados(doc, id=None):
             tab.add_row(cabecalho)
             tab.add_hline()
 
-            # TODO: teste
-            #  certificado = CertificadoRelatorio.objects.filter(relatorio_id=id)
-            certificados = CertificadoRelatorio.objects.all()
-            for certificado in certificados:
-                linha = [certificado.nome,
-                         certificado.funcao,
-                         certificado.frequencia,
-                         certificado.carga_horaria_total]
-                tab.add_row(linha)
-                tab.add_hline()
+            certificado = CertificadoRelatorio.objects.filter(relatorio_id=id)
+            if certificado:
+                for certificado in certificados:
+                    linha = [certificado.nome,
+                             certificado.funcao,
+                             certificado.frequencia,
+                             certificado.carga_horaria_total]
+                    tab.add_row(linha)
+                    tab.add_hline()
 
         doc.append(LineBreak())
 

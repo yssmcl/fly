@@ -28,9 +28,26 @@ class NovoParecer(View):
         else:
             return render(request, 'parecer/parecer_form.html', {'form': form, 'projeto_extensao': parecer.projeto_extensao})
 
+class DetalheParecer(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        parecer = get_object_or_404(Parecer, pk=pk)
 
-class ListaParecer(generic.ListView):
-    pass
+        main_form = ParecerForm(instance=parecer, prefix='main')
 
-class DetalheParecer(generic.DetailView):
-    pass
+        return render(request, 'parecer/parecer_form.html', {'main_form': main_form})
+
+    def post(self, request, pk):
+        parecer = get_object_or_404(parecer, pk=pk)
+
+        main_form = ParecerForm(request.POST, instance=parecer, prefix='main')
+
+        parecer = main_form.instance
+
+        if main_form.is_valid():
+            with transaction.atomic():
+                main_form.save()
+
+            return redirect('curso_extensao:index')
+
+        else:
+            return render(request, 'parecer/parecer_form.html', {'main_form': main_form})

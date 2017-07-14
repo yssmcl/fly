@@ -21,6 +21,9 @@ class Relatorio(models.Model):
 
     data = models.DateTimeField(auto_now_add=True)
 
+    # TODO: para o populate.py: aprovado, nao aprovado, submetido, nao submetido
+    estado = models.CharField(max_length=200)
+
 
 class FuncaoCertificado(models.Model):
     nome = models.CharField(max_length=200)

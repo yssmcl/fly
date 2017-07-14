@@ -11,7 +11,6 @@ class Docente(models.Model):
     curso = models.ForeignKey(CursoUnioeste)
     centro = models.ForeignKey(Centro)
     campus = models.ForeignKey(Campus)
-    colegiado = models.CharField(max_length=200, blank=True, null=True)
 
     pais = models.CharField(max_length=200)
     estado = models.CharField(max_length=200)
