@@ -48,7 +48,10 @@ def gerar_pdf(curso):
 
         pdfutils.tabela_area_tematica_principal(doc, enum, id=curso.area_tematica_principal.id)
 
-        pdfutils.tabela_area_tematica_secundaria(doc, enum, curso.area_tematica_secundaria, id=curso.area_tematica_secundaria.id)
+        if curso.area_tematica_secundaria:
+            pdfutils.tabela_area_tematica_secundaria(doc, enum, curso.area_tematica_secundaria, id=curso.area_tematica_secundaria.id)
+        else:
+            pdfutils.tabela_area_tematica_secundaria(doc, enum, curso.area_tematica_secundaria)
 
         pdfutils.tabela_linha_extensao(doc, enum, curso.linha_extensao, id=curso.linha_extensao.id)
 

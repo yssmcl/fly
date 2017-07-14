@@ -157,7 +157,7 @@ def tabela_unidade_administrativa(doc, enum, unidade_administrativa, campus):
             if campus and campus.id == c.id:
                 doc.append(NoEscape(campus.nome + r' ($\times$) '))
             else:
-                doc.append(campus.nome + ' () ')
+                doc.append(c.nome + ' () ')
 
 
 def tabela_centro(doc, enum, centro):
@@ -235,13 +235,10 @@ def tabela_area_tematica_principal(doc, enum, id):
     tabela_alternativas(doc, AreaTematica, '|X|X|X|', id=id)
 
 
-def tabela_area_tematica_secundaria(doc, enum, area_tematica_secundaria, id):
+def tabela_area_tematica_secundaria(doc, enum, area_tematica_secundaria, id=None):
     item(doc, enum, 'ÁREA TEMÁTICA SECUNDÁRIA: ')
     doc.append(NewLine())
-    if area_tematica_secundaria:
-        tabela_alternativas(doc, AreaTematica, '|X|X|X|', id=id)
-    else:
-        tabela_alternativas(doc, AreaTematica, '|X|X|X|')
+    tabela_alternativas(doc, AreaTematica, '|X|X|X|', id=id)
 
 
 def tabela_linha_extensao(doc, enum, linha_extensao, id):
