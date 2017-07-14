@@ -2,13 +2,13 @@
 
 {% load formset_tags %}
 
-{% block title %} Curso de Extensão {% endblock %}
+{% block title %} Relatório {% endblock %}
 
 {% block content %}
 
 	<br />
 
-	<form>
+<!-- 	<form>
 		<div class="row">
 			<div class="medium-4 columns">
 				<label>Título:</label>
@@ -29,27 +29,27 @@
 				<input type="submit" value="Pesquisar" class="button">	
 			</div>
 		</div>
-	</form>
+	</form> -->
+
+	<div class="row">
+		<h1>
+			{{ projeto_extensao }}
+		</h1>
+	</div>
 
 	<div class="row">
 		<table>
 			<thead>
-				<th>Título</th>
-				<th>Coordenador(a)</th>
-				<th>Estado</th>
+				<th>Projeto</th>
 				<th style="text-align:center;">Ação</th>
 			</thead>
 			<tbody>
-				{% for curso_extensao in object_list %}
+				{% for relatorio in object_list %}
 					<tr>
-						<td>{{ curso_extensao }}</td>
-						<td>{{ curso_extensao.coordenador }}</td>
-						<td>{{ curso_extensao.estado }}</td>
+						<td>{{ relatorio.periodo_inicio }} - {{relatorio.periodo_fim}}</td>
 						<td style="text-align:center;">
-							<a href="{% url 'curso_extensao:detalhe' curso_extensao.pk %}" class="button">Visualizar</a>
-							<a href="{% url 'curso_extensao:gerar_pdf' curso_extensao.pk %}" class="button">Gerar PDF</a>
-							<a href="{% url 'relatorio:novo' curso_extensao.pk %}" class="button">Adicionar Relatório</a>
-							<a href="{% url 'relatorio:consulta' curso_extensao.pk %}" class="button">Visualizar Relatórios</a>
+							<a href="{% url 'relatorio:detalhe' relatorio.pk %}" class="button">Visualizar</a>
+							<a href="{% url 'relatorio:detalhe' relatorio.pk %}" class="button">Gerar PDF</a>
 						</td>
 					</tr>
 				{% endfor %}
