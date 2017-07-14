@@ -4,7 +4,7 @@ dir_fly="../Code/fly"
 dir_fontes="../doc/fontes"
 dir_doc="../doc"
 
-if ! grep "'django_extensions'," "$dir_fly/fly/settings.py" > /dev/null
+if ! grep -q "'django_extensions'," "$dir_fly/fly/settings.py"
 then
 	sed -i "/INSTALLED_APPS = \[/a 'django_extensions'," "$dir_fly/fly/settings.py"
 fi
@@ -29,7 +29,7 @@ do
 done
 
 # MER
-# Opções do DbVisualizer: Show One Link/Column [on], Links to Colums: [off]
+# Opções do DbVisualizer: Show One Link/Column [on], Links to Colums [off]
 arqv_svg="$dir_fontes/mer.svg"
 if [ -f "$arqv_svg" ]
 then
