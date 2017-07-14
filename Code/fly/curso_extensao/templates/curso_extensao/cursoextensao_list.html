@@ -38,7 +38,6 @@
 				<th>Coordenador(a)</th>
 				<th>Estado</th>
 				<th style="text-align:center;">Projeto</th>
-				<th style="text-align:center;">PDF</th>
 				<th style="text-align:center;">Relatório</th>
 				<th style="text-align:center;">Parecer</th>
 			</thead>
@@ -58,7 +57,7 @@
    						</td>
 						<td style="text-align:center;">
 						    <a href="{% url 'parecer:novo' curso_extensao.pk %}" class="button">Adicionar Parecer</a>
-   						    <a href="{% url 'parecer:consulta' curso_extensao.pk %}" class="button">Visualizar Pareceres</a>
+   						    <a href="" class="button">Visualizar Pareceres</a>
 						</td>
 					</tr>
 				{% endfor %}

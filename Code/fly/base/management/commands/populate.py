@@ -210,6 +210,13 @@ class Command(BaseCommand):
                 'Participante',
             ]
 
+            estado_relatorio_list = [
+                'Não submetido',
+                'Submetido',
+                'Aprovado',
+                'Não aprovado',
+            ]
+
             self.saveList(Campus, campus_list)
             self.saveList(Centro, centro_list)
             self.saveList(UnidadeAdministrativa, unidade_administrativa_list)
@@ -223,6 +230,7 @@ class Command(BaseCommand):
             self.saveList(TurnoCurso, turno_curso_list)
             self.saveList(EstadoProjeto, estado_projeto_list)
             self.saveList(FuncaoCertificado, funcao_certificado_list)
+            self.saveList(EstadoRelatorio, estado_relatorio_list)
 
 
             #TODO: remove
@@ -418,6 +426,7 @@ class Command(BaseCommand):
         r.resumo = 'Quisque fermentum erat quis mattis ultrices. Phasellus lobortis ligula et tincidunt auctor. Proin eget eros nisi. Sed est tellus, finibus ac condimentum nec, tincidunt a orci. Sed ac nullam.'
         r.atividades_realizadas_programacao = 'Sed pulvinar felis vitae massa dapibus laoreet. Fusce vitae facilisis nibh, nec dictum purus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi ac lorem et orci massa nunc.'
         r.dificuldades = 'Morbi vehicula elit et molestie hendrerit. Pellentesque in lacus fermentum, egestas sapien nec, ornare urna. Nulla vitae eros efficitur, pharetra tortor nec, ullamcorper libero orci aliquam.'
+        r.estado = EstadoRelatorio.objects.all().first()
         r.save()
         print("Adicionando 'relatório curso 1' em 'Relatorio'")
 
