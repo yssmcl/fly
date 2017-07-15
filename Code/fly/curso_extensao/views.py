@@ -129,7 +129,7 @@ class DetalheCursoExtensao(LoginRequiredMixin, View):
 
         #TODO:
         if curso_extensao.estado.nome == 'B':
-            main_form.add_error(None, "Não é possível editar esse curso de extensão pois ele já foi submetido.")
+            main_form.add_error(None, "Não é possível editar esse curso de extensão, pois ele já foi submetido.")
 
         if (main_form.is_valid()
                 and palavras_formset.is_valid()
@@ -162,7 +162,9 @@ class GeracaoPDFCursoExtensao(LoginRequiredMixin, View):
         caminho_arquivo = 'curso_extensao/pdf/'
         nome_arquivo = 'curso_extensao_{}.pdf'.format(str(pk))
 
-        arquivo_pdf = open(caminho_arquivo + nome_arquivo, 'rb')
-        response = HttpResponse(arquivo_pdf, content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(nome_arquivo)
-        return response
+        with open(caminho_arquivo + nome_arquivo, 'rb') as arquivo_pdf:
+            response = HttpResponse(arquivo_pdf, content_type='application/pdf')
+            #  response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(nome_arquivo) # janela de download
+            response['Content-Disposition'] = 'inline; filename=%s' % smart_str(nome_arquivo) # abre no visualizador de PDF do navegador
+            response['X-Sendfile'] = "/path/to/manual_protocolo.pdf"
+            return response

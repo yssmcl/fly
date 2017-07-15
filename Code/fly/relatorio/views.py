@@ -86,7 +86,8 @@ class GeracaoPDFRelatorio(LoginRequiredMixin, View):
         caminho_arquivo = 'relatorio/pdf/'
         nome_arquivo = 'relatorio_{}.pdf'.format(str(pk))
 
-        arquivo_pdf = open(caminho_arquivo + nome_arquivo, 'rb')
-        response = HttpResponse(arquivo_pdf, content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(nome_arquivo)
-        return response
+        with open(caminho_arquivo + nome_arquivo, 'rb') as arquivo_pdf:
+            response = HttpResponse(arquivo_pdf, content_type='application/pdf')
+            #  response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(nome_arquivo) # janela de download
+            response['Content-Disposition'] = 'inline; filename=%s' % smart_str(nome_arquivo) # abre no visualizador de PDF do navegador
+            return response

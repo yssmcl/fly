@@ -49,7 +49,7 @@
 						<td>{{ relatorio.periodo_inicio }} — {{relatorio.periodo_fim}}</td>
 						<td style="text-align:center;">
 							<a href="{% url 'relatorio:detalhe' relatorio.pk %}" class="button">Visualizar</a>
-							<a href="{% url 'relatorio:gerar_pdf' relatorio.pk %}" class="button">Gerar PDF</a>
+							<a href="{% url 'relatorio:pdf' relatorio.pk %}" class="button">Gerar PDF</a>
 						</td>
 					</tr>
 				{% endfor %}
