@@ -2,6 +2,7 @@
 
 # TODO: checar se os objetos são nulos antes de colocar no PDF
 from relatorio.models import *
+import os
 
 def gerar_pdf(relatorio):
     from pylatex import Document, Enumerate, NoEscape, Package, Tabularx, FlushRight, \
@@ -70,4 +71,5 @@ def gerar_pdf(relatorio):
 
     pdfutils.local_data_assinatura(doc)
 
-    doc.generate_pdf('relatorio/pdf/relatorio_' + str(relatorio.id))
+    os.system('mkdir -p ./relatorio/pdf')
+    doc.generate_pdf('./relatorio/pdf/relatorio_' + str(relatorio.id))

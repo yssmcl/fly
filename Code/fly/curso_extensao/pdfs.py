@@ -4,6 +4,7 @@
 # TODO: limpar os imports (ou baixar plugin que limpa e adiciona sozinho)
 from pylatex import Enumerate, NoEscape, NewLine
 from pylatex.utils import escape_latex
+import os
 
 from base.models import *
 from curso_extensao.models import *
@@ -93,4 +94,5 @@ def gerar_pdf(curso):
 
             pdfutils.tabela_gestao_recursos_financeiros(doc, enum, previsao_orcamentaria)
 
-    doc.generate_pdf('curso_extensao/pdf/curso_extensao_' + str(curso.id))
+    os.system('mkdir -p ./curso_extensao/pdf')
+    doc.generate_pdf('./curso_extensao/pdf/curso_extensao_' + str(curso.id))
