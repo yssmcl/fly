@@ -95,4 +95,4 @@ def gerar_pdf(curso):
             pdfutils.tabela_gestao_recursos_financeiros(doc, enum, previsao_orcamentaria)
 
     os.system('mkdir -p ./curso_extensao/pdf')
-    doc.generate_pdf('./curso_extensao/pdf/curso_extensao_' + str(curso.id))
+    doc.generate_pdf('./curso_extensao/pdf/curso_extensao_' + str(curso.id), clean_tex=False)

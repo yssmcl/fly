@@ -72,4 +72,4 @@ def gerar_pdf(relatorio):
     pdfutils.local_data_assinatura(doc)
 
     os.system('mkdir -p ./relatorio/pdf')
-    doc.generate_pdf('./relatorio/pdf/relatorio_' + str(relatorio.id))
+    doc.generate_pdf('./relatorio/pdf/relatorio_' + str(relatorio.id), clean_tex=False)
