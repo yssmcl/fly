@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from base.models import *
 from curso_extensao.models import *
 from django.core.management.base import BaseCommand, CommandError

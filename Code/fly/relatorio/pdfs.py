@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # TODO: checar se os objetos são nulos antes de colocar no PDF
 from relatorio.models import *
 

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # TODO: checar se os objetos não são nulos antes de colocar no PDF
 # TODO: limpar os imports (ou baixar plugin que limpa e adiciona sozinho)
 from pylatex import Enumerate, NoEscape, NewLine

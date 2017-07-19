@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from pylatex import NoEscape, FlushRight, NewLine, MdFramed, Enumerate, Document, \
      NewPage, HFill, Tabularx, LineBreak, MultiColumn, MultiRow, Package, Center, \
      MiniPage
