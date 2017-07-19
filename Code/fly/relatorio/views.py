@@ -6,7 +6,7 @@ from django.utils.encoding import smart_str
 from django.views import View, generic
 
 from .forms import RelatorioForm, CertificadoRelatorioFormSet, FileUploadFormSet
-from .models import Relatorio
+from .models import Relatorio, EstadoRelatorio
 from curso_extensao.models import CursoExtensao
 from relatorio.pdfs import gerar_pdf
 
@@ -33,11 +33,14 @@ class NovoRelatorio(View):
         if (main_form.is_valid()
                 and certificados_formset.is_valid()):
 
+            # Set extra data
+            relatorio.estado = EstadoRelatorio.objects.get(nome='Não submetido')
+
             with transaction.atomic():
                 main_form.save()
                 certificados_formset.save()
 
-            return redirect('base:index')
+            return redirect('relatorio:consulta', pk)
         else:
             certificados_formset.can_delete = False
 
@@ -74,7 +77,7 @@ class DetalheRelatorio(View):
                 main_form.save()
                 certificados_formset.save()
 
-            return redirect('base:index')
+            return redirect('relatorio:consulta', pk)
         else:
             return render(request, 'relatorio/relatorio_form.html', {'main_form': main_form, 'certificados_formset': certificados_formset, 'projeto_extensao': relatorio.projeto_extensao})
 
