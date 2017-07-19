@@ -21,7 +21,7 @@ class NovoDocente(LoginRequiredMixin, View):
             with transaction.atomic():
                 main_form.save()
 
-            return redirect('curso_extensao:index')
+            return redirect('base:index')
 
         else:
             return render(request, 'docente/docente_form.html', {'main_form': main_form})
@@ -58,7 +58,7 @@ class DetalheDocente(LoginRequiredMixin, View):
             with transaction.atomic():
                 main_form.save()
 
-            return redirect('curso_extensao:index')
+            return redirect('base:index')
 
         else:
             return render(request, 'docente/docente_form.html', {'main_form': main_form})
