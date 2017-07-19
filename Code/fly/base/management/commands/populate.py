@@ -415,7 +415,7 @@ class Command(BaseCommand):
         r = Relatorio()
         r.projeto_extensao = CursoExtensao.objects.all().first()
         r.periodo_inicio = timezone.now()
-        r.periodo_fim = timezone.now()
+        r.periodo_fim = timezone.now() + timezone.timedelta(days=1)
         r.publico_atingido = 'público atingido'
         r.resumo = 'Quisque fermentum erat quis mattis ultrices. Phasellus lobortis ligula et tincidunt auctor. Proin eget eros nisi. Sed est tellus, finibus ac condimentum nec, tincidunt a orci. Sed ac nullam.'
         r.atividades_realizadas_programacao = 'Sed pulvinar felis vitae massa dapibus laoreet. Fusce vitae facilisis nibh, nec dictum purus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi ac lorem et orci massa nunc.'
