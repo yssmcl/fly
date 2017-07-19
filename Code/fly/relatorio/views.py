@@ -37,7 +37,7 @@ class NovoRelatorio(View):
                 main_form.save()
                 certificados_formset.save()
 
-            return redirect('curso_extensao:index')
+            return redirect('base:index')
         else:
             certificados_formset.can_delete = False
 
@@ -74,7 +74,7 @@ class DetalheRelatorio(View):
                 main_form.save()
                 certificados_formset.save()
 
-            return redirect('curso_extensao:index')
+            return redirect('base:index')
         else:
             return render(request, 'relatorio/relatorio_form.html', {'main_form': main_form, 'certificados_formset': certificados_formset, 'projeto_extensao': relatorio.projeto_extensao})
 

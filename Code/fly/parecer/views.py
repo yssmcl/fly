@@ -24,7 +24,7 @@ class NovoParecer(View):
         if form.is_valid():
             form.save()
 
-            return redirect('curso_extensao:index')
+            return redirect('base:index')
         else:
             return render(request, 'parecer/parecer_form.html', {'form': form, 'projeto_extensao': parecer.projeto_extensao})
 
@@ -47,7 +47,7 @@ class DetalheParecer(LoginRequiredMixin, View):
             with transaction.atomic():
                 main_form.save()
 
-            return redirect('curso_extensao:index')
+            return redirect('base:index')
 
         else:
             return render(request, 'parecer/parecer_form.html', {'main_form': main_form})

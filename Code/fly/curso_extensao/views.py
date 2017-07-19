@@ -15,11 +15,6 @@ from base.models import EstadoProjeto
 from curso_extensao.pdfs import gerar_pdf
 
 
-class IndexView(View):
-    def get(self, request):
-        return render(request, 'curso_extensao/index.html')
-
-
 class NovoCursoExtensao(LoginRequiredMixin, View):
     def get(self, request):
         # Initialize empty forms and formsets.
@@ -71,7 +66,7 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
                 membros_comunidade_formset.save()
                 previsao_orcamentaria_formset.save()
 
-            return redirect('curso_extensao:index')
+            return redirect('base:index')
         else:
             palavras_formset.can_delete = False
             discentes_formset.can_delete = False
@@ -152,7 +147,7 @@ class DetalheCursoExtensao(LoginRequiredMixin, View):
                 membros_comunidade_formset.save()
                 previsao_orcamentaria_formset.save()
 
-            return redirect('curso_extensao:index')
+            return redirect('base:index')
         else:
             return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_formset': servidores_formset, 'palavras_formset': palavras_formset, 'discentes_formset': discentes_formset, 'membros_comunidade_formset': membros_comunidade_formset, 'previsao_orcamentaria_formset': previsao_orcamentaria_formset})
 
