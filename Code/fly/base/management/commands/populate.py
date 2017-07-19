@@ -286,9 +286,9 @@ class Command(BaseCommand):
             c.estado = EstadoProjeto.objects.all().first()
             c.coordenador = Servidor.objects.all().first()
             c.periodo_realizacao_inicio = timezone.now()
-            c.periodo_realizacao_fim = timezone.now()
+            c.periodo_realizacao_fim = timezone.now() + timezone.timedelta(days=1)
             c.programa_extensao = None
-            c.unidade_administrativa = UnidadeAdministrativa.objects.all().first()
+            # c.unidade_administrativa = UnidadeAdministrativa.objects.all().first()
             c.campus = Campus.objects.all().first()
             c.centro = Centro.objects.all().first()
             c.grande_area = GrandeArea.objects.all().first()
@@ -355,14 +355,6 @@ class Command(BaseCommand):
             sc1.plano_trabalho = 'Quisque a augue vel libero placerat vestibulum. In vitae nunc bibendum ante porttitor bibendum a eu risus. Duis lorem tortor, tempus et ipsum tincidunt, dignissim aliquam metus.'
             sc1.save()
             print("Adicionando 'Foo' em 'Servidor_CursoExtensao'")
-            sc2 = Servidor_CursoExtensao()
-            sc2.curso_extensao = CursoExtensao.objects.all().first()
-            sc2.servidor = Servidor.objects.all().last()
-            sc2.carga_horaria_dedicada = 4
-            sc2.funcao = FuncaoServidor.objects.all().first()
-            sc2.plano_trabalho = 'Quisque a augue vel libero placerat vestibulum. In vitae nunc bibendum ante porttitor bibendum a eu risus. Duis lorem tortor, tempus et ipsum tincidunt, dignissim aliquam metus.'
-            sc2.save()
-            print("Adicionando 'Bar' em 'Servidor_CursoExtensao'")
 
             print("Iniciando insercao em 'Discente_CursoExtensao'")
             dc1 = Discente_CursoExtensao()

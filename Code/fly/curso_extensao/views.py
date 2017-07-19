@@ -66,7 +66,7 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
                 membros_comunidade_formset.save()
                 previsao_orcamentaria_formset.save()
 
-            return redirect('base:index')
+            return redirect('curso_extensao:consulta')
         else:
             palavras_formset.can_delete = False
             discentes_formset.can_delete = False
@@ -147,7 +147,7 @@ class DetalheCursoExtensao(LoginRequiredMixin, View):
                 membros_comunidade_formset.save()
                 previsao_orcamentaria_formset.save()
 
-            return redirect('base:index')
+            return redirect('curso_extensao:consulta')
         else:
             return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_formset': servidores_formset, 'palavras_formset': palavras_formset, 'discentes_formset': discentes_formset, 'membros_comunidade_formset': membros_comunidade_formset, 'previsao_orcamentaria_formset': previsao_orcamentaria_formset})
 
