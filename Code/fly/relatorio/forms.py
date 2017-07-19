@@ -8,7 +8,15 @@ class RelatorioForm(forms.ModelForm):
         model = Relatorio
         fields = ['periodo_inicio', 'periodo_fim', 'publico_atingido', 'resumo', 'atividades_realizadas_programacao', 'dificuldades']
 
-    # comentario = forms.CharField(max_length=Parecer._meta.get_field('comentario').max_length, widget=forms.Textarea)
+    def clean(self):
+        cleaned_data = super().clean()
+        
+        # Validar data de início e fim.
+        inicio = cleaned_data.get('periodo_inicio')
+        fim = cleaned_data.get('periodo_fim')
+
+        if inicio and fim and inicio >= fim:
+            self.add_error('periodo_fim', "Data de fim deve ser após a data de início.")
 
 
 class FileUploadForm(forms.Form):
