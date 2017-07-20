@@ -158,7 +158,7 @@ def tabela_unidade_administrativa(doc, enum, unidade_administrativa, campus):
         doc.append(bold('CAMPUS DE: '))
         for c in Campus.objects.all():
             if campus and campus.id == c.id:
-                doc.append(NoEscape(campus.nome + r' ($\times$) '))
+                doc.append(NoEscape(c.nome + r' ($\times$) '))
             else:
                 doc.append(c.nome + ' () ')
 
@@ -168,9 +168,9 @@ def tabela_centro(doc, enum, centro):
     doc.append(NewLine())
     for c in Centro.objects.all():
         if centro and centro.id == c.id:
-            doc.append(NoEscape(centro.nome + r' ($\times$) '))
+            doc.append(NoEscape(c.nome + r' ($\times$) '))
         else:
-            doc.append(centro.nome + ' () ')
+            doc.append(c.nome + ' () ')
 
 
 # id é opcional, só se quiser preencher a tabela
