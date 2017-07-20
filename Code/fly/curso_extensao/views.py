@@ -156,12 +156,14 @@ class GeracaoPDFCursoExtensao(LoginRequiredMixin, View):
     def get(self, request, pk):
         curso_extensao = get_object_or_404(CursoExtensao, pk=pk)
         gerar_pdf(curso_extensao)
-        caminho_arquivo = 'curso_extensao/pdf/'
+	# TODO: arrumar caminhos
+        pasta_arquivo = '/home/felipe/fly/Code/fly/curso_extensao/static/pdf/'
         nome_arquivo = 'curso_extensao_{}.pdf'.format(str(pk))
 
-        with open(caminho_arquivo + nome_arquivo, 'rb') as arquivo_pdf:
+        with open(pasta_arquivo + nome_arquivo, 'rb') as arquivo_pdf:
             response = HttpResponse(arquivo_pdf, content_type='application/pdf')
             #  response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(nome_arquivo) # janela de download
             response['Content-Disposition'] = 'inline; filename=%s' % smart_str(nome_arquivo) # abre no visualizador de PDF do navegador
-            response['X-Sendfile'] = "/path/to/manual_protocolo.pdf"
+            response['X-Sendfile'] = pasta_arquivo + nome_arquivo
+
             return response

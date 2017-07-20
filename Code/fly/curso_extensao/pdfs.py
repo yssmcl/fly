@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-# TODO: checar se os objetos não são nulos antes de colocar no PDF
 # TODO: limpar os imports (ou baixar plugin que limpa e adiciona sozinho)
 from pylatex import Enumerate, NoEscape, NewLine
 from pylatex.utils import escape_latex
@@ -94,5 +91,9 @@ def gerar_pdf(curso):
 
             pdfutils.tabela_gestao_recursos_financeiros(doc, enum, previsao_orcamentaria)
 
-    os.system('mkdir -p ./curso_extensao/pdf')
-    doc.generate_pdf('./curso_extensao/pdf/curso_extensao_' + str(curso.id), clean_tex=False)
+    # TODO: trocar para caminhos relativos
+    os.system('mkdir -p /home/felipe/fly/Code/fly/curso_extensao/static/pdf')
+    try:
+        doc.generate_pdf('/home/felipe/fly/Code/fly/curso_extensao/static/pdf/curso_extensao_' + str(curso.id), clean_tex=False, silent=False)
+    except Exception:
+        pass

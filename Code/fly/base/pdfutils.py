@@ -55,8 +55,9 @@ def configuracoes_preambulo(doc):
     # Configuração dos cabeçalhos
     doc.preamble.append(NoEscape('\pagestyle{fancy}'))
 
-    # Diretório das imagens (relativo a relatorio/pdf/)
-    doc.preamble.append(NoEscape(r'\graphicspath{{../../base/img/}}'))
+    # TODO: arrumar caminho
+    # Diretório das imagens
+    doc.preamble.append(NoEscape(r'\graphicspath{{../../../base/img/}}'))
 
     # Tamanho da fonte
     doc.append(NoEscape(r'\footnotesize'))
