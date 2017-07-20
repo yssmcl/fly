@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.utils.encoding import smart_str
 from django.views import View, generic
+from fly.settings import PDF_DIR
 
 from .forms import CursoExtensaoForm, Servidor_CursoExtensaoFormSet, PalavraChave_CursoExtensaoFormSet, Discente_CursoExtensaoFormSet, MembroComunidade_CursoExtensaoFormSet, PrevisaoOrcamentaria_CursoExtensaoFormSet
 from .models import CursoExtensao
@@ -156,14 +157,12 @@ class GeracaoPDFCursoExtensao(LoginRequiredMixin, View):
     def get(self, request, pk):
         curso_extensao = get_object_or_404(CursoExtensao, pk=pk)
         gerar_pdf(curso_extensao)
-	# TODO: arrumar caminhos
-        pasta_arquivo = '/home/felipe/fly/Code/fly/curso_extensao/static/pdf/'
         nome_arquivo = 'curso_extensao_{}.pdf'.format(str(pk))
 
-        with open(pasta_arquivo + nome_arquivo, 'rb') as arquivo_pdf:
+        with open(PDF_DIR + nome_arquivo, 'rb') as arquivo_pdf:
             response = HttpResponse(arquivo_pdf, content_type='application/pdf')
             #  response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(nome_arquivo) # janela de download
             response['Content-Disposition'] = 'inline; filename=%s' % smart_str(nome_arquivo) # abre no visualizador de PDF do navegador
-            response['X-Sendfile'] = pasta_arquivo + nome_arquivo
+            #  response['X-Sendfile'] = PDF_DIR + nome_arquivo
 
             return response

@@ -8,6 +8,7 @@ from pylatex.utils import escape_latex, bold
 from base.models import *
 from curso_extensao.models import *
 from relatorio.models import *
+from fly.settings import BASE_DIR
 
 
 mdframed_options = ['innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt']
@@ -42,6 +43,7 @@ def pacotes(doc):
     # Impede hifenização das palavras
     # doc.packages.add(Package('hyphenat', options='none'))
 
+
 def configuracoes_preambulo(doc):
     doc.preamble.append(NoEscape(r'\renewcommand{\familydefault}{\sfdefault}'))
     # doc.append(NoEscape(r'\fontfamily{\sfdefault}\selectfont'))
@@ -57,10 +59,12 @@ def configuracoes_preambulo(doc):
 
     # TODO: arrumar caminho
     # Diretório das imagens
-    doc.preamble.append(NoEscape(r'\graphicspath{{../../../base/img/}}'))
+    diretorio_img = BASE_DIR + '/base/img/'
+    doc.preamble.append(NoEscape(r'\graphicspath{{' + diretorio_img + '}}'))
 
     # Tamanho da fonte
     doc.append(NoEscape(r'\footnotesize'))
+
 
 def cabecalho(doc):
     cabecalho = r'''
