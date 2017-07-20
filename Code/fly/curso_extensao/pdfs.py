@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 
-# TODO: limpar os imports (ou baixar plugin que limpa e adiciona sozinho)
 from django.contrib.staticfiles.templatetags.staticfiles import static
+import os
 from pylatex import Enumerate, NoEscape, NewLine
 from pylatex.utils import escape_latex
-import os
-from fly.settings import PDF_DIR
 
+from base import pdfutils
 from base.models import *
 from curso_extensao.models import *
-from base import pdfutils
+from fly.settings import PDF_DIR
 
 def gerar_pdf(curso):
     doc = pdfutils.init_document()
@@ -95,7 +94,6 @@ def gerar_pdf(curso):
 
             pdfutils.tabela_gestao_recursos_financeiros(doc, enum, previsao_orcamentaria)
 
-    # TODO: trocar para caminhos relativos
     os.system('mkdir -p ' + PDF_DIR)
     try:
         doc.generate_pdf(PDF_DIR + 'curso_extensao_' + str(curso.id), clean_tex=False, silent=False)

@@ -9,6 +9,7 @@ from .forms import RelatorioForm, CertificadoRelatorioFormSet, FileUploadFormSet
 from .models import Relatorio, EstadoRelatorio
 from curso_extensao.models import CursoExtensao
 from relatorio.pdfs import gerar_pdf
+from fly.settings import PDF_DIR
 
 class NovoRelatorio(View):
     def get(self, request, pk):
@@ -86,11 +87,12 @@ class GeracaoPDFRelatorio(LoginRequiredMixin, View):
     def get(self, request, pk):
         relatorio = get_object_or_404(Relatorio, pk=pk)
         gerar_pdf(relatorio)
-        caminho_arquivo = 'relatorio/pdf/'
         nome_arquivo = 'relatorio_{}.pdf'.format(str(pk))
 
-        with open(caminho_arquivo + nome_arquivo, 'rb') as arquivo_pdf:
+        with open(PDF_DIR + nome_arquivo, 'rb') as arquivo_pdf:
             response = HttpResponse(arquivo_pdf, content_type='application/pdf')
             #  response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(nome_arquivo) # janela de download
             response['Content-Disposition'] = 'inline; filename=%s' % smart_str(nome_arquivo) # abre no visualizador de PDF do navegador
+            #  response['X-Sendfile'] = PDF_DIR + nome_arquivo
+
             return response

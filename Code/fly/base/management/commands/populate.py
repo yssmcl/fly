@@ -325,7 +325,7 @@ class Command(BaseCommand):
             p.outros_especificacao = 'especificação outros curso 1'
             p.identificacao = TipoGestaoRecursosFinanceiros.objects.all().first()
             p.fundacao = 'fundação curso 1'
-            p.outro_orgao_gestor = 'outro órgao gestor curso 1'
+            p.outro_orgao_gestor = 'outro órgão gestor curso 1'
             p.save()
             print("Adicionando 'previsão curso 1' em 'PrevisaoOrcamentaria_CursoExtensao'")
 
@@ -355,6 +355,14 @@ class Command(BaseCommand):
             sc1.plano_trabalho = 'Quisque a augue vel libero placerat vestibulum. In vitae nunc bibendum ante porttitor bibendum a eu risus. Duis lorem tortor, tempus et ipsum tincidunt, dignissim aliquam metus.'
             sc1.save()
             print("Adicionando 'Foo' em 'Servidor_CursoExtensao'")
+            sc2 = Servidor_CursoExtensao()
+            sc2.curso_extensao = CursoExtensao.objects.all().first()
+            sc2.servidor = Servidor.objects.all().last()
+            sc2.carga_horaria_dedicada = 4
+            sc2.funcao = FuncaoServidor.objects.all().first()
+            sc2.plano_trabalho = 'Quisque a augue vel libero placerat vestibulum. In vitae nunc bibendum ante porttitor bibendum a eu risus. Duis lorem tortor, tempus et ipsum tincidunt, dignissim aliquam metus.'
+            sc2.save()
+            print("Adicionando 'Bar' em 'Servidor_CursoExtensao'")
 
             print("Iniciando insercao em 'Discente_CursoExtensao'")
             dc1 = Discente_CursoExtensao()

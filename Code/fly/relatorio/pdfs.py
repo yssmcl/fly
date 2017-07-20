@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
 
-# TODO: checar se os objetos são nulos antes de colocar no PDF
-from relatorio.models import *
 import os
+from pylatex import Document, Enumerate, NoEscape, Package, Tabularx, FlushRight, \
+     LineBreak, NewLine, MultiColumn, MultiRow, HFill, Table, Center
+from pylatex.base_classes import Environment
+from pylatex.utils import escape_latex, bold
+
+from base import pdfutils
+from base.models import UnidadeAdministrativa, Campus, Centro
+from curso_extensao.models import CursoExtensao
+from fly.settings import PDF_DIR
+from relatorio.models import Relatorio, CertificadoRelatorio
 
 def gerar_pdf(relatorio):
-    from pylatex import Document, Enumerate, NoEscape, Package, Tabularx, FlushRight, \
-         LineBreak, NewLine, MultiColumn, MultiRow, HFill, Table, Center
-    from pylatex.base_classes import Environment
-    from pylatex.utils import escape_latex, bold
-
-    from relatorio.models import Relatorio, CertificadoRelatorio
-    from base.models import UnidadeAdministrativa, Campus, Centro
-    from curso_extensao.models import CursoExtensao
-    from base import pdfutils
-
     doc = pdfutils.init_document()
 
     pdfutils.pacotes(doc)
@@ -71,5 +69,8 @@ def gerar_pdf(relatorio):
 
     pdfutils.local_data_assinatura(doc)
 
-    os.system('mkdir -p ./relatorio/pdf')
-    doc.generate_pdf('./relatorio/pdf/relatorio_' + str(relatorio.id), clean_tex=False)
+    os.system('mkdir -p ' + PDF_DIR)
+    try:
+        doc.generate_pdf(PDF_DIR + 'relatorio_' + str(relatorio.id), clean_tex=False, silent=False)
+    except Exception:
+        pass
