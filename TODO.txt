@@ -1,0 +1,50 @@
+Login:
+- Subitem de login no canto superior direito
+- Não mostrar os menus de cadastro e consulta de curso antes de o usuário fazer login
+
+Curso:
+- Remover campo de estado da tela de cadastro de curso 
+- Validar Unidade Administrativa e Campus na interface
+- Arrumar max_length dos CharField
+- Botão para excluir servidor, membro e discente, com mensagem de confirmação
+- Impedir cadastro de mesmo servidor 2x
+- Adicionar outro botão de salvar no canto superior direito e mover o de baixo para o canto esquerdo
+- Não mostrar formulários de membro, servidor, discente e previsão orçamentária, somente o título e botão de + (extra=0)
+- Destacar erros em vermelho (junto com alert()?)
+- Adicionar menu para docente
+
+Relatório:
+- Não mostrar formulário certificados, somente o título e botão de + (extra=0)
+- Incluir data de início e término do projeto
+- Incluir texto indicando se o relatório é parcial ou final
+- Textarea para Resumo da Atividade Realizada, Relacionar as Atividades Realizadas ou Programação e Relacionar as Dificuldades Técnicas e/ou Administrativas
+- Destacar erros em vermelho (junto com alert()?)
+
+Consulta:
+- Ocultar coluna Estado
+- Adicionar botão para limpar filtros
+- Adicionar botão Voltar na tela de visualização de curso
+- Quando salvar, voltar para a tela de consulta
+- Exibir os projetos de todos os docentes, mas deixar modificar somente os projetos próprios
+- Paginação na tela de consulta (igual à página Tabela do trabalho de SI)
+- Implementar exclusão de curso, relatório e parecer
+
+PDF:
+- Arrumar geração de PDF de curso
+- Deixar os itens de textarea para incluir o texto embaixo
+- Deixar espaço entre os parênteses para preenchimento manual
+
+Layout:
+- Adicionar ícones nos botões e adicionar tooltip
+	* Salvar: disquete
+	* Visualizar/editar: lupa/olho/lápis
+	* Cadastrar: +
+	* Excluir: -
+	* Gerar PDF: logo da Adobe
+	* Visualizar pareceres e visualizar relatórios: lista (três riscos pequenos)
+	* Pesquisar: lupa
+- Mudar o menu:
+	| HOME | PROJETO | ... | LOGIN |
+         | Curso   |
+				 | Serviço |
+				 | ...     |
