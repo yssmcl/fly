@@ -57,7 +57,6 @@ def configuracoes_preambulo(doc):
     # Configuração dos cabeçalhos
     doc.preamble.append(NoEscape('\pagestyle{fancy}'))
 
-    # TODO: arrumar caminho
     # Diretório das imagens
     diretorio_img = BASE_DIR + '/base/img/'
     doc.preamble.append(NoEscape(r'\graphicspath{{' + diretorio_img + '}}'))

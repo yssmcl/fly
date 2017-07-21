@@ -193,7 +193,7 @@ class Command(BaseCommand):
             turno_curso_list = [
                 'Integral',
                 'Noturno',
-                'Matituno',
+                'Matutino',
                 'Tarde',
             ]
 
