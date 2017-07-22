@@ -260,8 +260,8 @@ def tabela_linha_extensao(doc, enum, linha_extensao, id):
 
 def mdframed_equipe_trabalho(doc, enum, projeto_extensao):
     # TODO: se projeto_extensao.servidores.all() for vazio, esse item não aparece?
-    for servidor in projeto_extensao.servidores.all():
-        servidor_cursoextensao = Servidor_CursoExtensao.objects.get(servidor_id=servidor.id)
+    for servidor_cursoextensao in Servidor_CursoExtensao.objects.filter(curso_extensao__id=projeto_extensao.id):
+        servidor = servidor_cursoextensao.servidor
 
         with doc.create(MdFramed(options=mdframed_options)):
             doc.append(bold('SERVIDORES UNIOESTE '))
