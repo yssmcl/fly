@@ -95,7 +95,4 @@ def gerar_pdf(curso):
             pdfutils.tabela_gestao_recursos_financeiros(doc, enum, previsao_orcamentaria)
 
     os.system('mkdir -p ' + PDF_DIR)
-    try:
-        doc.generate_pdf(PDF_DIR + 'curso_extensao_' + str(curso.id), clean_tex=False, silent=False)
-    except Exception:
-        pass
+    doc.generate_pdf(PDF_DIR + 'curso_extensao_' + str(curso.id), clean_tex=False)

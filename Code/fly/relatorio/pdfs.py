@@ -70,7 +70,4 @@ def gerar_pdf(relatorio):
     pdfutils.local_data_assinatura(doc)
 
     os.system('mkdir -p ' + PDF_DIR)
-    try:
-        doc.generate_pdf(PDF_DIR + 'relatorio_' + str(relatorio.id), clean_tex=False, silent=False)
-    except Exception:
-        pass
+    doc.generate_pdf(PDF_DIR + 'relatorio_' + str(relatorio.id), clean_tex=False)
