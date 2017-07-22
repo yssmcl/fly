@@ -260,7 +260,8 @@ def tabela_linha_extensao(doc, enum, linha_extensao, id):
 
 def mdframed_equipe_trabalho(doc, enum, projeto_extensao):
     # TODO: se projeto_extensao.servidores.all() for vazio, esse item não aparece?
-    for servidor_cursoextensao in Servidor_CursoExtensao.objects.filter(curso_extensao__id=projeto_extensao.id):
+    servidores_cursoextensao = Servidor_CursoExtensao.objects.filter(curso_extensao_id=projeto_extensao.id)
+    for servidor_cursoextensao in servidores_cursoextensao:
         servidor = servidor_cursoextensao.servidor
 
         with doc.create(MdFramed(options=mdframed_options)):
@@ -373,7 +374,7 @@ def tabela_discentes(doc, enum, projeto_extensao):
         tab.add_row(cabecalho)
         tab.add_hline()
 
-        discentes = Discente_CursoExtensao.objects.filter(curso_extensao=projeto_extensao.id)
+        discentes = Discente_CursoExtensao.objects.filter(curso_extensao_id=projeto_extensao.id)
         for discente in discentes:
             linha = [discente.nome,
                      discente.curso,
@@ -413,7 +414,7 @@ def tabela_membros(doc, enum, projeto_extensao):
         tab.add_row(cabecalho)
         tab.add_hline()
 
-        membros = MembroComunidade_CursoExtensao.objects.filter(curso_extensao=projeto_extensao.id)
+        membros = MembroComunidade_CursoExtensao.objects.filter(curso_extensao_id=projeto_extensao.id)
         for membro in membros:
             linha = [membro.nome,
                      membro.entidade,
