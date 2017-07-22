@@ -221,7 +221,7 @@ def tabela_palavras_chave(doc, enum, model):
 
         row = []
         for i, model in enumerate(model.objects.all(), 1):
-            row.append('{} ‒ {}'.format(str(i), model.nome))
+            row.append('{} -- {}'.format(str(i), model.nome))
 
             if i%nro_colunas == 0:
                 tab.add_row(row)
