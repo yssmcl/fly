@@ -13,6 +13,8 @@ from fly.settings import BASE_DIR
 
 mdframed_options = ['innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt']
 width_argument = NoEscape(r'\linewidth')
+times = NoEscape(r'$\times$')
+phantom = NoEscape(r'\phantom{$\times$}')
 
 
 def init_document():
@@ -135,35 +137,36 @@ def mdframed_informar(doc, enum, programa_extensao):
 
             subenum.add_item(NoEscape('Esta atividade faz parte de algum Programa de Extensão? '))
             if programa_extensao:
-                doc.append(NoEscape(r'Não () Sim ({$\times$}): Qual? '))
-                doc.append(programa_extensao.nome)
+                doc.append(NoEscape(r'Não ({}) Sim ({}): Qual? {}'.format(phantom, times, programa_extensao.nome)))
             else:
-                doc.append(NoEscape(r'Não ($\times$) Sim (): Qual? '))
+                doc.append(NoEscape(r'Não ({}) Sim ({}): Qual? '.format(times, phantom)))
 
             doc.append(NoEscape(r'''
-            Coordenador(a) do Programa: \\ \\ \\
-            Assinatura: \hrulefill \\
+Coordenador(a) do Programa: \\ \\ \\
+Assinatura: \hrulefill \\
             '''))
 
             # TODO: ???
-            subenum.add_item('Esta Atividade de Extensão está articulada (quando for o caso): ao Ensino () à Pesquisa ()')
+            subenum.add_item(NoEscape(r'\
+                                      Esta Atividade de Extensão está articulada (quando for o caso): \
+                                      ao Ensino ({}) à Pesquisa ({})'.format(phantom, phantom)))
 
 
 def tabela_unidade_administrativa(doc, enum, unidade_administrativa, campus):
         item(doc, enum, 'UNIDADE ADMINISTRATIVA: ')
         for ua in UnidadeAdministrativa.objects.all():
             if unidade_administrativa and unidade_administrativa.id == ua.id:
-                doc.append(NoEscape(ua.nome + r' ($\times$) '))
+                doc.append(NoEscape(r'{} ({}) '.format(ua.nome, times)))
             else:
-                doc.append(ua.nome + ' () ')
+                doc.append(NoEscape(r'{} ({}) '.format(ua.nome, phantom)))
         doc.append(NewLine())
 
         doc.append(bold('CAMPUS DE: '))
         for c in Campus.objects.all():
             if campus and campus.id == c.id:
-                doc.append(NoEscape(c.nome + r' ($\times$) '))
+                doc.append(NoEscape(r'{} ({}) '.format(c.nome, times)))
             else:
-                doc.append(c.nome + ' () ')
+                doc.append(NoEscape(r'{} ({}) '.format(c.nome, phantom)))
 
 
 def tabela_centro(doc, enum, centro):
@@ -171,9 +174,9 @@ def tabela_centro(doc, enum, centro):
     doc.append(NewLine())
     for c in Centro.objects.all():
         if centro and centro.id == c.id:
-            doc.append(NoEscape(c.nome + r' ($\times$) '))
+            doc.append(NoEscape(r'{} ({}) '.format(c.nome, times)))
         else:
-            doc.append(c.nome + ' () ')
+            doc.append(NoEscape(r'{} ({}) '.format(c.nome, phantom)))
 
 
 # id é opcional, só se quiser preencher a tabela
@@ -190,9 +193,9 @@ def tabela_alternativas(doc, model, table_spec, id=None, hline=True):
         row = []
         for i, model in enumerate(model.objects.all(), 1):
             if id and model.id == id:
-                row.append(NoEscape(r'($\times$) ' + model.nome))
+                row.append(NoEscape(r'({}) {}'.format(times, model.nome)))
             else:
-                row.append('() ' + model.nome)
+                row.append(NoEscape(r'({}) {} '.format(phantom, model.nome)))
 
             if i%nro_colunas == 0:
                 tab.add_row(row)
@@ -274,9 +277,9 @@ def mdframed_equipe_trabalho(doc, enum, projeto_extensao):
 
             for tipo_servidor in TipoServidor.objects.all():
                 if servidor.tipo.id == tipo_servidor.id:
-                    doc.append(NoEscape(r' ($\times$) ' + tipo_servidor.nome + ' '))
+                    doc.append(NoEscape(r'({}) {} '.format(times, tipo_servidor.nome)))
                 else:
-                    doc.append(' () ' + tipo_servidor.nome + ' ')
+                    doc.append(NoEscape(r'({}) {} '.format(phantom, tipo_servidor.nome)))
             doc.append(NewLine())
 
             doc.append('Regime de trabalho: ')
@@ -297,15 +300,14 @@ def mdframed_equipe_trabalho(doc, enum, projeto_extensao):
             doc.append('Unidade Administrativa: ')
             for ua in UnidadeAdministrativa.objects.all():
                 if servidor.unidade_administrativa and servidor.unidade_administrativa.id == ua.id:
-                    doc.append(NoEscape(r'($\times$) ' + ua.nome + ' '))
+                    doc.append(NoEscape(r'({}) {} '.format(times, ua.nome)))
                 else:
-                    doc.append('() ' + ua.nome + ' ')
+                    doc.append(NoEscape(r'({}) {} '.format(phantom, ua.nome)))
 
             if servidor.campus:
-                doc.append(NoEscape(r'($\times$) CAMPUS DE: '))
-                doc.append(servidor.campus)
+                doc.append(NoEscape(r'({}) CAMPUS DE: {}'.format(times, servidor.campus.nome)))
             else:
-                doc.append(NoEscape(r'() CAMPUS DE: '))
+                doc.append(NoEscape(r'({}) CAMPUS DE: '.format(phantom)))
             doc.append(NewLine())
 
             doc.append(NoEscape('E-mail: '))
@@ -503,9 +505,9 @@ def tabela_gestao_recursos_financeiros(doc, enum, previsao_orcamentaria):
 
             for tipo_gestao in TipoGestaoRecursosFinanceiros.objects.all():
                 if previsao_orcamentaria.identificacao and previsao_orcamentaria.identificacao.id == tipo_gestao.id:
-                    doc.append(NoEscape(r'($\times$) ' + tipo_gestao.nome.upper()))
+                    doc.append(NoEscape(r'({}) {}'.format(times, tipo_gestao.nome.upper())))
                 else:
-                    doc.append(('() ' + tipo_gestao.nome.upper()))
+                    doc.append(NoEscape(r'({}) {}'.format(phantom, tipo_gestao.nome.upper())))
                 doc.append(NewLine())
 
 
@@ -543,7 +545,7 @@ def tabela_certificados(doc, id=None):
 
         # TODO: Item 9.2: Inserir onde o certificado sera gerado: PROEX ou Centro de Coordenação / Órgão Promotor
         enum.add_item(NoEscape(r'Informar se os certificados devem ser emitidos: \\'))
-        doc.append(NoEscape('() pela PROEX \hfill () pelo Centro da Coordenação ou Órgão Promotor'))
+        doc.append(NoEscape('({}) pela PROEX \hfill ({}) pelo Centro da Coordenação ou Órgão Promotor'.format(phantom, phantom)))
 
 
 def local_data_assinatura(doc):
