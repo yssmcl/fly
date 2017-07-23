@@ -29,11 +29,6 @@ Consulta:
 - Paginação na tela de consulta (igual à página Tabela do trabalho de SI)
 - Implementar exclusão de curso, relatório e parecer
 
-PDF:
-- Arrumar geração de PDF de curso
-- Deixar os itens de textarea para incluir o texto embaixo
-- Deixar espaço entre os parênteses para preenchimento manual
-
 Layout:
 - Adicionar ícones nos botões e adicionar tooltip
 	* Salvar: disquete

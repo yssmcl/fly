@@ -52,7 +52,8 @@ def gerar_pdf(curso):
         pdfutils.tabela_area_tematica_principal(doc, enum, id=curso.area_tematica_principal.id)
 
         if curso.area_tematica_secundaria:
-            pdfutils.tabela_area_tematica_secundaria(doc, enum, curso.area_tematica_secundaria, id=curso.area_tematica_secundaria.id)
+            pdfutils.tabela_area_tematica_secundaria(doc, enum, curso.area_tematica_secundaria,
+                                                     id=curso.area_tematica_secundaria.id)
         else:
             pdfutils.tabela_area_tematica_secundaria(doc, enum, curso.area_tematica_secundaria)
 
@@ -72,7 +73,9 @@ def gerar_pdf(curso):
         doc.append(NewLine())
         doc.append(escape_latex(curso.resumo))
 
-        pdfutils.item(doc, enum, 'PROGRAMAÇÃO: ', curso.programacao)
+        pdfutils.item(doc, enum, 'PROGRAMAÇÃO: ')
+        doc.append(NewLine())
+        doc.append(escape_latex(curso.programacao))
 
         pdfutils.item(doc, enum, 'EQUIPE DE TRABALHO: ')
         doc.append(NewLine())

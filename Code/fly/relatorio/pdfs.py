@@ -13,6 +13,9 @@ from fly.settings import PDF_DIR
 from relatorio.models import Relatorio, CertificadoRelatorio
 
 def gerar_pdf(relatorio):
+    times = NoEscape(r'$\times$')
+    phantom = NoEscape(r'\phantom{$\times$}')
+
     doc = pdfutils.init_document()
 
     pdfutils.pacotes(doc)
@@ -38,10 +41,10 @@ def gerar_pdf(relatorio):
         with doc.create(Enumerate()) as subenum:
             subenum.add_item(NoEscape('Vinculada a algum Programa de Extensão? '))
             if relatorio.projeto_extensao.programa_extensao:
-                doc.append(NoEscape(r'Não () Sim ({$\times$}): Qual? '))
-                doc.append(relatorio.projeto_extensao.programa_extensao.nome)
+                doc.append(NoEscape(r'Não ({}) Sim ({}): Qual? {}'.format(phantom, times,
+                    relatorio.projeto_extensao.programa_extensao.nome)))
             else:
-                doc.append(NoEscape(r'Não ($\times$) Sim (): Qual? '))
+                doc.append(NoEscape(r'Não ({}) Sim ({}): Qual? '.format(times, phantom)))
 
         pdfutils.item(doc, enum, 'COORDENADOR(a): ')
 
@@ -50,7 +53,8 @@ def gerar_pdf(relatorio):
         periodo_realizacao = 'de {} a {}'.format(periodo_inicio, periodo_fim)
         pdfutils.item(doc, enum, 'PERÍODO DO RELATÓRIO: ', periodo_realizacao)
 
-        pdfutils.tabela_unidade_administrativa(doc, enum, relatorio.projeto_extensao.unidade_administrativa, relatorio.projeto_extensao.campus)
+        pdfutils.tabela_unidade_administrativa(doc, enum, relatorio.projeto_extensao.unidade_administrativa,
+                                               relatorio.projeto_extensao.campus)
 
         pdfutils.tabela_centro(doc, enum, relatorio.projeto_extensao.centro)
 
@@ -61,11 +65,17 @@ def gerar_pdf(relatorio):
         pdfutils.item(doc, enum, 'CERTIFICADOS: ')
         pdfutils.tabela_certificados(doc, id=relatorio.id)
 
-        pdfutils.item(doc, enum, 'RESUMO DA ATIVIDADE REALIZADA: ', relatorio.resumo)
+        pdfutils.item(doc, enum, 'RESUMO DA ATIVIDADE REALIZADA: ')
+        doc.append(NewLine())
+        doc.append(escape_latex(relatorio.resumo))
 
-        pdfutils.item(doc, enum, 'RELACIONAR AS ATIVIDADES REALIZADAS OU A PROGRAMAÇÃO PARA CURSOS OU EVENTOS: ', relatorio.atividades_realizadas_programacao)
+        pdfutils.item(doc, enum, 'RELACIONAR AS ATIVIDADES REALIZADAS OU A PROGRAMAÇÃO PARA CURSOS OU EVENTOS: ')
+        doc.append(NewLine())
+        doc.append(escape_latex(relatorio.atividades_realizadas_programacao))
 
-        pdfutils.item(doc, enum, 'RELACIONAR AS DIFICULDADES TÉCNICAS E/OU ADMINISTRATIVAS (se houver): ', relatorio.dificuldades)
+        pdfutils.item(doc, enum, 'RELACIONAR AS DIFICULDADES TÉCNICAS E/OU ADMINISTRATIVAS (se houver): ')
+        doc.append(NewLine())
+        doc.append(escape_latex(relatorio.dificuldades))
 
     pdfutils.local_data_assinatura(doc)
 
