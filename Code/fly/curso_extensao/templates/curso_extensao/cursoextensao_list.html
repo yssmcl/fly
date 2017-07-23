@@ -10,24 +10,28 @@
 
 	<form>
 		<div class="row">
-			<div class="medium-4 columns">
+			<div class="medium-3 columns">
 				<label>Título:</label>
 				<input type="text" name="titulo" value="{{ request.GET.titulo }}"/>
 			</div>
 
-			<div class="medium-4 columns">
+			<div class="medium-3 columns">
 				<label>Coordenador(a):</label>
 				<input type="text" name="coordenador" value="{{ request.GET.coordenador }}"/>
 			</div>
 
-			<div class="medium-4 columns">
+			<div class="medium-3 columns">
 				<label>Estado:</label>
 				<input type="text" name="estado" value="{{ request.GET.estado }}"/>
 			</div>
 
-			<div style="text-align:center;">
-				<input type="submit" value="Pesquisar" class="button">	
+			<div class="medium-3 columns">
+				<br />
+				<input type="submit" value="Pesquisar" class="button" style="width:150px;">	
 			</div>
+		</div>
+		<div class="row" style="text-align: right;">
+			<a class="success button" href="{% url 'curso_extensao:novo' %}">Novo Curso</a>
 		</div>
 	</form>
 
@@ -63,6 +67,9 @@
 				{% endfor %}
 			</tbody>
 		</table>
+	</div>
+	<div class="row" style="text-align: right;">
+		<a class="success button" href="{% url 'curso_extensao:novo' %}">Novo Curso</a>
 	</div>
 
 {% endblock %}

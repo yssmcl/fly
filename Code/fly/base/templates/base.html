@@ -36,11 +36,9 @@
 			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper> <!-- Essa div e a de cima servem para fazer a parte do menu lateral -->
 				<div class="off-canvas position-left" id="mobile-menu" data-off-canvas>
 					<li><a href="{% url 'base:index' %}">Home</a></li>
-					<div class="menu-mobile-opcao">Curso</div>
+					<div class="menu-mobile-opcao">Projeto</div>
 					<ul>
-						<li><a href="{% url 'curso_extensao:novo' %}">Cadastro de Curso</a></li>
-						<hr></hr>
-						<li><a href="{% url 'curso_extensao:consulta' %}">Consulta de Curso</a></li>
+						<li><a href="{% url 'curso_extensao:consulta' %}">Curso de Extensão</a></li>
 					</ul>
 				</div>
 
@@ -61,10 +59,9 @@
 								<ul class="dropdown menu menu-desktop" data-dropdown-menu>
 									<li><a href="{% url 'base:index' %}">Home</a></li>
 									<li>
-										<a href="#">Curso</a>
+										<a href="#">Projeto</a>
 										<ul class="menu">
-											<li><a href="{% url 'curso_extensao:novo' %}">Cadastro de Curso</a></li>
-											<li><a href="{% url 'curso_extensao:consulta' %}">Consulta de Curso</a></li>
+											<li><a href="{% url 'curso_extensao:consulta' %}">Curso de Extensão</a></li>
 										</ul>
 									</li>
 									<li>
