@@ -47,7 +47,7 @@ def gerar_pdf(curso):
 
         pdfutils.tabela_grande_area(doc, enum, id=curso.grande_area.id)
 
-        pdfutils.tabela_palavras_chave(doc, enum, PalavraChave_CursoExtensao)
+        pdfutils.tabela_palavras_chave(doc, enum, PalavraChave_CursoExtensao.objects.filter(curso_extensao_id=curso.id))
 
         pdfutils.tabela_area_tematica_principal(doc, enum, id=curso.area_tematica_principal.id)
 

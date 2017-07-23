@@ -214,7 +214,7 @@ def tabela_grande_area(doc, enum, id=None):
     tabela_alternativas(doc, GrandeArea, '|X|X|X|', id=id)
 
 
-def tabela_palavras_chave(doc, enum, model):
+def tabela_palavras_chave(doc, enum, palavras):
     item(doc, enum, 'PALAVRAS-CHAVE: ')
     doc.append(NewLine())
 
@@ -223,8 +223,8 @@ def tabela_palavras_chave(doc, enum, model):
         tab.add_hline()
 
         row = []
-        for i, model in enumerate(model.objects.all(), 1):
-            row.append(NoEscape('{} -- {}'.format(str(i), model.nome)))
+        for i, palavra in enumerate(palavras, 1):
+            row.append(NoEscape('{} -- {}'.format(str(i), palavra.nome)))
 
             if i%nro_colunas == 0:
                 tab.add_row(row)
