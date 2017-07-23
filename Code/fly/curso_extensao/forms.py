@@ -115,7 +115,7 @@ class BaseServidor_CursoExtensaoFormSet(forms.BaseInlineFormSet):
                         subcoordenador = True
 
 
-Servidor_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, Servidor_CursoExtensao, formset=BaseServidor_CursoExtensaoFormSet, extra=1, min_num=1, fields=['servidor', 'carga_horaria_dedicada', 'funcao', 'plano_trabalho'])
+Servidor_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, Servidor_CursoExtensao, formset=BaseServidor_CursoExtensaoFormSet, extra=0, min_num=1, fields=['servidor', 'carga_horaria_dedicada', 'funcao', 'plano_trabalho'])
 Discente_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, Discente_CursoExtensao, extra=0, fields=['nome', 'curso', 'serie', 'turno', 'carga_horaria_semanal', 'telefone', 'email', 'plano_trabalho'])
 PalavraChave_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, PalavraChave_CursoExtensao, extra=3, min_num=1, max_num=3, fields=['nome'])
 MembroComunidade_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, MembroComunidade_CursoExtensao, extra=0, fields=['nome', 'carga_horaria_semanal', 'entidade', 'telefone', 'email', 'cpf', 'data_nascimento', 'funcao', 'plano_trabalho'])

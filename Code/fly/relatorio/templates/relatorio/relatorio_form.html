@@ -76,12 +76,12 @@
 				{{ projeto_extensao.coordenador.colegiado }}
 			</div>
 			<div class="medium-3 columns">
-				<label>Período de Início</label>
+				<label>Período de Início{{ campo_obrigatorio }}</label>
 				{{ main_form.periodo_inicio }}
 				{{ main_form.periodo_inicio.errors }}
 			</div>
 			<div class="medium-3 columns">
-				<label>Período de Fim</label>
+				<label>Período de Fim{{ campo_obrigatorio }}</label>
 				{{ main_form.periodo_fim }}
 				{{ main_form.periodo_fim.errors }}
 			</div>
@@ -89,7 +89,7 @@
 
 		<div class="row">
 			<div class="medium-12 columns">
-				<label>Público Atingido (quantidade de participantes)</label>
+				<label>Público Atingido (quantidade de participantes){{ campo_obrigatorio }}</label>
 				{{ main_form.publico_atingido }}
 				{{ main_form.publico_atingido.errors }}
 			</div>
@@ -97,7 +97,7 @@
 
 		<div class="row">
 			<div class="medium-12 columns">
-				<label>Resumo da Atividade Realizada</label>
+				<label>Resumo da Atividade Realizada{{ campo_obrigatorio }}</label>
 				{{ main_form.resumo }}
 				{{ main_form.resumo.errors }}
 			</div>
@@ -105,7 +105,7 @@
 
 		<div class="row">
 			<div class="medium-12 columns">
-				<label>Relacionar as Atividades Realizadas ou Programação</label>
+				<label>Relacionar as Atividades Realizadas ou Programação{{ campo_obrigatorio }}</label>
 				{{ main_form.atividades_realizadas_programacao }}
 				{{ main_form.atividades_realizadas_programacao.errors }}
 			</div>
@@ -113,7 +113,7 @@
 
 		<div class="row">
 			<div class="medium-12 columns">
-				<label>Relacionar as Dificuldades Técnicas e/ou Administrativas</label>
+				<label>Relacionar as Dificuldades Técnicas e/ou Administrativas{{ campo_obrigatorio }}</label>
 				{{ main_form.dificuldades }}
 				{{ main_form.dificuldades.errors }}
 			</div>
@@ -137,22 +137,22 @@
 						<div class="row" style="background:#E2EEFA; padding:10px;">
 							<div class="row">
 								<div class="medium-4 columns">
-									<label>Nome</label>
+									<label>Nome{{ campo_obrigatorio }}</label>
 									{{ form.nome }}
 									{{ form.nome.errors }}
 								</div>
 								<div class="medium-3 columns">
-									<label>Função</label>
+									<label>Função{{ campo_obrigatorio }}</label>
 									{{ form.funcao }}
 									{{ form.funcao.errors }}
 								</div>
 								<div class="medium-2 columns">
-									<label>Frequência</label>
+									<label>Frequência{{ campo_obrigatorio }}</label>
 									{{ form.frequencia }}
 									{{ form.frequencia.errors }}
 								</div>
 								<div class="medium-2 columns">
-									<label>CH Total</label>
+									<label>CH Total{{ campo_obrigatorio }}</label>
 									{{ form.carga_horaria_total }}
 									{{ form.carga_horaria_total.errors }}
 								</div>
@@ -180,22 +180,22 @@
 						<div class="row" style="background:#E2EEFA; padding:10px;">
 							<div class="row">
 								<div class="medium-4 columns">
-									<label>Nome</label>
+									<label>Nome{{ campo_obrigatorio }}</label>
 									{{ certificados_formset.empty_form.nome }}
 									{{ certificados_formset.empty_form.nome.errors }}
 								</div>
 								<div class="medium-3 columns">
-									<label>Função</label>
+									<label>Função{{ campo_obrigatorio }}</label>
 									{{ certificados_formset.empty_form.funcao }}
 									{{ certificados_formset.empty_form.funcao.errors }}
 								</div>
 								<div class="medium-2 columns">
-									<label>Frequência</label>
+									<label>Frequência{{ campo_obrigatorio }}</label>
 									{{ certificados_formset.empty_form.frequencia }}
 									{{ certificados_formset.empty_form.frequencia.errors }}
 								</div>
 								<div class="medium-2 columns">
-									<label>CH Total</label>
+									<label>CH Total{{ campo_obrigatorio }}</label>
 									{{ certificados_formset.empty_form.carga_horaria_total }}
 									{{ certificados_formset.empty_form.carga_horaria_total.errors }}
 								</div>
