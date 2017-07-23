@@ -3,26 +3,18 @@ Login:
 - Não mostrar os menus de cadastro e consulta de curso antes de o usuário fazer login
 
 Curso:
-- Remover campo de estado da tela de cadastro de curso 
 - Validar Unidade Administrativa e Campus na interface
 - Arrumar max_length dos CharField
 - Botão para excluir servidor, membro e discente, com mensagem de confirmação
-- Impedir cadastro de mesmo servidor 2x
-- Não mostrar formulários de membro, servidor, discente e previsão orçamentária, somente o título e botão de + (extra=0)
 - Destacar erros em vermelho (junto com alert()?)
 
 Relatório:
-- Não mostrar formulário de certificados, somente o título e botão de + (extra=0)
-- Incluir data de início e término do projeto
 - Incluir texto indicando se o relatório é parcial ou final
-- Textarea para Resumo da Atividade Realizada, Relacionar as Atividades Realizadas ou Programação e Relacionar as Dificuldades Técnicas e/ou Administrativas
 - Destacar erros em vermelho (junto com alert()?)
 
 Consulta:
-- Ocultar coluna Estado
 - Adicionar botão para limpar filtros
 - Adicionar botão Voltar na tela de visualização de curso
-- Quando salvar, voltar para a tela de consulta
 - Exibir os projetos de todos os docentes, mas deixar modificar somente os projetos próprios
 - Paginação na tela de consulta (igual à página Tabela do trabalho de SI)
 - Implementar exclusão de curso, relatório e parecer

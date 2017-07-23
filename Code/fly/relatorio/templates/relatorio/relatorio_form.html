@@ -42,11 +42,11 @@
 		</div>
 
 		<div class="row">
-			<div class="medium-8 columns">
+			<div class="medium-6 columns">
 				<label>Coordenador(a)</label>
 				{{ projeto_extensao.coordenador }}
 			</div>
-			<div class="medium-4 columns">
+			<div class="medium-6 columns">
 				{% if projeto_extensao.unidade_administrativa %}
 					<label>Unidade Administrativa</label>
 					{{ projeto_extensao.unidade_administrativa }}
@@ -54,6 +54,17 @@
 					<label>Campus</label>
 					{{ projeto_extensao.campus }}
 				{% endif%}
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="medium-6 columns">
+				<label>Início</label>
+				{{ projeto_extensao.periodo_realizacao_inicio }}
+			</div>
+			<div class="medium-6 columns">
+				<label>Fim</label>
+				{{ projeto_extensao.periodo_realizacao_fim }}
 			</div>
 		</div>
 

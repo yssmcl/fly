@@ -18,11 +18,16 @@ class RelatorioForm(forms.ModelForm):
         if inicio and fim and inicio >= fim:
             self.add_error('periodo_fim', "Data de fim deve ser após a data de início.")
 
+    resumo = forms.CharField(max_length=Relatorio._meta.get_field('resumo').max_length, widget=forms.Textarea)
+    atividades_realizadas_programacao = forms.CharField(max_length=Relatorio._meta.get_field('atividades_realizadas_programacao').max_length, widget=forms.Textarea)
+    dificuldades = forms.CharField(max_length=Relatorio._meta.get_field('dificuldades').max_length, widget=forms.Textarea)
+
+
 
 class FileUploadForm(forms.Form):
     file_name = forms.CharField(max_length=200)
     file = forms.FileField()
 
 
-CertificadoRelatorioFormSet = forms.models.inlineformset_factory(Relatorio, CertificadoRelatorio, extra=1, fields=['nome', 'funcao', 'frequencia', 'carga_horaria_total'])
-FileUploadFormSet = forms.formset_factory(FileUploadForm, extra=1)
+CertificadoRelatorioFormSet = forms.models.inlineformset_factory(Relatorio, CertificadoRelatorio, extra=0, fields=['nome', 'funcao', 'frequencia', 'carga_horaria_total'])
+FileUploadFormSet = forms.formset_factory(FileUploadForm, extra=0)
