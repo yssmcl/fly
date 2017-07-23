@@ -11,10 +11,9 @@ Curso:
 - Adicionar outro botão de salvar no canto superior direito e mover o de baixo para o canto esquerdo
 - Não mostrar formulários de membro, servidor, discente e previsão orçamentária, somente o título e botão de + (extra=0)
 - Destacar erros em vermelho (junto com alert()?)
-- Adicionar menu para docente
 
 Relatório:
-- Não mostrar formulário certificados, somente o título e botão de + (extra=0)
+- Não mostrar formulário de certificados, somente o título e botão de + (extra=0)
 - Incluir data de início e término do projeto
 - Incluir texto indicando se o relatório é parcial ou final
 - Textarea para Resumo da Atividade Realizada, Relacionar as Atividades Realizadas ou Programação e Relacionar as Dificuldades Técnicas e/ou Administrativas
