@@ -18,7 +18,7 @@ class Relatorio(models.Model):
     periodo_inicio = models.DateField()
     periodo_fim = models.DateField()
 
-    publico_atingido = models.CharField(max_length=200)
+    publico_atingido = models.IntegerField()
 
     # TODO: Item 9.2: Inserir onde o certificado sera gerado: PROEX ou Centro de Coordenação / Órgão Promotor
     #  orgao_gerador_certificado = models.CharField(max_length=200)
