@@ -60,7 +60,7 @@ def configuracoes_preambulo(doc):
     doc.preamble.append(NoEscape('\pagestyle{fancy}'))
 
     # Diretório das imagens
-    diretorio_img = BASE_DIR + '/base/img/'
+    diretorio_img = BASE_DIR + '/base/static/img/'
     doc.preamble.append(NoEscape(r'\graphicspath{{' + diretorio_img + '}}'))
 
     # Tamanho da fonte
@@ -113,7 +113,7 @@ def titulo(doc, titulo, subtitulo):
     %(subtitulo)s
 }
 \eqparbox{b}{
-    \includegraphics[width=100px]{logo_extensao.jpg}
+    \includegraphics[width=100px]{logo_extensao_menor.jpg}
 }
     '''
 
