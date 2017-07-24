@@ -166,3 +166,13 @@ class GeracaoPDFCursoExtensao(LoginRequiredMixin, View):
             #  response['X-Sendfile'] = PDF_DIR + nome_arquivo
 
             return response
+
+            
+class DeletarCursoExtensao(LoginRequiredMixin, View):
+    def post(self, request):
+        curso_extensao = get_object_or_404(CursoExtensao, pk=request.POST['pk'])
+        if curso_extensao.user == request.user:
+            curso_extensao.delete()
+            return redirect('curso_extensao:consulta')
+        else:
+            return redirect('curso_extensao:consulta') #TODO: mensagem de erro
