@@ -1,6 +1,5 @@
 Login:
 - Subitem de login no canto superior direito
-- Não mostrar os menus de cadastro e consulta de curso antes de o usuário fazer login
 
 Curso:
 - Validar Unidade Administrativa e Campus na interface
@@ -13,7 +12,6 @@ Relatório:
 - Destacar erros em vermelho (junto com alert()?)
 
 Consulta:
-- Adicionar botão para limpar filtros
 - Adicionar botão Voltar na tela de visualização de curso
 - Exibir os projetos de todos os docentes, mas deixar modificar somente os projetos próprios
 - Paginação na tela de consulta (igual à página Tabela do trabalho de SI)

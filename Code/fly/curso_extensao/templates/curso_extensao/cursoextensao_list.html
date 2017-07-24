@@ -4,20 +4,30 @@
 
 {% block title %} Curso de Extensão {% endblock %}
 
+{% block body_begin_scripts %}
+
+	<script language="JavaScript" type="text/javascript">
+		function limparFiltros() {
+			document.getElementById("titulo").value = "";
+			document.getElementById("coordenador").value = "";
+		}
+	</script>
+{% endblock %}
+
 {% block content %}
 
 	<br />
 
 	<form>
 		<div class="row">
-			<div class="medium-5 columns">
+			<div class="medium-4 columns">
 				<label>Título:</label>
-				<input type="text" name="titulo" value="{{ request.GET.titulo }}"/>
+				<input type="text" name="titulo" id="titulo" value="{{ request.GET.titulo }}"/>
 			</div>
 
-			<div class="medium-5 columns">
+			<div class="medium-4 columns">
 				<label>Coordenador(a):</label>
-				<input type="text" name="coordenador" value="{{ request.GET.coordenador }}"/>
+				<input type="text" name="coordenador" id="coordenador" value="{{ request.GET.coordenador }}"/>
 			</div>
 
 			<!-- <div class="medium-3 columns">
@@ -25,9 +35,10 @@
 				<input type="text" name="estado" value="{{ request.GET.estado }}"/>
 			</div> -->
 
-			<div class="medium-2 columns">
+			<div class="medium-4 columns">
 				<br />
-				<input type="submit" value="Pesquisar" class="button" style="width:150px;">	
+				<input type="submit" value="Pesquisar" class="button" style="width:150px;">
+				<input type="button" value="Limpar Filtros" class="button" style="width: 150px;" onclick="limparFiltros()" />
 			</div>
 		</div>
 		<div class="row" style="text-align: right;">

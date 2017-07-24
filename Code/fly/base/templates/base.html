@@ -28,6 +28,7 @@
 
 		<link rel="stylesheet" href="{% static 'css/foundation.css' %}">
 		<link rel="stylesheet" href="{% static 'css/app.css' %} ">
+
 	</head>
 	<body>
 		{% block body_begin_scripts %}{% endblock %}
@@ -58,19 +59,21 @@
 							<div class="top-bar-left">
 								<ul class="dropdown menu menu-desktop" data-dropdown-menu>
 									<li><a href="{% url 'base:index' %}">Home</a></li>
-									<li>
-										<a href="#">Projeto</a>
-										<ul class="menu">
-											<li><a href="{% url 'curso_extensao:consulta' %}">Curso de Extensão</a></li>
-										</ul>
-									</li>
-									<li>
-										<a href="#">Docente</a>
-										<ul class="menu">
-											<li><a href="{% url 'docente:novo' %}">Cadastro de Docente</a></li>
-											<li><a href="{% url 'docente:consulta' %}">Consulta de Docente</a></li>
-										</ul>
-									</li>
+									{% if user.is_authenticated %}
+										<li>
+											<a href="#">Projeto</a>
+											<ul class="menu">
+												<li><a href="{% url 'curso_extensao:consulta' %}">Curso de Extensão</a></li>
+											</ul>
+										</li>
+										<li>
+											<a href="#">Docente</a>
+											<ul class="menu">
+												<li><a href="{% url 'docente:novo' %}">Cadastro de Docente</a></li>
+												<li><a href="{% url 'docente:consulta' %}">Consulta de Docente</a></li>
+											</ul>
+										</li>
+									{% endif%}
 								</ul>
 							</div>
 							<div class="top-bar-right">
