@@ -95,7 +95,7 @@
 								tabindex="1">
 								<i class="fi-page-export-pdf size-14"></i>
 							</a>
-							<form method="post" action="{% url 'curso_extensao:deletar' %}">
+							<form method="post" action="{% url 'curso_extensao:deletar' %}" style="display: inline;">
 								{% csrf_token %}
 								<input type="hidden" name="pk" value="{{ curso_extensao.pk }}"/>
 								<button type="submit" value="Deletar" class="hollow button"
