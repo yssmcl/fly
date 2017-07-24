@@ -5,11 +5,9 @@ Curso:
 - Validar Unidade Administrativa e Campus na interface
 - Arrumar max_length dos CharField
 - Botão para excluir servidor, membro e discente, com mensagem de confirmação
-- Destacar erros em vermelho (junto com alert()?)
 
 Relatório:
 - Incluir texto indicando se o relatório é parcial ou final
-- Destacar erros em vermelho (junto com alert()?)
 
 Consulta:
 - Adicionar botão Voltar na tela de visualização de curso
