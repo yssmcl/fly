@@ -3,7 +3,7 @@ from django.db import transaction
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View, generic
 
-from base.models import Docente
+from .models import Docente
 from .forms import DocenteForm
 
 class NovoDocente(LoginRequiredMixin, View):
