@@ -37,12 +37,23 @@
 
 			<div class="medium-4 columns">
 				<br />
-				<input type="submit" value="Pesquisar" class="button" style="width:150px;">
-				<input type="button" value="Limpar Filtros" class="button" style="width: 150px;" onclick="limparFiltros()" />
+				<button type="submit" class="button">
+					<i class="fi-magnifying-glass size-14"></i> Pesquisar
+				</button>
+				<button type="button"
+					class="button"
+					style="width: 150px;"
+					onclick="limparFiltros()">
+					<i class="fi-filter size-14"></i> Limpar filtros
+				</button>
 			</div>
 		</div>
 		<div class="row" style="text-align: right;">
-			<a class="success button" href="{% url 'curso_extensao:novo' %}">Novo Curso</a>
+			<a class="success button"
+				href="{% url 'curso_extensao:novo' %}">
+				<i class="fi-plus size-14"></i>
+				Novo curso
+			</a>
 		</div>
 	</form>
 
@@ -63,16 +74,66 @@
 						<td>{{ curso_extensao.coordenador }}</td>
 						<!-- <td>{{ curso_extensao.estado }}</td> -->
 						<td style="text-align:center;">
-							<a href="{% url 'curso_extensao:detalhe' curso_extensao.pk %}" class="button">Visualizar</a>
-							<a href="{% url 'curso_extensao:pdf' curso_extensao.pk %}" class="button">Gerar PDF</a>
+							<a href="{% url 'curso_extensao:detalhe' curso_extensao.pk %}"
+								class="hollow button"
+								data-tooltip
+								title="Visualizar/editar projeto">
+								<!-- <i class="fi-magnifying-glass size-14"></i> -->
+								<i class="fi-info size-14"></i>
+								<!-- <i class="fi-eye size-14"></i> -->
+								<!-- <strong> | </strong> -->
+								<i class="fi-pencil size-14"></i>
+							</a>
+							<a href="{% url 'curso_extensao:pdf' curso_extensao.pk %}"
+								class="hollow button"
+								type="button"
+								title="Exportar como PDF"
+								data-position="bottom"
+								data-alignment="center"
+								data-disable-hover="false"
+								data-tooltip aria-haspopup="true"
+								tabindex="1">
+								<i class="fi-page-export-pdf size-14"></i>
+							</a>
+							<a href="{% url 'curso_extensao:pdf' curso_extensao.pk %}"
+								class="hollow button"
+								type="button"
+								title="Excluir projeto"
+								data-position="bottom"
+								data-alignment="center"
+								data-disable-hover="false"
+								data-tooltip aria-haspopup="true"
+								tabindex="1">
+								<i class="fi-trash size-14"></i>
+							</a>
 						</td>
 						<td style="text-align:center;">
-						    <a href="{% url 'relatorio:novo' curso_extensao.pk %}" class="button">Adicionar Relatório</a>
-							<a href="{% url 'relatorio:consulta' curso_extensao.pk %}" class="button">Visualizar Relatórios</a>
+						    <a href="{% url 'relatorio:novo' curso_extensao.pk %}"
+								class="hollow button"
+								data-tooltip
+								title="Adicionar relatório">
+								<i class="fi-plus size-14"></i>
+							</a>
+							<a href="{% url 'relatorio:consulta' curso_extensao.pk %}"
+								class="hollow button"
+								data-tooltip
+								title="Visualizar relatórios">
+								<i class="fi-list size-14"></i>
+							</a>
    						</td>
 						<td style="text-align:center;">
-						    <a href="{% url 'parecer:novo' curso_extensao.pk %}" class="button">Adicionar Parecer</a>
-   						    <a href="" class="button">Visualizar Pareceres</a>
+							<a href="{% url 'parecer:novo' curso_extensao.pk %}"
+								class="hollow button"
+								data-tooltip
+								title="Adicionar parecer">
+								<i class="fi-plus size-14"></i>
+							</a>
+							<a href=""
+								class="hollow button"
+								data-tooltip
+								title="Visualizar pareceres">
+								<i class="fi-list size-14"></i>
+							</a>
 						</td>
 					</tr>
 				{% endfor %}
@@ -80,7 +141,11 @@
 		</table>
 	</div>
 	<div class="row" style="text-align: right;">
-		<a class="success button" href="{% url 'curso_extensao:novo' %}">Novo Curso</a>
+		<a class="success button"
+			href="{% url 'curso_extensao:novo' %}">
+			<i class="fi-plus size-14"></i>
+			Novo curso
+		</a>
 	</div>
 
 {% endblock %}
