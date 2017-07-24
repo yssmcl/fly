@@ -23,6 +23,13 @@ label{
 	font-size: 17px;
 }
 
+ul.errorlist{
+	list-style-type: none;
+	border: 1px solid #da3116;
+	background-color: #fce6e2;
+	padding: 5px;
+}
+
 
 
 
