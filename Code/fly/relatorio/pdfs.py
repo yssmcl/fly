@@ -80,4 +80,9 @@ def gerar_pdf(relatorio):
     pdfutils.local_data_assinatura(doc)
 
     os.system('mkdir -p ' + PDF_DIR)
-    doc.generate_pdf(PDF_DIR + 'relatorio_' + str(relatorio.id), clean_tex=False)
+
+
+    try:
+        doc.generate_pdf(PDF_DIR + 'relatorio_' + str(relatorio.id), clean_tex=False)
+    except UnicodeDecodeError:
+        pass

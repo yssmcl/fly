@@ -450,7 +450,7 @@ def tabela_previsao_orcamentaria(doc, enum, previsao_orcamentaria):
             previsao_orcamentaria.material_consumo +
             previsao_orcamentaria.xerox +
             previsao_orcamentaria.certificados +
-            previsao_orcamentaria.outros)
+            (previsao_orcamentaria.outros or 0))
 
         with doc.create(Tabularx('|' + 'X|'*4, width_argument=width_argument)) as tab:
             tab.add_hline()

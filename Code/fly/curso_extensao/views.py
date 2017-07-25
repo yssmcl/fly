@@ -15,6 +15,7 @@ from .models import CursoExtensao
 from base.models import EstadoProjeto
 from curso_extensao.pdfs import gerar_pdf
 
+import subprocess
 
 class NovoCursoExtensao(LoginRequiredMixin, View):
     def get(self, request):
@@ -156,7 +157,12 @@ class DetalheCursoExtensao(LoginRequiredMixin, View):
 class GeracaoPDFCursoExtensao(LoginRequiredMixin, View):
     def get(self, request, pk):
         curso_extensao = get_object_or_404(CursoExtensao, pk=pk)
-        gerar_pdf(curso_extensao)
+
+        try:
+            gerar_pdf(curso_extensao)
+        except subprocess.CalledProcessError:
+            pass
+
         nome_arquivo = 'curso_extensao_{}.pdf'.format(str(pk))
 
         with open(PDF_DIR + nome_arquivo, 'rb') as arquivo_pdf:

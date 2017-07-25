@@ -11,6 +11,8 @@ from curso_extensao.models import CursoExtensao
 from relatorio.pdfs import gerar_pdf
 from fly.settings import PDF_DIR
 
+import subprocess
+
 class NovoRelatorio(View):
     def get(self, request, pk):
         main_form = RelatorioForm(prefix='main')
@@ -86,7 +88,12 @@ class DetalheRelatorio(View):
 class GeracaoPDFRelatorio(LoginRequiredMixin, View):
     def get(self, request, pk):
         relatorio = get_object_or_404(Relatorio, pk=pk)
-        gerar_pdf(relatorio)
+
+        try:
+            gerar_pdf(relatorio)
+        except subprocess.CalledProcessError:
+            pass
+            
         nome_arquivo = 'relatorio_{}.pdf'.format(str(pk))
 
         with open(PDF_DIR + nome_arquivo, 'rb') as arquivo_pdf:
