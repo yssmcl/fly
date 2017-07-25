@@ -13,7 +13,7 @@ from fly.settings import PDF_DIR
 
 import subprocess
 
-class NovoRelatorio(View):
+class NovoRelatorio(LoginRequiredMixin, View):
     def get(self, request, pk):
         main_form = RelatorioForm(prefix='main')
         certificados_formset = CertificadoRelatorioFormSet(prefix='certificados')
@@ -50,7 +50,7 @@ class NovoRelatorio(View):
             return render(request, 'relatorio/relatorio_form.html', {'main_form': main_form, 'certificados_formset': certificados_formset, 'projeto_extensao': relatorio.projeto_extensao})
 
 
-class ConsultaRelatorio(View):
+class ConsultaRelatorio(LoginRequiredMixin, View):
     def get(self, request, pk):
         projeto_extensao = get_object_or_404(CursoExtensao, pk=pk)
         object_list = Relatorio.objects.filter(projeto_extensao=projeto_extensao)
@@ -58,7 +58,7 @@ class ConsultaRelatorio(View):
         return render(request, 'relatorio/relatorio_list.html', {'projeto_extensao':projeto_extensao, 'object_list':object_list})
 
 
-class DetalheRelatorio(View):
+class DetalheRelatorio(LoginRequiredMixin, View):
     def get(self, request, pk):
         relatorio = get_object_or_404(Relatorio, pk=pk)
 
@@ -103,3 +103,13 @@ class GeracaoPDFRelatorio(LoginRequiredMixin, View):
             #  response['X-Sendfile'] = PDF_DIR + nome_arquivo
 
             return response
+
+            
+class DeletarRelatorio(LoginRequiredMixin, View):
+    def post(self, request):
+        relatorio = get_object_or_404(Relatorio, pk=request.POST['pk'])
+        if relatorio.projeto_extensao.user == request.user:
+            relatorio.delete()
+            return redirect('relatorio:consulta', relatorio.projeto_extensao.pk)
+        else:
+            return redirect('relatorio:consulta', relatorio.projeto_extensao.pk) #TODO: mensagem de erro

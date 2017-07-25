@@ -55,6 +55,16 @@
 								<i class="fi-info size-16"></i>
 								<i class="fi-pencil size-16"></i>
 							</a>
+							<form method="post" action="{% url 'parecer:deletar' %}" onsubmit="return confirm('Deseja realmente excluir o parecer?');" style="display: inline;">
+								{% csrf_token %}
+								<input type="hidden" name="pk" value="{{ parecer.pk }}"/>
+								<button type="submit" value="Deletar"
+									class="hollow button"
+									title="Excluir parecer"
+									data-tooltip>
+									<i class="fi-trash size-16"></i>
+								</button>
+							</form>
 						</td>
 					</tr>
 				{% endfor %}

@@ -59,3 +59,13 @@ class DetalheParecer(LoginRequiredMixin, View):
 
         else:
             return render(request, 'parecer/parecer_form.html', {'form': form, 'projeto_extensao': parecer.projeto_extensao})
+
+
+class DeletarParecer(LoginRequiredMixin, View):
+    def post(self, request):
+        parecer = get_object_or_404(Parecer, pk=request.POST['pk'])
+        if parecer.projeto_extensao.user == request.user:
+            parecer.delete()
+            return redirect('parecer:consulta', parecer.projeto_extensao.pk)
+        else:
+            return redirect('parecer:consulta', parecer.projeto_extensao.pk) #TODO: mensagem de erro
