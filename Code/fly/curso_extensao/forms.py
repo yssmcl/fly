@@ -35,8 +35,8 @@ class CursoExtensaoForm(forms.ModelForm):
         inicio = cleaned_data.get('periodo_realizacao_inicio')
         fim = cleaned_data.get('periodo_realizacao_fim')
 
-        if inicio and fim and inicio >= fim:
-            self.add_error('periodo_realizacao_fim', "Data de fim deve ser após a data de início.")
+        if inicio and fim and inicio > fim:
+            self.add_error('periodo_realizacao_fim', "Data de início não deve ser após a data de fim.")
 
         # Validar que coordenador não seja Docente Temporário.
         coordenador = cleaned_data.get('coordenador')
