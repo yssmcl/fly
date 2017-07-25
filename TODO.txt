@@ -12,5 +12,4 @@ Relatório:
 Consulta:
 - Adicionar botão Voltar na tela de visualização de curso
 - Exibir os projetos de todos os docentes, mas deixar modificar somente os projetos próprios
-- Paginação na tela de consulta (igual à página Tabela do trabalho de SI)
 - Implementar exclusão de relatório, parecer e docente
