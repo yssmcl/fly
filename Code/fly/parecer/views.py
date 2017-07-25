@@ -24,30 +24,38 @@ class NovoParecer(View):
         if form.is_valid():
             form.save()
 
-            return redirect('base:index')
+            return redirect('parecer:consulta', pk)
         else:
             return render(request, 'parecer/parecer_form.html', {'form': form, 'projeto_extensao': parecer.projeto_extensao})
+
+
+class ConsultaParecer(View):
+    def get(self, request, pk):
+        projeto_extensao = get_object_or_404(CursoExtensao, pk=pk)
+        object_list = Parecer.objects.filter(projeto_extensao=projeto_extensao)
+
+        return render(request, 'parecer/parecer_list.html', {'projeto_extensao':projeto_extensao, 'object_list':object_list})
+
 
 class DetalheParecer(LoginRequiredMixin, View):
     def get(self, request, pk):
         parecer = get_object_or_404(Parecer, pk=pk)
 
-        main_form = ParecerForm(instance=parecer, prefix='main')
+        form = ParecerForm(instance=parecer)
 
-        return render(request, 'parecer/parecer_form.html', {'main_form': main_form})
+        return render(request, 'parecer/parecer_form.html', {'form': form, 'projeto_extensao': parecer.projeto_extensao})
 
     def post(self, request, pk):
-        parecer = get_object_or_404(parecer, pk=pk)
+        parecer = get_object_or_404(Parecer, pk=pk)
 
-        main_form = ParecerForm(request.POST, instance=parecer, prefix='main')
+        form = ParecerForm(request.POST, instance=parecer)
 
-        parecer = main_form.instance
+        parecer = form.instance
 
-        if main_form.is_valid():
-            with transaction.atomic():
-                main_form.save()
+        if form.is_valid():
+            form.save()
 
-            return redirect('base:index')
+            return redirect('parecer:consulta', parecer.projeto_extensao.pk)
 
         else:
-            return render(request, 'parecer/parecer_form.html', {'main_form': main_form})
+            return render(request, 'parecer/parecer_form.html', {'form': form, 'projeto_extensao': parecer.projeto_extensao})

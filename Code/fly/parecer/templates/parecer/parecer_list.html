@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% load formset_tags %}
+
+{% block title %} Parecer {% endblock %}
+
+{% block content %}
+
+	<br />
+
+<!-- 	<form>
+		<div class="row">
+			<div class="medium-4 columns">
+				<label>Título:</label>
+				<input type="text" name="titulo" value="{{ request.GET.titulo }}"/>
+			</div>
+
+			<div class="medium-4 columns">
+				<label>Coordenador(a):</label>
+				<input type="text" name="coordenador" value="{{ request.GET.coordenador }}"/>
+			</div>
+
+			<div class="medium-4 columns">
+				<label>Estado:</label>
+				<input type="text" name="estado" value="{{ request.GET.estado }}"/>
+			</div>
+
+			<div style="text-align:center;">
+				<input type="submit" value="Pesquisar" class="button">	
+			</div>
+		</div>
+	</form> -->
+
+	<div class="row">
+		<h1>
+			{{ projeto_extensao }}
+		</h1>
+	</div>
+
+	<div class="row">
+		<table>
+			<thead>
+				<th>Período</th>
+				<th style="text-align:center;">Ação</th>
+			</thead>
+			<tbody>
+				{% for parecer in object_list %}
+					<tr>
+						<td>{{ parecer.data }}</td>
+						<td style="text-align:center;">
+							<a href="{% url 'parecer:detalhe' parecer.pk %}"
+								class="hollow button"
+								title="Visualizar/editar parecer"
+								data-tooltip>
+								<i class="fi-info size-16"></i>
+								<i class="fi-pencil size-16"></i>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}
