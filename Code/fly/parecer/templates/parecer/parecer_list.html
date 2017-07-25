@@ -41,12 +41,14 @@
 		<table>
 			<thead>
 				<th>Período</th>
+				<th>Estado</th>
 				<th style="text-align:center;">Ação</th>
 			</thead>
 			<tbody>
 				{% for parecer in object_list %}
 					<tr>
 						<td>{{ parecer.data }}</td>
+						<td>{{ parecer.estado_parecer }}</td>
 						<td style="text-align:center;">
 							<a href="{% url 'parecer:detalhe' parecer.pk %}"
 								class="hollow button"
