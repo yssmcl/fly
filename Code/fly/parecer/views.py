@@ -6,7 +6,7 @@ from curso_extensao.models import CursoExtensao
 from .models import Parecer
 from .forms import ParecerForm
 
-class NovoParecer(View):
+class NovoParecer(LoginRequiredMixin, View):
     def get(self, request, pk):
         form = ParecerForm()
 
@@ -29,7 +29,7 @@ class NovoParecer(View):
             return render(request, 'parecer/parecer_form.html', {'form': form, 'projeto_extensao': parecer.projeto_extensao})
 
 
-class ConsultaParecer(View):
+class ConsultaParecer(LoginRequiredMixin, View):
     def get(self, request, pk):
         projeto_extensao = get_object_or_404(CursoExtensao, pk=pk)
         object_list = Parecer.objects.filter(projeto_extensao=projeto_extensao)
