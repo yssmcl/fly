@@ -100,6 +100,6 @@ def gerar_pdf(curso):
     os.system('mkdir -p ' + PDF_DIR)
 
     try:
-    	doc.generate_pdf(PDF_DIR + 'curso_extensao_' + str(curso.id), clean_tex=False)
+        doc.generate_pdf(PDF_DIR + 'curso_extensao_' + str(curso.id), clean_tex=False)
     except UnicodeDecodeError:
-    	pass
+        pass
