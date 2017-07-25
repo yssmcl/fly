@@ -92,17 +92,8 @@ class BaseServidor_CursoExtensaoFormSet(forms.BaseInlineFormSet):
         coordenador = False
         subcoordenador = False
 
-        servidores = set()
-
         for form in self.forms:
             if form.cleaned_data and not form.cleaned_data.get('DELETE', False):
-                servidor = form.cleaned_data.get('servidor')
-                if servidor:
-                    if servidor.pk in servidores:
-                        form.add_error('servidor', "O servidor já possui outra função.")
-                    else:
-                        servidores.add(servidor.pk)
-
                 funcao = form.cleaned_data.get('funcao')
                 if funcao:
                     if funcao.nome == 'Coordenador(a)':
