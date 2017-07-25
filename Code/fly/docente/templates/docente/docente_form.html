@@ -11,7 +11,7 @@
 		function cancelar_cadastro() {
 			decisao = confirm("Ao sair, todos os dados do formulário serão perdidos. Deseja continuar?");
 			if (decisao) {
-				location.href = "{% url 'base:index' %}";
+				location.href = "{% url 'docente:consulta' %}";
 			}
 		}
 	</script>
