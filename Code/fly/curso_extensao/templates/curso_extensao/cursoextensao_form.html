@@ -27,7 +27,9 @@
 		{% csrf_token %}
 
 		<div class="row" style="text-align:left;">
-			<input type="submit" value="Salvar" class="button primary" style="width:100px;">
+			<button type="submit" class="button primary" style="width:100px;">
+				<i class="fi-save size-16"></i> Salvar
+			</button>
 		</div>
 
 		<div class="row">
@@ -267,7 +269,24 @@
 			</script>
 			<div class="row">
 				<div class="medium-12 columns">
-					<input class="hollow button" type="button" value="Adicionar servidor" data-formset-add>
+					<a class="hollow button"
+						type="button"
+						title="Adicionar servidor"
+						data-alignment="center"
+						data-position="bottom"
+						data-tooltip
+						data-formset-add>
+						<i class="fi-plus size-16"></i>
+					</a>
+					<a class="hollow button"
+						type="button"
+						title="Excluir servidor"
+						data-alignment="center"
+						data-position="bottom"
+						data-tooltip
+						data-formset-delete-button>
+						<i class="fi-minus size-16"></i>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -407,7 +426,24 @@
 			</script>
 			<div class="row">
 				<div class="medium-12 columns">
-					<input class="hollow button" type="button" value="Adicionar discente" data-formset-add>
+					<a class="hollow button"
+						type="button"
+						title="Adicionar discente"
+						data-alignment="center"
+						data-position="bottom"
+						data-tooltip
+						data-formset-add>
+						<i class="fi-plus size-16"></i>
+					</a>
+					<a class="hollow button"
+						type="button"
+						title="Excluir discente"
+						data-alignment="center"
+						data-position="bottom"
+						data-tooltip
+						data-formset-delete-button>
+						<i class="fi-minus size-16"></i>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -566,7 +602,24 @@
 			</script>
 			<div class="row">
 				<div class="medium-12 columns">
-					<input class="hollow button" type="button" value="Adicionar membro da comunidade" data-formset-add>
+					<a class="hollow button"
+						type="button"
+						title="Adicionar membro"
+						data-alignment="center"
+						data-position="bottom"
+						data-tooltip
+						data-formset-add>
+						<i class="fi-plus size-16"></i>
+					</a>
+					<a class="hollow button"
+						type="button"
+						title="Excluir membro"
+						data-alignment="center"
+						data-position="bottom"
+						data-tooltip
+						data-formset-delete-button>
+						<i class="fi-minus size-16"></i>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -826,7 +879,15 @@
 			</script>
 			<div class="row">
 				<div class="medium-12 columns">
-					<input class="hollow button" type="button" value="Incluir Previsão Orçamentária" data-formset-add>
+					<a class="hollow button"
+						type="button"
+						title="Incluir previsão orçamentária"
+						data-alignment="center"
+						data-position="bottom"
+						data-tooltip
+						data-formset-add>
+						<i class="fi-plus size-16"></i>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -840,8 +901,12 @@
 		<br />
 		<div class="row">
 			<div style="text-align:left;">
-				<input type="button" value="Cancelar" class="button secondary" style="width:100px;" onclick="cancelar_cadastro()"/>
-				<input type="submit" value="Salvar" class="button primary" style="width:100px;">
+				<button type="submit" class="button secondary" style="width:100px;" onclick="cancelar_cadastro()"/>
+					<i class="fi-x size-16"></i> Cancelar
+				</button>
+				<button type="submit" class="button primary" style="width:100px;">
+					<i class="fi-save size-16"></i> Salvar
+				</button>
 			</div>
 		</div>
 		<br />

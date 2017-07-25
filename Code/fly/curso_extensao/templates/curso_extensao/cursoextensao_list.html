@@ -38,20 +38,20 @@
 			<div class="medium-4 columns">
 				<br />
 				<button type="submit" class="button">
-					<i class="fi-magnifying-glass size-14"></i> Pesquisar
+					<i class="fi-magnifying-glass size-16"></i> Pesquisar
 				</button>
 				<button type="button"
 					class="button"
 					style="width: 150px;"
 					onclick="limparFiltros()">
-					<i class="fi-filter size-14"></i> Limpar filtros
+					<i class="fi-filter size-16"></i> Limpar filtros
 				</button>
 			</div>
 		</div>
 		<div class="row" style="text-align: right;">
 			<a class="success button"
 				href="{% url 'curso_extensao:novo' %}">
-				<i class="fi-plus size-14"></i>
+				<i class="fi-plus size-16"></i>
 				Novo curso
 			</a>
 		</div>
@@ -78,34 +78,23 @@
 								class="hollow button"
 								data-tooltip
 								title="Visualizar/editar projeto">
-								<!-- <i class="fi-magnifying-glass size-14"></i> -->
-								<i class="fi-info size-14"></i>
-								<!-- <i class="fi-eye size-14"></i> -->
-								<!-- <strong> | </strong> -->
-								<i class="fi-pencil size-14"></i>
+								<i class="fi-info size-16"></i>
+								<i class="fi-pencil size-16"></i>
 							</a>
 							<a href="{% url 'curso_extensao:pdf' curso_extensao.pk %}"
 								class="hollow button"
-								type="button"
 								title="Exportar como PDF"
-								data-position="bottom"
-								data-alignment="center"
-								data-disable-hover="false"
-								data-tooltip aria-haspopup="true"
-								tabindex="1">
-								<i class="fi-page-export-pdf size-14"></i>
+								data-tooltip>
+								<i class="fi-page-export-pdf size-16"></i>
 							</a>
 							<form method="post" action="{% url 'curso_extensao:deletar' %}" onsubmit="return confirm('Deseja realmente excluir o Curso de Extensão \'{{ curso_extensao }}\'?');" style="display: inline;">
 								{% csrf_token %}
 								<input type="hidden" name="pk" value="{{ curso_extensao.pk }}"/>
-								<button type="submit" value="Deletar" class="hollow button"
+								<button type="submit" value="Deletar"
+									class="hollow button"
 									title="Excluir projeto"
-									data-position="bottom"
-									data-alignment="center"
-									data-disable-hover="false"
-									data-tooltip aria-haspopup="true"
-									tabindex="1">
-									<i class="fi-trash size-14"></i>
+									data-tooltip>
+									<i class="fi-trash size-16"></i>
 								</button>
 							</form>
 						</td>
@@ -114,13 +103,13 @@
 								class="hollow button"
 								data-tooltip
 								title="Adicionar relatório">
-								<i class="fi-plus size-14"></i>
+								<i class="fi-plus size-16"></i>
 							</a>
 							<a href="{% url 'relatorio:consulta' curso_extensao.pk %}"
 								class="hollow button"
 								data-tooltip
 								title="Visualizar relatórios">
-								<i class="fi-list size-14"></i>
+								<i class="fi-list size-16"></i>
 							</a>
    						</td>
 						<td style="text-align:center;">
@@ -128,13 +117,13 @@
 								class="hollow button"
 								data-tooltip
 								title="Adicionar parecer">
-								<i class="fi-plus size-14"></i>
+								<i class="fi-plus size-16"></i>
 							</a>
 							<a href=""
 								class="hollow button"
 								data-tooltip
 								title="Visualizar pareceres">
-								<i class="fi-list size-14"></i>
+								<i class="fi-list size-16"></i>
 							</a>
 						</td>
 					</tr>
@@ -145,7 +134,7 @@
 	<div class="row" style="text-align: right;">
 		<a class="success button"
 			href="{% url 'curso_extensao:novo' %}">
-			<i class="fi-plus size-14"></i>
+			<i class="fi-plus size-16"></i>
 			Novo curso
 		</a>
 	</div>

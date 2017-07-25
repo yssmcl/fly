@@ -48,8 +48,19 @@
 					<tr>
 						<td>{{ relatorio.periodo_inicio }} — {{relatorio.periodo_fim}}</td>
 						<td style="text-align:center;">
-							<a href="{% url 'relatorio:detalhe' relatorio.pk %}" class="button">Visualizar</a>
-							<a href="{% url 'relatorio:pdf' relatorio.pk %}" class="button">Gerar PDF</a>
+							<a href="{% url 'relatorio:detalhe' relatorio.pk %}"
+								class="hollow button"
+								title="Visualizar/editar relatório"
+								data-tooltip>
+								<i class="fi-info size-16"></i>
+								<i class="fi-pencil size-16"></i>
+							</a>
+							<a href="{% url 'relatorio:pdf' relatorio.pk %}"
+								class="hollow button"
+								title="Exportar como PDF"
+								data-tooltip>
+								<i class="fi-page-export-pdf size-16"></i>
+							</a>
 						</td>
 					</tr>
 				{% endfor %}

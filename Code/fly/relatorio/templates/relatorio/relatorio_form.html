@@ -26,7 +26,9 @@
 		{% csrf_token %}
 
 		<div class="row" style="text-align:left;">
-			<input type="submit" value="Salvar" class="button primary" style="width:100px;">
+			<button type="submit" class="button primary" style="width:100px;">
+				<i class="fi-save size-16"></i> Salvar
+			</button>
 		</div>
 
 		<div class="row">
@@ -223,8 +225,12 @@
 		</div>
 		<div class="row">
 			<div style="text-align:left;">
-				<input type="button" value="Cancelar" class="button secondary" style="width:100px;" onclick="cancelar_cadastro()"/>
-				<input type="submit" value="Salvar" class="button primary" style="width:100px;">
+				<button type="submit" class="button secondary" style="width:100px;" onclick="cancelar_cadastro()"/>
+					<i class="fi-x size-16"></i> Cancelar
+				</button>
+				<button type="submit" class="button primary" style="width:100px;">
+					<i class="fi-save size-16"></i> Salvar
+				</button>
 			</div>
 		</div>
 		<br />
