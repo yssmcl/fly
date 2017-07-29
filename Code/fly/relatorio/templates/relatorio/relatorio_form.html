@@ -74,12 +74,21 @@
 			</div>
 		</div>
 
-		<hr>
+
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>Colegiado</label>
+				{{ projeto_extensao.coordenador.colegiado }}
+			</div>
+		</div>
+		
+		<hr />
 
 		<div class="row">
 			<div class="medium-6 columns">
-				<label>Colegiado</label>
-				{{ projeto_extensao.coordenador.colegiado }}
+				<label>Público Atingido (quantidade de participantes){{ campo_obrigatorio }}</label>
+				{{ main_form.publico_atingido }}
+				{{ main_form.publico_atingido.errors }}
 			</div>
 			<div class="medium-3 columns">
 				<label>Período de Início{{ campo_obrigatorio }}</label>
@@ -90,14 +99,6 @@
 				<label>Período de Fim{{ campo_obrigatorio }}</label>
 				{{ main_form.periodo_fim }}
 				{{ main_form.periodo_fim.errors }}
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="medium-12 columns">
-				<label>Público Atingido (quantidade de participantes){{ campo_obrigatorio }}</label>
-				{{ main_form.publico_atingido }}
-				{{ main_form.publico_atingido.errors }}
 			</div>
 		</div>
 
