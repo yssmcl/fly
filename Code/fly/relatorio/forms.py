@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Relatorio, CertificadoRelatorio
+from .models import Relatorio, RelatorioFile, CertificadoRelatorio
 
 
 class RelatorioForm(forms.ModelForm):
@@ -23,11 +23,10 @@ class RelatorioForm(forms.ModelForm):
     dificuldades = forms.CharField(max_length=Relatorio._meta.get_field('dificuldades').max_length, widget=forms.Textarea)
 
 
-
-class FileUploadForm(forms.Form):
-    file_name = forms.CharField(max_length=200)
-    file = forms.FileField()
+class RelatorioFileForm(forms.ModelForm):
+    class Meta:
+        model = RelatorioFile
+        fields = ['file']
 
 
 CertificadoRelatorioFormSet = forms.models.inlineformset_factory(Relatorio, CertificadoRelatorio, extra=0, fields=['nome', 'funcao', 'frequencia', 'carga_horaria_total'])
-FileUploadFormSet = forms.formset_factory(FileUploadForm, extra=0)

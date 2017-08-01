@@ -5,11 +5,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.encoding import smart_str
 from django.views import View, generic
 
-from .forms import RelatorioForm, CertificadoRelatorioFormSet, FileUploadFormSet
-from .models import Relatorio, EstadoRelatorio
+from .forms import RelatorioForm, RelatorioFileForm, CertificadoRelatorioFormSet
+from .models import Relatorio, RelatorioFile, EstadoRelatorio
 from curso_extensao.models import CursoExtensao
 from relatorio.pdfs import gerar_pdf
-from fly.settings import PDF_DIR
+from fly.settings import PDF_DIR, MEDIA_ROOT
 
 import subprocess
 
@@ -85,6 +85,62 @@ class DetalheRelatorio(LoginRequiredMixin, View):
             return render(request, 'relatorio/relatorio_form.html', {'main_form': main_form, 'certificados_formset': certificados_formset, 'projeto_extensao': relatorio.projeto_extensao})
 
 
+class UploadArquivoRelatorio(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        relatorio = get_object_or_404(Relatorio, pk=pk)
+
+        file_form = RelatorioFileForm()
+
+        return render(request, 'relatorio/upload_form.html', {'file_form':file_form})
+
+    def post(self, request, pk):
+        relatorio = get_object_or_404(Relatorio, pk=pk)
+
+        file_form = RelatorioFileForm(request.POST, request.FILES)
+        file_instance = file_form.instance
+        file_instance.relatorio = relatorio
+
+        if file_form.is_valid():
+            file_instance.nome = file_instance.file.name
+            file_form.save()
+
+            return redirect('relatorio:lista_arquivos', relatorio.pk)
+        else:
+            return render(request, 'relatorio/upload_form.html', {'file_form':file_form})
+
+
+class ListaArquivosRelatorio(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        relatorio = get_object_or_404(Relatorio, pk=pk)
+        object_list = relatorio.relatoriofile_set.all()
+
+        return render(request, 'relatorio/relatoriofile_list.html', {'relatorio':relatorio, 'object_list':object_list})
+
+
+class DownloadArquivoRelatorio(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        relatorio_file = get_object_or_404(RelatorioFile, pk=pk)
+        file = relatorio_file.file
+
+        response = HttpResponse(file, content_type='application/force-download')
+        response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(relatorio_file.nome)
+        response['Content-Length'] = file.size
+        # response['X-Sendfile'] = smart_str(MEDIA_ROOT+file.name)
+
+        return response
+
+
+class DeletarArquivoRelatorio(LoginRequiredMixin, View):
+    def post(self, request):
+        file = get_object_or_404(RelatorioFile, pk=request.POST['pk'])
+        relatorio = file.relatorio
+        if file.relatorio.projeto_extensao.user == request.user:
+            file.delete()
+            return redirect('relatorio:lista_arquivos', relatorio.pk)
+        else:
+            return redirect('base:index') #TODO: mensagem de erro
+
+
 class GeracaoPDFRelatorio(LoginRequiredMixin, View):
     def get(self, request, pk):
         relatorio = get_object_or_404(Relatorio, pk=pk)
@@ -104,7 +160,7 @@ class GeracaoPDFRelatorio(LoginRequiredMixin, View):
 
             return response
 
-            
+
 class DeletarRelatorio(LoginRequiredMixin, View):
     def post(self, request):
         relatorio = get_object_or_404(Relatorio, pk=request.POST['pk'])
@@ -112,4 +168,4 @@ class DeletarRelatorio(LoginRequiredMixin, View):
             relatorio.delete()
             return redirect('relatorio:consulta', relatorio.projeto_extensao.pk)
         else:
-            return redirect('relatorio:consulta', relatorio.projeto_extensao.pk) #TODO: mensagem de erro
+            return redirect('base:index') #TODO: mensagem de erro

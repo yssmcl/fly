@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import *
 from curso_extensao.models import PrevisaoOrcamentaria_CursoExtensao, CursoExtensao, PalavraChave_CursoExtensao, Servidor_CursoExtensao, TurnoCurso, Discente_CursoExtensao, MembroComunidade_CursoExtensao
 from parecer.models import Parecer
-from relatorio.models import Relatorio, FuncaoCertificado, CertificadoRelatorio
+from relatorio.models import Relatorio, RelatorioFile, FuncaoCertificado, CertificadoRelatorio
 
 
 class MembrosComunidadeAdmin(admin.ModelAdmin): pass
@@ -30,6 +30,7 @@ class MembroComunidade_CursoExtensaoAdmin(admin.ModelAdmin): pass
 class ParecerAdmin(admin.ModelAdmin): pass
 
 class RelatorioAdmin(admin.ModelAdmin): pass
+class RelatorioFileAdmin(admin.ModelAdmin): pass
 class FuncaoCertificadoAdmin(admin.ModelAdmin): pass
 class CertificadoRelatorioAdmin(admin.ModelAdmin): pass
 
@@ -58,5 +59,6 @@ admin.site.register(MembroComunidade_CursoExtensao, MembroComunidade_CursoExtens
 admin.site.register(Parecer, ParecerAdmin)
 
 admin.site.register(Relatorio, RelatorioAdmin)
+admin.site.register(RelatorioFile, RelatorioFileAdmin)
 admin.site.register(FuncaoCertificado, FuncaoCertificadoAdmin)
 admin.site.register(CertificadoRelatorio, CertificadoRelatorioAdmin)

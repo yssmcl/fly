@@ -33,49 +33,41 @@
 
 	<div class="row">
 		<h1>
-			{{ projeto_extensao }}
+			Arquivos de: {{ relatorio.projeto_extensao }}
 		</h1>
+	</div>
+
+	<div class="row" style="text-align: right;">
+		<a class="success button"
+			href="{% url 'relatorio:upload_arquivo' relatorio.pk %}">
+			<i class="fi-plus size-16"></i>
+			Novo arquivo
+		</a>
 	</div>
 
 	<div class="row">
 		<table>
 			<thead>
-				<th>Período</th>
-				<th>Arquivos</th>
+				<th>Arquivo</th>
 				<th style="text-align:center;">Ação</th>
 			</thead>
 			<tbody>
-				{% for relatorio in object_list %}
+				{% for relatoriofile in object_list %}
 					<tr>
-						<td>{{ relatorio.periodo_inicio }} — {{relatorio.periodo_fim}}</td>
-						<td>
-							<a href="{% url 'relatorio:lista_arquivos' relatorio.pk %}"
-								class="hollow button"
-								data-tooltip
-								title="Visualizar arquivos">
-								<i class="fi-list size-16"></i>
-							</a>
-						</td>
+						<td>{{ relatoriofile.nome }}</td>
 						<td style="text-align:center;">
-							<a href="{% url 'relatorio:detalhe' relatorio.pk %}"
+							<a href="{% url 'relatorio:download_arquivo' relatoriofile.pk %}"
 								class="hollow button"
-								title="Visualizar/editar relatório"
-								data-tooltip>
-								<i class="fi-info size-16"></i>
-								<i class="fi-pencil size-16"></i>
-							</a>
-							<a href="{% url 'relatorio:pdf' relatorio.pk %}"
-								class="hollow button"
-								title="Exportar como PDF"
+								title="Baixar arquivo"
 								data-tooltip>
 								<i class="fi-page-export-pdf size-16"></i>
 							</a>
-							<form method="post" action="{% url 'relatorio:deletar' %}" onsubmit="return confirm('Deseja realmente excluir o relatorio?');" style="display: inline;">
+							<form method="post" action="{% url 'relatorio:deletar_arquivo' %}" onsubmit="return confirm('Deseja realmente excluir o arquivo?');" style="display: inline;">
 								{% csrf_token %}
-								<input type="hidden" name="pk" value="{{ relatorio.pk }}"/>
+								<input type="hidden" name="pk" value="{{ relatoriofile.pk }}"/>
 								<button type="submit" value="Deletar"
 									class="hollow button"
-									title="Excluir relatório"
+									title="Excluir arquivo"
 									data-tooltip>
 									<i class="fi-trash size-16"></i>
 								</button>
@@ -85,6 +77,14 @@
 				{% endfor %}
 			</tbody>
 		</table>
+	</div>
+
+	<div class="row" style="text-align: right;">
+		<a class="success button"
+			href="{% url 'relatorio:upload_arquivo' relatorio.pk %}">
+			<i class="fi-plus size-16"></i>
+			Novo arquivo
+		</a>
 	</div>
 
 {% endblock %}

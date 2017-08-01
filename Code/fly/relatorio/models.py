@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+import os
 
 from django.db import models
+from django.dispatch import receiver
 
 from curso_extensao.models import CursoExtensao
 
@@ -39,6 +41,18 @@ class FuncaoCertificado(models.Model):
 
     def __str__(self):
         return self.nome
+
+
+class RelatorioFile(models.Model):
+    relatorio = models.ForeignKey(Relatorio)
+    nome = models.CharField(max_length=200)
+    file = models.FileField(upload_to='uploads/')
+
+
+@receiver(models.signals.post_delete, sender=RelatorioFile)
+def auto_delete_file(sender, instance, **kwargs):
+    if instance.file and os.path.isfile(instance.file.path):
+        os.remove(instance.file.path)
 
 
 class CertificadoRelatorio(models.Model):
