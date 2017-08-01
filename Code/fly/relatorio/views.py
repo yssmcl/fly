@@ -122,20 +122,22 @@ class DownloadArquivoRelatorio(LoginRequiredMixin, View):
         relatorio_file = get_object_or_404(RelatorioFile, pk=pk)
         file = relatorio_file.file
 
-        response = HttpResponse(file, content_type='application/force-download')
-        response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(relatorio_file.nome)
-        response['Content-Length'] = file.size
-        # response['X-Sendfile'] = smart_str(MEDIA_ROOT+file.name)
-
-        return response
+        if relatorio_file.relatorio.projeto_extensao.user == request.user:
+            response = HttpResponse(file, content_type='application/force-download')
+            response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(relatorio_file.nome)
+            response['Content-Length'] = file.size
+            # response['X-Sendfile'] = smart_str(MEDIA_ROOT+file.name)
+            return response
+        else:
+            return redirect('base:index') #TODO: mensagem de erro
 
 
 class DeletarArquivoRelatorio(LoginRequiredMixin, View):
     def post(self, request):
-        file = get_object_or_404(RelatorioFile, pk=request.POST['pk'])
-        relatorio = file.relatorio
-        if file.relatorio.projeto_extensao.user == request.user:
-            file.delete()
+        relatorio_file = get_object_or_404(RelatorioFile, pk=request.POST['pk'])
+        relatorio = relatorio_file.relatorio
+        if relatorio_file.relatorio.projeto_extensao.user == request.user:
+            relatorio_file.delete()
             return redirect('relatorio:lista_arquivos', relatorio.pk)
         else:
             return redirect('base:index') #TODO: mensagem de erro
