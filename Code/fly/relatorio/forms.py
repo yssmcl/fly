@@ -15,8 +15,8 @@ class RelatorioForm(forms.ModelForm):
         inicio = cleaned_data.get('periodo_inicio')
         fim = cleaned_data.get('periodo_fim')
 
-        if inicio and fim and inicio >= fim:
-            self.add_error('periodo_fim', "Data de fim deve ser após a data de início.")
+        if inicio and fim and inicio > fim:
+            self.add_error('periodo_fim', "Data de início não deve ser após a data de fim.")
 
     resumo = forms.CharField(max_length=Relatorio._meta.get_field('resumo').max_length, widget=forms.Textarea)
     atividades_realizadas_programacao = forms.CharField(max_length=Relatorio._meta.get_field('atividades_realizadas_programacao').max_length, widget=forms.Textarea)
