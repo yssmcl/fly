@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load formset_tags %}
+{% load i18n %}
+
+{% block title %} Relatorio {% endblock%}
+
+{% block body_begin_scripts %}
+	<script language="JavaScript" type="text/javascript">
+		function cancelar_cadastro() {
+			decisao = confirm("Ao sair, todos os dados do formulário serão perdidos. Deseja continuar?");
+			if (decisao) {
+				location.href = "{% url 'curso_extensao:consulta' %}";
+			}
+		}
+	</script>
+{% endblock %}
+
+{% block content %}
+	{% trans '<sup><a href="#campo_obrigatorio">*</a></sup>' as campo_obrigatorio %}
+
+	<h1 style="text-align:center;">Upload de Arquivos - Relatório</h1>
+
+	<form data-abide novalidate method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+
+		{% for hidden in file_form.hidden_fields %}{{ hidden }}{% endfor %}
+
+
+		<div class="row" style="text-align:left;">
+			<button type="submit" class="button primary" style="width:130px;">
+				<i class="fi-save size-16"></i> Salvar
+			</button>
+		</div>
+
+		<div class="row">
+			{{ file_form.non_field_errors }}
+			<div data-abide-error class="alert callout" style="display: none;">
+				<p><i class="fi-alert"></i>Campos obrigatórios não preenchidos!</p>
+			</div>
+		</div>
+
+		{% for hidden in main_form.hidden_fields %}{{ hidden }}{% endfor %}
+
+		<div class="row">
+			<div class="medium-6 columns">
+				<label>Arquivo</label>
+				{{ file_form.file }}
+			</div>
+		</div>
+
+		<div class="row" id="campo_obrigatorio">
+			<span><b>* Campos obrigatórios</b></span>
+		</div>
+		<div class="row">
+			<div style="text-align:left;">
+				<button type="submit" class="button secondary" style="width:130px;" onclick="cancelar_cadastro()"/>
+					<i class="fi-x size-16"></i> Cancelar
+				</button>
+				<button type="submit" class="button primary" style="width:130px;">
+					<i class="fi-save size-16"></i> Salvar
+				</button>
+			</div>
+		</div>
+		<br />
+	</form>
+{% endblock %}
+
+{% block body_end_scripts %}
+	<script src="{% static 'js/jquery.js' %}"></script>
+	<script src="{% static 'js/jquery.formset.js' %}"></script>
+	<script src="{% static 'js/vendor/jquery.maskedinput.js' %}"></script>
+	<script src="{% static 'js/mascaras.js' %}"></script>
+	<script>
+		jQuery(function($) {
+			$("#certificados_formset").formset({});
+		});
+	</script>
+{% endblock %}
