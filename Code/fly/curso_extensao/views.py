@@ -10,7 +10,7 @@ from django.utils.encoding import smart_str
 from django.views import View, generic
 from fly.settings import PDF_DIR
 
-from .forms import CursoExtensaoForm, Servidor_CursoExtensaoFormSet, PalavraChave_CursoExtensaoFormSet, Discente_CursoExtensaoFormSet, MembroComunidade_CursoExtensaoFormSet, PrevisaoOrcamentaria_CursoExtensaoFormSet
+from .forms import CursoExtensaoForm, AgenteUniversitario_CursoExtensaoFormSet, PalavraChave_CursoExtensaoFormSet, Discente_CursoExtensaoFormSet, MembroComunidade_CursoExtensaoFormSet, PrevisaoOrcamentaria_CursoExtensaoFormSet
 from .models import CursoExtensao
 from base.models import EstadoProjeto
 from curso_extensao.pdfs import gerar_pdf
@@ -23,17 +23,17 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
         main_form = CursoExtensaoForm(prefix='main')
         palavras_formset = PalavraChave_CursoExtensaoFormSet(prefix='palavras')
         discentes_formset = Discente_CursoExtensaoFormSet(prefix='discentes')
-        servidores_formset = Servidor_CursoExtensaoFormSet(prefix='servidores')
+        agentes_universitarios_formset = AgenteUniversitario_CursoExtensaoFormSet(prefix='agentes_universitarios')
         membros_comunidade_formset = MembroComunidade_CursoExtensaoFormSet(prefix='membros')
         previsao_orcamentaria_formset = PrevisaoOrcamentaria_CursoExtensaoFormSet(prefix='previsao')
 
         palavras_formset.can_delete = False
         discentes_formset.can_delete = False
-        servidores_formset.can_delete = False
+        agentes_universitarios_formset.can_delete = False
         membros_comunidade_formset.can_delete = False
         previsao_orcamentaria_formset.can_delete = False
 
-        return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_formset': servidores_formset, 'palavras_formset': palavras_formset, 'discentes_formset': discentes_formset, 'membros_comunidade_formset': membros_comunidade_formset, 'previsao_orcamentaria_formset': previsao_orcamentaria_formset})
+        return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'agentes_universitarios_formset': agentes_universitarios_formset, 'palavras_formset': palavras_formset, 'discentes_formset': discentes_formset, 'membros_comunidade_formset': membros_comunidade_formset, 'previsao_orcamentaria_formset': previsao_orcamentaria_formset})
 
     def post(self, request):
         # Initialize form with POST data.
@@ -44,14 +44,14 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
         # Initialize formsets with POST data and foreignKey already set.
         palavras_formset = PalavraChave_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='palavras')
         discentes_formset = Discente_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='discentes')
-        servidores_formset = Servidor_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='servidores')
+        agentes_universitarios_formset = AgenteUniversitario_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='agentes_universitarios')
         membros_comunidade_formset = MembroComunidade_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='membros')
         previsao_orcamentaria_formset = PrevisaoOrcamentaria_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='previsao')
 
         if (main_form.is_valid()
                 and palavras_formset.is_valid()
                 and discentes_formset.is_valid()
-                and servidores_formset.is_valid()
+                and agentes_universitarios_formset.is_valid()
                 and membros_comunidade_formset.is_valid()
                 and previsao_orcamentaria_formset.is_valid()):
 
@@ -64,7 +64,7 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
                 main_form.save()
                 palavras_formset.save()
                 discentes_formset.save()
-                servidores_formset.save()
+                agentes_universitarios_formset.save()
                 membros_comunidade_formset.save()
                 previsao_orcamentaria_formset.save()
 
@@ -72,11 +72,11 @@ class NovoCursoExtensao(LoginRequiredMixin, View):
         else:
             palavras_formset.can_delete = False
             discentes_formset.can_delete = False
-            servidores_formset.can_delete = False
+            agentes_universitarios_formset.can_delete = False
             membros_comunidade_formset.can_delete = False
             previsao_orcamentaria_formset.can_delete = False
 
-            return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_formset': servidores_formset, 'palavras_formset': palavras_formset, 'discentes_formset': discentes_formset, 'membros_comunidade_formset': membros_comunidade_formset, 'previsao_orcamentaria_formset': previsao_orcamentaria_formset})
+            return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'agentes_universitarios_formset': agentes_universitarios_formset, 'palavras_formset': palavras_formset, 'discentes_formset': discentes_formset, 'membros_comunidade_formset': membros_comunidade_formset, 'previsao_orcamentaria_formset': previsao_orcamentaria_formset})
 
 
 class ConsultaCursoExtensao(LoginRequiredMixin, generic.ListView):
@@ -105,11 +105,11 @@ class DetalheCursoExtensao(LoginRequiredMixin, View):
         main_form = CursoExtensaoForm(instance=curso_extensao, prefix='main')
         palavras_formset = PalavraChave_CursoExtensaoFormSet(instance=curso_extensao, prefix='palavras')
         discentes_formset = Discente_CursoExtensaoFormSet(instance=curso_extensao, prefix='discentes')
-        servidores_formset = Servidor_CursoExtensaoFormSet(instance=curso_extensao, prefix='servidores')
+        agentes_universitarios_formset = AgenteUniversitario_CursoExtensaoFormSet(instance=curso_extensao, prefix='agentes_universitarios')
         membros_comunidade_formset = MembroComunidade_CursoExtensaoFormSet(instance=curso_extensao, prefix='membros')
         previsao_orcamentaria_formset = PrevisaoOrcamentaria_CursoExtensaoFormSet(instance=curso_extensao, prefix='previsao')
 
-        return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_formset': servidores_formset, 'palavras_formset': palavras_formset, 'discentes_formset': discentes_formset, 'membros_comunidade_formset': membros_comunidade_formset, 'previsao_orcamentaria_formset': previsao_orcamentaria_formset})
+        return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'agentes_universitarios_formset': agentes_universitarios_formset, 'palavras_formset': palavras_formset, 'discentes_formset': discentes_formset, 'membros_comunidade_formset': membros_comunidade_formset, 'previsao_orcamentaria_formset': previsao_orcamentaria_formset})
 
     def post(self, request, pk):
         curso_extensao = get_object_or_404(CursoExtensao, pk=pk)
@@ -122,7 +122,7 @@ class DetalheCursoExtensao(LoginRequiredMixin, View):
         # Initialize formsets with POST data and foreignKey already set.
         palavras_formset = PalavraChave_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='palavras')
         discentes_formset = Discente_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='discentes')
-        servidores_formset = Servidor_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='servidores')
+        agentes_universitarios_formset = AgenteUniversitario_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='agentes_universitarios')
         membros_comunidade_formset = MembroComunidade_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='membros')
         previsao_orcamentaria_formset = PrevisaoOrcamentaria_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='previsao')
 
@@ -133,7 +133,7 @@ class DetalheCursoExtensao(LoginRequiredMixin, View):
         if (main_form.is_valid()
                 and palavras_formset.is_valid()
                 and discentes_formset.is_valid()
-                and servidores_formset.is_valid()
+                and agentes_universitarios_formset.is_valid()
                 and membros_comunidade_formset.is_valid()
                 and previsao_orcamentaria_formset.is_valid()):
 
@@ -145,13 +145,13 @@ class DetalheCursoExtensao(LoginRequiredMixin, View):
                 main_form.save()
                 palavras_formset.save()
                 discentes_formset.save()
-                servidores_formset.save()
+                agentes_universitarios_formset.save()
                 membros_comunidade_formset.save()
                 previsao_orcamentaria_formset.save()
 
             return redirect('curso_extensao:consulta')
         else:
-            return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'servidores_formset': servidores_formset, 'palavras_formset': palavras_formset, 'discentes_formset': discentes_formset, 'membros_comunidade_formset': membros_comunidade_formset, 'previsao_orcamentaria_formset': previsao_orcamentaria_formset})
+            return render(request, 'curso_extensao/cursoextensao_form.html', {'main_form': main_form, 'agentes_universitarios_formset': agentes_universitarios_formset, 'palavras_formset': palavras_formset, 'discentes_formset': discentes_formset, 'membros_comunidade_formset': membros_comunidade_formset, 'previsao_orcamentaria_formset': previsao_orcamentaria_formset})
 
 
 class GeracaoPDFCursoExtensao(LoginRequiredMixin, View):

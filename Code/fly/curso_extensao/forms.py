@@ -3,14 +3,14 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from .models import CursoExtensao, Servidor, Servidor_CursoExtensao, PalavraChave_CursoExtensao, Discente_CursoExtensao, MembroComunidade_CursoExtensao, PrevisaoOrcamentaria_CursoExtensao
+from .models import CursoExtensao, PalavraChave_CursoExtensao, Discente_CursoExtensao, MembroComunidade_CursoExtensao, PrevisaoOrcamentaria_CursoExtensao, AgenteUniversitario_CursoExtensao
 
 class CursoExtensaoForm(forms.ModelForm):
     class Meta:
         model = CursoExtensao
         fields = ['titulo', 'coordenador', 'periodo_realizacao_inicio', 'periodo_realizacao_fim', 'programa_extensao', 'unidade_administrativa', 'campus', 'centro', 'grande_area', 'area_tematica_principal', 'area_tematica_secundaria', 'linha_extensao', 'publico_alvo', 'numero_pessoas_beneficiadas', 'carga_horaria_total', 'numero_vagas', 'local_inscricao', 'resumo', 'programacao']
 
-    coordenador = forms.ModelChoiceField(queryset=Servidor.objects.exclude(tipo__nome='Docente Temporário'))
+    # coordenador = forms.ModelChoiceField(queryset=Servidor.objects.exclude(tipo__nome='Docente Temporário'))
     resumo = forms.CharField(max_length=CursoExtensao._meta.get_field('resumo').max_length, widget=forms.Textarea)
     programacao = forms.CharField(max_length=CursoExtensao._meta.get_field('programacao').max_length, widget=forms.Textarea)
 
@@ -85,9 +85,9 @@ class PrevisaoOrcamentaria_CursoExtensaoForm(forms.ModelForm):
         return cleaned_data
 
 
-class BaseServidor_CursoExtensaoFormSet(forms.BaseInlineFormSet):
+class BaseAgenteUniversitario_CursoExtensaoFormSet(forms.BaseInlineFormSet):
     def clean(self):
-        super(BaseServidor_CursoExtensaoFormSet, self).clean()
+        super().clean()
 
         coordenador = False
         subcoordenador = False
@@ -106,7 +106,7 @@ class BaseServidor_CursoExtensaoFormSet(forms.BaseInlineFormSet):
                         subcoordenador = True
 
 
-Servidor_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, Servidor_CursoExtensao, formset=BaseServidor_CursoExtensaoFormSet, extra=0, min_num=1, fields=['servidor', 'carga_horaria_dedicada', 'funcao', 'plano_trabalho'])
+AgenteUniversitario_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, AgenteUniversitario_CursoExtensao, formset=BaseAgenteUniversitario_CursoExtensaoFormSet, extra=0, min_num=1, fields=['carga_horaria_dedicada', 'funcao', 'plano_trabalho', 'nome_completo', 'email', 'telefone', 'curso', 'colegiado', 'centro', 'unidade_administrativa', 'campus', 'pais', 'estado', 'cidade', 'logradouro', 'complemento', 'cep'])
 Discente_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, Discente_CursoExtensao, extra=0, fields=['nome', 'curso', 'serie', 'turno', 'carga_horaria_semanal', 'telefone', 'email', 'plano_trabalho'])
 PalavraChave_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, PalavraChave_CursoExtensao, extra=3, min_num=1, max_num=3, fields=['nome'])
 MembroComunidade_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, MembroComunidade_CursoExtensao, extra=0, fields=['nome', 'carga_horaria_semanal', 'entidade', 'telefone', 'email', 'cpf', 'data_nascimento', 'funcao', 'plano_trabalho'])

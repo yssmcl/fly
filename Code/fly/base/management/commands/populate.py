@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from base.models import *
-from curso_extensao.models import *
 from django.core.management.base import BaseCommand, CommandError
 from django.utils import timezone
+
+from base.models import *
+from curso_extensao.models import *
+from docente.models import *
 from relatorio.models import *
 
 class Command(BaseCommand):
@@ -165,10 +167,9 @@ class Command(BaseCommand):
                 'Pedagogia',
             ]
 
-            tipo_servidor_list = [
+            tipo_docente_list = [
                 'Docente Efetivo',
                 'Docente Temporário',
-                'Agente Universitário',
             ]
 
             tipo_gestao_recurso_financeiro_list = [
@@ -226,7 +227,7 @@ class Command(BaseCommand):
             self.saveList(AreaTematica, area_tematica_list)
             self.saveList(LinhaExtensao, linha_extensao_list)
             self.saveList(CursoUnioeste, curso_list)
-            self.saveList(TipoServidor, tipo_servidor_list)
+            self.saveList(TipoDocente, tipo_docente_list)
             self.saveList(TipoGestaoRecursosFinanceiros, tipo_gestao_recurso_financeiro_list)
             self.saveList(FuncaoServidor, funcao_servidor_list)
             self.saveList(TurnoCurso, turno_curso_list)
@@ -236,45 +237,45 @@ class Command(BaseCommand):
 
 
             #TODO: remove
-            print("Iniciando insercao em 'Servidor'")
+            # print("Iniciando insercao em 'Servidor'")
 
-            if not Servidor.objects.filter(nome_completo='Foo').exists():
-                s = Servidor()
-                s.nome_completo = 'Foo'
-                s.tipo = TipoServidor.objects.all().first()
-                s.regime_trabalho = 1
-                s.colegiado = 'colegiado_foo'
-                s.centro = Centro.objects.all().first()
-                s.campus = Campus.objects.all().first()
-                s.email = 'foo@foo.com'
-                s.telefone = '12345678'
-                s.pais = 'foo'
-                s.estado = 'foo'
-                s.cidade = 'foo'
-                s.logradouro = 'foo'
-                s.complemento = 'foo'
-                s.cep = 12345678
-                s.save()
-                print("Adicionando Foo em Servidor")
+            # if not Servidor.objects.filter(nome_completo='Foo').exists():
+            #     s = Servidor()
+            #     s.nome_completo = 'Foo'
+            #     s.tipo = TipoServidor.objects.all().first()
+            #     s.regime_trabalho = 1
+            #     s.colegiado = 'colegiado_foo'
+            #     s.centro = Centro.objects.all().first()
+            #     s.campus = Campus.objects.all().first()
+            #     s.email = 'foo@foo.com'
+            #     s.telefone = '12345678'
+            #     s.pais = 'foo'
+            #     s.estado = 'foo'
+            #     s.cidade = 'foo'
+            #     s.logradouro = 'foo'
+            #     s.complemento = 'foo'
+            #     s.cep = 12345678
+            #     s.save()
+            #     print("Adicionando Foo em Servidor")
 
-            if not Servidor.objects.filter(nome_completo='Bar').exists():
-                s = Servidor()
-                s.nome_completo = 'Bar'
-                s.tipo = TipoServidor.objects.all().first()
-                s.regime_trabalho = 1
-                s.colegiado = 'colegiado_bar'
-                s.centro = Centro.objects.all().first()
-                s.campus = Campus.objects.all().first()
-                s.email = 'bar@bar.com'
-                s.telefone = '12345678'
-                s.pais = 'bar'
-                s.estado = 'bar'
-                s.cidade = 'bar'
-                s.logradouro = 'bar'
-                s.complemento = 'bar'
-                s.cep = 12345678
-                s.save()
-                print("Adicionando Bar em Servidor")
+            # if not Servidor.objects.filter(nome_completo='Bar').exists():
+            #     s = Servidor()
+            #     s.nome_completo = 'Bar'
+            #     s.tipo = TipoServidor.objects.all().first()
+            #     s.regime_trabalho = 1
+            #     s.colegiado = 'colegiado_bar'
+            #     s.centro = Centro.objects.all().first()
+            #     s.campus = Campus.objects.all().first()
+            #     s.email = 'bar@bar.com'
+            #     s.telefone = '12345678'
+            #     s.pais = 'bar'
+            #     s.estado = 'bar'
+            #     s.cidade = 'bar'
+            #     s.logradouro = 'bar'
+            #     s.complemento = 'bar'
+            #     s.cep = 12345678
+            #     s.save()
+            #     print("Adicionando Bar em Servidor")
 
     def popular_cursoextensao(self):
         print("Iniciando insercao em 'CursoExtensao'")

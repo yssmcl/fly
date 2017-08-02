@@ -3,7 +3,8 @@
 from django.db import models
 from django.contrib.auth import models as auth_models
 
-from base.models import Servidor, Programa, UnidadeAdministrativa, Campus, Centro, GrandeArea, AreaTematica, LinhaExtensao, TipoGestaoRecursosFinanceiros, FuncaoServidor, CursoUnioeste, EstadoProjeto
+from base.models import Programa, UnidadeAdministrativa, Campus, Centro, GrandeArea, AreaTematica, LinhaExtensao, TipoGestaoRecursosFinanceiros, FuncaoServidor, CursoUnioeste, EstadoProjeto
+from docente.models import Docente
 
 class CursoExtensao(models.Model):
     user = models.ForeignKey(auth_models.User)
@@ -14,8 +15,7 @@ class CursoExtensao(models.Model):
 
     estado = models.ForeignKey(EstadoProjeto)
 
-    # Docente efetivo ou Agente Universitario
-    coordenador = models.ForeignKey(Servidor, related_name='coordenador')
+    coordenador = models.ForeignKey(Docente, related_name='coordenador')
     periodo_realizacao_inicio = models.DateField()
     periodo_realizacao_fim = models.DateField()
 
@@ -46,7 +46,7 @@ class CursoExtensao(models.Model):
 
     programacao = models.CharField(max_length=200)
 
-    servidores = models.ManyToManyField(Servidor, related_name='servidores', through='Servidor_CursoExtensao')
+    docentes = models.ManyToManyField(Docente, related_name='docentes', through='Docente_CursoExtensao')
 
     def __str__(self):
         return self.titulo
@@ -92,8 +92,8 @@ class PalavraChave_CursoExtensao(models.Model):
         return self.nome
 
 
-class Servidor_CursoExtensao(models.Model):
-    servidor = models.ForeignKey(Servidor)
+class Docente_CursoExtensao(models.Model):
+    docente = models.ForeignKey(Docente)
     curso_extensao = models.ForeignKey(CursoExtensao)
 
     carga_horaria_dedicada = models.IntegerField()
@@ -102,6 +102,38 @@ class Servidor_CursoExtensao(models.Model):
 
     plano_trabalho = models.CharField(max_length=200)
 
+
+class AgenteUniversitario_CursoExtensao(models.Model):
+    curso_extensao = models.ForeignKey(CursoExtensao)
+
+    carga_horaria_dedicada = models.IntegerField()
+
+    funcao = models.ForeignKey(FuncaoServidor)
+
+    plano_trabalho = models.CharField(max_length=200)
+
+    # Agente
+    nome_completo = models.CharField(max_length=200)
+    email = models.EmailField()
+    telefone = models.CharField(max_length=200)
+
+    curso = models.ForeignKey(CursoUnioeste)
+    colegiado = models.CharField(max_length=200, blank=True, null=True)
+    centro = models.ForeignKey(Centro)
+
+    # Deve conter ou Unidade Administrativa ou Campus.
+    unidade_administrativa = models.ForeignKey(UnidadeAdministrativa, blank=True, null=True)
+    campus = models.ForeignKey(Campus, blank=True, null=True)
+
+    pais = models.CharField(max_length=200)
+    estado = models.CharField(max_length=200)
+    cidade = models.CharField(max_length=200)
+    logradouro = models.CharField(max_length=200)
+    complemento = models.CharField(max_length=200, blank=True, null=True)
+    cep = models.IntegerField()
+
+    def __str__(self):
+    	return self.nome_completo
 
 class TurnoCurso(models.Model):
     nome = models.CharField(max_length=200)
