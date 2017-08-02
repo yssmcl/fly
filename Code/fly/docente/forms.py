@@ -12,11 +12,13 @@ class DocenteForm(forms.ModelForm):
             'telefone',
             'curso',
             'centro',
+            'colegiado',
             'campus',
             'pais',
             'estado',
             'cidade',
             'logradouro',
             'complemento',
-            'cep'
+            'cep',
+            'tipo_docente',
         ]

@@ -65,18 +65,23 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="medium-4 columns">
+			<div class="medium-3 columns">
 				<label>Curso{{ campo_obrigatorio }}</label>
 				{{ main_form.curso }}
 				{{ main_form.curso.errors }}
 			</div>
 			<!-- TODO: autocompletar centro com base no curso selecionado -->
-			<div class="medium-4 columns">
+			<div class="medium-3 columns">
 				<label>Centro{{ campo_obrigatorio }}</label>
 				{{ main_form.centro }}
 				{{ main_form.centro.errors }}
 			</div>
-			<div class="medium-4 columns">
+			<div class="medium-3 columns">
+				<label>Colegiado{{ campo_obrigatorio }}</label>
+				{{ main_form.colegiado }}
+				{{ main_form.colegiado.errors }}
+			</div>
+			<div class="medium-3 columns">
 				<label>Campus{{ campo_obrigatorio }}</label>
 				{{ main_form.campus }}
 				{{ main_form.campus.errors }}
@@ -121,6 +126,13 @@
 				<label>País{{ campo_obrigatorio }}</label>
 				{{ main_form.pais }}
 				{{ main_form.pais.errors }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="medium-12 columns">
+				<label>Tipo{{ campo_obrigatorio }}</label>
+				{{ main_form.tipo_docente }}
+				{{ main_form.tipo_docente.errors }}
 			</div>
 		</div>
 

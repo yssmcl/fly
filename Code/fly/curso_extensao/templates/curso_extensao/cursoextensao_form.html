@@ -185,23 +185,25 @@
 				</div>	
 			{% endfor %}
 		</div>
+
+
 		<div class="row">
 			<hr />
-			<h3><b>Servidores</b></h3>
+			<h3><b>Docentes</b></h3>
 		</div>
-		<div id="servidores_formset" data-formset-prefix="{{ servidores_formset.prefix }}">
-			{{ servidores_formset.management_form }}
+		<div id="docentes_formset" data-formset-prefix="{{ docentes_formset.prefix }}">
+			{{ docentes_formset.management_form }}
 			<div data-formset-body>
-				{% for form in servidores_formset %}
+				{% for form in docentes_formset %}
 					<div data-formset-form>
 						<div class="row" style="background:#E2EEFA; padding:10px;">
 							{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
 							{{ form.non_field_errors }}
 							<div class="row">
 								<div class="medium-4 columns">
-									<label>Servidor{{ campo_obrigatorio }}</label>
-									{{ form.servidor }}
-									{{ form.servidor.errors }}
+									<label>Docente{{ campo_obrigatorio }}</label>
+									{{ form.docente }}
+									{{ form.docente.errors }}
 								</div>
 								<div class="medium-4 columns">
 									<label>Função{{ campo_obrigatorio }}</label>
@@ -221,7 +223,7 @@
 									{{ form.plano_trabalho.errors }}
 								</div>
 							</div>
-							{% if servidores_formset.can_delete %}
+							{% if docentes_formset.can_delete %}
 								<div class="row">
 									<div class="medium-12 columns">
 										<label>Deletar</label>
@@ -240,26 +242,26 @@
 						<div class="row" style="background:#E2EEFA; padding:10px;">
 							<div class="row">
 								<div class="medium-4 columns">
-									<label>Servidor{{ campo_obrigatorio }}</label>
-									{{ servidores_formset.empty_form.servidor }}
-									{{ servidores_formset.empty_form.servidor.errors }}
+									<label>Docente{{ campo_obrigatorio }}</label>
+									{{ docentes_formset.empty_form.docente }}
+									{{ docentes_formset.empty_form.docente.errors }}
 								</div>
 								<div class="medium-4 columns">
 									<label>Função{{ campo_obrigatorio }}</label>
-									{{ servidores_formset.empty_form.funcao }}
-									{{ servidores_formset.empty_form.funcao.errors }}
+									{{ docentes_formset.empty_form.funcao }}
+									{{ docentes_formset.empty_form.funcao.errors }}
 								</div>
 								<div class="medium-4 columns">
 									<label>Carga horária dedicada{{ campo_obrigatorio }}</label>
-									{{ servidores_formset.empty_form.carga_horaria_dedicada }}
-									{{ servidores_formset.empty_form.carga_horaria_dedicada.errors }}
+									{{ docentes_formset.empty_form.carga_horaria_dedicada }}
+									{{ docentes_formset.empty_form.carga_horaria_dedicada.errors }}
 								</div>
 							</div>
 							<div class="row">
 								<div class="medium-12 columns">
-									<label>Plano de trabalho</label>
-									{{ servidores_formset.empty_form.plano_trabalho }}
-									{{ servidores_formset.empty_form.plano_trabalho.errors }}
+									<label>Plano de trabalho{{ campo_obrigatorio }}</label>
+									{{ docentes_formset.empty_form.plano_trabalho }}
+									{{ docentes_formset.empty_form.plano_trabalho.errors }}
 								</div>
 							</div>
 						</div>
@@ -290,6 +292,265 @@
 				</div>
 			</div>
 		</div>
+
+
+		<div class="row">
+			<hr />
+			<h3><b>Agentes Universitários</b></h3>
+		</div>
+		<div id="agentes_universitarios_formset" data-formset-prefix="{{ agentes_universitarios_formset.prefix }}">
+			{{ agentes_universitarios_formset.management_form }}
+			<div data-formset-body>
+				{% for form in agentes_universitarios_formset %}
+					<div data-formset-form>
+						<div class="row" style="background:#E2EEFA; padding:10px;">
+							{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+							{{ form.non_field_errors }}
+							<div class="row">
+								<div class="medium-4 columns">
+									<label>Nome{{ campo_obrigatorio }}</label>
+									{{ form.nome_completo }}
+									{{ form.nome_completo.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Função{{ campo_obrigatorio }}</label>
+									{{ form.funcao }}
+									{{ form.funcao.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Carga horária dedicada{{ campo_obrigatorio }}</label>
+									{{ form.carga_horaria_dedicada }}
+									{{ form.carga_horaria_dedicada.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-12 columns">
+									<label>Plano de trabalho{{ campo_obrigatorio }}</label>
+									{{ form.plano_trabalho }}
+									{{ form.plano_trabalho.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-6 columns">
+									<label>Email{{ campo_obrigatorio }}</label>
+									{{ form.email }}
+									{{ form.email.errors }}
+								</div>
+								<div class="medium-6 columns">
+									<label>Telefone{{ campo_obrigatorio }}</label>
+									{{ form.telefone }}
+									{{ form.telefone.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-4 columns">
+									<label>Curso{{ campo_obrigatorio }}</label>
+									{{ form.curso }}
+									{{ form.curso.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Colegiado{{ campo_obrigatorio }}</label>
+									{{ form.colegiado }}
+									{{ form.colegiado.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Centro{{ campo_obrigatorio }}</label>
+									{{ form.centro }}
+									{{ form.centro.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-6 columns">
+									<label>Unidade Administrativa{{ campo_mutuamente_exclusivo }}</label>
+									{{ form.unidade_administrativa }}
+									{{ form.unidade_administrativa.errors }}
+								</div>
+								<div class="medium-6 columns">
+									<label>Campus{{ campo_mutuamente_exclusivo }}</label>
+									{{ form.campus }}
+									{{ form.campus.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-4 columns">
+									<label>Pais{{ campo_obrigatorio }}</label>
+									{{ form.pais }}
+									{{ form.pais.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Estado{{ campo_obrigatorio }}</label>
+									{{ form.estado }}
+									{{ form.estado.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Cidade{{ campo_obrigatorio }}</label>
+									{{ form.cidade }}
+									{{ form.cidade.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-4 columns">
+									<label>Logradouro{{ campo_obrigatorio }}</label>
+									{{ form.logradouro }}
+									{{ form.logradouro.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Cep{{ campo_obrigatorio }}</label>
+									{{ form.cep }}
+									{{ form.cep.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Complemento</label>
+									{{ form.complemento }}
+									{{ form.complemento.errors }}
+								</div>
+							</div>
+							{% if agentes_universitarios_formset.can_delete %}
+								<div class="row">
+									<div class="medium-12 columns">
+										<label>Deletar</label>
+										{{ form.DELETE }}
+									</div>
+								</div>
+							{% endif %}
+						</div>
+						<br />
+					</div>
+				{% endfor %}
+			</div>
+			<script type="form-template" data-formset-empty-form>
+				{% escapescript %}
+					<div data-formset-form>
+						<div class="row" style="background:#E2EEFA; padding:10px;">
+							<div class="row">
+								<div class="medium-4 columns">
+									<label>Nome{{ campo_obrigatorio }}</label>
+									{{ agentes_universitarios_formset.empty_form.nome_completo }}
+									{{ agentes_universitarios_formset.empty_form.nome_completo.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Função{{ campo_obrigatorio }}</label>
+									{{ agentes_universitarios_formset.empty_form.funcao }}
+									{{ agentes_universitarios_formset.empty_form.funcao.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Carga horária dedicada{{ campo_obrigatorio }}</label>
+									{{ agentes_universitarios_formset.empty_form.carga_horaria_dedicada }}
+									{{ agentes_universitarios_formset.empty_form.carga_horaria_dedicada.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-12 columns">
+									<label>Plano de trabalho{{ campo_obrigatorio }}</label>
+									{{ agentes_universitarios_formset.empty_form.plano_trabalho }}
+									{{ agentes_universitarios_formset.empty_form.plano_trabalho.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-6 columns">
+									<label>Email{{ campo_obrigatorio }}</label>
+									{{ agentes_universitarios_formset.empty_form.email }}
+									{{ agentes_universitarios_formset.empty_form.email.errors }}
+								</div>
+								<div class="medium-6 columns">
+									<label>Telefone{{ campo_obrigatorio }}</label>
+									{{ agentes_universitarios_formset.empty_form.telefone }}
+									{{ agentes_universitarios_formset.empty_form.telefone.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-4 columns">
+									<label>Curso{{ campo_obrigatorio }}</label>
+									{{ agentes_universitarios_formset.empty_form.curso }}
+									{{ agentes_universitarios_formset.empty_form.curso.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Colegiado{{ campo_obrigatorio }}</label>
+									{{ agentes_universitarios_formset.empty_form.colegiado }}
+									{{ agentes_universitarios_formset.empty_form.colegiado.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Centro{{ campo_obrigatorio }}</label>
+									{{ agentes_universitarios_formset.empty_form.centro }}
+									{{ agentes_universitarios_formset.empty_form.centro.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-6 columns">
+									<label>Unidade Administrativa{{ campo_mutuamente_exclusivo }}</label>
+									{{ agentes_universitarios_formset.empty_form.unidade_administrativa }}
+									{{ agentes_universitarios_formset.empty_form.unidade_administrativa.errors }}
+								</div>
+								<div class="medium-6 columns">
+									<label>campusC{ campo_mutuamente_exclusivo }}</label>
+									{{ agentes_universitarios_formset.empty_form.campus }}
+									{{ agentes_universitarios_formset.empty_form.campus.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-4 columns">
+									<label>Pais{{ campo_obrigatorio }}</label>
+									{{ agentes_universitarios_formset.empty_form.pais }}
+									{{ agentes_universitarios_formset.empty_form.pais.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Estado{{ campo_obrigatorio }}</label>
+									{{ agentes_universitarios_formset.empty_form.estado }}
+									{{ agentes_universitarios_formset.empty_form.estado.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Cidade{{ campo_obrigatorio }}</label>
+									{{ agentes_universitarios_formset.empty_form.cidade }}
+									{{ agentes_universitarios_formset.empty_form.cidade.errors }}
+								</div>
+							</div>
+							<div class="row">
+								<div class="medium-4 columns">
+									<label>Logradouro{{ campo_obrigatorio }}</label>
+									{{ agentes_universitarios_formset.empty_form.logradouro }}
+									{{ agentes_universitarios_formset.empty_form.logradouro.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Cep{{ campo_obrigatorio }}</label>
+									{{ agentes_universitarios_formset.empty_form.cep }}
+									{{ agentes_universitarios_formset.empty_form.cep.errors }}
+								</div>
+								<div class="medium-4 columns">
+									<label>Complemento</label>
+									{{ agentes_universitarios_formset.empty_form.complemento }}
+									{{ agentes_universitarios_formset.empty_form.complemento.errors }}
+								</div>
+							</div>
+						</div>
+						<br />
+					</div>
+				{% endescapescript %}
+			</script>
+			<div class="row">
+				<div class="medium-12 columns">
+					<a class="hollow button"
+						type="button"
+						title="Adicionar servidor"
+						data-alignment="center"
+						data-position="bottom"
+						data-tooltip
+						data-formset-add>
+						<i class="fi-plus size-16"></i>
+					</a>
+					<a class="hollow button"
+						type="button"
+						title="Excluir servidor"
+						data-alignment="center"
+						data-position="bottom"
+						data-tooltip
+						data-formset-delete-button>
+						<i class="fi-minus size-16"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+
+
 		<div class="row">
 			<hr/>
 			<h3><b>Discentes</b></h3>
@@ -920,7 +1181,8 @@
 	<script src="{% static 'js/mascaras.js' %}"></script>
 	<script>
 		jQuery(function($) {
-			$("#servidores_formset").formset({});
+			$("#docentes_formset").formset({});
+			$("#agentes_universitarios_formset").formset({});
 			$("#discentes_formset").formset({});
 			$("#membros_comunidade_formset").formset({});
 			$("#previsao_orcamentaria_formset").formset({});

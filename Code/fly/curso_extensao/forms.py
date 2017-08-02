@@ -3,7 +3,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from .models import CursoExtensao, PalavraChave_CursoExtensao, Discente_CursoExtensao, MembroComunidade_CursoExtensao, PrevisaoOrcamentaria_CursoExtensao, AgenteUniversitario_CursoExtensao
+from .models import CursoExtensao, PalavraChave_CursoExtensao, Docente_CursoExtensao, Discente_CursoExtensao, MembroComunidade_CursoExtensao, PrevisaoOrcamentaria_CursoExtensao, AgenteUniversitario_CursoExtensao
 
 class CursoExtensaoForm(forms.ModelForm):
     class Meta:
@@ -15,7 +15,7 @@ class CursoExtensaoForm(forms.ModelForm):
     programacao = forms.CharField(max_length=CursoExtensao._meta.get_field('programacao').max_length, widget=forms.Textarea)
 
     def clean(self):
-        cleaned_data = super(CursoExtensaoForm, self).clean()
+        cleaned_data = super().clean()
 
         # Obrigar existir pelo menos 1 dos 2, mas não os 2 ao mesmo tempo.
         unidade_administrativa = cleaned_data.get('unidade_administrativa')
@@ -38,12 +38,6 @@ class CursoExtensaoForm(forms.ModelForm):
         if inicio and fim and inicio > fim:
             self.add_error('periodo_realizacao_fim', "Data de início não deve ser após a data de fim.")
 
-        # Validar que coordenador não seja Docente Temporário.
-        coordenador = cleaned_data.get('coordenador')
-
-        if coordenador and coordenador.tipo.nome == 'Docente Temporário':
-            self.add_error('coordenador', "Coordenador não pode ser docente temporário.")
-
         # Validar que as áreas temáticas são diferentes.
         area1 = cleaned_data.get('area_tematica_principal')
         area2 = cleaned_data.get('area_tematica_secundaria')
@@ -60,8 +54,8 @@ class PrevisaoOrcamentaria_CursoExtensaoForm(forms.ModelForm):
         fields = ['inscricoes', 'convenios', 'patrocinios', 'fonte_financiamento', 'honorarios', 'passagens', 'alimentacao', 'hospedagem', 'divulgacao', 'material_consumo', 'xerox', 'certificados', 'outros', 'outros_especificacao', 'identificacao', 'fundacao', 'outro_orgao_gestor']
 
     def clean(self):
-        cleaned_data = super(PrevisaoOrcamentaria_CursoExtensaoForm, self).clean()
-        
+        cleaned_data = super().clean()
+
         # Validar especificação de campo `outros`.
         outros = cleaned_data.get('outros')
         outros_especificacao = cleaned_data.get('outros_especificacao')
@@ -87,7 +81,7 @@ class PrevisaoOrcamentaria_CursoExtensaoForm(forms.ModelForm):
 
 class BaseAgenteUniversitario_CursoExtensaoFormSet(forms.BaseInlineFormSet):
     def clean(self):
-        super().clean()
+        cd = super().clean()
 
         coordenador = False
         subcoordenador = False
@@ -105,8 +99,34 @@ class BaseAgenteUniversitario_CursoExtensaoFormSet(forms.BaseInlineFormSet):
                             form.add_error('funcao', "Somente um subcoordenador é permitido.")
                         subcoordenador = True
 
+        return cd
 
-AgenteUniversitario_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, AgenteUniversitario_CursoExtensao, formset=BaseAgenteUniversitario_CursoExtensaoFormSet, extra=0, min_num=1, fields=['carga_horaria_dedicada', 'funcao', 'plano_trabalho', 'nome_completo', 'email', 'telefone', 'curso', 'colegiado', 'centro', 'unidade_administrativa', 'campus', 'pais', 'estado', 'cidade', 'logradouro', 'complemento', 'cep'])
+
+class BaseDocente_CursoExtensaoFormSet(forms.BaseInlineFormSet):
+    def clean(self):
+        cd = super().clean()
+
+        coordenador = False
+        subcoordenador = False
+
+        for form in self.forms:
+            if form.cleaned_data and not form.cleaned_data.get('DELETE', False):
+                funcao = form.cleaned_data.get('funcao')
+                if funcao:
+                    if funcao.nome == 'Coordenador(a)':
+                        if coordenador:
+                            form.add_error('funcao', "Somente um coordenador é permitido.")
+                        coordenador = True
+                    elif funcao.nome == 'Subcoordenador(a)':
+                        if subcoordenador:
+                            form.add_error('funcao', "Somente um subcoordenador é permitido.")
+                        subcoordenador = True
+
+        return cd
+
+
+AgenteUniversitario_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, AgenteUniversitario_CursoExtensao, formset=BaseAgenteUniversitario_CursoExtensaoFormSet, extra=0, min_num=0, fields=['carga_horaria_dedicada', 'funcao', 'plano_trabalho', 'nome_completo', 'email', 'telefone', 'curso', 'colegiado', 'centro', 'unidade_administrativa', 'campus', 'pais', 'estado', 'cidade', 'logradouro', 'complemento', 'cep'])
+Docente_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, Docente_CursoExtensao, formset=BaseDocente_CursoExtensaoFormSet, extra=0, min_num=1, fields=['docente', 'carga_horaria_dedicada', 'funcao', 'plano_trabalho'])
 Discente_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, Discente_CursoExtensao, extra=0, fields=['nome', 'curso', 'serie', 'turno', 'carga_horaria_semanal', 'telefone', 'email', 'plano_trabalho'])
 PalavraChave_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, PalavraChave_CursoExtensao, extra=3, min_num=1, max_num=3, fields=['nome'])
 MembroComunidade_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, MembroComunidade_CursoExtensao, extra=0, fields=['nome', 'carga_horaria_semanal', 'entidade', 'telefone', 'email', 'cpf', 'data_nascimento', 'funcao', 'plano_trabalho'])

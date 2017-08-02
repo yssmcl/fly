@@ -118,7 +118,7 @@ class AgenteUniversitario_CursoExtensao(models.Model):
     telefone = models.CharField(max_length=200)
 
     curso = models.ForeignKey(CursoUnioeste)
-    colegiado = models.CharField(max_length=200, blank=True, null=True)
+    colegiado = models.CharField(max_length=200)
     centro = models.ForeignKey(Centro)
 
     # Deve conter ou Unidade Administrativa ou Campus.

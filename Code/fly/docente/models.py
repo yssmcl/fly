@@ -15,6 +15,7 @@ class Docente(models.Model):
     telefone = models.CharField(max_length=200)
 
     curso = models.ForeignKey(CursoUnioeste)
+    colegiado = models.CharField(max_length=200)
     centro = models.ForeignKey(Centro)
     campus = models.ForeignKey(Campus)
 
