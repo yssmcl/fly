@@ -79,50 +79,9 @@ class PrevisaoOrcamentaria_CursoExtensaoForm(forms.ModelForm):
         return cleaned_data
 
 
-class BaseAgenteUniversitario_CursoExtensaoFormSet(forms.BaseInlineFormSet):
-    def clean(self):
-        cd = super().clean()
+class BaseAgenteUniversitario_CursoExtensaoFormSet(forms.BaseInlineFormSet): pass
 
-        coordenador = False
-        subcoordenador = False
-
-        for form in self.forms:
-            if form.cleaned_data and not form.cleaned_data.get('DELETE', False):
-                funcao = form.cleaned_data.get('funcao')
-                if funcao:
-                    if funcao.nome == 'Coordenador(a)':
-                        if coordenador:
-                            form.add_error('funcao', "Somente um coordenador é permitido.")
-                        coordenador = True
-                    elif funcao.nome == 'Subcoordenador(a)':
-                        if subcoordenador:
-                            form.add_error('funcao', "Somente um subcoordenador é permitido.")
-                        subcoordenador = True
-
-        return cd
-
-
-class BaseDocente_CursoExtensaoFormSet(forms.BaseInlineFormSet):
-    def clean(self):
-        cd = super().clean()
-
-        coordenador = False
-        subcoordenador = False
-
-        for form in self.forms:
-            if form.cleaned_data and not form.cleaned_data.get('DELETE', False):
-                funcao = form.cleaned_data.get('funcao')
-                if funcao:
-                    if funcao.nome == 'Coordenador(a)':
-                        if coordenador:
-                            form.add_error('funcao', "Somente um coordenador é permitido.")
-                        coordenador = True
-                    elif funcao.nome == 'Subcoordenador(a)':
-                        if subcoordenador:
-                            form.add_error('funcao', "Somente um subcoordenador é permitido.")
-                        subcoordenador = True
-
-        return cd
+class BaseDocente_CursoExtensaoFormSet(forms.BaseInlineFormSet): pass
 
 
 AgenteUniversitario_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, AgenteUniversitario_CursoExtensao, formset=BaseAgenteUniversitario_CursoExtensaoFormSet, extra=0, min_num=0, fields=['carga_horaria_dedicada', 'funcao', 'plano_trabalho', 'nome_completo', 'email', 'telefone', 'curso', 'colegiado', 'centro', 'unidade_administrativa', 'campus', 'pais', 'estado', 'cidade', 'logradouro', 'complemento', 'cep'])
