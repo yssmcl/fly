@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'docente.apps.DocenteConfig',
     'parecer.apps.ParecerConfig',
     'relatorio.apps.RelatorioConfig',
+    'comissao.apps.ComissaoConfig',
     'jquery',
     'djangoformsetjs',
     'django.contrib.admin',

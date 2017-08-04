@@ -30,11 +30,3 @@ class Docente(models.Model):
 
     def __str__(self):
         return self.nome_completo
-
-class Comissao(models.Model):
-    mandato_inicio = models.DateField()
-    mandato_fim = models.DateField()
-
-    docente = models.ForeignKey(Docente)
-
-    observacao = models.CharField(max_length=200)

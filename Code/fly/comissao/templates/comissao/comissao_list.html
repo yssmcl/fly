@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% load formset_tags %}
+
+{% block title %} Comissão {% endblock %}
+
+{% block body_begin_scripts %}
+
+	<script language="JavaScript" type="text/javascript">
+		function limparFiltros() {
+			document.getElementById("periodo").value = "";
+		}
+	</script>
+{% endblock %}
+
+{% block content %}
+
+	<br />
+
+	<form>
+		<div class="row">
+			<div class="medium-9 columns">
+				<label>Período</label>
+				<input type="text" name="periodo" id="periodo" value="{% ifequal request.GET.periodo '' %}{{ request.GET.periodo }}{% else %}{% now 'SHORT_DATE_FORMAT' %}{% endifequal %}"/>
+			</div>
+			<br />
+			<div class="medium-3 columns" style="text-align:center;">
+				<button type="submit" class="button">
+					<i class="fi-magnifying-glass size-16"></i> Pesquisar
+				</button>
+				<button type="button"
+					class="button"
+					style="width: 150px;"
+					onclick="limparFiltros()">
+					<i class="fi-filter size-16"></i> Limpar filtros
+				</button>
+			</div>			
+		</div>
+	</form>
+
+	<div class="row" style="text-align: right;">
+		<a class="success button"
+			href="{% url 'comissao:novo' %}">
+			<i class="fi-plus size-16"></i>
+			Nova comissão
+		</a>
+	</div>
+
+	<div class="row">
+		<table id="example" class="display">
+			<thead>
+				<th>Período</th>
+				<th style="text-align:center;">Ação</th>
+			</thead>
+			<tbody>
+				{% for comissao in object_list %}
+					<tr>
+						<td>{{ comissao.inicio }} - {{ comissao.fim }}</td>
+						<td style="text-align:center;">
+							<a href="{% url 'comissao:detalhe' comissao.pk %}" class="hollow button"
+								data-tooltip
+								title="Visualizar/editar comissão">
+								<i class="fi-info size-16"></i>
+								<i class="fi-pencil size-16"></i>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div class="row" style="text-align: right;">
+		<a class="success button"
+			href="{% url 'comissao:novo' %}">
+			<i class="fi-plus size-16"></i>
+			Nova comissão
+		</a>
+	</div>
+
+{% endblock %}

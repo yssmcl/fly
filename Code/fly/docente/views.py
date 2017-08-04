@@ -32,9 +32,8 @@ class ConsultaDocente(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         d = {}
-        if 'nome_completo' in self.request.GET:
-            d['nome_completo__contains'] = self.request.GET.get('nome_completo', '')
-            d['email__contains'] = self.request.GET.get('email', '')
+
+        d['nome_completo__contains'] = self.request.GET.get('nome_completo', '')
 
         return Docente.objects.filter(**d)
 

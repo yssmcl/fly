@@ -79,13 +79,8 @@ class PrevisaoOrcamentaria_CursoExtensaoForm(forms.ModelForm):
         return cleaned_data
 
 
-class BaseAgenteUniversitario_CursoExtensaoFormSet(forms.BaseInlineFormSet): pass
-
-class BaseDocente_CursoExtensaoFormSet(forms.BaseInlineFormSet): pass
-
-
-AgenteUniversitario_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, AgenteUniversitario_CursoExtensao, formset=BaseAgenteUniversitario_CursoExtensaoFormSet, extra=0, min_num=0, fields=['carga_horaria_dedicada', 'funcao', 'plano_trabalho', 'nome_completo', 'email', 'telefone', 'curso', 'colegiado', 'centro', 'unidade_administrativa', 'campus', 'pais', 'estado', 'cidade', 'logradouro', 'complemento', 'cep'])
-Docente_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, Docente_CursoExtensao, formset=BaseDocente_CursoExtensaoFormSet, extra=0, min_num=1, fields=['docente', 'carga_horaria_dedicada', 'funcao', 'plano_trabalho'])
+AgenteUniversitario_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, AgenteUniversitario_CursoExtensao, extra=0, min_num=0, fields=['carga_horaria_dedicada', 'funcao', 'plano_trabalho', 'nome_completo', 'email', 'telefone', 'curso', 'colegiado', 'centro', 'unidade_administrativa', 'campus', 'pais', 'estado', 'cidade', 'logradouro', 'complemento', 'cep'])
+Docente_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, Docente_CursoExtensao, extra=0, min_num=1, fields=['docente', 'carga_horaria_dedicada', 'funcao', 'plano_trabalho'])
 Discente_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, Discente_CursoExtensao, extra=0, fields=['nome', 'curso', 'serie', 'turno', 'carga_horaria_semanal', 'telefone', 'email', 'plano_trabalho'])
 PalavraChave_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, PalavraChave_CursoExtensao, extra=3, min_num=1, max_num=3, fields=['nome'])
 MembroComunidade_CursoExtensaoFormSet = forms.models.inlineformset_factory(CursoExtensao, MembroComunidade_CursoExtensao, extra=0, fields=['nome', 'carga_horaria_semanal', 'entidade', 'telefone', 'email', 'cpf', 'data_nascimento', 'funcao', 'plano_trabalho'])

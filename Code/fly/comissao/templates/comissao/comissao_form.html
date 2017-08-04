@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load formset_tags %}
+{% load i18n %}
+
+{% block title %} Comissao {% endblock%}
+
+{% block body_begin_scripts %}
+	<script language="JavaScript" type="text/javascript">
+		function cancelar_cadastro() {
+			decisao = confirm("Ao sair, todos os dados do formulário serão perdidos. Deseja continuar?");
+			if (decisao) {
+				location.href = "{% url 'comissao:consulta' %}";
+			}
+		}
+	</script>
+{% endblock %}
+
+{% block content %}
+	{% trans '<sup><a href="#campo_obrigatorio">*</a></sup>' as campo_obrigatorio %}
+
+	<h1 style="text-align:center;">Cadastro de Comissao</h1>
+
+	<form data-abide novalidate method="post">
+		{% csrf_token %}
+
+		<div class="row" style="text-align:left;">
+			<button type="submit" class="button primary" style="width:130px;">
+				<i class="fi-save size-16"></i> Salvar
+			</button>
+		</div>
+
+		<div class="row">
+			{{ main_form.non_field_errors }}
+			<div data-abide-error class="alert callout" style="display: none;">
+				<p><i class="fi-alert"></i>Campos obrigatórios não preenchidos!</p>
+			</div>
+		</div>
+
+		{% for hidden in main_form.hidden_fields %}{{ hidden }}{% endfor %}
+
+		<div class="row">
+			<div class="medium-6 columns">
+				<label>Início{{ campo_obrigatorio }}</label>
+				{{ main_form.inicio }}
+				{{ main_form.inicio.errors }}
+			</div>
+			<div class="medium-6 columns">
+				<label>Fim{{ campo_obrigatorio }}</label>
+				{{ main_form.fim }}
+				{{ main_form.fim.errors }}
+			</div>
+		</div>
+
+
+		<div class="row">
+			<hr/>
+			<h3><b>Membros</b></h3>
+		</div>
+		<div id="membros_formset" data-formset-prefix="{{ membros_formset.prefix }}">
+			{{ membros_formset.management_form }}
+			<div data-formset-body>
+				{% for form in membros_formset %}
+					<div data-formset-form>
+						{% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+						<div class="row"><div class="medium-12">
+							{{ form.non_field_errors }}
+						</div></div>
+						<div class="row">
+							<div class="medium-10 columns">
+								<label>Docente{{ campo_obrigatorio }}</label>
+								{{ form.docente }}
+								{{ form.docente.errors }}
+							</div>
+							{% if membros_formset.can_delete %}
+								<div class="medium-2 columns">
+									<label>Deletar</label>
+									{{ form.DELETE }}
+								</div>
+							{% endif %}
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			<script type="form-template" data-formset-empty-form>
+				{% escapescript %}
+					<div data-formset-form>
+						{% for hidden in membros_formset.empty_form.hidden_fields %}{{ hidden }}{% endfor %}
+						<div class="row"><div class="medium-12">
+							{{ membros_formset.empty_form.non_field_errors }}
+						</div></div>
+						<div class="row">
+							<div class="medium-10 columns">
+								<label>Docente{{ campo_obrigatorio }}</label>
+								{{ membros_formset.empty_form.docente }}
+								{{ membros_formset.empty_form.docente.errors }}
+							</div>
+						</div>
+					</div>
+				{% endescapescript %}
+			</script>
+			<div class="row">
+				<div class="medium-12 columns">
+					<a class="hollow button"
+						type="button"
+						title="Adicionar membro"
+						data-alignment="center"
+						data-position="bottom"
+						data-tooltip
+						data-formset-add>
+						<i class="fi-plus size-16"></i>
+					</a>
+					<a class="hollow button"
+						type="button"
+						title="Excluir membro"
+						data-alignment="center"
+						data-position="bottom"
+						data-tooltip
+						data-formset-delete-button>
+						<i class="fi-minus size-16"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row" id="campo_obrigatorio">
+			<span><b>* Campos obrigatórios</b></span>
+		</div>
+		<div class="row">
+			<div style="text-align:left;">
+				<button type="submit" class="button secondary" style="width:130px;" onclick="cancelar_cadastro()"/>
+					<i class="fi-x size-16"></i> Cancelar
+				</button>
+				<button type="submit" class="button primary" style="width:130px;">
+					<i class="fi-save size-16"></i> Salvar
+				</button>
+			</div>
+		</div>
+		<br />
+	</form>
+{% endblock %}
+
+{% block body_end_scripts %}
+	<script src="{% static 'js/jquery.js' %}"></script>
+	<script src="{% static 'js/jquery.formset.js' %}"></script>
+	<script src="{% static 'js/vendor/jquery.maskedinput.js' %}"></script>
+	<script src="{% static 'js/mascaras.js' %}"></script>
+	<script>
+		jQuery(function($) {
+			$("#membros_formset").formset({});
+		});
+	</script>
+{% endblock %}
