@@ -147,11 +147,12 @@ class GeracaoPDFRelatorio(LoginRequiredMixin, View):
     def get(self, request, pk):
         relatorio = get_object_or_404(Relatorio, pk=pk)
 
-        try:
-            gerar_pdf(relatorio)
-        except subprocess.CalledProcessError:
-            pass
-            
+        # TODO:
+        #  try:
+        gerar_pdf(relatorio)
+        #  except subprocess.CalledProcessError:
+            #  pass
+
         nome_arquivo = 'relatorio_{}.pdf'.format(str(pk))
 
         with open(PDF_DIR + nome_arquivo, 'rb') as arquivo_pdf:
