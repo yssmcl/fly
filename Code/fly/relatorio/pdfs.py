@@ -67,15 +67,18 @@ def gerar_pdf(relatorio):
 
         pdfutils.item(doc, enum, 'RESUMO DA ATIVIDADE REALIZADA: ')
         doc.append(NewLine())
-        doc.append(escape_latex(relatorio.resumo))
+        resumo_fmt = escape_latex(relatorio.resumo.replace('\r', ''))
+        doc.append(escape_latex(resumo_fmt))
 
         pdfutils.item(doc, enum, 'RELACIONAR AS ATIVIDADES REALIZADAS OU A PROGRAMAÇÃO PARA CURSOS OU EVENTOS: ')
         doc.append(NewLine())
-        doc.append(escape_latex(relatorio.atividades_realizadas_programacao))
+        atividades_fmt = escape_latex(relatorio.atividades_realizadas_programacao.replace('\r', ''))
+        doc.append(atividades_fmt)
 
         pdfutils.item(doc, enum, 'RELACIONAR AS DIFICULDADES TÉCNICAS E/OU ADMINISTRATIVAS (se houver): ')
         doc.append(NewLine())
-        doc.append(escape_latex(relatorio.dificuldades))
+        dificuldades_fmt = escape_latex(relatorio.dificuldades.replace('\r', ''))
+        doc.append(dificuldades_fmt)
 
     pdfutils.local_data_assinatura(doc)
 

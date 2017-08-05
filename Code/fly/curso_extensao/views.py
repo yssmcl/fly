@@ -197,10 +197,11 @@ class GeracaoPDFCursoExtensao(LoginRequiredMixin, View):
     def get(self, request, pk):
         curso_extensao = get_object_or_404(CursoExtensao, pk=pk)
 
-        try:
-            gerar_pdf(curso_extensao)
-        except subprocess.CalledProcessError:
-            pass
+        # TODO:
+        #  try:
+        gerar_pdf(curso_extensao)
+        #  except subprocess.CalledProcessError:
+            #  pass
 
         nome_arquivo = 'curso_extensao_{}.pdf'.format(str(pk))
 
@@ -212,7 +213,7 @@ class GeracaoPDFCursoExtensao(LoginRequiredMixin, View):
 
             return response
 
-            
+
 class DeletarCursoExtensao(LoginRequiredMixin, View):
     def post(self, request):
         curso_extensao = get_object_or_404(CursoExtensao, pk=request.POST['pk'])

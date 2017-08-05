@@ -6,6 +6,7 @@ from django.contrib.auth import models as auth_models
 from base.models import Programa, UnidadeAdministrativa, Campus, Centro, GrandeArea, AreaTematica, LinhaExtensao, TipoGestaoRecursosFinanceiros, FuncaoServidor, CursoUnioeste, EstadoProjeto
 from docente.models import Docente
 
+
 class CursoExtensao(models.Model):
     user = models.ForeignKey(auth_models.User)
 
@@ -134,6 +135,7 @@ class AgenteUniversitario_CursoExtensao(models.Model):
 
     def __str__(self):
         return self.nome_completo
+
 
 class TurnoCurso(models.Model):
     nome = models.CharField(max_length=200)

@@ -71,11 +71,13 @@ def gerar_pdf(curso):
 
         pdfutils.item(doc, enum, 'RESUMO: ')
         doc.append(NewLine())
-        doc.append(escape_latex(curso.resumo))
+        resumo_fmt = escape_latex(curso.resumo.replace('\r', ''))
+        doc.append(escape_latex(resumo_fmt))
 
         pdfutils.item(doc, enum, 'PROGRAMAÇÃO: ')
         doc.append(NewLine())
-        doc.append(escape_latex(curso.programacao))
+        programacao_fmt = escape_latex(curso.programacao.replace('\r', ''))
+        doc.append(programacao_fmt)
 
         pdfutils.item(doc, enum, 'EQUIPE DE TRABALHO: ')
         doc.append(NewLine())
