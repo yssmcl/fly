@@ -41,9 +41,7 @@ def pacotes(doc):
     doc.packages.add(Package('mdframed'))
     doc.packages.add(Package('eqparbox'))
     doc.packages.add(Package('fancyhdr'))
-    # TODO:
-    # Impede hifenização das palavras
-    # doc.packages.add(Package('hyphenat', options='none'))
+    doc.packages.add(Package('makecell'))
 
 
 def configuracoes_preambulo(doc):
@@ -60,7 +58,7 @@ def configuracoes_preambulo(doc):
     doc.preamble.append(NoEscape('\pagestyle{fancy}'))
 
     # Diretório das imagens
-    diretorio_img = BASE_DIR + '/base/static/img/'
+    diretorio_img = BASE_DIR + '/base/static/img/' # necessário barra no final (trailing slash)
     doc.preamble.append(NoEscape(r'\graphicspath{{' + diretorio_img + '}}'))
 
     # Tamanho da fonte
@@ -355,12 +353,12 @@ def mdframed_plano_trabalho(doc, models):
 
 
 def tabela_discentes(doc, enum, projeto_extensao):
-    table_spec = NoEscape(r'''>{\centering\arraybackslash}X|
-                          @{    }c@{    }|
-                          @{    }c@{    }|
-                          @{    }c@{    }|
-                          @{    }c@{    }|
-                          >{\centering\arraybackslash}X|
+    table_spec = NoEscape(r'''|>{\centering\arraybackslash}X| % prioriza cabeçalho
+                              >{\centering\arraybackslash}X|
+                              @{  }c@{  }| % prioriza conteúdo
+                              @{  }c@{  }|
+                              @{  }c@{  }|
+                              @{  }c@{  }|
                           ''')
     cabecalho = ['NOME COMPLETO',
                  'CURSO',
@@ -383,7 +381,8 @@ def tabela_discentes(doc, enum, projeto_extensao):
                      discente.serie,
                      discente.turno.nome,
                      discente.carga_horaria_semanal,
-                     NoEscape(discente.telefone + ', \n' + '\leavevmode\hspace{0pt}' + escape_latex(discente.email))]
+                     # TODO: hifenizar email
+                     NoEscape('\makecell{' + discente.telefone + ';' + escape_latex(discente.email) + '}')]
             tab.add_row(linha)
             tab.add_hline()
 
@@ -393,18 +392,18 @@ def tabela_discentes(doc, enum, projeto_extensao):
 
 
 def tabela_membros(doc, enum, projeto_extensao):
-    table_spec = NoEscape(r'''@{    }c@{    }|
-                          >{\centering\arraybackslash}X|
-                          @{    }c@{    }|
-                          @{    }c@{    }|
-                          @{    }c@{    }|
-                          >{\centering\arraybackslash}X|
-                          >{\centering\arraybackslash}X|
+    table_spec = NoEscape(r'''|>{\centering\arraybackslash}X|
+                              >{\centering\arraybackslash}X|
+                              @{  }c@{  }|
+                              @{  }c@{  }|
+                              >{\centering\arraybackslash}X|
+                              >{\centering\arraybackslash}X|
+                              @{  }c@{  }|
                           ''')
     cabecalho = ['NOME COMPLETO',
                  'INSTITUIÇÃO/ ENTIDADE',
                  'CPF',
-                 'DATA DE NASC.',
+                 'DATA NASC.',
                  'FUNÇÃO',
                  'C/H SEMANAL',
                  'TELEFONE E E-MAIL']
@@ -421,10 +420,12 @@ def tabela_membros(doc, enum, projeto_extensao):
             linha = [membro.nome,
                      membro.entidade,
                      membro.cpf,
-                     str(membro.data_nascimento),
+                     membro.data_nascimento.strftime('%d/%m/%Y'),
+                     # str(membro.data_nascimento),
                      membro.funcao,
                      membro.carga_horaria_semanal,
-                     NoEscape(membro.telefone + ', \n' + '\leavevmode\hspace{0pt}' + escape_latex(membro.email))]
+                     # TODO: hifenizar email
+                     NoEscape('\makecell{' + membro.telefone + ';' + escape_latex(membro.email) + '}')]
             tab.add_row(linha)
             tab.add_hline()
 
