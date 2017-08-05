@@ -7,6 +7,7 @@ from pylatex.utils import escape_latex, bold
 
 from base.models import *
 from curso_extensao.models import *
+from docente.models import *
 from relatorio.models import *
 from fly.settings import BASE_DIR
 
@@ -152,11 +153,11 @@ Assinatura: \hrulefill \\
 
 def tabela_unidade_administrativa(doc, enum, unidade_administrativa, campus):
         item(doc, enum, 'UNIDADE ADMINISTRATIVA: ')
-        for ua in UnidadeAdministrativa.objects.all():
-            if unidade_administrativa and unidade_administrativa.id == ua.id:
-                doc.append(NoEscape(r'{} ({}) '.format(ua.nome, times)))
+        for unidade in UnidadeAdministrativa.objects.all():
+            if unidade_administrativa and unidade_administrativa.id == unidade.id:
+                doc.append(NoEscape(r'{} ({}) '.format(unidade.nome, times)))
             else:
-                doc.append(NoEscape(r'{} ({}) '.format(ua.nome, phantom)))
+                doc.append(NoEscape(r'{} ({}) '.format(unidade.nome, phantom)))
         doc.append(NewLine())
 
         doc.append(bold('CAMPUS DE: '))
@@ -259,80 +260,112 @@ def tabela_linha_extensao(doc, enum, linha_extensao, id):
     doc.append(NoEscape('}'))
 
 
-def mdframed_equipe_trabalho(doc, enum, projeto_extensao):
-    # TODO: se projeto_extensao.servidores.all() for vazio, esse item não aparece?
-    servidores_cursoextensao = Servidor_CursoExtensao.objects.filter(curso_extensao_id=projeto_extensao.id)
-    for servidor_cursoextensao in servidores_cursoextensao:
-        servidor = servidor_cursoextensao.servidor
+def popular_servidores(doc, servidor, docente_cursoextensao=None):
+    with doc.create(MdFramed(options=mdframed_options)):
+        doc.append(bold('SERVIDORES UNIOESTE '))
+        doc.append(NewLine())
+
+        doc.append(NoEscape('Nome completo: '))
+        doc.append(escape_latex(servidor.nome_completo))
+        doc.append(NewLine())
+
+        if servidor.__class__ == Docente_CursoExtensao:
+            for tipo_docente in TipoDocente.objects.all():
+                if docente.tipo_docente.id == tipo_docente.id:
+                    doc.append(NoEscape(r'({}) {} '.format(times, tipo_docente.nome)))
+                else:
+                    doc.append(NoEscape(r'({}) {} '.format(phantom, tipo_docente.nome)))
+            doc.append(NoEscape(r'({}) {} '.format(phantom, 'Agente Universitário')))
+            doc.append(NewLine())
+        elif servidor.__class__ == AgenteUniversitario_CursoExtensao:
+            for tipo_docente in TipoDocente.objects.all():
+                doc.append(NoEscape(r'({}) {} '.format(phantom, tipo_docente.nome)))
+            doc.append(NoEscape(r'({}) {} '.format(times, 'Agente Universitário')))
+            doc.append(NewLine())
+
+        # TODO: regime_trabalho
+        #  doc.append('Regime de trabalho: ')
+        #  doc.append(escape_latex(servidor.regime_trabalho))
+        #  doc.append(NoEscape('\ hora(s) \hfill'))
+
+        doc.append('Carga horária semanal dedicada à atividade: ')
+        if docente_cursoextensao:
+            doc.append(docente_cursoextensao.carga_horaria_dedicada)
+        else:
+            doc.append(servidor.carga_horaria_dedicada)
+        doc.append(NoEscape('\ hora(s) \hfill'))
+        doc.append(NewLine())
+
+        doc.append('Colegiado: ')
+        doc.append(escape_latex(servidor.colegiado))
+        doc.append(NewLine())
+
+        doc.append('Centro: ')
+        doc.append(escape_latex(servidor.centro.nome))
+        doc.append(NewLine())
+
+        # TODO: unidade_administrativa
+        #  doc.append('Unidade Administrativa: ')
+        #  for unidade in UnidadeAdministrativa.objects.all():
+        #      if agente_cursoextensao.unidade_administrativa and agente_cursoextensao.unidade_administrativa.id == unidade.id:
+        #          doc.append(NoEscape(r'({}) {} '.format(times, unidade.nome)))
+        #      else:
+        #          doc.append(NoEscape(r'({}) {} '.format(phantom, unidade.nome)))
+
+        #  if agente_cursoextensao.campus:
+        #      doc.append(NoEscape(r'({}) CAMPUS DE: {}'.format(times, agente_cursoextensao.campus.nome)))
+        #  else:
+        #      doc.append(NoEscape(r'({}) CAMPUS DE: '.format(phantom)))
+        #  doc.append(NewLine())
+
+        doc.append(NoEscape('E-mail: '))
+        doc.append(escape_latex(servidor.email))
+        doc.append(NewLine())
+
+        doc.append('Telefone: ')
+        doc.append(servidor.telefone)
+        doc.append(NewLine())
+
+        doc.append('Endereço: ')
+        doc.append(NoEscape('{}, {} -- {} -- {}'.format(escape_latex(servidor.logradouro),
+                                                        escape_latex(servidor.cidade),
+                                                        escape_latex(servidor.estado),
+                                                        escape_latex(servidor.pais))))
+        doc.append(NewLine())
 
         with doc.create(MdFramed(options=mdframed_options)):
-            doc.append(bold('SERVIDORES UNIOESTE '))
+            doc.append('Função: ')
             doc.append(NewLine())
-
-            doc.append(NoEscape('Nome completo: '))
-            doc.append(servidor.nome_completo)
-            doc.append(NewLine())
-
-            for tipo_servidor in TipoServidor.objects.all():
-                if servidor.tipo.id == tipo_servidor.id:
-                    doc.append(NoEscape(r'({}) {} '.format(times, tipo_servidor.nome)))
-                else:
-                    doc.append(NoEscape(r'({}) {} '.format(phantom, tipo_servidor.nome)))
-            doc.append(NewLine())
-
-            doc.append('Regime de trabalho: ')
-            doc.append(escape_latex(servidor.regime_trabalho))
-            doc.append(NoEscape('\ hora(s) \hfill'))
-            doc.append('Carga horária semanal dedicada à atividade: ')
-            doc.append(servidor_cursoextensao.carga_horaria_dedicada)
-            doc.append(NoEscape('\ hora(s) \hfill'))
-            doc.append(NewLine())
-
-            doc.append('Colegiado: ')
-            doc.append(escape_latex(servidor.colegiado))
-            doc.append(HFill())
-            doc.append('Centro: ')
-            doc.append(escape_latex(servidor.centro.nome))
-            doc.append(NewLine())
-
-            doc.append('Unidade Administrativa: ')
-            for ua in UnidadeAdministrativa.objects.all():
-                if servidor.unidade_administrativa and servidor.unidade_administrativa.id == ua.id:
-                    doc.append(NoEscape(r'({}) {} '.format(times, ua.nome)))
-                else:
-                    doc.append(NoEscape(r'({}) {} '.format(phantom, ua.nome)))
-
-            if servidor.campus:
-                doc.append(NoEscape(r'({}) CAMPUS DE: {}'.format(times, servidor.campus.nome)))
-            else:
-                doc.append(NoEscape(r'({}) CAMPUS DE: '.format(phantom)))
-            doc.append(NewLine())
-
-            doc.append(NoEscape('E-mail: '))
-            doc.append(escape_latex(servidor.email))
-            doc.append(NewLine())
-
-            doc.append('Telefone: ')
-            doc.append(servidor.telefone)
-            doc.append(NewLine())
-
-            doc.append('Endereço: ')
-            doc.append(servidor.logradouro + ', ' + servidor.cidade + ', ' + servidor.estado)
-            doc.append(NewLine())
-
-            with doc.create(MdFramed(options=mdframed_options)):
-                doc.append('Função: ')
-                doc.append(NewLine())
+            if docente_cursoextensao:
                 tabela_alternativas(doc, FuncaoServidor, 'XXX',
-                             id=servidor_cursoextensao.funcao.id, hline=False)
+                                    id=docente_cursoextensao.funcao.id, hline=False)
+            else:
+                tabela_alternativas(doc, FuncaoServidor, 'XXX',
+                                    id=servidor.funcao.id, hline=False)
 
-            doc.append(NoEscape(r'\bigskip'))
-            doc.append(NoEscape(r'\bigskip'))
-            doc.append(NoEscape(r'Assinatura do participante: \hrulefill \\ \\ \\'))
-            doc.append(NoEscape(r'Assinatura da chefia imediata: \hrulefill \\ \\'))
+        doc.append(NoEscape(r'\bigskip'))
+        doc.append(NoEscape(r'\bigskip'))
+        doc.append(NoEscape(r'Assinatura do participante: \hrulefill \\ \\ \\'))
+        doc.append(NoEscape(r'Assinatura da chefia imediata: \hrulefill \\ \\'))
 
-            doc.append(bold('PLANO DE TRABALHO: '))
-            doc.append(escape_latex(servidor_cursoextensao.plano_trabalho))
+        doc.append(bold('PLANO DE TRABALHO: '))
+        if docente_cursoextensao:
+            doc.append(escape_latex(docente_cursoextensao.plano_trabalho))
+        else:
+            doc.append(escape_latex(servidor.plano_trabalho))
+
+
+def mdframed_equipe_trabalho(doc, enum, projeto_extensao):
+    # itera sobre os docentes
+    docentes_cursoextensao = Docente_CursoExtensao.objects.filter(curso_extensao_id=projeto_extensao.id)
+    for docente_cursoextensao in docentes_cursoextensao:
+        docente = docente_cursoextensao.docente
+        popular_servidores(doc, docente, docente_cursoextensao)
+
+    # itera sobre os agentes universitários
+    agentes_cursoextensao = AgenteUniversitario_CursoExtensao.objects.filter(curso_extensao_id=projeto_extensao.id)
+    for agente_cursoextensao in agentes_cursoextensao:
+        popular_servidores(doc, agente_cursoextensao)
 
 
 def mdframed_plano_trabalho(doc, models):
@@ -353,9 +386,9 @@ def mdframed_plano_trabalho(doc, models):
 
 
 def tabela_discentes(doc, enum, projeto_extensao):
-    table_spec = NoEscape(r'''|>{\centering\arraybackslash}X| % prioriza cabeçalho
+    table_spec = NoEscape(r'''>{\centering\arraybackslash}X|
                               >{\centering\arraybackslash}X|
-                              @{  }c@{  }| % prioriza conteúdo
+                              @{  }c@{  }|
                               @{  }c@{  }|
                               @{  }c@{  }|
                               @{  }c@{  }|
@@ -376,13 +409,17 @@ def tabela_discentes(doc, enum, projeto_extensao):
 
         discentes = Discente_CursoExtensao.objects.filter(curso_extensao_id=projeto_extensao.id)
         for discente in discentes:
-            linha = [discente.nome,
-                     discente.curso,
-                     discente.serie,
-                     discente.turno.nome,
-                     discente.carga_horaria_semanal,
-                     # TODO: hifenizar email
-                     NoEscape('\makecell{' + discente.telefone + ';' + escape_latex(discente.email) + '}')]
+            linha = [
+                discente.nome,
+                discente.curso,
+                discente.serie,
+                discente.turno.nome,
+                discente.carga_horaria_semanal,
+                # TODO: hifenizar email
+                NoEscape('\makecell{' + escape_latex(discente.telefone) +
+                         r'; \\ ' +
+                         escape_latex(discente.email) + '}')
+            ]
             tab.add_row(linha)
             tab.add_hline()
 
@@ -392,7 +429,7 @@ def tabela_discentes(doc, enum, projeto_extensao):
 
 
 def tabela_membros(doc, enum, projeto_extensao):
-    table_spec = NoEscape(r'''|>{\centering\arraybackslash}X|
+    table_spec = NoEscape(r'''>{\centering\arraybackslash}X|
                               >{\centering\arraybackslash}X|
                               @{  }c@{  }|
                               @{  }c@{  }|
@@ -401,7 +438,7 @@ def tabela_membros(doc, enum, projeto_extensao):
                               @{  }c@{  }|
                           ''')
     cabecalho = ['NOME COMPLETO',
-                 'INSTITUIÇÃO/ ENTIDADE',
+                 'ENTIDADE',
                  'CPF',
                  'DATA NASC.',
                  'FUNÇÃO',
@@ -417,15 +454,18 @@ def tabela_membros(doc, enum, projeto_extensao):
 
         membros = MembroComunidade_CursoExtensao.objects.filter(curso_extensao_id=projeto_extensao.id)
         for membro in membros:
-            linha = [membro.nome,
-                     membro.entidade,
-                     membro.cpf,
-                     membro.data_nascimento.strftime('%d/%m/%Y'),
-                     # str(membro.data_nascimento),
-                     membro.funcao,
-                     membro.carga_horaria_semanal,
-                     # TODO: hifenizar email
-                     NoEscape('\makecell{' + membro.telefone + ';' + escape_latex(membro.email) + '}')]
+            linha = [
+                membro.nome,
+                membro.entidade,
+                membro.cpf,
+                membro.data_nascimento.strftime('%d/%m/%Y'),
+                membro.funcao,
+                membro.carga_horaria_semanal,
+                # TODO: hifenizar email
+                NoEscape('\makecell{' + escape_latex(membro.telefone) +
+                         r'; \\ ' +
+                         escape_latex(membro.email) + '}')
+            ]
             tab.add_row(linha)
             tab.add_hline()
 

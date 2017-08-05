@@ -133,7 +133,8 @@ class AgenteUniversitario_CursoExtensao(models.Model):
     cep = models.IntegerField()
 
     def __str__(self):
-    	return self.nome_completo
+        return self.nome_completo
+
 
 class TurnoCurso(models.Model):
     nome = models.CharField(max_length=200)
