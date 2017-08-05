@@ -41,6 +41,7 @@
 		<table>
 			<thead>
 				<th>Período</th>
+				<th>Estado</th>
 				<th>Arquivos</th>
 				<th style="text-align:center;">Ação</th>
 			</thead>
@@ -48,6 +49,7 @@
 				{% for relatorio in object_list %}
 					<tr>
 						<td>{{ relatorio.periodo_inicio }} — {{relatorio.periodo_fim}}</td>
+						<td>{{ relatorio.estado }}</td>
 						<td>
 							<a href="{% url 'relatorio:lista_arquivos' relatorio.pk %}"
 								class="hollow button"
@@ -76,6 +78,16 @@
 								<button type="submit" value="Deletar"
 									class="hollow button"
 									title="Excluir relatório"
+									data-tooltip>
+									<i class="fi-trash size-16"></i>
+								</button>
+							</form>
+							<form method="post" action="{% url 'relatorio:submeter' %}" onsubmit="return confirm('Após a submissão, não será mais possivel editar o relatório. Deseja continuar?');" style="display: inline;">
+								{% csrf_token %}
+								<input type="hidden" name="pk" value="{{ relatorio.pk }}"/>
+								<button type="submit" value="Submissão"
+									class="hollow button"
+									title="Submeter relatório"
 									data-tooltip>
 									<i class="fi-trash size-16"></i>
 								</button>

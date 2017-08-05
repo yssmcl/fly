@@ -20,22 +20,22 @@
 
 	<form>
 		<div class="row">
-			<div class="medium-4 columns">
+			<div class="medium-3 columns">
 				<label>Título:</label>
 				<input type="text" name="titulo" id="titulo" value="{{ request.GET.titulo }}"/>
 			</div>
 
-			<div class="medium-4 columns">
+			<div class="medium-3 columns">
 				<label>Coordenador(a):</label>
 				<input type="text" name="coordenador" id="coordenador" value="{{ request.GET.coordenador }}"/>
 			</div>
 
-			<!-- <div class="medium-3 columns">
+			<div class="medium-3 columns">
 				<label>Estado:</label>
 				<input type="text" name="estado" value="{{ request.GET.estado }}"/>
-			</div> -->
+			</div>
 
-			<div class="medium-4 columns">
+			<div class="medium-3 columns">
 				<br />
 				<button type="submit" class="button">
 					<i class="fi-magnifying-glass size-16"></i> Pesquisar
@@ -63,17 +63,18 @@
 			<thead>
 				<th>Título</th>
 				<th>Coordenador(a)</th>
-				<!-- <th>Estado</th> -->
+				<th>Estado</th>
 				<th style="text-align:center;">Projeto</th>
 				<th style="text-align:center;">Relatório</th>
 				<th style="text-align:center;">Parecer</th>
+				<th style="text-align:center;">Submeter</th>
 			</thead>
 			<tbody>
 				{% for curso_extensao in object_list %}
 					<tr>
 						<td>{{ curso_extensao }}</td>
 						<td>{{ curso_extensao.coordenador }}</td>
-						<!-- <td>{{ curso_extensao.estado }}</td> -->
+						<td>{{ curso_extensao.estado }}</td>
 						<td style="text-align:center;">
 							<a href="{% url 'curso_extensao:detalhe' curso_extensao.pk %}"
 								class="hollow button"
@@ -126,6 +127,18 @@
 								title="Visualizar pareceres">
 								<i class="fi-list size-16"></i>
 							</a>
+						</td>
+						<td style="text-align:center;">
+							<form method="post" action="{% url 'curso_extensao:submeter' %}" onsubmit="return confirm('Após a submissão, não será mais possivel editar o curso de extensão. Deseja continuar?');" style="display: inline;">
+								{% csrf_token %}
+								<input type="hidden" name="pk" value="{{ curso_extensao.pk }}"/>
+								<button type="submit" value="Submeter"
+									class="hollow button"
+									title="Submeter projeto"
+									data-tooltip>
+									<i class="fi-trash size-16"></i>
+								</button>
+							</form>
 						</td>
 					</tr>
 				{% endfor %}

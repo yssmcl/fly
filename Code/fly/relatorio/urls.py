@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^deletar_arquivo/$', views.DeletarArquivoRelatorio.as_view(), name='deletar_arquivo'),
     url(r'^pdf/(?P<pk>[0-9]+)/$', views.GeracaoPDFRelatorio.as_view(), name='pdf'),
 	url(r'^deletar/$', views.DeletarRelatorio.as_view(), name='deletar'),
+	url(r'^submeter/$', views.SubmeterRelatorio.as_view(), name='submeter'),
 ]

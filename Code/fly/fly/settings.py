@@ -27,7 +27,7 @@ SECRET_KEY = 'g@xfsl+31evbzmbo*)cxp5+@4w=wy#7((jv$sw8!y7l^3*uziq'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost', 'cacc.unioeste-foz.br']
+ALLOWED_HOSTS = ['cacc.unioeste-foz.br', '0.0.0.0', '127.0.0.1', 'localhost']
 
 
 # Application definition

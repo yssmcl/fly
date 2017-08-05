@@ -4,12 +4,14 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.encoding import smart_str
 from django.views import View, generic
+from django.urls import reverse
 
 from .forms import RelatorioForm, RelatorioFileForm, CertificadoRelatorioFormSet
 from .models import Relatorio, RelatorioFile, EstadoRelatorio
 from curso_extensao.models import CursoExtensao
 from relatorio.pdfs import gerar_pdf
 from fly.settings import PDF_DIR, MEDIA_ROOT
+from base.utils import send_email_comissao
 
 import subprocess
 
@@ -178,8 +180,20 @@ class GeracaoPDFRelatorio(LoginRequiredMixin, View):
 class DeletarRelatorio(LoginRequiredMixin, View):
     def post(self, request):
         relatorio = get_object_or_404(Relatorio, pk=request.POST['pk'])
-        if relatorio.projeto_extensao.user == request.user:
+        if relatorio.projeto_extensao.user != request.user:
+            return redirect('base:index') #TODO: mensagem de erro
+        else:
             relatorio.delete()
             return redirect('relatorio:consulta', relatorio.projeto_extensao.pk)
-        else:
+
+
+class SubmeterRelatorio(LoginRequiredMixin, View):
+    def post(self, request):
+        relatorio = get_object_or_404(Relatorio, pk=request.POST['pk'])
+        if relatorio.projeto_extensao.user != request.user or relatorio.estado.nome not in {'Não submetido'}:
             return redirect('base:index') #TODO: mensagem de erro
+        else:
+            relatorio.estado = EstadoRelatorio.objects.get(nome='Submetido')
+            relatorio.save()
+            send_email_comissao("[SGPE] Submissão de relatório.", 'Relatório submetido, acesse-o neste <a href="http://127.0.0.1:8000' + reverse('relatorio:detalhe', args=[relatorio.pk]) + '">link</a>.')
+            return redirect('relatorio:consulta', relatorio.projeto_extensao.pk)

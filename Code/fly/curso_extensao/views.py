@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.db.models import F
@@ -8,11 +6,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.utils.encoding import smart_str
 from django.views import View, generic
+from django.urls import reverse
 from fly.settings import PDF_DIR
 
 from .forms import CursoExtensaoForm, AgenteUniversitario_CursoExtensaoFormSet, Docente_CursoExtensaoFormSet, PalavraChave_CursoExtensaoFormSet, Discente_CursoExtensaoFormSet, MembroComunidade_CursoExtensaoFormSet, PrevisaoOrcamentaria_CursoExtensaoFormSet
 from .models import CursoExtensao
 from base.models import EstadoProjeto
+from base.utils import send_email_comissao
 from curso_extensao.pdfs import gerar_pdf
 
 import subprocess
@@ -120,13 +120,13 @@ class ConsultaCursoExtensao(LoginRequiredMixin, generic.ListView):
         d = { 'user': self.request.user }
 
         if 'titulo' in self.request.GET:
-            d['titulo__contains'] = self.request.GET.get('titulo', '')
+            d['titulo__contains'] = self.request.GET['titulo']
 
         if 'coordenador' in self.request.GET:
-            d['coordenador__nome_completo__contains'] = self.request.GET.get('coordenador', '')
+            d['coordenador__nome_completo__contains'] = self.request.GET['coordenador']
 
         if 'estado' in self.request.GET:
-            d['estado__nome__contains'] = self.request.GET.get('estado', '')
+            d['estado__nome__contains'] = self.request.GET['estado']
 
         return CursoExtensao.objects.filter(**d)
 
@@ -162,8 +162,7 @@ class DetalheCursoExtensao(LoginRequiredMixin, View):
         membros_comunidade_formset = MembroComunidade_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='membros')
         previsao_orcamentaria_formset = PrevisaoOrcamentaria_CursoExtensaoFormSet(request.POST, instance=curso_extensao, prefix='previsao')
 
-        #TODO:
-        if curso_extensao.estado.nome == 'B':
+        if curso_extensao.estado.nome not in {'Não submetido', 'Reformulação'}:
             main_form.add_error(None, "Não é possível editar esse curso de extensão, pois ele já foi submetido.")
 
         validar_curso_extensao(main_form, palavras_formset, discentes_formset, docentes_formset, agentes_universitarios_formset, membros_comunidade_formset, previsao_orcamentaria_formset)
@@ -217,8 +216,20 @@ class GeracaoPDFCursoExtensao(LoginRequiredMixin, View):
 class DeletarCursoExtensao(LoginRequiredMixin, View):
     def post(self, request):
         curso_extensao = get_object_or_404(CursoExtensao, pk=request.POST['pk'])
-        if curso_extensao.user == request.user:
+        if curso_extensao.user != request.user:
+            return redirect('curso_extensao:consulta') #TODO: mensagem de erro
+        else:
             curso_extensao.delete()
             return redirect('curso_extensao:consulta')
-        else:
+
+            
+class SubmeterCursoExtensao(LoginRequiredMixin, View):
+    def post(self, request):
+        curso_extensao = get_object_or_404(CursoExtensao, pk=request.POST['pk'])
+        if curso_extensao.user != request.user or curso_extensao.estado.nome not in {'Não submetido', 'Reformulação'}:
             return redirect('curso_extensao:consulta') #TODO: mensagem de erro
+        else:
+            curso_extensao.estado = EstadoProjeto.objects.get(nome='Submetido')
+            curso_extensao.save()
+            send_email_comissao("[SGPE] Submissão de Curso de Extensão.", 'Curso de Extensão submetido, acesse-o neste <a href="http://127.0.0.1:8000' + reverse('curso_extensao:detalhe', args=[curso_extensao.pk]) + '">link</a>.')
+            return redirect('curso_extensao:consulta')

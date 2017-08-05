@@ -9,4 +9,5 @@ urlpatterns = [
 	url(r'^(?P<pk>[0-9]+)/$', views.DetalheCursoExtensao.as_view(), name='detalhe'),
 	url(r'^(?P<pk>[0-9]+)/pdf/$', views.GeracaoPDFCursoExtensao.as_view(), name='pdf'),
 	url(r'^deletar/$', views.DeletarCursoExtensao.as_view(), name='deletar'),
+	url(r'^submeter/$', views.SubmeterCursoExtensao.as_view(), name='submeter'),
 ]

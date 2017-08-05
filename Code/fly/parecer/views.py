@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View, generic
+from django.db import transaction
 
 from curso_extensao.models import CursoExtensao
 from .models import Parecer
@@ -22,7 +23,10 @@ class NovoParecer(LoginRequiredMixin, View):
         parecer.projeto_extensao = get_object_or_404(CursoExtensao, pk=pk)
 
         if form.is_valid():
-            form.save()
+            with transaction.atomic():
+                form.save()
+                parecer.projeto_extensao.estado = parecer.estado_parecer
+                parecer.projeto_extensao.save()
 
             return redirect('parecer:consulta', pk)
         else:
@@ -53,7 +57,10 @@ class DetalheParecer(LoginRequiredMixin, View):
         parecer = form.instance
 
         if form.is_valid():
-            form.save()
+            with transaction.atomic():
+                form.save()
+                parecer.projeto_extensao.estado = parecer.estado_parecer
+                parecer.projeto_extensao.save()
 
             return redirect('parecer:consulta', parecer.projeto_extensao.pk)
 
@@ -64,8 +71,8 @@ class DetalheParecer(LoginRequiredMixin, View):
 class DeletarParecer(LoginRequiredMixin, View):
     def post(self, request):
         parecer = get_object_or_404(Parecer, pk=request.POST['pk'])
-        if parecer.projeto_extensao.user == request.user:
+        if parecer.projeto_extensao.user != request.user:
+            return redirect('parecer:consulta', parecer.projeto_extensao.pk) #TODO: mensagem de erro
+        else:
             parecer.delete()
             return redirect('parecer:consulta', parecer.projeto_extensao.pk)
-        else:
-            return redirect('parecer:consulta', parecer.projeto_extensao.pk) #TODO: mensagem de erro

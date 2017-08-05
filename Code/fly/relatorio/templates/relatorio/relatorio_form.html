@@ -85,8 +85,8 @@
 		<hr />
 
 		<div class="row">
-			<div class="medium-6 columns">
-				<label>Público Atingido (quantidade de participantes){{ campo_obrigatorio }}</label>
+			<div class="medium-3 columns">
+				<label>Público Atingido{{ campo_obrigatorio }}</label>
 				{{ main_form.publico_atingido }}
 				{{ main_form.publico_atingido.errors }}
 			</div>
@@ -99,6 +99,10 @@
 				<label>Período de Fim{{ campo_obrigatorio }}</label>
 				{{ main_form.periodo_fim }}
 				{{ main_form.periodo_fim.errors }}
+			</div>
+			<div class="medium-3 columns">
+				<label>Estado</label>
+				{{ main_form.instance.estado }}
 			</div>
 		</div>
 
