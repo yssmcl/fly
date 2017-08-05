@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django.db import models
 
 from curso_extensao.models import CursoExtensao
@@ -12,4 +10,4 @@ class Parecer(models.Model):
 
     estado_parecer = models.ForeignKey(EstadoProjeto)
 
-    comentario = models.CharField(max_length=200)
+    numero_ata = models.CharField(max_length=200)

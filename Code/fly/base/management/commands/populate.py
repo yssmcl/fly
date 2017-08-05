@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django.core.management.base import BaseCommand, CommandError
 from django.utils import timezone
 
@@ -198,7 +196,13 @@ class Command(BaseCommand):
                 'Tarde',
             ]
 
-            estado_projeto_list = ['Não submetido', 'Atividade Concluída', 'Atividade em Andamento', 'Atividade com Interrupção Temporária', 'Arquivo PRPPG', 'Arquivado protocolo geral - Cancelado', 'Arquivado protocolo geral - Concluído', 'Projeto cancelado pela comissão de pesquisa', 'Projeto suspenso temporariamente', 'Atividade cancelada', 'Processo inadimplente', 'Em tramitação', 'Projeto cancelado por exoneração do coordenador', 'Projeto cancelado por aposentadoria do coordenador', 'Grupo de Pesquisa em Andamento', 'CR  com o docente - exonerado', 'Relatório final em tramitação', 'Atividade inadimplente - relatório final', 'Atividade inadimplente - relatório anual', 'Atividade não aprovada pela Comissão de Extensão', 'Atividade inadimplente']
+            estado_projeto_list = [
+                'Não submetido',
+                'Submetido',
+                'Aprovado',
+                'Não aprovado',
+                'Reformulação',
+            ]
 
             funcao_certificado_list = [
                 'Coordenador(a)',
@@ -216,8 +220,6 @@ class Command(BaseCommand):
             estado_relatorio_list = [
                 'Não submetido',
                 'Submetido',
-                'Aprovado',
-                'Não aprovado',
             ]
 
             self.saveList(Campus, campus_list)
