@@ -195,5 +195,5 @@ class SubmeterRelatorio(LoginRequiredMixin, View):
         else:
             relatorio.estado = EstadoRelatorio.objects.get(nome='Submetido')
             relatorio.save()
-            send_email_comissao("[SGPE] Submissão de relatório.", 'Relatório submetido, acesse-o neste <a href="http://127.0.0.1:8000' + reverse('relatorio:detalhe', args=[relatorio.pk]) + '">link</a>.')
+            send_email_comissao("[SGPE] Submissão de relatório.", 'Relatório submetido, acesse-o neste <a href="http://cacc.unioeste-foz.br:8000' + reverse('relatorio:detalhe', args=[relatorio.pk]) + '">link</a>.')
             return redirect('relatorio:consulta', relatorio.projeto_extensao.pk)
