@@ -46,7 +46,14 @@
 		<div class="off-canvas-wrapper">
 			<div class="off-canvas-wrapper-inner" data-off-canvas-wrapper> <!-- Essa div e a de cima servem para fazer a parte do menu lateral -->
 				<div class="off-canvas position-left" id="mobile-menu" data-off-canvas>
-					<li><a href="{% url 'base:index' %}">Home</a></li>
+					<li>
+						<a href="{% url 'base:index' %}"
+							class="hollow button"
+							data-tooltip
+							title="Início"
+							<i class="fi-plus size-16"></i>
+						</a>
+					</li>
 					<div class="menu-mobile-opcao">Projeto</div>
 					<ul>
 						<li><a href="{% url 'curso_extensao:consulta' %}">Curso de Extensão</a></li>
@@ -68,7 +75,14 @@
 					 <div class="wrap">
 							<div class="top-bar-left">
 								<ul class="dropdown menu menu-desktop" data-dropdown-menu>
-									<li><a href="{% url 'base:index' %}">Home</a></li>
+									<li>
+										<a href="{% url 'base:index' %}"
+											data-tooltip
+											data-width="1"
+											title="Início"
+											<i class="fi-home size-16"></i>
+										</a>
+									</li>
 									{% if user.is_authenticated %}
 										<li>
 											<a href="#">Projeto</a>
@@ -85,9 +99,17 @@
 								<ul class="menu menu-desktop">
 									{% if user.is_authenticated %}
 										<li style="color:white; padding-right:30px;">Olá, {{ user }}</li>
-										<li><a href="{% url 'accounts:logout' %}">Sair</a></li>                  
+										<li>
+											<a href="{% url 'accounts:logout' %}">
+												Sair
+											</a>
+										</li>
 									{% else %}
-										<li><a href="{% url 'accounts:login' %}">Entrar</a></li>                  
+									<li>
+										<a href="{% url 'accounts:login' %}"
+											Entrar
+										</a>
+									</li>
 									{% endif%}
 								</ul>
 							</div>

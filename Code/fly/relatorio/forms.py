@@ -10,7 +10,7 @@ class RelatorioForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        
+
         # Validar data de início e fim.
         inicio = cleaned_data.get('periodo_inicio')
         fim = cleaned_data.get('periodo_fim')

@@ -30,7 +30,6 @@ ul.errorlist{
 	padding: 5px;
 }
 
-
 .size-12 { font-size: 12px; }
 .size-14 { font-size: 14px; }
 .size-16 { font-size: 16px; }
@@ -42,7 +41,9 @@ ul.errorlist{
 .size-60 { font-size: 60px; }
 .size-72 { font-size: 72px; }
 
-
+.tooltip {
+    max-width: 8rem !important;
+}
 
 /* ******************************************************************************************************
 NAV - MOBILE
