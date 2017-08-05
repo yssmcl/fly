@@ -15,12 +15,26 @@ import subprocess
 
 class NovoRelatorio(LoginRequiredMixin, View):
     def get(self, request, pk):
-        main_form = RelatorioForm(prefix='main')
-        certificados_formset = CertificadoRelatorioFormSet(prefix='certificados')
-
         projeto_extensao = get_object_or_404(CursoExtensao, pk=pk)
 
-        certificados_formset.can_delete = False
+        main_form = RelatorioForm(prefix='main')
+
+        certificados_initial = []
+        
+        for docente_cursoextensao in projeto_extensao.docente_cursoextensao_set.all():
+            certificados_initial.append({'nome':docente_cursoextensao.docente.nome_completo, 'funcao':docente_cursoextensao.funcao, 'DELETE':True})
+
+        for agente_universitario in projeto_extensao.agenteuniversitario_cursoextensao_set.all():
+            certificados_initial.append({'nome':agente_universitario.nome_completo, 'funcao':agente_universitario.funcao, 'DELETE':True})
+
+        for discente in projeto_extensao.discente_cursoextensao_set.all():
+            certificados_initial.append({'nome':discente.nome, 'DELETE':True})
+
+        for membro in projeto_extensao.membrocomunidade_cursoextensao_set.all():
+            certificados_initial.append({'nome':membro.nome, 'DELETE':True})
+
+        certificados_formset = CertificadoRelatorioFormSet(initial=certificados_initial, prefix='certificados')
+        certificados_formset.extra += len(certificados_initial)
 
         return render(request, 'relatorio/relatorio_form.html', {'main_form':main_form, 'certificados_formset':certificados_formset, 'projeto_extensao':projeto_extensao})
 
@@ -45,8 +59,6 @@ class NovoRelatorio(LoginRequiredMixin, View):
 
             return redirect('relatorio:consulta', pk)
         else:
-            certificados_formset.can_delete = False
-
             return render(request, 'relatorio/relatorio_form.html', {'main_form': main_form, 'certificados_formset': certificados_formset, 'projeto_extensao': relatorio.projeto_extensao})
 
 
