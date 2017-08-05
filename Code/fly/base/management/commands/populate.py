@@ -237,76 +237,78 @@ class Command(BaseCommand):
 
 
             #TODO: remove
-            # print("Iniciando insercao em 'Servidor'")
+            print("Iniciando inserção em 'Docente'")
 
-            # if not Servidor.objects.filter(nome_completo='Foo').exists():
-            #     s = Servidor()
-            #     s.nome_completo = 'Foo'
-            #     s.tipo = TipoServidor.objects.all().first()
-            #     s.regime_trabalho = 1
-            #     s.colegiado = 'colegiado_foo'
-            #     s.centro = Centro.objects.all().first()
-            #     s.campus = Campus.objects.all().first()
-            #     s.email = 'foo@foo.com'
-            #     s.telefone = '12345678'
-            #     s.pais = 'foo'
-            #     s.estado = 'foo'
-            #     s.cidade = 'foo'
-            #     s.logradouro = 'foo'
-            #     s.complemento = 'foo'
-            #     s.cep = 12345678
-            #     s.save()
-            #     print("Adicionando Foo em Servidor")
+            if not Docente.objects.filter(nome_completo='Foo').exists():
+               s = Docente()
+               s.nome_completo = 'Foo'
+               s.cpf = '123.456.789-00'
+               s.email = 'foo@foo.com'
+               s.telefone = '12345678'
+               s.curso = CursoUnioeste.objects.all().first()
+               s.colegiado = 'colegiado_foo'
+               s.centro = Centro.objects.all().first()
+               s.campus = Campus.objects.all().first()
+               s.pais = 'foo'
+               s.estado = 'foo'
+               s.cidade = 'foo'
+               s.logradouro = 'foo'
+               s.complemento = 'foo'
+               s.cep = 12345678
+               s.tipo_docente = TipoDocente.objects.all().first()
+               s.save()
+               print("Adicionando Foo em Docente")
 
-            # if not Servidor.objects.filter(nome_completo='Bar').exists():
-            #     s = Servidor()
-            #     s.nome_completo = 'Bar'
-            #     s.tipo = TipoServidor.objects.all().first()
-            #     s.regime_trabalho = 1
-            #     s.colegiado = 'colegiado_bar'
-            #     s.centro = Centro.objects.all().first()
-            #     s.campus = Campus.objects.all().first()
-            #     s.email = 'bar@bar.com'
-            #     s.telefone = '12345678'
-            #     s.pais = 'bar'
-            #     s.estado = 'bar'
-            #     s.cidade = 'bar'
-            #     s.logradouro = 'bar'
-            #     s.complemento = 'bar'
-            #     s.cep = 12345678
-            #     s.save()
-            #     print("Adicionando Bar em Servidor")
+            if not Docente.objects.filter(nome_completo='Bar').exists():
+               s = Docente()
+               s.nome_completo = 'Bar'
+               s.cpf = '789.418.981-00'
+               s.email = 'bar@bar.com'
+               s.telefone = '12345678'
+               s.curso = CursoUnioeste.objects.all().last()
+               s.colegiado = 'colegiado_bar'
+               s.centro = Centro.objects.all().last()
+               s.campus = Campus.objects.all().last()
+               s.pais = 'bar'
+               s.estado = 'bar'
+               s.cidade = 'bar'
+               s.logradouro = 'bar'
+               s.complemento = 'bar'
+               s.cep = 12345678
+               s.tipo_docente = TipoDocente.objects.all().last()
+               s.save()
+               print("Adicionando Bar em Docente")
+
 
     def popular_cursoextensao(self):
         print("Iniciando insercao em 'CursoExtensao'")
-        if not CursoExtensao.objects.filter(titulo='título curso 1').exists():
-            c = CursoExtensao()
-            c.user = auth_models.User.objects.all().first()
-            c.data = timezone.now()
-            c.titulo = 'título curso 1'
-            c.estado = EstadoProjeto.objects.all().first()
-            c.coordenador = Servidor.objects.all().first()
-            c.periodo_realizacao_inicio = timezone.now()
-            c.periodo_realizacao_fim = timezone.now() + timezone.timedelta(days=1)
-            c.programa_extensao = None
-            # c.unidade_administrativa = UnidadeAdministrativa.objects.all().first()
-            c.campus = Campus.objects.all().first()
-            c.centro = Centro.objects.all().first()
-            c.grande_area = GrandeArea.objects.all().first()
-            c.area_tematica_principal = AreaTematica.objects.all().first()
-            c.area_tematica_secundaria = AreaTematica.objects.all().last()
-            c.linha_extensao = LinhaExtensao.objects.all().first()
-            c.publico_alvo = 'público alvo curso 1'
-            c.numero_pessoas_beneficiadas = 50
-            c.carga_horaria_total = 12
-            c.numero_vagas = 80
-            c.local_inscricao = 'local de inscrição curso 1'
-            c.resumo = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque id mi et enim iaculis finibus. Maecenas posuere dolor ac lacus venenatis efficitur. In vestibulum rutrum nulla.'
-            c.programacao = 'Aliquam erat volutpat. Sed et aliquet risus. Sed mattis eget felis nec placerat. Mauris imperdiet turpis sit amet lorem dictum, non fringilla tellus condimentum.'
-            #  c.servidores =
-            c.save()
-            print("Adicionando 'título curso 1' em 'CursoExtensao'")
+        c = CursoExtensao()
+        c.user = auth_models.User.objects.all().first()
+        c.data = timezone.now()
+        c.titulo = 'título curso 1'
+        c.estado = EstadoProjeto.objects.all().first()
+        c.coordenador = Docente.objects.all().first()
+        c.periodo_realizacao_inicio = timezone.now()
+        c.periodo_realizacao_fim = timezone.now() + timezone.timedelta(days=1)
+        c.programa_extensao = None
+        # c.unidade_administrativa = UnidadeAdministrativa.objects.all().first()
+        c.campus = Campus.objects.all().first()
+        c.centro = Centro.objects.all().first()
+        c.grande_area = GrandeArea.objects.all().first()
+        c.area_tematica_principal = AreaTematica.objects.all().first()
+        c.area_tematica_secundaria = AreaTematica.objects.all().last()
+        c.linha_extensao = LinhaExtensao.objects.all().first()
+        c.publico_alvo = 'público alvo curso 1'
+        c.numero_pessoas_beneficiadas = 50
+        c.carga_horaria_total = 12
+        c.numero_vagas = 80
+        c.local_inscricao = 'local de inscrição curso 1'
+        c.resumo = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque id mi et enim iaculis finibus. Maecenas posuere dolor ac lacus venenatis efficitur. In vestibulum rutrum nulla.'
+        c.programacao = 'Aliquam erat volutpat. Sed et aliquet risus. Sed mattis eget felis nec placerat. Mauris imperdiet turpis sit amet lorem dictum, non fringilla tellus condimentum.'
+        c.save()
+        print("Adicionando 'título curso 1' em 'CursoExtensao'")
 
+        if not CursoExtensao.objects.filter(titulo='título curso 1').exists():
             print("Iniciando insercao em 'PrevisaoOrcamentaria_CursoExtensao'")
             p = PrevisaoOrcamentaria_CursoExtensao()
             p.curso_extensao = CursoExtensao.objects.all().first()
@@ -330,94 +332,95 @@ class Command(BaseCommand):
             p.save()
             print("Adicionando 'previsão curso 1' em 'PrevisaoOrcamentaria_CursoExtensao'")
 
-            print("Iniciando insercao em 'PalavraChave_CursoExtensao'")
-            pal1 = PalavraChave_CursoExtensao()
-            pal1.curso_extensao = CursoExtensao.objects.all().first()
-            pal1.nome = 'palavra-chave 1 curso 1'
-            pal1.save()
-            print("Adicionando 'palavra-chave 1 curso 1' em 'PalavraChave_CursoExtensao'")
-            pal2 = PalavraChave_CursoExtensao()
-            pal2.curso_extensao = CursoExtensao.objects.all().first()
-            pal2.nome = 'palavra-chave 2 curso 1'
-            pal2.save()
-            print("Adicionando 'palavra-chave 2 curso 1' em 'PalavraChave_CursoExtensao'")
-            pal3 = PalavraChave_CursoExtensao()
-            pal3.curso_extensao = CursoExtensao.objects.all().first()
-            pal3.nome = 'palavra-chave 3 curso 1'
-            pal3.save()
-            print("Adicionando 'palavra-chave 3 curso 1' em 'PalavraChave_CursoExtensao'")
+        print("Iniciando insercao em 'PalavraChave_CursoExtensao'")
+        pal1 = PalavraChave_CursoExtensao()
+        pal1.curso_extensao = CursoExtensao.objects.all().first()
+        pal1.nome = 'palavra-chave 1 curso 1'
+        pal1.save()
+        print("Adicionando 'palavra-chave 1 curso 1' em 'PalavraChave_CursoExtensao'")
+        pal2 = PalavraChave_CursoExtensao()
+        pal2.curso_extensao = CursoExtensao.objects.all().first()
+        pal2.nome = 'palavra-chave 2 curso 1'
+        pal2.save()
+        print("Adicionando 'palavra-chave 2 curso 1' em 'PalavraChave_CursoExtensao'")
+        pal3 = PalavraChave_CursoExtensao()
+        pal3.curso_extensao = CursoExtensao.objects.all().first()
+        pal3.nome = 'palavra-chave 3 curso 1'
+        pal3.save()
+        print("Adicionando 'palavra-chave 3 curso 1' em 'PalavraChave_CursoExtensao'")
 
-            print("Iniciando insercao em 'Servidor_CursoExtensao'")
-            sc1 = Servidor_CursoExtensao()
-            sc1.curso_extensao = CursoExtensao.objects.all().first()
-            sc1.servidor = Servidor.objects.all().first()
-            sc1.carga_horaria_dedicada = 4
-            sc1.funcao = FuncaoServidor.objects.all().first()
-            sc1.plano_trabalho = 'Quisque a augue vel libero placerat vestibulum. In vitae nunc bibendum ante porttitor bibendum a eu risus. Duis lorem tortor, tempus et ipsum tincidunt, dignissim aliquam metus.'
-            sc1.save()
-            print("Adicionando 'Foo' em 'Servidor_CursoExtensao'")
-            sc2 = Servidor_CursoExtensao()
-            sc2.curso_extensao = CursoExtensao.objects.all().first()
-            sc2.servidor = Servidor.objects.all().last()
-            sc2.carga_horaria_dedicada = 4
-            sc2.funcao = FuncaoServidor.objects.all().first()
-            sc2.plano_trabalho = 'Quisque a augue vel libero placerat vestibulum. In vitae nunc bibendum ante porttitor bibendum a eu risus. Duis lorem tortor, tempus et ipsum tincidunt, dignissim aliquam metus.'
-            sc2.save()
-            print("Adicionando 'Bar' em 'Servidor_CursoExtensao'")
+        print("Iniciando insercao em 'Docente_CursoExtensao'")
+        sc1 = Docente_CursoExtensao()
+        sc1.docente = Docente.objects.all().first()
+        sc1.curso_extensao = CursoExtensao.objects.all().first()
+        sc1.carga_horaria_dedicada = 4
+        sc1.funcao = FuncaoServidor.objects.all().first()
+        sc1.plano_trabalho = 'Quisque a augue vel libero placerat vestibulum. In vitae nunc bibendum ante porttitor bibendum a eu risus. Duis lorem tortor, tempus et ipsum tincidunt, dignissim aliquam metus.'
+        sc1.save()
+        print("Adicionando 'Foo' em 'Docente_CursoExtensao'")
+        sc2 = Docente_CursoExtensao()
+        sc2.docente = Docente.objects.all().last()
+        sc2.curso_extensao = CursoExtensao.objects.all().first()
+        sc2.carga_horaria_dedicada = 5
+        sc2.funcao = FuncaoServidor.objects.all().first()
+        sc2.plano_trabalho = 'Quisque a augue vel libero placerat vestibulum. In vitae nunc bibendum ante porttitor bibendum a eu risus. Duis lorem tortor, tempus et ipsum tincidunt, dignissim aliquam metus.'
+        sc2.save()
+        print("Adicionando 'Bar' em 'Docente_CursoExtensao'")
 
-            print("Iniciando insercao em 'Discente_CursoExtensao'")
-            dc1 = Discente_CursoExtensao()
-            dc1.curso_extensao = CursoExtensao.objects.all().first()
-            dc1.nome = 'nome discente 1 curso 1'
-            dc1.curso = CursoUnioeste.objects.all().first()
-            dc1.serie = 2
-            dc1.turno = TurnoCurso.objects.all().first()
-            dc1.carga_horaria_semanal = 20
-            dc1.telefone = '35755153'
-            dc1.email = 'emaildiscente1@email.com'
-            dc1.plano_trabalho = 'Phasellus dictum scelerisque egestas. Nulla pharetra ligula consequat tortor varius malesuada id vitae risus. Phasellus aliquet, mauris vel tempor lacinia, felis neque feugiat nibh.'
-            dc1.save()
-            print("Adicionando 'discente 1 curso 1' em 'Discente_CursoExtensao'")
-            dc2 = Discente_CursoExtensao()
-            dc2.curso_extensao = CursoExtensao.objects.all().first()
-            dc2.nome = 'nome discente 2 curso 1'
-            dc2.curso = CursoUnioeste.objects.all().last()
-            dc2.serie = 4
-            dc2.turno = TurnoCurso.objects.all().last()
-            dc2.carga_horaria_semanal = 30
-            dc2.telefone = '35715453'
-            dc2.email = 'emaildiscente2@email.com'
-            dc2.plano_trabalho = 'Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin sit amet cursus diam, nec pulvinar augue. Ut commodo sem vitae dolor ultricies, eu volutpat.'
-            dc2.save()
-            print("Adicionando 'discente 2 curso 1' em 'Discente_CursoExtensao'")
+        print("Iniciando insercao em 'Discente_CursoExtensao'")
+        dc1 = Discente_CursoExtensao()
+        dc1.curso_extensao = CursoExtensao.objects.all().first()
+        dc1.nome = 'nome discente 1 curso 1'
+        dc1.curso = CursoUnioeste.objects.all().first()
+        dc1.serie = 2
+        dc1.turno = TurnoCurso.objects.all().first()
+        dc1.carga_horaria_semanal = 20
+        dc1.telefone = '35755153'
+        dc1.email = 'emaildiscente1@email.com'
+        dc1.plano_trabalho = 'Phasellus dictum scelerisque egestas. Nulla pharetra ligula consequat tortor varius malesuada id vitae risus. Phasellus aliquet, mauris vel tempor lacinia, felis neque feugiat nibh.'
+        dc1.save()
+        print("Adicionando 'discente 1 curso 1' em 'Discente_CursoExtensao'")
+        dc2 = Discente_CursoExtensao()
+        dc2.curso_extensao = CursoExtensao.objects.all().first()
+        dc2.nome = 'nome discente 2 curso 1'
+        dc2.curso = CursoUnioeste.objects.all().last()
+        dc2.serie = 4
+        dc2.turno = TurnoCurso.objects.all().last()
+        dc2.carga_horaria_semanal = 30
+        dc2.telefone = '35715453'
+        dc2.email = 'emaildiscente2@email.com'
+        dc2.plano_trabalho = 'Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin sit amet cursus diam, nec pulvinar augue. Ut commodo sem vitae dolor ultricies, eu volutpat.'
+        dc2.save()
+        print("Adicionando 'discente 2 curso 1' em 'Discente_CursoExtensao'")
 
-            print("Iniciando insercao em 'MembroComunidade_CursoExtensao'")
-            mc1 = MembroComunidade_CursoExtensao()
-            mc1.curso_extensao = CursoExtensao.objects.all().first()
-            mc1.nome = 'membro 1 curso 1'
-            mc1.carga_horaria_semanal = 25
-            mc1.entidade = 'entidade 1'
-            mc1.telefone = '35845645'
-            mc1.email = 'emailmembro1@email.com'
-            mc1.cpf = '054.456.489-51'
-            mc1.data_nascimento = timezone.now()
-            mc1.funcao = 'função 1'
-            mc1.plano_trabalho = 'Vestibulum bibendum enim sed nibh suscipit, ac viverra turpis volutpat. Curabitur ullamcorper sem eget molestie tempor. Suspendisse quis pellentesque sem. Fusce sagittis et leo ac cras amet.'
-            mc1.save()
-            print("Adicionando 'membro 1 curso 1' em 'Discente_CursoExtensao'")
-            mc2 = MembroComunidade_CursoExtensao()
-            mc2.curso_extensao = CursoExtensao.objects.all().first()
-            mc2.nome = 'membro 2 curso 1'
-            mc2.carga_horaria_semanal = 25
-            mc2.entidade = 'entidade 2'
-            mc2.telefone = '35465456'
-            mc2.email = 'emailmembro1@email.com'
-            mc2.cpf = '055.461.492-49'
-            mc2.data_nascimento = timezone.now()
-            mc2.funcao = 'função 2'
-            mc2.plano_trabalho = 'Morbi nisl risus, dictum sed quam nec, convallis varius nisl. Aliquam vestibulum dapibus aliquet. Aliquam dignissim mi eget sodales facilisis. Aenean molestie dui eget justo tincidunt metus.'
-            mc2.save()
-            print("Adicionando 'membro 2 curso 1' em 'Discente_CursoExtensao'")
+        print("Iniciando insercao em 'MembroComunidade_CursoExtensao'")
+        mc1 = MembroComunidade_CursoExtensao()
+        mc1.curso_extensao = CursoExtensao.objects.all().first()
+        mc1.nome = 'membro 1 curso 1'
+        mc1.carga_horaria_semanal = 25
+        mc1.entidade = 'entidade 1'
+        mc1.telefone = '35845645'
+        mc1.email = 'emailmembro1@email.com'
+        mc1.cpf = '054.456.489-51'
+        mc1.data_nascimento = timezone.now()
+        mc1.funcao = 'função 1'
+        mc1.plano_trabalho = 'Vestibulum bibendum enim sed nibh suscipit, ac viverra turpis volutpat. Curabitur ullamcorper sem eget molestie tempor. Suspendisse quis pellentesque sem. Fusce sagittis et leo ac cras amet.'
+        mc1.save()
+        print("Adicionando 'membro 1 curso 1' em 'Discente_CursoExtensao'")
+        mc2 = MembroComunidade_CursoExtensao()
+        mc2.curso_extensao = CursoExtensao.objects.all().first()
+        mc2.nome = 'membro 2 curso 1'
+        mc2.carga_horaria_semanal = 25
+        mc2.entidade = 'entidade 2'
+        mc2.telefone = '35465456'
+        mc2.email = 'emailmembro1@email.com'
+        mc2.cpf = '055.461.492-49'
+        mc2.data_nascimento = timezone.now()
+        mc2.funcao = 'função 2'
+        mc2.plano_trabalho = 'Morbi nisl risus, dictum sed quam nec, convallis varius nisl. Aliquam vestibulum dapibus aliquet. Aliquam dignissim mi eget sodales facilisis. Aenean molestie dui eget justo tincidunt metus.'
+        mc2.save()
+        print("Adicionando 'membro 2 curso 1' em 'Discente_CursoExtensao'")
+
 
     def popular_relatorio(self):
         print("Iniciando insercao em 'Relatorio'")
@@ -425,7 +428,7 @@ class Command(BaseCommand):
         r.projeto_extensao = CursoExtensao.objects.all().first()
         r.periodo_inicio = timezone.now()
         r.periodo_fim = timezone.now() + timezone.timedelta(days=1)
-        r.publico_atingido = 'público atingido'
+        r.publico_atingido = 100
         r.resumo = 'Quisque fermentum erat quis mattis ultrices. Phasellus lobortis ligula et tincidunt auctor. Proin eget eros nisi. Sed est tellus, finibus ac condimentum nec, tincidunt a orci. Sed ac nullam.'
         r.atividades_realizadas_programacao = 'Sed pulvinar felis vitae massa dapibus laoreet. Fusce vitae facilisis nibh, nec dictum purus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi ac lorem et orci massa nunc.'
         r.dificuldades = 'Morbi vehicula elit et molestie hendrerit. Pellentesque in lacus fermentum, egestas sapien nec, ornare urna. Nulla vitae eros efficitur, pharetra tortor nec, ullamcorper libero orci aliquam.'
@@ -450,4 +453,3 @@ class Command(BaseCommand):
         cr2.carga_horaria_total = 16
         cr2.save()
         print("Adicionando 'nome 2' em 'CertificadoRelatorio'")
-
