@@ -5,6 +5,7 @@ from pylatex import Enumerate, NoEscape, NewLine
 from pylatex.utils import escape_latex
 
 from base import pdfutils
+from relatorio.models import CertificadoRelatorio
 from fly.settings import PDF_DIR
 
 def gerar_pdf_relatorio(relatorio):
@@ -80,3 +81,121 @@ def gerar_pdf_relatorio(relatorio):
     doc.generate_pdf(filepath, clean_tex=False, compiler=pdfutils.COMPILER, compiler_args=pdfutils.COMPILER_ARGS)
 
     return filepath
+
+
+def gerar_pdf_certificado(certificado):
+    # TODO: tirar esses import daqui
+    import os
+    import locale
+    from django.utils import timezone
+    from pylatex import Document, Package, Enumerate, NoEscape, NewLine, FlushRight, FlushLeft, \
+         StandAloneGraphic, VerticalSpace, HorizontalSpace, LineBreak, LargeText, MiniPage, Center
+    from pylatex.utils import escape_latex
+
+    from base import pdfutils
+    from relatorio.models import CertificadoRelatorio
+    from fly.settings import PDF_DIR, BASE_DIR
+
+    # usado para datas
+    l = locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+
+    # Configurações da classe
+    geometry_options = {'landscape': True,
+                        'left': '2cm',
+                        'right': '1cm'}
+    doc = Document(geometry_options=geometry_options, lmodern=False, document_options=['a4paper', 'brazil'])
+
+    # Pacotes
+    doc.packages.add(Package('microtype'))
+    doc.packages.add(Package('indentfirst'))
+    doc.packages.add(Package('graphicx'))
+    doc.packages.add(Package('calc'))
+    doc.packages.add(Package('fontspec'))
+    options_background = ['scale=1',
+                          'opacity=1',
+                          'angle=0']
+    doc.packages.add(Package('background', options=options_background))
+
+    # Configurações (preâmbulo)
+    doc.preamble.append(NoEscape('\setmainfont{Carlito}'))
+
+    # TODO: substituir essa string toda por Command ou BaseCommand
+    doc.preamble.append(NoEscape(r'''\renewcommand{\baselinestretch}{1.5}%
+\renewcommand\textbullet{\ensuremath{\bullet}}%
+\setlength{\parindent}{.35\textwidth}%
+\setlength{\parskip}{0.2cm}%
+\setlength{\emergencystretch}{5pt}'''))
+
+    # Imagem de fundo
+    doc.preamble.append(NoEscape(r'''\backgroundsetup{
+    contents=\includegraphics{modelo_certificado.pdf}
+}'''))
+
+    # Diretório das imagens
+    diretorio_img = '{}/base/static/img/'.format(BASE_DIR) # necessário barra no final
+    doc.preamble.append(NoEscape(r'\graphicspath{{' + diretorio_img + '}}'))
+
+    # Início do documento
+    doc.append(NoEscape(r'''
+\pagestyle{empty}
+\BgThispage
+'''))
+    doc.append(VerticalSpace(size='2cm', star=True))
+
+    # TODO:
+    with doc.create(FlushRight()) as fr:
+        fr.append(StandAloneGraphic(image_options="width=6.5cm", filename='titulo_certificado.pdf'))
+        fr.append(LineBreak())
+
+    doc.append(VerticalSpace(size=NoEscape('-1cm'), star=True))
+    doc.append(NoEscape('\Large%\n'))
+
+    inicio = certificado.relatorio.periodo_inicio.strftime('%B/%Y').lower()
+    fim = certificado.relatorio.periodo_inicio.strftime('%B/%Y').lower()
+    # TODO: tá faltando coisa
+    texto_principal = r'''
+
+    Certificamos que \textbf{{{nome}}} participou como {funcao}, sob a orientação de \textbf{{{coordenador}}}, no período de {inicio} a {fim}, com a atividade de extensão: ``\textbf{{{titulo}}}'', com carga horária de {carga_horaria_total} horas.
+
+    '''
+    texto_principal = texto_principal.format(nome=certificado.nome,
+                                             funcao=certificado.funcao.nome,
+                                             coordenador=certificado.relatorio.projeto_extensao.coordenador.nome_completo,
+                                             inicio=inicio,
+                                             fim=fim,
+                                             titulo=certificado.relatorio.projeto_extensao.titulo,
+                                             carga_horaria_total=str(certificado.carga_horaria_total).split('.')[0])
+
+    # texto_principal = NoEscape(r'''
+
+    # Certificamos que \textbf{Adriana de Oliveira Gomes} participou como bolsista do Programa de Apoio a Inclusão Social em Atividades de Extensão -- Convênio No 750/2014 -- Fundação Araucária, Edital 05/2014-PROEX, sob a orientação do (a) professor (a) \textbf{Fernando Amâncio Aragão}, no período de outubro/2014 a setembro/2015, com a atividade de extensão: \textbf{''Atendimento fisioterapêutico para pacientes com sequelas neurológicas baseada em tarefas funcionais.''}, com carga horária de 960 (novecentas e sessenta) horas.
+
+    # ''')
+
+    doc.append(NoEscape(texto_principal))
+
+    doc.append(VerticalSpace(size='1.5cm', star=True))
+
+    doc.append(HorizontalSpace(size='7cm', star=True))
+    dia = timezone.now().strftime('%d')
+    mes = timezone.now().strftime('%B')
+    ano = timezone.now().strftime('%Y')
+
+    data = NoEscape(r'''Foz do Iguaçu, {} de {} de {}'''.format(dia, mes, ano))
+    largura = r'\widthof{{{}}}'.format(data)
+    with doc.create(MiniPage(width=largura)) as mini:
+        with mini.create(Center()) as center:
+            center.append(data)
+            center.append(NewLine())
+            center.append(NewLine())
+            center.append(NewLine())
+            center.append('Pró-Reitor de Extensão')
+
+    os.system('mkdir -p ' + PDF_DIR)
+
+    filepath = '{}/certificado_{}'.format(PDF_DIR, str(certificado.id))
+    doc.generate_pdf(filepath, clean_tex=False, compiler=pdfutils.COMPILER, compiler_args=pdfutils.COMPILER_ARGS)
+
+    return filepath
+
+gerar_pdf_certificado(CertificadoRelatorio.objects.get(id=1))

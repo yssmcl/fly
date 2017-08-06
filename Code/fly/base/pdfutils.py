@@ -27,9 +27,9 @@ def init_document():
                         'bottom': '2.5cm',
                         'top': '6.5cm',
                         'headheight': '4cm'}
-    document = Document(geometry_options=geometry_options, lmodern=False, document_options=['12pt', 'a4paper', 'oneside', 'brazil'])
+    doc = Document(geometry_options=geometry_options, lmodern=False, document_options=['12pt', 'a4paper', 'oneside', 'brazil'])
 
-    return document
+    return doc
 
 
 def pacotes(doc):
@@ -44,7 +44,7 @@ def pacotes(doc):
     doc.packages.add(Package('tabularx'))
     doc.packages.add(Package('mdframed'))
     doc.packages.add(Package('eqparbox')) # similar a minipage
-    doc.packages.add(Package('fancyhdr')) # cabeçalho
+    doc.packages.add(Package('fancyhdr')) # cabeçalho?
     doc.packages.add(Package('makecell')) # criação de células em tabelas
     doc.packages.add(Package('calc')) # \widthof
     doc.packages.add(Package('fontspec')) # para fonte TeX Gyre Heros ('ª' e 'º' não funcionam com helvet)
