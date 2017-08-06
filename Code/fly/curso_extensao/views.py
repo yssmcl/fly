@@ -199,17 +199,14 @@ class GeracaoPDFCursoExtensao(LoginRequiredMixin, View):
 
         # TODO:
         #  try:
-        gerar_pdf(curso_extensao)
+        caminho = gerar_pdf(curso_extensao) + '.pdf'
         #  except subprocess.CalledProcessError:
             #  pass
 
-        nome_arquivo = 'curso_extensao_{}.pdf'.format(str(pk))
-
-        with open(PDF_DIR + nome_arquivo, 'rb') as arquivo_pdf:
+        with open(caminho, 'rb') as arquivo_pdf:
             response = HttpResponse(arquivo_pdf, content_type='application/pdf')
-            #  response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(nome_arquivo) # janela de download
-            response['Content-Disposition'] = 'inline; filename=%s' % smart_str(nome_arquivo) # abre no visualizador de PDF do navegador
-            #  response['X-Sendfile'] = PDF_DIR + nome_arquivo
+            # Abre no visualizador de PDFs do navegador
+            response['Content-Disposition'] = 'inline; filename={}'.format(smart_str(caminho))
 
             return response
 
@@ -223,7 +220,7 @@ class DeletarCursoExtensao(LoginRequiredMixin, View):
             curso_extensao.delete()
             return redirect('curso_extensao:consulta')
 
-            
+
 class SubmeterCursoExtensao(LoginRequiredMixin, View):
     def post(self, request):
         curso_extensao = get_object_or_404(CursoExtensao, pk=request.POST['pk'])

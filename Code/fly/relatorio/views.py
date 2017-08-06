@@ -2,16 +2,16 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from django.utils.encoding import smart_str
 from django.views import View, generic
-from django.urls import reverse
 
 from .forms import RelatorioForm, RelatorioFileForm, CertificadoRelatorioFormSet
 from .models import Relatorio, RelatorioFile, EstadoRelatorio
-from curso_extensao.models import CursoExtensao
-from relatorio.pdfs import gerar_pdf
-from fly.settings import PDF_DIR, MEDIA_ROOT
 from base.utils import send_email_comissao
+from curso_extensao.models import CursoExtensao
+from fly.settings import PDF_DIR, MEDIA_ROOT
+from relatorio.pdfs import gerar_pdf
 
 import subprocess
 
@@ -22,7 +22,7 @@ class NovoRelatorio(LoginRequiredMixin, View):
         main_form = RelatorioForm(prefix='main')
 
         certificados_initial = []
-        
+
         for docente_cursoextensao in projeto_extensao.docente_cursoextensao_set.all():
             certificados_initial.append({'nome':docente_cursoextensao.docente.nome_completo, 'funcao':docente_cursoextensao.funcao, 'DELETE':True})
 
@@ -163,17 +163,14 @@ class GeracaoPDFRelatorio(LoginRequiredMixin, View):
 
         # TODO:
         #  try:
-        gerar_pdf(relatorio)
+        caminho = gerar_pdf(relatorio) + '.pdf'
         #  except subprocess.CalledProcessError:
             #  pass
 
-        nome_arquivo = 'relatorio_{}.pdf'.format(str(pk))
-
-        with open(PDF_DIR + nome_arquivo, 'rb') as arquivo_pdf:
+        with open(caminho, 'rb') as arquivo_pdf:
             response = HttpResponse(arquivo_pdf, content_type='application/pdf')
-            #  response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(nome_arquivo) # janela de download
-            response['Content-Disposition'] = 'inline; filename=%s' % smart_str(nome_arquivo) # abre no visualizador de PDF do navegador
-            #  response['X-Sendfile'] = PDF_DIR + nome_arquivo
+            # Abre no visualizador de PDF do navegador
+            response['Content-Disposition'] = 'inline; filename={}'.format(smart_str(caminho))
 
             return response
 

@@ -1,11 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect, get_object_or_404
-from django.views import View, generic
 from django.db import transaction
+from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.utils.encoding import smart_str
+from django.views import View, generic
 
-from curso_extensao.models import CursoExtensao
-from .models import Parecer
 from .forms import ParecerForm
+from .models import Parecer
+from curso_extensao.models import CursoExtensao
+from parecer.pdfs import gerar_pdf
 
 class NovoParecer(LoginRequiredMixin, View):
     def get(self, request, pk):
@@ -76,3 +79,21 @@ class DeletarParecer(LoginRequiredMixin, View):
         else:
             parecer.delete()
             return redirect('parecer:consulta', parecer.projeto_extensao.pk)
+
+
+class GeracaoPDFParecer(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        parecer = get_object_or_404(Parecer, pk=pk)
+
+        # TODO:
+        #  try:
+        caminho = gerar_pdf(parecer) + '.pdf'
+        #  except subprocess.CalledProcessError:
+            #  pass
+
+        with open(caminho, 'rb') as arquivo_pdf:
+            response = HttpResponse(arquivo_pdf, content_type='application/pdf')
+            # Abre no visualizador de PDFs do navegador
+            response['Content-Disposition'] = 'inline; filename={}'.format(smart_str(caminho))
+
+            return response

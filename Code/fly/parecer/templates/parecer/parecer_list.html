@@ -57,6 +57,12 @@
 								<i class="fi-info size-16"></i>
 								<i class="fi-pencil size-16"></i>
 							</a>
+							<a href="{% url 'parecer:pdf' parecer.pk %}"
+								class="hollow button"
+								title="Exportar como PDF"
+								data-tooltip>
+								<i class="fi-page-export-pdf size-16"></i>
+							</a>
 							<form method="post" action="{% url 'parecer:deletar' %}" onsubmit="return confirm('Deseja realmente excluir o parecer?');" style="display: inline;">
 								{% csrf_token %}
 								<input type="hidden" name="pk" value="{{ parecer.pk }}"/>
