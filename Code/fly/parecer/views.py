@@ -1,3 +1,4 @@
+import os
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.http import HttpResponse
@@ -16,7 +17,8 @@ class NovoParecer(LoginRequiredMixin, View):
 
         projeto_extensao = get_object_or_404(CursoExtensao, pk=pk)
 
-        return render(request, 'parecer/parecer_form.html', {'form': form, 'projeto_extensao': projeto_extensao})
+        return render(request, 'parecer/parecer_form.html',
+                      {'form': form, 'projeto_extensao': projeto_extensao})
 
     def post(self, request, pk):
         form = ParecerForm(request.POST)
@@ -33,7 +35,8 @@ class NovoParecer(LoginRequiredMixin, View):
 
             return redirect('parecer:consulta', pk)
         else:
-            return render(request, 'parecer/parecer_form.html', {'form': form, 'projeto_extensao': parecer.projeto_extensao})
+            return render(request, 'parecer/parecer_form.html',
+                          {'form': form, 'projeto_extensao': parecer.projeto_extensao})
 
 
 class ConsultaParecer(LoginRequiredMixin, View):
@@ -41,7 +44,8 @@ class ConsultaParecer(LoginRequiredMixin, View):
         projeto_extensao = get_object_or_404(CursoExtensao, pk=pk)
         object_list = Parecer.objects.filter(projeto_extensao=projeto_extensao)
 
-        return render(request, 'parecer/parecer_list.html', {'projeto_extensao':projeto_extensao, 'object_list':object_list})
+        return render(request, 'parecer/parecer_list.html',
+                      {'projeto_extensao':projeto_extensao, 'object_list':object_list})
 
 
 class DetalheParecer(LoginRequiredMixin, View):
@@ -50,7 +54,8 @@ class DetalheParecer(LoginRequiredMixin, View):
 
         form = ParecerForm(instance=parecer)
 
-        return render(request, 'parecer/parecer_form.html', {'form': form, 'projeto_extensao': parecer.projeto_extensao})
+        return render(request, 'parecer/parecer_form.html',
+                      {'form': form, 'projeto_extensao': parecer.projeto_extensao})
 
     def post(self, request, pk):
         parecer = get_object_or_404(Parecer, pk=pk)
@@ -68,7 +73,8 @@ class DetalheParecer(LoginRequiredMixin, View):
             return redirect('parecer:consulta', parecer.projeto_extensao.pk)
 
         else:
-            return render(request, 'parecer/parecer_form.html', {'form': form, 'projeto_extensao': parecer.projeto_extensao})
+            return render(request, 'parecer/parecer_form.html',
+                          {'form': form, 'projeto_extensao': parecer.projeto_extensao})
 
 
 class DeletarParecer(LoginRequiredMixin, View):
@@ -94,6 +100,7 @@ class GeracaoPDFParecer(LoginRequiredMixin, View):
         with open(caminho, 'rb') as arquivo_pdf:
             response = HttpResponse(arquivo_pdf, content_type='application/pdf')
             # Abre no visualizador de PDFs do navegador
-            response['Content-Disposition'] = 'inline; filename={}'.format(smart_str(caminho))
+            nome_arquivo = caminho.split(os.sep)[-1]
+            response['Content-Disposition'] = 'inline; filename={}'.format(smart_str(nome_arquivo))
 
             return response

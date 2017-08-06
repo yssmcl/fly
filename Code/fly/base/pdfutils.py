@@ -20,10 +20,10 @@ phantom = NoEscape(r'\phantom{$\times$}')
 
 def init_document():
     geometry_options = {'left': '3cm',
-                        'right': '2cm',
-                        'bottom': '2cm',
+                        'right': '1.5cm',
+                        'bottom': '2.5cm',
                         'top': '6.5cm',
-                        'headheight': '5cm'}
+                        'headheight': '4cm'}
     document = Document(geometry_options=geometry_options, lmodern=False, document_options=['12pt', 'a4paper', 'oneside'])
 
     return document
@@ -37,12 +37,13 @@ def pacotes(doc):
     doc.packages.add(Package('titlesec'))
     doc.packages.add(Package('parskip'))
     doc.packages.add(Package('enumitem'))
-    doc.packages.add(Package('helvet'))
+    doc.packages.add(Package('helvet', options='scaled=0.92'))
     doc.packages.add(Package('tabularx'))
     doc.packages.add(Package('mdframed'))
     doc.packages.add(Package('eqparbox'))
     doc.packages.add(Package('fancyhdr'))
     doc.packages.add(Package('makecell'))
+    doc.packages.add(Package('calc'))
 
 
 def configuracoes_preambulo(doc):
@@ -59,7 +60,7 @@ def configuracoes_preambulo(doc):
     doc.preamble.append(NoEscape('\pagestyle{fancy}'))
 
     # Diretório das imagens
-    diretorio_img = BASE_DIR + '/base/static/img/' # necessário barra no final (trailing slash)
+    diretorio_img = '{}/base/static/img/'.format(BASE_DIR) # necessário barra no final
     doc.preamble.append(NoEscape(r'\graphicspath{{' + diretorio_img + '}}'))
 
     # Tamanho da fonte
@@ -67,26 +68,23 @@ def configuracoes_preambulo(doc):
 
 
 def cabecalho(doc):
-    cabecalho = r'''
+    doc.append(NoEscape(r'''
 \renewcommand{\headrulewidth}{0pt}%
 \renewcommand{\footrulewidth}{0pt}%
 \fancyhead[L]{%
     \includegraphics[width=200px]{logo_unioeste.png}
     \newline
-    \newline
-    {\scriptsize
-        Reitoria - CNPJ 78680337/0001-84 \\
-        Rua Universitária, 1619 - Fone: (45) 3220-3000 - Fax: (45) 3324-4590 \\
-        Jardim Universitário - Cx. P. 000701 - CEP 85819-110 - Cascavel - Paraná \\
+    {\footnotesize
+        Reitoria -- CNPJ 78680337/0001-84 \\
+        Rua Universitária, 1619 -- Fone: (45) 3220-3000 -- Fax: (45) 3324-4590 \\
+        Jardim Universitário -- Cx. P. 000701 -- CEP 85819-110 -- Cascavel -- Paraná \\
         www.unioeste.br
     }
 }
-\fancyhead[R]{
+\fancyhead[R]{%
     \includegraphics[width=80px]{logo_governo.jpg}
 }
-    '''
-
-    doc.append(NoEscape(cabecalho))
+    '''))
 
 
 def rodape(doc, texto):
@@ -185,7 +183,7 @@ def tabela_alternativas(doc, model, table_spec, id=None, hline=True):
     # Conta a quantidade de 'X', 'l', 'c', 'r' etc.
     nro_colunas = sum(char.isalpha() for char in table_spec)
 
-    with doc.create(Tabularx(table_spec, width_argument=NoEscape('\linewidth'))) as tab:
+    with doc.create(Tabularx(table_spec, width_argument=width_argument)) as tab:
         if hline:
             tab.add_hline()
 
@@ -201,9 +199,11 @@ def tabela_alternativas(doc, model, table_spec, id=None, hline=True):
                 del row[:]
 
         # Adiciona o resto dos itens à tabela
-        for i in range(nro_colunas-len(row)):
-            row.append('')
-        tab.add_row(row)
+        if len(row):
+            for _ in range(nro_colunas - len(row)):
+                row.append('')
+            tab.add_row(row, strict=False)
+
         if hline: tab.add_hline()
 
 
@@ -218,7 +218,7 @@ def tabela_palavras_chave(doc, enum, palavras):
     doc.append(NewLine())
 
     nro_colunas = 3
-    with doc.create(Tabularx('|X|X|X|', width_argument=NoEscape('\linewidth'))) as tab:
+    with doc.create(Tabularx('|X|X|X|', width_argument=width_argument)) as tab:
         tab.add_hline()
 
         row = []
@@ -230,7 +230,7 @@ def tabela_palavras_chave(doc, enum, palavras):
                 del row[:]
 
         # Adiciona o resto dos itens à tabela
-        for i in range(nro_colunas-len(row)):
+        for _ in range(nro_colunas - len(row)):
             row.append('')
         tab.add_row(row)
 
@@ -386,11 +386,11 @@ def mdframed_plano_trabalho(doc, models):
 
 
 def tabela_discentes(doc, enum, projeto_extensao):
-    table_spec = NoEscape(r'''>{\centering\arraybackslash}X|
+    table_spec = NoEscape(r'''|>{\centering\arraybackslash}X|
                               >{\centering\arraybackslash}X|
                               @{  }c@{  }|
                               @{  }c@{  }|
-                              @{  }c@{  }|
+                              >{\centering\arraybackslash}X|
                               @{  }c@{  }|
                           ''')
     cabecalho = ['NOME COMPLETO',
@@ -402,7 +402,7 @@ def tabela_discentes(doc, enum, projeto_extensao):
 
     doc.append(NoEscape('{\scriptsize'))
 
-    with doc.create(Tabularx('|' + table_spec, width_argument=width_argument)) as tab:
+    with doc.create(Tabularx(table_spec, width_argument=width_argument)) as tab:
         tab.add_hline()
         tab.add_row(cabecalho)
         tab.add_hline()
@@ -416,9 +416,8 @@ def tabela_discentes(doc, enum, projeto_extensao):
                 discente.turno.nome,
                 discente.carga_horaria_semanal,
                 # TODO: hifenizar email
-                NoEscape('\makecell{' + escape_latex(discente.telefone) +
-                         r'; \\ ' +
-                         escape_latex(discente.email) + '}')
+                NoEscape(r'\makecell{{ {}; \\ {} }}'.format(escape_latex(discente.telefone),
+                                                            escape_latex(discente.email)))
             ]
             tab.add_row(linha)
             tab.add_hline()
@@ -429,7 +428,7 @@ def tabela_discentes(doc, enum, projeto_extensao):
 
 
 def tabela_membros(doc, enum, projeto_extensao):
-    table_spec = NoEscape(r'''>{\centering\arraybackslash}X|
+    table_spec = NoEscape(r'''|>{\centering\arraybackslash}X|
                               >{\centering\arraybackslash}X|
                               @{  }c@{  }|
                               @{  }c@{  }|
@@ -447,7 +446,7 @@ def tabela_membros(doc, enum, projeto_extensao):
 
     doc.append(NoEscape('{\scriptsize'))
 
-    with doc.create(Tabularx('|' + table_spec, width_argument=width_argument)) as tab:
+    with doc.create(Tabularx( table_spec, width_argument=width_argument)) as tab:
         tab.add_hline()
         tab.add_row(cabecalho)
         tab.add_hline()
@@ -462,9 +461,8 @@ def tabela_membros(doc, enum, projeto_extensao):
                 membro.funcao,
                 membro.carga_horaria_semanal,
                 # TODO: hifenizar email
-                NoEscape('\makecell{' + escape_latex(membro.telefone) +
-                         r'; \\ ' +
-                         escape_latex(membro.email) + '}')
+                NoEscape(r'\makecell{{ {}; \\ {} }}'.format(escape_latex(membro.telefone),
+                                                            escape_latex(membro.email)))
             ]
             tab.add_row(linha)
             tab.add_hline()
@@ -557,17 +555,17 @@ def tabela_certificados(doc, id=None):
     with doc.create(Enumerate()) as enum:
         enum.add_item('Relacionar o nome dos participantes com direito a certificados.')
         doc.append(NewLine())
-        table_spec = NoEscape(r'''>{\centering\arraybackslash}X|
-                              @{    }c@{    }|
-                              @{    }c@{    }|
-                              @{    }c@{    }|
+        table_spec = NoEscape(r'''|>{\centering\arraybackslash}X|
+                                  @{    }c@{    }|
+                                  @{    }c@{    }|
+                                  @{    }c@{    }|
                               ''')
         cabecalho = ['NOME',
                      'FUNÇÃO',
                      'FREQUÊNCIA (%)',
                      'C/H TOTAL']
 
-        with doc.create(Tabularx('|' + table_spec, width_argument=width_argument)) as tab:
+        with doc.create(Tabularx(table_spec, width_argument=width_argument)) as tab:
             tab.add_hline()
             tab.add_row(cabecalho)
             tab.add_hline()
@@ -603,3 +601,15 @@ def local_data_assinatura(doc):
         center.append(NoEscape(r'\bigskip'))
         center.append(NoEscape('Assinatura do(a) Coordenador(a) da Atividade'))
         doc.append(center)
+
+
+# TODO: usar essa pra substituir a de cima
+def assinatura(doc, texto, largura, pos_env):
+    doc.append(NoEscape(r'\bigskip'))
+    doc.append(NoEscape(r'\bigskip'))
+    doc.append(NoEscape(r'\bigskip'))
+    with doc.create(pos_env) as pos:
+        with pos.create(MiniPage(width=largura)) as mini:
+            mini.append(NoEscape('\hrulefill'))
+            mini.append(NewLine())
+            mini.append(NoEscape(r'{}'.format(texto)))

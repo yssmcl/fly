@@ -1,16 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import os
-from pylatex import Document, Enumerate, NoEscape, Package, Tabularx, FlushRight, \
-     LineBreak, NewLine, MultiColumn, MultiRow, HFill, Table, Center
-from pylatex.base_classes import Environment
-from pylatex.utils import escape_latex, bold
+from pylatex import Enumerate, NoEscape, NewLine
+from pylatex.utils import escape_latex
 
 from base import pdfutils
-from base.models import UnidadeAdministrativa, Campus, Centro
-from curso_extensao.models import CursoExtensao
 from fly.settings import PDF_DIR
-from relatorio.models import Relatorio, CertificadoRelatorio
 
 def gerar_pdf(relatorio):
     times = NoEscape(r'$\times$')
@@ -25,7 +20,7 @@ def gerar_pdf(relatorio):
 
     pdfutils.cabecalho(doc)
 
-    texto_anexo = NoEscape(r'\texttt{ANEXO X DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014}')
+    texto_anexo = NoEscape(r'\texttt{ANEXO X DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014.}')
     pdfutils.rodape(doc, texto_anexo)
     doc.append(texto_anexo)
 
@@ -46,7 +41,7 @@ def gerar_pdf(relatorio):
             else:
                 doc.append(NoEscape(r'Não ({}) Sim ({}): Qual? '.format(times, phantom)))
 
-        pdfutils.item(doc, enum, 'COORDENADOR(a): ')
+        pdfutils.item(doc, enum, 'COORDENADOR(a): ', relatorio.projeto_extensao.coordenador.nome_completo)
 
         periodo_inicio = relatorio.periodo_inicio.strftime('%d/%m/%Y')
         periodo_fim = relatorio.periodo_fim.strftime('%d/%m/%Y')
@@ -84,8 +79,11 @@ def gerar_pdf(relatorio):
 
     os.system('mkdir -p ' + PDF_DIR)
 
+    # TODO: UnicodeDecodeError
+    # try:
+    filepath = '{}/relatorio_{}'.format(PDF_DIR, str(relatorio.id))
+    doc.generate_pdf(filepath, clean_tex=False)
+    # except UnicodeDecodeError:
+        # pass
 
-    try:
-        doc.generate_pdf(PDF_DIR + 'relatorio_' + str(relatorio.id), clean_tex=False)
-    except UnicodeDecodeError:
-        pass
+    return filepath

@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib.staticfiles.templatetags.staticfiles import static
 import os
 from pylatex import Enumerate, NoEscape, NewLine
 from pylatex.utils import escape_latex
 
 from base import pdfutils
-from base.models import *
-from curso_extensao.models import *
+from curso_extensao.models import PalavraChave_CursoExtensao, PrevisaoOrcamentaria_CursoExtensao
 from fly.settings import PDF_DIR
 
 def gerar_pdf(curso):
@@ -20,7 +18,7 @@ def gerar_pdf(curso):
 
     pdfutils.cabecalho(doc)
 
-    texto_anexo = NoEscape(r'\texttt{ANEXO V DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014}')
+    texto_anexo = NoEscape(r'\texttt{ANEXO V DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014.}')
     pdfutils.rodape(doc, texto_anexo)
     doc.append(texto_anexo)
 
@@ -101,7 +99,11 @@ def gerar_pdf(curso):
 
     os.system('mkdir -p ' + PDF_DIR)
 
-    try:
-        doc.generate_pdf(PDF_DIR + 'curso_extensao_' + str(curso.id), clean_tex=False)
-    except UnicodeDecodeError:
-        pass
+    # TODO: UnicodeDecodeError
+    # try:
+    filepath = '{}/curso-extensao_{}'.format(PDF_DIR, str(curso.id))
+    doc.generate_pdf(filepath, clean_tex=False)
+    # except UnicodeDecodeError:
+        # pass
+
+    return filepath

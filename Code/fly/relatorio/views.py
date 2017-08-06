@@ -1,3 +1,4 @@
+import os
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.http import HttpResponse
@@ -170,7 +171,8 @@ class GeracaoPDFRelatorio(LoginRequiredMixin, View):
         with open(caminho, 'rb') as arquivo_pdf:
             response = HttpResponse(arquivo_pdf, content_type='application/pdf')
             # Abre no visualizador de PDF do navegador
-            response['Content-Disposition'] = 'inline; filename={}'.format(smart_str(caminho))
+            nome_arquivo = caminho.split(os.sep)[-1]
+            response['Content-Disposition'] = 'inline; filename={}'.format(smart_str(nome_arquivo))
 
             return response
 
@@ -193,5 +195,5 @@ class SubmeterRelatorio(LoginRequiredMixin, View):
         else:
             relatorio.estado = EstadoRelatorio.objects.get(nome='Submetido')
             relatorio.save()
-            send_email_comissao("[SGPE] Submissão de relatório.", 'Relatório submetido, acesse-o neste <a href="http://cacc.unioeste-foz.br:8000' + reverse('relatorio:detalhe', args=[relatorio.pk]) + '">link</a>.')
+            send_email_comissao("[SGPE] Submissão de relatório", 'Relatório submetido, acesse-o neste <a href="http://cacc.unioeste-foz.br:8000' + reverse('relatorio:detalhe', args=[relatorio.pk]) + '">link</a>.')
             return redirect('relatorio:consulta', relatorio.projeto_extensao.pk)

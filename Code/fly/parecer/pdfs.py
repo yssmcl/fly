@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import os
-from pylatex import Document, Enumerate, NoEscape, Package, Tabularx, FlushRight, \
-     LineBreak, NewLine, MultiColumn, MultiRow, HFill, Table, Center
-from pylatex.base_classes import Environment
+from pylatex import Enumerate, NoEscape, NewLine, Center
 from pylatex.utils import escape_latex, bold
 
 from base import pdfutils
-from base.models import UnidadeAdministrativa, Campus, Centro, EstadoProjeto
-from curso_extensao.models import CursoExtensao
+from base.models import EstadoProjeto
 from fly.settings import PDF_DIR
 
 def gerar_pdf(parecer):
@@ -40,31 +37,21 @@ def gerar_pdf(parecer):
     doc.append(NoEscape(r'Colegiado: {} \\'.format(escape_latex(parecer.projeto_extensao.coordenador.colegiado))))
     doc.append(NoEscape(r'Centro: {} \\'.format(escape_latex(parecer.projeto_extensao.centro.nome))))
     doc.append(NoEscape(r'Campus: {} \\'.format(escape_latex(parecer.projeto_extensao.campus.nome))))
-    doc.append(NoEscape(r'Título da atividades: {} \\'.format(escape_latex(parecer.projeto_extensao.titulo))))
+    doc.append(NoEscape(r'Título da atividade: {} \\'.format(escape_latex(parecer.projeto_extensao.titulo))))
     doc.append(NoEscape(r'Parecer referente a: \\ \\')) # TODO: referente a portaria?
 
     doc.append(bold('COMENTÁRIOS:'))
     doc.append(NewLine())
-    # for estado in UnidadeAdministrativa.objects.all():
-    #     if parecer.estado_parecer and parecer.estado_parecer.id == estado.id:
-    #         doc.append(NoEscape(r'{} ({}) '.format(estado.nome, times)))
-    #     else:
-    #         doc.append(NoEscape(r'{} ({}) '.format(estado.nome, phantom)))
-    # table_spec = NoEscape(r'''|>{\centering\arraybackslash}c|
-    #                           >{\centering\arraybackslash}X|
-    #                           >{\centering\arraybackslash}X|
-    #                           >{\centering\arraybackslash}c|
-    #                           >{\centering\arraybackslash}c|
-    #                       ''')
     pdfutils.tabela_alternativas(doc, EstadoProjeto, '|c|X|X|c|c|', id=parecer.estado_parecer.id)
-
     doc.append(NewLine())
+    doc.append(NewLine())
+    doc.append(NoEscape(r'Ata nº: {} \\'.format(parecer.numero_ata)))
+    data = parecer.data.strftime('%d/%m/%Y')
+    doc.append(NoEscape(r'Data: {} \\'.format(data)))
 
-    # doc.append(NoEscape('Ata nº: {} \\'.format(parecer.numero_ata)))
-    # data = parecer.data.strftime('%d/%m/%Y'),
-    # doc.append(NoEscape('Data: {} \\'.format(data)))
-    # pdfutils.assinatura(doc, 'Carimbo e Assinatura do Coordenador(a) da Comissão de Extensão ou Representante Legal',
-    #                     '.8\textwidth')
+    texto = 'Carimbo e Assinatura do Coordenador(a) da Comissão de Extensão ou Representante Legal'
+    largura = r'\widthof{{{}}}'.format(texto)
+    pdfutils.assinatura(doc, texto, largura, Center())
 
     os.system('mkdir -p ' + PDF_DIR)
 
