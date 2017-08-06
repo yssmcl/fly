@@ -8,7 +8,7 @@ from base import pdfutils
 from base.models import EstadoProjeto
 from fly.settings import PDF_DIR
 
-def gerar_pdf(parecer):
+def gerar_pdf_parecer(parecer):
     doc = pdfutils.init_document()
 
     pdfutils.pacotes(doc)
@@ -58,7 +58,7 @@ def gerar_pdf(parecer):
     # TODO: UnicodeDecodeError
     # try:
     filepath = '{}/parecer_{}_projeto_{}'.format(PDF_DIR, str(parecer.id), str(parecer.projeto_extensao.id))
-    doc.generate_pdf(filepath, clean_tex=False, compiler=pdfutils.compiler, compiler_args=pdfutils.compiler_args)
+    doc.generate_pdf(filepath, clean_tex=False, compiler=pdfutils.COMPILER, compiler_args=pdfutils.COMPILER_ARGS)
     # except UnicodeDecodeError:
         # pass
 

@@ -12,7 +12,7 @@ from .models import Relatorio, RelatorioFile, EstadoRelatorio
 from base.utils import send_email_comissao
 from curso_extensao.models import CursoExtensao
 from fly.settings import PDF_DIR, MEDIA_ROOT
-from relatorio.pdfs import gerar_pdf
+from relatorio.pdfs import *
 
 import subprocess
 
@@ -162,7 +162,7 @@ class GeracaoPDFRelatorio(LoginRequiredMixin, View):
     def get(self, request, pk):
         relatorio = get_object_or_404(Relatorio, pk=pk)
 
-        caminho = gerar_pdf(relatorio) + '.pdf'
+        caminho = gerar_pdf_relatorio(relatorio) + '.pdf'
 
         with open(caminho, 'rb') as arquivo_pdf:
             response = HttpResponse(arquivo_pdf, content_type='application/pdf')

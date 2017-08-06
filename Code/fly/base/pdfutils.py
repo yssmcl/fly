@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from pylatex import NoEscape, FlushRight, NewLine, MdFramed, Enumerate, Document, \
-     NewPage, HFill, Tabularx, LineBreak, MultiColumn, MultiRow, Package, Center, \
-     MiniPage
+from pylatex import NoEscape, FlushRight, NewLine, MdFramed, Enumerate, Document, NewPage, HFill, \
+     Tabularx, LineBreak, MultiColumn, MultiRow, Package, Center, MiniPage
 from pylatex.utils import escape_latex, bold
 
 from base.models import *
@@ -12,12 +11,14 @@ from relatorio.models import *
 from fly.settings import BASE_DIR
 
 
-mdframed_options = ['innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt']
-width_argument = NoEscape(r'\linewidth')
-times = NoEscape(r'$\times$')
-phantom = NoEscape(r'\phantom{$\times$}')
-compiler_args = ['-pdflua', '-verbose']
-compiler = 'latexmk'
+TIMES = NoEscape(r'\ding{53}')
+PHANTOM = NoEscape(r'\phantom{\ding{53}}')
+
+WIDTH_ARGUMENT = NoEscape(r'\linewidth')
+MDFRAMED_OPTIONS = ['innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt']
+
+COMPILER = 'latexmk'
+COMPILER_ARGS = ['-pdflua', '-verbose']
 
 
 def init_document():
@@ -26,7 +27,7 @@ def init_document():
                         'bottom': '2.5cm',
                         'top': '6.5cm',
                         'headheight': '4cm'}
-    document = Document(geometry_options=geometry_options, lmodern=False, document_options=['12pt', 'a4paper', 'oneside'])
+    document = Document(geometry_options=geometry_options, lmodern=False, document_options=['12pt', 'a4paper', 'oneside', 'brazil'])
 
     return document
 
@@ -39,18 +40,24 @@ def pacotes(doc):
     doc.packages.add(Package('titlesec'))
     doc.packages.add(Package('parskip'))
     doc.packages.add(Package('enumitem'))
-    doc.packages.add(Package('helvet', options='scaled=0.92'))
+    # doc.packages.add(Package('helvet', options='scaled=0.92'))
     doc.packages.add(Package('tabularx'))
     doc.packages.add(Package('mdframed'))
-    doc.packages.add(Package('eqparbox'))
-    doc.packages.add(Package('fancyhdr'))
-    doc.packages.add(Package('makecell'))
-    doc.packages.add(Package('calc'))
+    doc.packages.add(Package('eqparbox')) # similar a minipage
+    doc.packages.add(Package('fancyhdr')) # cabeçalho
+    doc.packages.add(Package('makecell')) # criação de células em tabelas
+    doc.packages.add(Package('calc')) # \widthof
+    doc.packages.add(Package('fontspec')) # para fonte TeX Gyre Heros ('ª' e 'º' não funcionam com helvet)
+    doc.packages.add(Package('pifont')) # \ding
+    doc.packages.add(Package('csquotes')) # \MakeOuterQuote
 
 
 def configuracoes_preambulo(doc):
-    doc.preamble.append(NoEscape(r'\renewcommand{\familydefault}{\sfdefault}'))
+    # doc.preamble.append(NoEscape(r'\renewcommand{\familydefault}{\sfdefault}'))
     # doc.append(NoEscape(r'\fontfamily{\sfdefault}\selectfont'))
+    doc.preamble.append(NoEscape(r'\setmainfont[Scale=0.9]{TeX Gyre Heros}')) # fonte parecida com Arial e Helvetica
+
+    doc.preamble.append(NoEscape(r'\MakeOuterQuote{"}')) # coverte aspas automaticamente, sem precisar de `` e ''
 
     # Configuração das listas
     doc.preamble.append(NoEscape(r'''
@@ -129,16 +136,16 @@ def item(doc, enum, texto, dado=None):
 
 
 def mdframed_informar(doc, enum, programa_extensao):
-    with doc.create(MdFramed(options=mdframed_options)):
+    with doc.create(MdFramed(options=MDFRAMED_OPTIONS)):
         item(doc, enum, 'INFORMAR: ')
         with doc.create(Enumerate()) as subenum:
             doc.append(NoEscape('\scriptsize'))
 
             subenum.add_item(NoEscape('Esta atividade faz parte de algum Programa de Extensão? '))
             if programa_extensao:
-                doc.append(NoEscape(r'Não ({}) Sim ({}): Qual? {}'.format(phantom, times, programa_extensao.nome)))
+                doc.append(NoEscape(r'Não ({}) Sim ({}): Qual? {}'.format(PHANTOM, TIMES, programa_extensao.nome)))
             else:
-                doc.append(NoEscape(r'Não ({}) Sim ({}): Qual? '.format(times, phantom)))
+                doc.append(NoEscape(r'Não ({}) Sim ({}): Qual? '.format(TIMES, PHANTOM)))
 
             doc.append(NoEscape(r'''
 Coordenador(a) do Programa: \\ \\ \\
@@ -148,24 +155,24 @@ Assinatura: \hrulefill \\
             # TODO: ???
             subenum.add_item(NoEscape(r'\
                                       Esta Atividade de Extensão está articulada (quando for o caso): \
-                                      ao Ensino ({}) à Pesquisa ({})'.format(phantom, phantom)))
+                                      ao Ensino ({}) à Pesquisa ({})'.format(PHANTOM, PHANTOM)))
 
 
 def tabela_unidade_administrativa(doc, enum, unidade_administrativa, campus):
         item(doc, enum, 'UNIDADE ADMINISTRATIVA: ')
         for unidade in UnidadeAdministrativa.objects.all():
             if unidade_administrativa and unidade_administrativa.id == unidade.id:
-                doc.append(NoEscape(r'{} ({}) '.format(unidade.nome, times)))
+                doc.append(NoEscape(r'{} ({}) '.format(unidade.nome, TIMES)))
             else:
-                doc.append(NoEscape(r'{} ({}) '.format(unidade.nome, phantom)))
+                doc.append(NoEscape(r'{} ({}) '.format(unidade.nome, PHANTOM)))
         doc.append(NewLine())
 
         doc.append(bold('CAMPUS DE: '))
         for c in Campus.objects.all():
             if campus and campus.id == c.id:
-                doc.append(NoEscape(r'{} ({}) '.format(c.nome, times)))
+                doc.append(NoEscape(r'{} ({}) '.format(c.nome, TIMES)))
             else:
-                doc.append(NoEscape(r'{} ({}) '.format(c.nome, phantom)))
+                doc.append(NoEscape(r'{} ({}) '.format(c.nome, PHANTOM)))
 
 
 def tabela_centro(doc, enum, centro):
@@ -173,9 +180,9 @@ def tabela_centro(doc, enum, centro):
     doc.append(NewLine())
     for c in Centro.objects.all():
         if centro and centro.id == c.id:
-            doc.append(NoEscape(r'{} ({}) '.format(c.nome, times)))
+            doc.append(NoEscape(r'{} ({}) '.format(c.nome, TIMES)))
         else:
-            doc.append(NoEscape(r'{} ({}) '.format(c.nome, phantom)))
+            doc.append(NoEscape(r'{} ({}) '.format(c.nome, PHANTOM)))
 
 
 # id é opcional, só se quiser preencher a tabela
@@ -185,16 +192,16 @@ def tabela_alternativas(doc, model, table_spec, id=None, hline=True):
     # Conta a quantidade de 'X', 'l', 'c', 'r' etc.
     nro_colunas = sum(char.isalpha() for char in table_spec)
 
-    with doc.create(Tabularx(table_spec, width_argument=width_argument)) as tab:
+    with doc.create(Tabularx(table_spec, width_argument=WIDTH_ARGUMENT)) as tab:
         if hline:
             tab.add_hline()
 
         row = []
         for i, model in enumerate(model.objects.all(), 1):
             if id and model.id == id:
-                row.append(NoEscape(r'({}) {}'.format(times, model.nome)))
+                row.append(NoEscape(r'({}) {}'.format(TIMES, model.nome)))
             else:
-                row.append(NoEscape(r'({}) {} '.format(phantom, model.nome)))
+                row.append(NoEscape(r'({}) {} '.format(PHANTOM, model.nome)))
 
             if i%nro_colunas == 0:
                 tab.add_row(row)
@@ -220,7 +227,7 @@ def tabela_palavras_chave(doc, enum, palavras):
     doc.append(NewLine())
 
     nro_colunas = 3
-    with doc.create(Tabularx('|X|X|X|', width_argument=width_argument)) as tab:
+    with doc.create(Tabularx('|X|X|X|', width_argument=WIDTH_ARGUMENT)) as tab:
         tab.add_hline()
 
         row = []
@@ -256,14 +263,14 @@ def tabela_linha_extensao(doc, enum, linha_extensao, id):
     item(doc, enum, 'LINHA DE EXTENSÃO: ')
     doc.append(NewLine())
     doc.append(NewLine())
-    doc.append(NoEscape(r'{\tiny'))
+    doc.append(NoEscape(r'{\scriptsize'))
     if linha_extensao:
         tabela_alternativas(doc, LinhaExtensao, 'X|X|X', id=id, hline=False)
     doc.append(NoEscape('}'))
 
 
 def popular_servidores(doc, servidor, docente_cursoextensao=None):
-    with doc.create(MdFramed(options=mdframed_options)):
+    with doc.create(MdFramed(options=MDFRAMED_OPTIONS)):
         doc.append(bold('SERVIDORES UNIOESTE '))
         doc.append(NewLine())
 
@@ -274,15 +281,15 @@ def popular_servidores(doc, servidor, docente_cursoextensao=None):
         if servidor.__class__ == Docente_CursoExtensao:
             for tipo_docente in TipoDocente.objects.all():
                 if docente.tipo_docente.id == tipo_docente.id:
-                    doc.append(NoEscape(r'({}) {} '.format(times, tipo_docente.nome)))
+                    doc.append(NoEscape(r'({}) {} '.format(TIMES, tipo_docente.nome)))
                 else:
-                    doc.append(NoEscape(r'({}) {} '.format(phantom, tipo_docente.nome)))
-            doc.append(NoEscape(r'({}) {} '.format(phantom, 'Agente Universitário')))
+                    doc.append(NoEscape(r'({}) {} '.format(PHANTOM, tipo_docente.nome)))
+            doc.append(NoEscape(r'({}) {} '.format(PHANTOM, 'Agente Universitário')))
             doc.append(NewLine())
         elif servidor.__class__ == AgenteUniversitario_CursoExtensao:
             for tipo_docente in TipoDocente.objects.all():
-                doc.append(NoEscape(r'({}) {} '.format(phantom, tipo_docente.nome)))
-            doc.append(NoEscape(r'({}) {} '.format(times, 'Agente Universitário')))
+                doc.append(NoEscape(r'({}) {} '.format(PHANTOM, tipo_docente.nome)))
+            doc.append(NoEscape(r'({}) {} '.format(TIMES, 'Agente Universitário')))
             doc.append(NewLine())
 
         # TODO: regime_trabalho
@@ -310,14 +317,14 @@ def popular_servidores(doc, servidor, docente_cursoextensao=None):
         #  doc.append('Unidade Administrativa: ')
         #  for unidade in UnidadeAdministrativa.objects.all():
         #      if agente_cursoextensao.unidade_administrativa and agente_cursoextensao.unidade_administrativa.id == unidade.id:
-        #          doc.append(NoEscape(r'({}) {} '.format(times, unidade.nome)))
+        #          doc.append(NoEscape(r'({}) {} '.format(TIMES, unidade.nome)))
         #      else:
-        #          doc.append(NoEscape(r'({}) {} '.format(phantom, unidade.nome)))
+        #          doc.append(NoEscape(r'({}) {} '.format(PHANTOM, unidade.nome)))
 
         #  if agente_cursoextensao.campus:
-        #      doc.append(NoEscape(r'({}) CAMPUS DE: {}'.format(times, agente_cursoextensao.campus.nome)))
+        #      doc.append(NoEscape(r'({}) CAMPUS DE: {}'.format(TIMES, agente_cursoextensao.campus.nome)))
         #  else:
-        #      doc.append(NoEscape(r'({}) CAMPUS DE: '.format(phantom)))
+        #      doc.append(NoEscape(r'({}) CAMPUS DE: '.format(PHANTOM)))
         #  doc.append(NewLine())
 
         doc.append(NoEscape('E-mail: '))
@@ -335,7 +342,7 @@ def popular_servidores(doc, servidor, docente_cursoextensao=None):
                                                         escape_latex(servidor.pais))))
         doc.append(NewLine())
 
-        with doc.create(MdFramed(options=mdframed_options)):
+        with doc.create(MdFramed(options=MDFRAMED_OPTIONS)):
             doc.append('Função: ')
             doc.append(NewLine())
             if docente_cursoextensao:
@@ -404,7 +411,7 @@ def tabela_discentes(doc, enum, projeto_extensao):
 
     doc.append(NoEscape('{\scriptsize'))
 
-    with doc.create(Tabularx(table_spec, width_argument=width_argument)) as tab:
+    with doc.create(Tabularx(table_spec, width_argument=WIDTH_ARGUMENT)) as tab:
         tab.add_hline()
         tab.add_row(cabecalho)
         tab.add_hline()
@@ -448,7 +455,7 @@ def tabela_membros(doc, enum, projeto_extensao):
 
     doc.append(NoEscape('{\scriptsize'))
 
-    with doc.create(Tabularx( table_spec, width_argument=width_argument)) as tab:
+    with doc.create(Tabularx( table_spec, width_argument=WIDTH_ARGUMENT)) as tab:
         tab.add_hline()
         tab.add_row(cabecalho)
         tab.add_hline()
@@ -493,7 +500,7 @@ def tabela_previsao_orcamentaria(doc, enum, previsao_orcamentaria):
             previsao_orcamentaria.certificados +
             (previsao_orcamentaria.outros or 0))
 
-        with doc.create(Tabularx('|' + 'X|'*4, width_argument=width_argument)) as tab:
+        with doc.create(Tabularx('|' + 'X|'*4, width_argument=WIDTH_ARGUMENT)) as tab:
             tab.add_hline()
             tab.add_row(MultiColumn(2, data=bold('Receitas'), align='|c|'),
                         MultiColumn(2, data=bold('Despesas'), align='c|'))
@@ -538,7 +545,7 @@ def tabela_gestao_recursos_financeiros(doc, enum, previsao_orcamentaria):
         item(doc, enum, 'GESTÃO DOS RECURSOS FINANCEIROS: ')
         doc.append(NewLine())
 
-        with doc.create(MdFramed(options=mdframed_options)):
+        with doc.create(MdFramed(options=MDFRAMED_OPTIONS)):
             doc.append(bold('ÓRGÃO GESTOR DOS RECURSOS FINANCEIROS '))
             doc.append(NewLine())
 
@@ -546,9 +553,9 @@ def tabela_gestao_recursos_financeiros(doc, enum, previsao_orcamentaria):
 
             for tipo_gestao in TipoGestaoRecursosFinanceiros.objects.all():
                 if previsao_orcamentaria.identificacao and previsao_orcamentaria.identificacao.id == tipo_gestao.id:
-                    doc.append(NoEscape(r'({}) {}'.format(times, tipo_gestao.nome.upper())))
+                    doc.append(NoEscape(r'({}) {}'.format(TIMES, tipo_gestao.nome.upper())))
                 else:
-                    doc.append(NoEscape(r'({}) {}'.format(phantom, tipo_gestao.nome.upper())))
+                    doc.append(NoEscape(r'({}) {}'.format(PHANTOM, tipo_gestao.nome.upper())))
                 doc.append(NewLine())
 
 
@@ -567,7 +574,7 @@ def tabela_certificados(doc, id=None):
                      'FREQUÊNCIA (%)',
                      'C/H TOTAL']
 
-        with doc.create(Tabularx(table_spec, width_argument=width_argument)) as tab:
+        with doc.create(Tabularx(table_spec, width_argument=WIDTH_ARGUMENT)) as tab:
             tab.add_hline()
             tab.add_row(cabecalho)
             tab.add_hline()
@@ -586,7 +593,7 @@ def tabela_certificados(doc, id=None):
 
         # TODO: Item 9.2: Inserir onde o certificado sera gerado: PROEX ou Centro de Coordenação / Órgão Promotor
         enum.add_item(NoEscape(r'Informar se os certificados devem ser emitidos: \\'))
-        doc.append(NoEscape('({}) pela PROEX \hfill ({}) pelo Centro da Coordenação ou Órgão Promotor'.format(phantom, phantom)))
+        doc.append(NoEscape('({}) pela PROEX \hfill ({}) pelo Centro da Coordenação ou Órgão Promotor'.format(PHANTOM, PHANTOM)))
 
 
 def local_data_assinatura(doc):

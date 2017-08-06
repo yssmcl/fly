@@ -8,7 +8,7 @@ from base import pdfutils
 from curso_extensao.models import PalavraChave_CursoExtensao, PrevisaoOrcamentaria_CursoExtensao
 from fly.settings import PDF_DIR
 
-def gerar_pdf(curso):
+def gerar_pdf_curso(curso):
     doc = pdfutils.init_document()
 
     pdfutils.pacotes(doc)
@@ -102,7 +102,7 @@ def gerar_pdf(curso):
     # TODO: UnicodeDecodeError
     # try:
     filepath = '{}/curso-extensao_{}'.format(PDF_DIR, str(curso.id))
-    doc.generate_pdf(filepath, clean_tex=False, compiler=pdfutils.compiler, compiler_args=pdfutils.compiler_args)
+    doc.generate_pdf(filepath, clean_tex=False, compiler=pdfutils.COMPILER, compiler_args=pdfutils.COMPILER_ARGS)
     # except UnicodeDecodeError:
         # pass
 

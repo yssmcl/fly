@@ -7,10 +7,7 @@ from pylatex.utils import escape_latex
 from base import pdfutils
 from fly.settings import PDF_DIR
 
-def gerar_pdf(relatorio):
-    times = NoEscape(r'$\times$')
-    phantom = NoEscape(r'\phantom{$\times$}')
-
+def gerar_pdf_relatorio(relatorio):
     doc = pdfutils.init_document()
 
     pdfutils.pacotes(doc)
@@ -36,10 +33,10 @@ def gerar_pdf(relatorio):
         with doc.create(Enumerate()) as subenum:
             subenum.add_item(NoEscape('Vinculada a algum Programa de Extensão? '))
             if relatorio.projeto_extensao.programa_extensao:
-                doc.append(NoEscape(r'Não ({}) Sim ({}): Qual? {}'.format(phantom, times,
+                doc.append(NoEscape(r'Não ({}) Sim ({}): Qual? {}'.format(pdfutils.PHANTOM, pdfutils.TIMES,
                     relatorio.projeto_extensao.programa_extensao.nome)))
             else:
-                doc.append(NoEscape(r'Não ({}) Sim ({}): Qual? '.format(times, phantom)))
+                doc.append(NoEscape(r'Não ({}) Sim ({}): Qual? '.format(pdfutils.TIMES, pdfutils.PHANTOM)))
 
         pdfutils.item(doc, enum, 'COORDENADOR(a): ', relatorio.projeto_extensao.coordenador.nome_completo)
 
@@ -80,6 +77,6 @@ def gerar_pdf(relatorio):
     os.system('mkdir -p ' + PDF_DIR)
 
     filepath = '{}/relatorio_{}'.format(PDF_DIR, str(relatorio.id))
-    doc.generate_pdf(filepath, clean_tex=False, compiler=pdfutils.compiler, compiler_args=pdfutils.compiler_args)
+    doc.generate_pdf(filepath, clean_tex=False, compiler=pdfutils.COMPILER, compiler_args=pdfutils.COMPILER_ARGS)
 
     return filepath

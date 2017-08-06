@@ -14,7 +14,7 @@ from .forms import CursoExtensaoForm, AgenteUniversitario_CursoExtensaoFormSet, 
 from .models import CursoExtensao
 from base.models import EstadoProjeto
 from base.utils import send_email_comissao
-from curso_extensao.pdfs import gerar_pdf
+from curso_extensao.pdfs import *
 
 import subprocess
 
@@ -198,7 +198,7 @@ class GeracaoPDFCursoExtensao(LoginRequiredMixin, View):
     def get(self, request, pk):
         curso_extensao = get_object_or_404(CursoExtensao, pk=pk)
 
-        caminho = gerar_pdf(curso_extensao) + '.pdf'
+        caminho = gerar_pdf_curso(curso_extensao) + '.pdf'
 
         with open(caminho, 'rb') as arquivo_pdf:
             response = HttpResponse(arquivo_pdf, content_type='application/pdf')

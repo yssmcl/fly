@@ -22,8 +22,7 @@ PDF_DIR = os.path.join(BASE_DIR, 'tmp')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'g@xfsl+31evbzmbo*)cxp5+@4w=wy#7((jv$sw8!y7l^3*uziq'
 
-# TODO:
-# SECURITY WARNING: don't run with debug turned on in production!
+# TODO: # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['cacc.unioeste-foz.br', '0.0.0.0', '127.0.0.1', 'localhost']

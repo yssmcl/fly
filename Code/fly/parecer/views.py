@@ -9,7 +9,7 @@ from django.views import View, generic
 from .forms import ParecerForm
 from .models import Parecer
 from curso_extensao.models import CursoExtensao
-from parecer.pdfs import gerar_pdf
+from parecer.pdfs import *
 
 class NovoParecer(LoginRequiredMixin, View):
     def get(self, request, pk):
@@ -91,7 +91,7 @@ class GeracaoPDFParecer(LoginRequiredMixin, View):
     def get(self, request, pk):
         parecer = get_object_or_404(Parecer, pk=pk)
 
-        caminho = gerar_pdf(parecer) + '.pdf'
+        caminho = gerar_pdf_parecer(parecer) + '.pdf'
 
         with open(caminho, 'rb') as arquivo_pdf:
             response = HttpResponse(arquivo_pdf, content_type='application/pdf')
