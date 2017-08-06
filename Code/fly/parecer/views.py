@@ -91,11 +91,7 @@ class GeracaoPDFParecer(LoginRequiredMixin, View):
     def get(self, request, pk):
         parecer = get_object_or_404(Parecer, pk=pk)
 
-        # TODO:
-        #  try:
         caminho = gerar_pdf(parecer) + '.pdf'
-        #  except subprocess.CalledProcessError:
-            #  pass
 
         with open(caminho, 'rb') as arquivo_pdf:
             response = HttpResponse(arquivo_pdf, content_type='application/pdf')

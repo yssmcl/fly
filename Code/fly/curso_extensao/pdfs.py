@@ -102,7 +102,7 @@ def gerar_pdf(curso):
     # TODO: UnicodeDecodeError
     # try:
     filepath = '{}/curso-extensao_{}'.format(PDF_DIR, str(curso.id))
-    doc.generate_pdf(filepath, clean_tex=False)
+    doc.generate_pdf(filepath, clean_tex=False, compiler=pdfutils.compiler, compiler_args=pdfutils.compiler_args)
     # except UnicodeDecodeError:
         # pass
 

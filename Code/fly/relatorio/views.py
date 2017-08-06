@@ -162,11 +162,7 @@ class GeracaoPDFRelatorio(LoginRequiredMixin, View):
     def get(self, request, pk):
         relatorio = get_object_or_404(Relatorio, pk=pk)
 
-        # TODO:
-        #  try:
         caminho = gerar_pdf(relatorio) + '.pdf'
-        #  except subprocess.CalledProcessError:
-            #  pass
 
         with open(caminho, 'rb') as arquivo_pdf:
             response = HttpResponse(arquivo_pdf, content_type='application/pdf')

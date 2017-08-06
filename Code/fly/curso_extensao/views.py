@@ -198,11 +198,7 @@ class GeracaoPDFCursoExtensao(LoginRequiredMixin, View):
     def get(self, request, pk):
         curso_extensao = get_object_or_404(CursoExtensao, pk=pk)
 
-        # TODO:
-        #  try:
         caminho = gerar_pdf(curso_extensao) + '.pdf'
-        #  except subprocess.CalledProcessError:
-            #  pass
 
         with open(caminho, 'rb') as arquivo_pdf:
             response = HttpResponse(arquivo_pdf, content_type='application/pdf')

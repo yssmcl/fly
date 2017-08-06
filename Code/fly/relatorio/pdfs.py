@@ -79,11 +79,7 @@ def gerar_pdf(relatorio):
 
     os.system('mkdir -p ' + PDF_DIR)
 
-    # TODO: UnicodeDecodeError
-    # try:
     filepath = '{}/relatorio_{}'.format(PDF_DIR, str(relatorio.id))
-    doc.generate_pdf(filepath, clean_tex=False)
-    # except UnicodeDecodeError:
-        # pass
+    doc.generate_pdf(filepath, clean_tex=False, compiler=pdfutils.compiler, compiler_args=pdfutils.compiler_args)
 
     return filepath

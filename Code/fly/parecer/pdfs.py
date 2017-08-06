@@ -58,7 +58,7 @@ def gerar_pdf(parecer):
     # TODO: UnicodeDecodeError
     # try:
     filepath = '{}/parecer_{}_projeto_{}'.format(PDF_DIR, str(parecer.id), str(parecer.projeto_extensao.id))
-    doc.generate_pdf(filepath, clean_tex=False)
+    doc.generate_pdf(filepath, clean_tex=False, compiler=pdfutils.compiler, compiler_args=pdfutils.compiler_args)
     # except UnicodeDecodeError:
         # pass
 

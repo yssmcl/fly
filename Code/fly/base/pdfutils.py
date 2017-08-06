@@ -16,6 +16,8 @@ mdframed_options = ['innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3
 width_argument = NoEscape(r'\linewidth')
 times = NoEscape(r'$\times$')
 phantom = NoEscape(r'\phantom{$\times$}')
+compiler_args = ['-pdflua', '-verbose']
+compiler = 'latexmk'
 
 
 def init_document():
