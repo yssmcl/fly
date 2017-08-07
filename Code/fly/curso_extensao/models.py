@@ -73,12 +73,10 @@ class PrevisaoOrcamentaria_CursoExtensao(models.Model):
     xerox = models.DecimalField(max_digits=10, decimal_places=2)
     certificados = models.DecimalField(max_digits=10, decimal_places=2)
 
-    #TODO: validar:
     outros = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     outros_especificacao = models.CharField(max_length=200, blank=True, null=True)
 
     # Gestao dos recursos financeiros
-    #TODO: validar:
     identificacao = models.ForeignKey(TipoGestaoRecursosFinanceiros)
     fundacao = models.CharField(max_length=200, blank=True, null=True)
     outro_orgao_gestor = models.CharField(max_length=200, blank=True, null=True)
@@ -170,7 +168,6 @@ class MembroComunidade_CursoExtensao(models.Model):
 
     nome = models.CharField(max_length=200)
     carga_horaria_semanal = models.IntegerField()
-    #TODO: instituição/entidade
     entidade = models.CharField(max_length=200)
 
     telefone = models.CharField(max_length=200)

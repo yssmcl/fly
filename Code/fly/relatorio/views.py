@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils.encoding import smart_str
 from django.views import View, generic
+from django.core.exceptions import PermissionDenied
 
 from .forms import RelatorioForm, RelatorioFileForm, CertificadoRelatorioFormSet
 from .models import Relatorio, RelatorioFile, EstadoRelatorio
@@ -137,25 +138,26 @@ class DownloadArquivoRelatorio(LoginRequiredMixin, View):
         relatorio_file = get_object_or_404(RelatorioFile, pk=pk)
         file = relatorio_file.file
 
-        if relatorio_file.relatorio.projeto_extensao.user == request.user:
-            response = HttpResponse(file, content_type='application/force-download')
-            response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(relatorio_file.nome)
-            response['Content-Length'] = file.size
-            # response['X-Sendfile'] = smart_str(MEDIA_ROOT+file.name)
-            return response
-        else:
-            return redirect('base:index') #TODO: mensagem de erro
+        if relatorio_file.relatorio.projeto_extensao.user != request.user:
+            raise PermissionDenied
+
+        response = HttpResponse(file, content_type='application/force-download')
+        response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(relatorio_file.nome)
+        response['Content-Length'] = file.size
+        # response['X-Sendfile'] = smart_str(MEDIA_ROOT+file.name)
+        return response
 
 
 class DeletarArquivoRelatorio(LoginRequiredMixin, View):
     def post(self, request):
         relatorio_file = get_object_or_404(RelatorioFile, pk=request.POST['pk'])
         relatorio = relatorio_file.relatorio
-        if relatorio_file.relatorio.projeto_extensao.user == request.user:
-            relatorio_file.delete()
-            return redirect('relatorio:lista_arquivos', relatorio.pk)
-        else:
-            return redirect('base:index') #TODO: mensagem de erro
+
+        if relatorio_file.relatorio.projeto_extensao.user != request.user:
+            raise PermissionDenied
+
+        relatorio_file.delete()
+        return redirect('relatorio:lista_arquivos', relatorio.pk)
 
 
 class GeracaoPDFRelatorio(LoginRequiredMixin, View):
@@ -176,23 +178,25 @@ class GeracaoPDFRelatorio(LoginRequiredMixin, View):
 class DeletarRelatorio(LoginRequiredMixin, View):
     def post(self, request):
         relatorio = get_object_or_404(Relatorio, pk=request.POST['pk'])
+
         if relatorio.projeto_extensao.user != request.user:
-            return redirect('base:index') #TODO: mensagem de erro
-        else:
-            relatorio.delete()
-            return redirect('relatorio:consulta', relatorio.projeto_extensao.pk)
+            raise PermissionDenied
+
+        relatorio.delete()
+        return redirect('relatorio:consulta', relatorio.projeto_extensao.pk)
 
 
 class SubmeterRelatorio(LoginRequiredMixin, View):
     def post(self, request):
         relatorio = get_object_or_404(Relatorio, pk=request.POST['pk'])
+
         if relatorio.projeto_extensao.user != request.user or relatorio.estado.nome not in {'Não submetido'}:
-            return redirect('base:index') #TODO: mensagem de erro
-        else:
-            relatorio.estado = EstadoRelatorio.objects.get(nome='Submetido')
-            relatorio.save()
-            send_email_comissao("[SGPE] Submissão de relatório", 'Relatório submetido, acesse-o neste <a href="http://cacc.unioeste-foz.br:8000' + reverse('relatorio:detalhe', args=[relatorio.pk]) + '">link</a>.')
-            return redirect('relatorio:consulta', relatorio.projeto_extensao.pk)
+            raise PermissionDenied
+
+        relatorio.estado = EstadoRelatorio.objects.get(nome='Submetido')
+        relatorio.save()
+        send_email_comissao("[SGPE] Submissão de relatório", 'Relatório submetido, acesse-o neste <a href="http://cacc.unioeste-foz.br:8000' + reverse('relatorio:detalhe', args=[relatorio.pk]) + '">link</a>.')
+        return redirect('relatorio:consulta', relatorio.projeto_extensao.pk)
 
 
 class ConsultaCertificado(LoginRequiredMixin, View):

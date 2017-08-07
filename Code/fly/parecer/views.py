@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.encoding import smart_str
 from django.views import View, generic
+from django.core.exceptions import PermissionDenied
 
 from .forms import ParecerForm
 from .models import Parecer
@@ -80,11 +81,12 @@ class DetalheParecer(LoginRequiredMixin, View):
 class DeletarParecer(LoginRequiredMixin, View):
     def post(self, request):
         parecer = get_object_or_404(Parecer, pk=request.POST['pk'])
+
         if parecer.projeto_extensao.user != request.user:
-            return redirect('parecer:consulta', parecer.projeto_extensao.pk) #TODO: mensagem de erro
-        else:
-            parecer.delete()
-            return redirect('parecer:consulta', parecer.projeto_extensao.pk)
+            raise PermissionDenied
+
+        parecer.delete()
+        return redirect('parecer:consulta', parecer.projeto_extensao.pk)
 
 
 class GeracaoPDFParecer(LoginRequiredMixin, View):
