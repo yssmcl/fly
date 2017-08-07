@@ -105,3 +105,8 @@ ENV/
 
 # Swap file
 *.swp
+
+# LaTeX
+# *.aux
+# *.fdb_latexmk
+# *.fsl

@@ -2,7 +2,7 @@
 
 import os
 from pylatex import Enumerate, NoEscape, NewLine
-from pylatex.utils import escape_latex
+from pylatex.utils import escape_latex, dumps_list
 
 from base import pdfutils
 from curso_extensao.models import PalavraChave_CursoExtensao, PrevisaoOrcamentaria_CursoExtensao
@@ -28,9 +28,9 @@ def gerar_pdf_curso(curso):
 
     # Início do formulário
     with doc.create(Enumerate()) as enum:
-        pdfutils.item(doc, enum, 'TÍTULO: ', curso.titulo)
+        pdfutils.item(doc, enum, 'TÍTULO: ', dumps_list(curso.titulo))
 
-        pdfutils.item(doc, enum, 'COORDENADOR(a): ', curso.coordenador.nome_completo)
+        pdfutils.item(doc, enum, 'COORDENADOR(a): ', escape_latex(curso.coordenador.nome_completo))
 
         periodo_inicio = curso.periodo_realizacao_inicio.strftime('%d/%m/%Y')
         periodo_fim = curso.periodo_realizacao_fim.strftime('%d/%m/%Y')
@@ -57,7 +57,7 @@ def gerar_pdf_curso(curso):
 
         pdfutils.tabela_linha_extensao(doc, enum, curso.linha_extensao, id=curso.linha_extensao.id)
 
-        pdfutils.item(doc, enum, 'PÚBLICO ALVO: ', curso.publico_alvo)
+        pdfutils.item(doc, enum, 'PÚBLICO ALVO: ', escape_latex(curso.publico_alvo))
 
         pdfutils.item(doc, enum, 'NÚMERO DE PESSOAS A SEREM BENEFICIADAS: ', curso.numero_pessoas_beneficiadas)
 
@@ -65,17 +65,17 @@ def gerar_pdf_curso(curso):
 
         pdfutils.item(doc, enum, 'Nº DE VAGAS: ', curso.numero_vagas)
 
-        pdfutils.item(doc, enum, 'LOCAL DA INSCRIÇÃO: ', curso.local_inscricao)
+        pdfutils.item(doc, enum, 'LOCAL DA INSCRIÇÃO: ', escape_latex(curso.local_inscricao))
 
         pdfutils.item(doc, enum, 'RESUMO: ')
         doc.append(NewLine())
-        resumo_fmt = escape_latex(curso.resumo.replace('\r', ''))
+        resumo_fmt = curso.resumo.replace('\r', '')
         doc.append(escape_latex(resumo_fmt))
 
         pdfutils.item(doc, enum, 'PROGRAMAÇÃO: ')
         doc.append(NewLine())
-        programacao_fmt = escape_latex(curso.programacao.replace('\r', ''))
-        doc.append(programacao_fmt)
+        programacao_fmt = curso.programacao.replace('\r', '')
+        doc.append(escape_latex(programacao_fmt))
 
         pdfutils.item(doc, enum, 'EQUIPE DE TRABALHO: ')
         doc.append(NewLine())

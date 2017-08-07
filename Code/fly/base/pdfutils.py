@@ -18,7 +18,7 @@ WIDTH_ARGUMENT = NoEscape(r'\linewidth')
 MDFRAMED_OPTIONS = ['innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt']
 
 COMPILER = 'latexmk'
-COMPILER_ARGS = ['-pdflua', '-verbose']
+COMPILER_ARGS = ['-lualatex', '-verbose']
 
 
 def init_document():
@@ -232,7 +232,7 @@ def tabela_palavras_chave(doc, enum, palavras):
 
         row = []
         for i, palavra in enumerate(palavras, 1):
-            row.append(NoEscape('{} -- {}'.format(str(i), palavra.nome)))
+            row.append(NoEscape('{} -- {}'.format(str(i), escape_latex(palavra.nome))))
 
             if i%nro_colunas == 0:
                 tab.add_row(row)
@@ -294,7 +294,7 @@ def popular_servidores(doc, servidor, docente_cursoextensao=None):
 
         # TODO: regime_trabalho
         #  doc.append('Regime de trabalho: ')
-        #  doc.append(escape_latex(servidor.regime_trabalho))
+        #  doc.append(servidor.regime_trabalho)
         #  doc.append(NoEscape('\ hora(s) \hfill'))
 
         doc.append('Carga horária semanal dedicada à atividade: ')
@@ -310,7 +310,7 @@ def popular_servidores(doc, servidor, docente_cursoextensao=None):
         doc.append(NewLine())
 
         doc.append('Centro: ')
-        doc.append(escape_latex(servidor.centro.nome))
+        doc.append(servidor.centro.nome)
         doc.append(NewLine())
 
         # TODO: unidade_administrativa
@@ -332,7 +332,7 @@ def popular_servidores(doc, servidor, docente_cursoextensao=None):
         doc.append(NewLine())
 
         doc.append('Telefone: ')
-        doc.append(servidor.telefone)
+        doc.append(escape_latex(servidor.telefone))
         doc.append(NewLine())
 
         doc.append('Endereço: ')
@@ -419,8 +419,8 @@ def tabela_discentes(doc, enum, projeto_extensao):
         discentes = Discente_CursoExtensao.objects.filter(curso_extensao_id=projeto_extensao.id)
         for discente in discentes:
             linha = [
-                discente.nome,
-                discente.curso,
+                escape_latex(discente.nome),
+                escape_latex(discente.curso.nome),
                 discente.serie,
                 discente.turno.nome,
                 discente.carga_horaria_semanal,
@@ -433,7 +433,7 @@ def tabela_discentes(doc, enum, projeto_extensao):
 
     mdframed_plano_trabalho(doc, discentes)
 
-    doc.append(NoEscape('}')) # volta com tamanho da fonte normal
+    doc.append(NoEscape('}')) # volta com tamanho normal da fonte
 
 
 def tabela_membros(doc, enum, projeto_extensao):
@@ -455,7 +455,7 @@ def tabela_membros(doc, enum, projeto_extensao):
 
     doc.append(NoEscape('{\scriptsize'))
 
-    with doc.create(Tabularx( table_spec, width_argument=WIDTH_ARGUMENT)) as tab:
+    with doc.create(Tabularx(table_spec, width_argument=WIDTH_ARGUMENT)) as tab:
         tab.add_hline()
         tab.add_row(cabecalho)
         tab.add_hline()
@@ -463,11 +463,11 @@ def tabela_membros(doc, enum, projeto_extensao):
         membros = MembroComunidade_CursoExtensao.objects.filter(curso_extensao_id=projeto_extensao.id)
         for membro in membros:
             linha = [
-                membro.nome,
-                membro.entidade,
-                membro.cpf,
+                escape_latex(membro.nome),
+                escape_latex(membro.entidade),
+                escape_latex(membro.cpf),
                 membro.data_nascimento.strftime('%d/%m/%Y'),
-                membro.funcao,
+                escape_latex(membro.funcao),
                 membro.carga_horaria_semanal,
                 # TODO: hifenizar email
                 NoEscape(r'\makecell{{ {}; \\ {} }}'.format(escape_latex(membro.telefone),
@@ -481,62 +481,96 @@ def tabela_membros(doc, enum, projeto_extensao):
     doc.append(NoEscape('}')) # volta com tamanho da fonte normal
 
 
+# TODO: juntar a tabela_discentes e a tabela_membros nessa
+def tabela_discentes_membros(doc, enum, projeto_extensao):
+    pass
+
+
 def tabela_previsao_orcamentaria(doc, enum, previsao_orcamentaria):
         item(doc, enum, 'PREVISÃO ORÇAMENTÁRIA: ')
         doc.append(NewLine())
 
-        total_receitas = (previsao_orcamentaria.inscricoes +
-            previsao_orcamentaria.convenios +
-            previsao_orcamentaria.patrocinios +
-            previsao_orcamentaria.fonte_financiamento)
+        # TODO: blank=True para os DecimalField
+        inscricoes           = previsao_orcamentaria.inscricoes           or 0
+        convenios            = previsao_orcamentaria.convenios            or 0
+        patrocinios          = previsao_orcamentaria.patrocinios          or 0
+        fonte_financiamento  = previsao_orcamentaria.fonte_financiamento  or 0
+        honorarios           = previsao_orcamentaria.honorarios           or 0
+        passagens            = previsao_orcamentaria.passagens            or 0
+        alimentacao          = previsao_orcamentaria.alimentacao          or 0
+        hospedagem           = previsao_orcamentaria.hospedagem           or 0
+        divulgacao           = previsao_orcamentaria.divulgacao           or 0
+        material_consumo     = previsao_orcamentaria.material_consumo     or 0
+        xerox                = previsao_orcamentaria.xerox                or 0
+        certificados         = previsao_orcamentaria.certificados         or 0
+        outros               = previsao_orcamentaria.outros               or 0
+        outros_especificacao = previsao_orcamentaria.outros_especificacao or ''
+        fundacao             = previsao_orcamentaria.fundacao             or ''
+        outro_orgao_gestor   = previsao_orcamentaria.outro_orgao_gestor   or ''
 
-        total_despesas = (previsao_orcamentaria.honorarios +
-            previsao_orcamentaria.passagens +
-            previsao_orcamentaria.alimentacao +
-            previsao_orcamentaria.hospedagem +
-            previsao_orcamentaria.divulgacao +
-            previsao_orcamentaria.material_consumo +
-            previsao_orcamentaria.xerox +
-            previsao_orcamentaria.certificados +
-            (previsao_orcamentaria.outros or 0))
+        total_receitas = (inscricoes +
+                          convenios +
+                          patrocinios +
+                          fonte_financiamento)
+
+        total_despesas = (honorarios +
+                          passagens +
+                          alimentacao +
+                          hospedagem +
+                          divulgacao +
+                          material_consumo +
+                          xerox +
+                          certificados +
+                          outros)
 
         with doc.create(Tabularx('|' + 'X|'*4, width_argument=WIDTH_ARGUMENT)) as tab:
             tab.add_hline()
+
             tab.add_row(MultiColumn(2, data=bold('Receitas'), align='|c|'),
                         MultiColumn(2, data=bold('Despesas'), align='c|'))
             tab.add_hline()
-            tab.add_row('Inscrições', previsao_orcamentaria.inscricoes,
-                        'Honorários', previsao_orcamentaria.honorarios)
+
+            tab.add_row('Inscrições', inscricoes,
+                        'Honorários', honorarios)
             tab.add_hline()
-            tab.add_row('Convênios', previsao_orcamentaria.convenios,
-                        'Passagens', previsao_orcamentaria.passagens)
+
+            tab.add_row('Convênios', convenios,
+                        'Passagens', passagens)
             tab.add_hline()
-            tab.add_row('Patrocínios', previsao_orcamentaria.patrocinios,
-                        'Alimentação', previsao_orcamentaria.alimentacao)
+
+            tab.add_row('Patrocínios', patrocinios,
+                        'Alimentação', alimentacao)
             tab.add_hline()
-            tab.add_row('Fonte(s) de financiamento', previsao_orcamentaria.fonte_financiamento,
-                        'Hospedagem', previsao_orcamentaria.hospedagem)
+
+            tab.add_row('Fonte(s) de financiamento', fonte_financiamento,
+                        'Hospedagem', hospedagem)
             tab.add_hline()
+
             tab.add_row('', '',
-                        'Divulgação', previsao_orcamentaria.divulgacao)
+                        'Divulgação', divulgacao)
             tab.add_hline()
+
             tab.add_row('', '',
-                        'Material de consumo', previsao_orcamentaria.material_consumo)
+                        'Material de consumo', material_consumo)
             tab.add_hline()
+
             tab.add_row('', '',
-                        'Xerox', previsao_orcamentaria.xerox)
+                        'Xerox', xerox)
             tab.add_hline()
+
             tab.add_row('', '',
-                        'Certificados', previsao_orcamentaria.certificados)
+                        'Certificados', certificados)
             tab.add_hline()
+
             tab.add_row('', '',
-                        'Outros (especificar)', str(previsao_orcamentaria.outros) + '\n' + \
-                        previsao_orcamentaria.outros_especificacao)
+                        'Outros (especificar)', '{}\n{}'.format(str(outros), outros_especificacao))
             tab.add_hline()
+
             tab.add_row(bold('Total'), total_receitas,
                         MultiRow(2, data=bold('Total')), MultiRow(2, data=total_despesas))
             doc.append(NoEscape('\cline{1-2}'))
-            # TODO: não tem atributo para saldo previsto na classe PrevisaoOrcamentara
+
+            # TODO: não tem atributo para saldo previsto na classe PrevisaoOrcamentaria_CursoExtensao
             tab.add_row(bold('Saldo previsto'), '', '', '')
             tab.add_hline()
 
@@ -582,7 +616,7 @@ def tabela_certificados(doc, id=None):
             certificados = CertificadoRelatorio.objects.filter(relatorio_id=id)
             for certificado in certificados:
                 if certificado:
-                    linha = [certificado.nome,
+                    linha = [escape_latex(certificado.nome),
                              certificado.funcao,
                              certificado.frequencia,
                              certificado.carga_horaria_total]
