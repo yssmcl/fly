@@ -1,0 +1,56 @@
+\documentclass[a4paper,brazil]{article}%
+\usepackage[T1]{fontenc}%
+\usepackage[utf8]{inputenc}%
+\usepackage{textcomp}%
+\usepackage{lastpage}%
+\usepackage[landscape=True,left=2cm,right=1cm]{geometry}%
+\usepackage{microtype}%
+\usepackage{indentfirst}%
+\usepackage{graphicx}%
+\usepackage{calc}%
+\usepackage{fontspec}%
+\usepackage[scale=1,opacity=1,angle=0]{background}%
+\usepackage{ragged2e}%
+%
+\setmainfont{Carlito}%
+\renewcommand{\baselinestretch}{1.5}%
+\renewcommand\textbullet{\ensuremath{\bullet}}%
+\setlength{\parindent}{.35\textwidth}%
+\setlength{\parskip}{0.2cm}%
+\setlength{\emergencystretch}{5pt}%
+\backgroundsetup{
+    contents=\includegraphics{modelo_certificado.pdf}
+}%
+\graphicspath{{/home/user/p/es2/trabalhos/fly/Code/fly/base/static/img/}}%
+%
+\begin{document}%
+\normalsize%
+
+\pagestyle{empty}
+\BgThispage
+%
+\vspace*{2cm}%
+\begin{flushright}%
+\includegraphics[width=6.5cm]{titulo_certificado.pdf}%
+\linebreak%
+\end{flushright}%
+\vspace*{-1cm}%
+\Large%
+%
+
+
+    Certificamos que \textbf{membro 2 curso 1} participou como Ministrante, sob a orientação de \textbf{Foo}, no período de agosto/2015 a agosto/2015, com a atividade de extensão: ``\textbf{título curso 1}'', com carga horária de 87 horas.
+
+    %
+\vspace*{1.5cm}%
+\hspace*{7cm}%
+\begin{minipage}{\widthof{Foz do Iguaçu, 07 de agosto de 2017}}%
+\begin{center}%
+Foz do Iguaçu, 07 de agosto de 2017%
+\newline%
+\newline%
+\newline%
+Pró{-}Reitor de Extensão%
+\end{center}%
+\end{minipage}%
+\end{document}
