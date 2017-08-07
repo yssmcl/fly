@@ -2,7 +2,7 @@
 
 import os
 from pylatex import Enumerate, NoEscape, NewLine
-from pylatex.utils import escape_latex, dumps_list
+from pylatex.utils import escape_latex
 
 from base import pdfutils
 from curso_extensao.models import PalavraChave_CursoExtensao, PrevisaoOrcamentaria_CursoExtensao
@@ -28,7 +28,7 @@ def gerar_pdf_curso(curso):
 
     # Início do formulário
     with doc.create(Enumerate()) as enum:
-        pdfutils.item(doc, enum, 'TÍTULO: ', dumps_list(curso.titulo))
+        pdfutils.item(doc, enum, 'TÍTULO: ', escape_latex(curso.titulo))
 
         pdfutils.item(doc, enum, 'COORDENADOR(a): ', escape_latex(curso.coordenador.nome_completo))
 

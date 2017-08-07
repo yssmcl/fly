@@ -35,8 +35,8 @@ def gerar_pdf_parecer(parecer):
     doc.append(NewLine())
     doc.append(NoEscape(r'Coordenador(a): {} \\'.format(escape_latex(parecer.projeto_extensao.coordenador.nome_completo))))
     doc.append(NoEscape(r'Colegiado: {} \\'.format(escape_latex(parecer.projeto_extensao.coordenador.colegiado))))
-    doc.append(NoEscape(r'Centro: {} \\'.format(escape_latex(parecer.projeto_extensao.centro.nome))))
-    doc.append(NoEscape(r'Campus: {} \\'.format(escape_latex(parecer.projeto_extensao.campus.nome))))
+    doc.append(NoEscape(r'Centro: {} \\'.format(parecer.projeto_extensao.centro.nome)))
+    doc.append(NoEscape(r'Campus: {} \\'.format(parecer.projeto_extensao.campus.nome)))
     doc.append(NoEscape(r'Título da atividade: {} \\'.format(escape_latex(parecer.projeto_extensao.titulo))))
     # TODO: referente a portaria?
     # doc.append(NoEscape(r'Parecer referente a: \\ \\'))
@@ -46,7 +46,7 @@ def gerar_pdf_parecer(parecer):
     pdfutils.tabela_alternativas(doc, EstadoProjeto, '|c|X|X|c|c|', id=parecer.estado_parecer.id)
     doc.append(NewLine())
     doc.append(NewLine())
-    doc.append(NoEscape(r'Ata nº: {} \\'.format(parecer.numero_ata)))
+    doc.append(NoEscape(r'Ata nº: {} \\'.format(escape_latex(parecer.numero_ata))))
     data = parecer.data.strftime('%d/%m/%Y')
     doc.append(NoEscape(r'Data: {} \\'.format(data)))
 

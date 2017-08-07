@@ -33,16 +33,16 @@ def gerar_pdf_relatorio(relatorio):
     with doc.create(Enumerate()) as enum:
         doc.append(NoEscape(r'\footnotesize'))
 
-        pdfutils.item(doc, enum, 'TÍTULO DA ATIVIDADE: ', relatorio.projeto_extensao.titulo)
+        pdfutils.item(doc, enum, 'TÍTULO DA ATIVIDADE: ', escape_latex(relatorio.projeto_extensao.titulo))
         with doc.create(Enumerate()) as subenum:
             subenum.add_item(NoEscape('Vinculada a algum Programa de Extensão? '))
             if relatorio.projeto_extensao.programa_extensao:
                 doc.append(NoEscape(r'Não ({}) Sim ({}): Qual? {}'.format(pdfutils.PHANTOM, pdfutils.TIMES,
-                    relatorio.projeto_extensao.programa_extensao.nome)))
+                                                                           escape_latex(relatorio.projeto_extensao.programa_extensao.nome))))
             else:
                 doc.append(NoEscape(r'Não ({}) Sim ({}): Qual? '.format(pdfutils.TIMES, pdfutils.PHANTOM)))
 
-        pdfutils.item(doc, enum, 'COORDENADOR(a): ', relatorio.projeto_extensao.coordenador.nome_completo)
+        pdfutils.item(doc, enum, 'COORDENADOR(a): ', escape_latex(relatorio.projeto_extensao.coordenador.nome_completo))
 
         periodo_inicio = relatorio.periodo_inicio.strftime('%d/%m/%Y')
         periodo_fim = relatorio.periodo_fim.strftime('%d/%m/%Y')
@@ -54,9 +54,9 @@ def gerar_pdf_relatorio(relatorio):
 
         pdfutils.tabela_centro(doc, enum, relatorio.projeto_extensao.centro)
 
-        pdfutils.item(doc, enum, 'COLEGIADO: ', relatorio.projeto_extensao.coordenador.colegiado)
+        pdfutils.item(doc, enum, 'COLEGIADO: ', escape_latex(relatorio.projeto_extensao.coordenador.colegiado))
 
-        pdfutils.item(doc, enum, 'PÚBLICO ATINGIDO: ', relatorio.publico_atingido)
+        pdfutils.item(doc, enum, 'PÚBLICO ATINGIDO: ', escape_latex(relatorio.publico_atingido))
 
         pdfutils.item(doc, enum, 'CERTIFICADOS: ')
         pdfutils.tabela_certificados(doc, id=relatorio.id)
@@ -68,13 +68,13 @@ def gerar_pdf_relatorio(relatorio):
 
         pdfutils.item(doc, enum, 'RELACIONAR AS ATIVIDADES REALIZADAS OU A PROGRAMAÇÃO PARA CURSOS OU EVENTOS: ')
         doc.append(NewLine())
-        atividades_fmt = escape_latex(relatorio.atividades_realizadas_programacao.replace('\r', ''))
-        doc.append(atividades_fmt)
+        atividades_fmt = relatorio.atividades_realizadas_programacao.replace('\r', '')
+        doc.append(escape_latex(atividades_fmt))
 
         pdfutils.item(doc, enum, 'RELACIONAR AS DIFICULDADES TÉCNICAS E/OU ADMINISTRATIVAS (se houver): ')
         doc.append(NewLine())
-        dificuldades_fmt = escape_latex(relatorio.dificuldades.replace('\r', ''))
-        doc.append(dificuldades_fmt)
+        dificuldades_fmt = relatorio.dificuldades.replace('\r', '')
+        doc.append(escape_latex(dificuldades_fmt))
 
     pdfutils.local_data_assinatura(doc)
 
@@ -149,12 +149,12 @@ def gerar_pdf_certificado(certificado):
     Certificamos que \textbf{{{nome}}} participou como {funcao}, sob a orientação de \textbf{{{coordenador}}}, no período de {inicio} a {fim}, com a atividade de extensão: ``\textbf{{{titulo}}}'', com carga horária de {carga_horaria_total} horas.
 
     '''
-    texto_principal = texto_principal.format(nome=certificado.nome,
+    texto_principal = texto_principal.format(nome=escape_latex(certificado.nome),
                                              funcao=certificado.funcao.nome,
-                                             coordenador=certificado.relatorio.projeto_extensao.coordenador.nome_completo,
+                                             coordenador=escape_latex(certificado.relatorio.projeto_extensao.coordenador.nome_completo),
                                              inicio=inicio,
                                              fim=fim,
-                                             titulo=certificado.relatorio.projeto_extensao.titulo,
+                                             titulo=escape_latex(certificado.relatorio.projeto_extensao.titulo),
                                              carga_horaria_total=str(certificado.carga_horaria_total).split('.')[0])
 
     # texto_principal = NoEscape(r'''
