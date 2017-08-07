@@ -51,6 +51,9 @@ class NovoRelatorio(LoginRequiredMixin, View):
 
         relatorio.projeto_extensao = get_object_or_404(CursoExtensao, pk=pk)
 
+        if relatorio.projeto_extensao.user != request.user:
+            raise PermissionDenied
+
         if (main_form.is_valid()
                 and certificados_formset.is_valid()):
 
@@ -86,6 +89,9 @@ class DetalheRelatorio(LoginRequiredMixin, View):
     def post(self, request, pk):
         relatorio = get_object_or_404(Relatorio, pk=pk)
 
+        if relatorio.projeto_extensao.user != request.user:
+            raise PermissionDenied
+
         main_form = RelatorioForm(request.POST, instance=relatorio, prefix='main')
         certificados_formset = CertificadoRelatorioFormSet(request.POST, instance=relatorio, prefix='certificados')
 
@@ -111,6 +117,9 @@ class UploadArquivoRelatorio(LoginRequiredMixin, View):
 
     def post(self, request, pk):
         relatorio = get_object_or_404(Relatorio, pk=pk)
+
+        if relatorio.projeto_extensao.user != request.user:
+            raise PermissionDenied
 
         file_form = RelatorioFileForm(request.POST, request.FILES)
         file_instance = file_form.instance
@@ -138,6 +147,7 @@ class DownloadArquivoRelatorio(LoginRequiredMixin, View):
         relatorio_file = get_object_or_404(RelatorioFile, pk=pk)
         file = relatorio_file.file
 
+        #TODO: permitir que a comissão acesse os arquivos
         if relatorio_file.relatorio.projeto_extensao.user != request.user:
             raise PermissionDenied
 

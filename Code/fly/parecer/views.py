@@ -28,6 +28,9 @@ class NovoParecer(LoginRequiredMixin, View):
 
         parecer.projeto_extensao = get_object_or_404(CursoExtensao, pk=pk)
 
+        if parecer.projeto_extensao.user != request.user:
+            raise PermissionDenied
+
         if form.is_valid():
             with transaction.atomic():
                 form.save()
@@ -64,6 +67,9 @@ class DetalheParecer(LoginRequiredMixin, View):
         form = ParecerForm(request.POST, instance=parecer)
 
         parecer = form.instance
+
+        if parecer.projeto_extensao.user != request.user:
+            raise PermissionDenied
 
         if form.is_valid():
             with transaction.atomic():

@@ -45,6 +45,7 @@ def validar_curso_extensao(main_form, palavras_formset, discentes_formset, docen
     if not coordenador:
         main_form.add_error(None, "É necessário ter um coordenador.")
 
+
 class NovoCursoExtensao(LoginRequiredMixin, View):
     def get(self, request):
         # Initialize empty forms and formsets.
@@ -150,6 +151,9 @@ class DetalheCursoExtensao(LoginRequiredMixin, View):
 
     def post(self, request, pk):
         curso_extensao = get_object_or_404(CursoExtensao, pk=pk)
+        
+        if curso_extensao.user != request.user:
+            raise PermissionDenied
 
         # Initialize form with POST data.
         main_form = CursoExtensaoForm(request.POST, instance=curso_extensao, prefix='main')
