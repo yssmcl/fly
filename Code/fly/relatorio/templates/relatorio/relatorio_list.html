@@ -37,6 +37,14 @@
 		</h1>
 	</div>
 
+	<div class="row" style="text-align: right;">
+		<a class="success button"
+			href="{% url 'relatorio:novo' projeto_extensao.pk %}">
+			<i class="fi-plus size-16"></i>
+			Adicionar relatório
+		</a>
+	</div>
+
 	<div class="row">
 		<table id="example" class="hover order-column">
 			<thead>
@@ -97,6 +105,14 @@
 				{% endfor %}
 			</tbody>
 		</table>
+	</div>
+
+	<div class="row" style="text-align: right;">
+		<a class="success button"
+			href="{% url 'relatorio:novo' projeto_extensao.pk %}">
+			<i class="fi-plus size-16"></i>
+			Adicionar relatório
+		</a>
 	</div>
 
 {% endblock %}
