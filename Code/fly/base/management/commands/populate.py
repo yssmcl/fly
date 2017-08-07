@@ -249,48 +249,47 @@ class Command(BaseCommand):
             self.saveList(EstadoRelatorio, estado_relatorio_list)
 
 
-            #TODO: remove
-            print("Iniciando inserção em 'Docente'")
+            # print("Iniciando inserção em 'Docente'")
 
-            if not Docente.objects.filter(nome_completo='Foo').exists():
-               s = Docente()
-               s.nome_completo = 'Foo'
-               s.cpf = '123.456.789-00'
-               s.email = 'foo@foo.com'
-               s.telefone = '12345678'
-               s.curso = CursoUnioeste.objects.all().first()
-               s.colegiado = 'colegiado_foo'
-               s.centro = Centro.objects.all().first()
-               s.campus = Campus.objects.all().first()
-               s.pais = 'foo'
-               s.estado = 'foo'
-               s.cidade = 'foo'
-               s.logradouro = 'foo'
-               s.complemento = 'foo'
-               s.cep = 12345678
-               s.tipo_docente = TipoDocente.objects.all().first()
-               s.save()
-               print("  Adicionando Foo em Docente")
+            # if not Docente.objects.filter(nome_completo='Foo').exists():
+            #    s = Docente()
+            #    s.nome_completo = 'Foo'
+            #    s.cpf = '123.456.789-00'
+            #    s.email = 'foo@foo.com'
+            #    s.telefone = '12345678'
+            #    s.curso = CursoUnioeste.objects.all().first()
+            #    s.colegiado = 'colegiado_foo'
+            #    s.centro = Centro.objects.all().first()
+            #    s.campus = Campus.objects.all().first()
+            #    s.pais = 'foo'
+            #    s.estado = 'foo'
+            #    s.cidade = 'foo'
+            #    s.logradouro = 'foo'
+            #    s.complemento = 'foo'
+            #    s.cep = 12345678
+            #    s.tipo_docente = TipoDocente.objects.all().first()
+            #    s.save()
+            #    print("  Adicionando Foo em Docente")
 
-            if not Docente.objects.filter(nome_completo='Bar').exists():
-               s = Docente()
-               s.nome_completo = 'Bar'
-               s.cpf = '789.418.981-00'
-               s.email = 'bar@bar.com'
-               s.telefone = '12345678'
-               s.curso = CursoUnioeste.objects.all().last()
-               s.colegiado = 'colegiado_bar'
-               s.centro = Centro.objects.all().last()
-               s.campus = Campus.objects.all().last()
-               s.pais = 'bar'
-               s.estado = 'bar'
-               s.cidade = 'bar'
-               s.logradouro = 'bar'
-               s.complemento = 'bar'
-               s.cep = 12345678
-               s.tipo_docente = TipoDocente.objects.all().last()
-               s.save()
-               print("  Adicionando Bar em Docente")
+            # if not Docente.objects.filter(nome_completo='Bar').exists():
+            #    s = Docente()
+            #    s.nome_completo = 'Bar'
+            #    s.cpf = '789.418.981-00'
+            #    s.email = 'bar@bar.com'
+            #    s.telefone = '12345678'
+            #    s.curso = CursoUnioeste.objects.all().last()
+            #    s.colegiado = 'colegiado_bar'
+            #    s.centro = Centro.objects.all().last()
+            #    s.campus = Campus.objects.all().last()
+            #    s.pais = 'bar'
+            #    s.estado = 'bar'
+            #    s.cidade = 'bar'
+            #    s.logradouro = 'bar'
+            #    s.complemento = 'bar'
+            #    s.cep = 12345678
+            #    s.tipo_docente = TipoDocente.objects.all().last()
+            #    s.save()
+            #    print("  Adicionando Bar em Docente")
 
 
     def popular_cursoextensao(self):
