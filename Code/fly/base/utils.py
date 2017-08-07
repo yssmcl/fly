@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 from fly.settings import EMAIL_HOST_USER
 from comissao.models import Comissao, Comissao_Docente
 
+
 def parse_locale_date(formatted_date):
     parsed_date = None
     for date_format in formats.get_format('DATE_INPUT_FORMATS'):

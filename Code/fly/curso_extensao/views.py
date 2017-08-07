@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.utils.encoding import smart_str
 from django.views import View, generic
 from django.urls import reverse
+from django.core.exceptions import PermissionDenied
 from fly.settings import PDF_DIR
 
 from .forms import CursoExtensaoForm, AgenteUniversitario_CursoExtensaoFormSet, Docente_CursoExtensaoFormSet, PalavraChave_CursoExtensaoFormSet, Discente_CursoExtensaoFormSet, MembroComunidade_CursoExtensaoFormSet, PrevisaoOrcamentaria_CursoExtensaoFormSet
@@ -43,6 +44,7 @@ def validar_curso_extensao(main_form, palavras_formset, discentes_formset, docen
 
     if not coordenador:
         main_form.add_error(None, "É necessário ter um coordenador.")
+
 
 class NovoCursoExtensao(LoginRequiredMixin, View):
     def get(self, request):
@@ -149,6 +151,9 @@ class DetalheCursoExtensao(LoginRequiredMixin, View):
 
     def post(self, request, pk):
         curso_extensao = get_object_or_404(CursoExtensao, pk=pk)
+        
+        if curso_extensao.user != request.user:
+            raise PermissionDenied
 
         # Initialize form with POST data.
         main_form = CursoExtensaoForm(request.POST, instance=curso_extensao, prefix='main')
@@ -212,20 +217,22 @@ class GeracaoPDFCursoExtensao(LoginRequiredMixin, View):
 class DeletarCursoExtensao(LoginRequiredMixin, View):
     def post(self, request):
         curso_extensao = get_object_or_404(CursoExtensao, pk=request.POST['pk'])
+
         if curso_extensao.user != request.user:
-            return redirect('curso_extensao:consulta') #TODO: mensagem de erro
-        else:
-            curso_extensao.delete()
-            return redirect('curso_extensao:consulta')
+            raise PermissionDenied
+
+        curso_extensao.delete()
+        return redirect('curso_extensao:consulta')
 
 
 class SubmeterCursoExtensao(LoginRequiredMixin, View):
     def post(self, request):
         curso_extensao = get_object_or_404(CursoExtensao, pk=request.POST['pk'])
+        
         if curso_extensao.user != request.user or curso_extensao.estado.nome not in {'Não submetido', 'Reformulação'}:
-            return redirect('curso_extensao:consulta') #TODO: mensagem de erro
-        else:
-            curso_extensao.estado = EstadoProjeto.objects.get(nome='Submetido')
-            curso_extensao.save()
-            send_email_comissao("[SGPE] Submissão de Curso de Extensão", 'Curso de Extensão submetido, acesse-o neste <a href="http://cacc.unioeste-foz.br:8000' + reverse('curso_extensao:detalhe', args=[curso_extensao.pk]) + '">link</a>.')
-            return redirect('curso_extensao:consulta')
+            raise PermissionDenied
+
+        curso_extensao.estado = EstadoProjeto.objects.get(nome='Submetido')
+        curso_extensao.save()
+        send_email_comissao("[SGPE] Submissão de Curso de Extensão", 'Curso de Extensão submetido, acesse-o neste <a href="http://cacc.unioeste-foz.br:8000' + reverse('curso_extensao:detalhe', args=[curso_extensao.pk]) + '">link</a>.')
+        return redirect('curso_extensao:consulta')
