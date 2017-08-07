@@ -193,3 +193,27 @@ class SubmeterRelatorio(LoginRequiredMixin, View):
             relatorio.save()
             send_email_comissao("[SGPE] Submissão de relatório", 'Relatório submetido, acesse-o neste <a href="http://cacc.unioeste-foz.br:8000' + reverse('relatorio:detalhe', args=[relatorio.pk]) + '">link</a>.')
             return redirect('relatorio:consulta', relatorio.projeto_extensao.pk)
+
+
+class ConsultaCertificado(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        projeto_extensao = get_object_or_404(CursoExtensao, pk=pk)
+        object_list = CertificadoRelatorio.objects.filter(relatorio__projeto_extensao=projeto_extensao)
+
+        return render(request, 'relatorio/certificado_list.html',
+                      {'projeto_extensao': projeto_extensao, 'object_list': object_list})
+
+
+class GeracaoPDFCertificado(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        certificado = get_object_or_404(CertificadoRelatorio, pk=pk)
+
+        caminho = gerar_pdf_certificado(certificado) + '.pdf'
+
+        with open(caminho, 'rb') as arquivo_pdf:
+            response = HttpResponse(arquivo_pdf, content_type='application/pdf')
+            # Abre no visualizador de PDFs do navegador
+            nome_arquivo = caminho.split(os.sep)[-1]
+            response['Content-Disposition'] = 'inline; filename={}'.format(smart_str(nome_arquivo))
+
+            return response

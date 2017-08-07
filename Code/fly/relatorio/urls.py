@@ -11,7 +11,9 @@ urlpatterns = [
     url(r'^arquivos/(?P<pk>[0-9]+)/$', views.ListaArquivosRelatorio.as_view(), name='lista_arquivos'),
     url(r'^download/(?P<pk>[0-9]+)/$', views.DownloadArquivoRelatorio.as_view(), name='download_arquivo'),
     url(r'^deletar_arquivo/$', views.DeletarArquivoRelatorio.as_view(), name='deletar_arquivo'),
-    url(r'^pdf/(?P<pk>[0-9]+)/$', views.GeracaoPDFRelatorio.as_view(), name='pdf'),
-	url(r'^deletar/$', views.DeletarRelatorio.as_view(), name='deletar'),
-	url(r'^submeter/$', views.SubmeterRelatorio.as_view(), name='submeter'),
+    url(r'^deletar/$', views.DeletarRelatorio.as_view(), name='deletar'),
+    url(r'^submeter/$', views.SubmeterRelatorio.as_view(), name='submeter'),
+    url(r'^(?P<pk>[0-9]+)/consulta_certificado/$', views.ConsultaCertificado.as_view(), name='consulta_certificado'),
+    url(r'^pdf_relatorio/(?P<pk>[0-9]+)/$', views.GeracaoPDFRelatorio.as_view(), name='pdf_relatorio'),
+    url(r'^pdf_certificado/(?P<pk>[0-9]+)/$', views.GeracaoPDFCertificado.as_view(), name='pdf_certificado'),
 ]

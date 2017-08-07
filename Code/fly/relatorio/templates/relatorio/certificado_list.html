@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load formset_tags %}
+
+{% block title %} Certificado {% endblock %}
+
+{% block content %}
+
+	<br />
+
+	<div class="row">
+		<h1>
+			{{ projeto_extensao }}
+		</h1>
+	</div>
+
+	<div class="row">
+		<table>
+			<thead>
+				<th style="text-align:center;">Nome</th>
+				<th style="text-align:center;">Ação</th>
+			</thead>
+			<tbody>
+				{% for certificado in object_list %}
+					<tr>
+						<td>{{ certificado.nome }}</td>
+						<td style="text-align:center;">
+							<a href="{% url 'relatorio:pdf_certificado' certificado.pk %}"
+								class="hollow button"
+								title="Gerar PDF"
+								data-tooltip>
+								<i class="fi-page-export-pdf size-16"></i>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}

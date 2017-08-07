@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 
 import os
-from pylatex import Enumerate, NoEscape, NewLine
+import locale
+from django.utils import timezone
+from pylatex import Document, Package, Enumerate, NoEscape, NewLine, FlushRight, FlushLeft, \
+     StandAloneGraphic, VerticalSpace, HorizontalSpace, LineBreak, LargeText, MiniPage, Center
 from pylatex.utils import escape_latex
 
 from base import pdfutils
 from relatorio.models import CertificadoRelatorio
-from fly.settings import PDF_DIR
+from fly.settings import PDF_DIR, BASE_DIR
 
 def gerar_pdf_relatorio(relatorio):
     doc = pdfutils.init_document()
@@ -84,20 +87,9 @@ def gerar_pdf_relatorio(relatorio):
 
 
 def gerar_pdf_certificado(certificado):
-    # TODO: tirar esses import daqui
-    import os
-    import locale
-    from django.utils import timezone
-    from pylatex import Document, Package, Enumerate, NoEscape, NewLine, FlushRight, FlushLeft, \
-         StandAloneGraphic, VerticalSpace, HorizontalSpace, LineBreak, LargeText, MiniPage, Center
-    from pylatex.utils import escape_latex
 
-    from base import pdfutils
-    from relatorio.models import CertificadoRelatorio
-    from fly.settings import PDF_DIR, BASE_DIR
-
-    # usado para datas
-    l = locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+    # Usado para o nome dos meses
+    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8') # TODO: deixar assim?
 
     # Configurações da classe
     geometry_options = {'landscape': True,
@@ -142,7 +134,6 @@ def gerar_pdf_certificado(certificado):
 '''))
     doc.append(VerticalSpace(size='2cm', star=True))
 
-    # TODO:
     with doc.create(FlushRight()) as fr:
         fr.append(StandAloneGraphic(image_options="width=6.5cm", filename='titulo_certificado.pdf'))
         fr.append(LineBreak())
@@ -197,5 +188,3 @@ def gerar_pdf_certificado(certificado):
     doc.generate_pdf(filepath, clean_tex=False, compiler=pdfutils.COMPILER, compiler_args=pdfutils.COMPILER_ARGS)
 
     return filepath
-
-gerar_pdf_certificado(CertificadoRelatorio.objects.get(id=1))

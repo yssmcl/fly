@@ -67,6 +67,7 @@
 				<th style="text-align:center;">Projeto</th>
 				<th style="text-align:center;">Relatório</th>
 				<th style="text-align:center;">Parecer</th>
+				<th style="text-align:center;">Certificados</th>
 				<th style="text-align:center;">Submeter</th>
 			</thead>
 			<tbody>
@@ -125,6 +126,14 @@
 								class="hollow button"
 								data-tooltip
 								title="Visualizar pareceres">
+								<i class="fi-list size-16"></i>
+							</a>
+						</td>
+						<td style="text-align:center;">
+							<a href="{% url 'relatorio:consulta_certificado' curso_extensao.pk %}"
+								class="hollow button"
+								data-tooltip
+								title="Visualizar certificados">
 								<i class="fi-list size-16"></i>
 							</a>
 						</td>

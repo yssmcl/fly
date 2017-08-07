@@ -604,6 +604,7 @@ def local_data_assinatura(doc):
         center.append(NoEscape('\hrulefill'))
         center.append(NewLine())
         center.append(NoEscape(r'\bigskip'))
+        center.append(NoEscape(r'\bigskip'))
         center.append(NoEscape(r'Local e data \\'))
         center.append(NoEscape('\hrulefill'))
         center.append(NewLine())
