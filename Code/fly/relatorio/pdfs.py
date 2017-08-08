@@ -89,7 +89,7 @@ def gerar_pdf_relatorio(relatorio):
 def gerar_pdf_certificado(certificado):
 
     # Usado para o nome dos meses
-    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8') # TODO: deixar assim?
+    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
     # Configurações da classe
     geometry_options = {'landscape': True,
@@ -111,7 +111,6 @@ def gerar_pdf_certificado(certificado):
     # Configurações (preâmbulo)
     doc.preamble.append(NoEscape('\setmainfont{Carlito}'))
 
-    # TODO: substituir essa string toda por Command ou BaseCommand
     doc.preamble.append(NoEscape(r'''\renewcommand{\baselinestretch}{1.5}%
 \renewcommand\textbullet{\ensuremath{\bullet}}%
 \setlength{\parindent}{.35\textwidth}%
