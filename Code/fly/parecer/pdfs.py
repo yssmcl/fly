@@ -37,7 +37,7 @@ def gerar_pdf_parecer(parecer):
     doc.append(NoEscape(r'Colegiado: {} \\'.format(escape_latex(parecer.projeto_extensao.coordenador.colegiado))))
     doc.append(NoEscape(r'Centro: {} \\'.format(parecer.projeto_extensao.centro.nome)))
     doc.append(NoEscape(r'Campus: {} \\'.format(parecer.projeto_extensao.campus.nome)))
-    doc.append(NoEscape(r'Título da atividade: {} \\'.format(escape_latex(parecer.projeto_extensao.titulo))))
+    doc.append(NoEscape(r'Título da atividade: {} \\ \\'.format(escape_latex(parecer.projeto_extensao.titulo))))
     # TODO: referente a portaria?
     # doc.append(NoEscape(r'Parecer referente a: \\ \\'))
 
