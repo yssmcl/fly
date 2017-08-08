@@ -9,4 +9,4 @@ class ParecerForm(forms.ModelForm):
         model = Parecer
         fields = ['estado_parecer', 'numero_ata']
 
-    estado_parecer = forms.ModelChoiceField(queryset=EstadoProjeto.objects.exclude(nome='Não submetido'))
+    estado_parecer = forms.ModelChoiceField(queryset=EstadoProjeto.objects.exclude(nome='Não submetido').exclude(nome='Submetido'))
