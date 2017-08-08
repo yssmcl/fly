@@ -32,6 +32,9 @@ class NovoParecer(LoginRequiredMixin, View):
 
         #TODO: verificar se .user pertence a comissao
 
+        if parecer.projeto_extensao.estado.nome not in {'Submetido'}:
+            raise PermissionDenied
+
         if form.is_valid():
             with transaction.atomic():
                 form.save()
