@@ -41,7 +41,7 @@ class NovoParecer(LoginRequiredMixin, View):
                 parecer.projeto_extensao.estado = parecer.estado_parecer
                 parecer.projeto_extensao.save()
 
-            send_email_docente(parecer.projeto_extensao.coordenador, "[SGPE] Submissão de parecer", 'Seu Curso de Extensão recebeu um parecer, acesse-o neste <a href="http://cacc.unioeste-foz.br:8000' + reverse('parecer:consulta', args=[pk]) + '">link</a>.')
+            send_email_docente(parecer.projeto_extensao.coordenador, "[SGPE] Submissão de parecer", f"<div style='background: #E2EEFA; border-radius: 30px; padding: 20px;'><h1>Caro docente, seu Curso de Extensão recebeu um parecer:</h1><br/><span><b>Título:</b> {parecer.projeto_extensao}</span><br/><span><b>Coordenador(a):</b> {parecer.projeto_extensao.coordenador}</span><br/><span><b>Parecer:</b> {parecer.estado_parecer.nome}</span><br/><span><b>Data:</b> {parecer.data}</span><br/><br/><span>Para acessar clique <a href='http://cacc.unioeste-foz.br:8000{reverse('parecer:consulta', args=[pk])}'>aqui</a></span></div>")
 
             return redirect('parecer:consulta', pk)
         else:

@@ -1,1 +1,1 @@
-[sudo] python -m pip install django-formset-js
+[sudo] python3 -m pip install django-formset-js

@@ -234,5 +234,5 @@ class SubmeterCursoExtensao(LoginRequiredMixin, View):
 
         curso_extensao.estado = EstadoProjeto.objects.get(nome='Submetido')
         curso_extensao.save()
-        send_email_comissao("[SGPE] Submissão de Curso de Extensão", 'Curso de Extensão submetido, acesse-o neste <a href="http://cacc.unioeste-foz.br:8000' + reverse('curso_extensao:detalhe', args=[curso_extensao.pk]) + '">link</a>.')
+        send_email_comissao("[SGPE] Submissão de Curso de Extensão", f"<div style='background: #E2EEFA; border-radius: 30px; padding: 20px;'><h1>O seguinte Curso de Extensão foi submetido para avaliação:</h1><br/><span><b>Título:</b> {curso_extensao}</span><br/><span><b>Coordenador(a):</b> {curso_extensao.coordenador}</span><br/><span><b>Data de submissão:</b> {curso_extensao.data}</span><br/><br/><span>Para acessar clique <a href='http://cacc.unioeste-foz.br:8000{reverse('curso_extensao:detalhe', args=[curso_extensao.pk])}'>aqui</a></span></div>")
         return redirect('curso_extensao:consulta')

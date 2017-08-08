@@ -205,7 +205,7 @@ class SubmeterRelatorio(LoginRequiredMixin, View):
 
         relatorio.estado = EstadoRelatorio.objects.get(nome='Submetido')
         relatorio.save()
-        send_email_comissao("[SGPE] Submissão de relatório", 'Relatório submetido, acesse-o neste <a href="http://cacc.unioeste-foz.br:8000' + reverse('relatorio:detalhe', args=[relatorio.pk]) + '">link</a>.')
+        send_email_comissao("[SGPE] Submissão de relatório", f"<div style='background: #E2EEFA; border-radius: 30px; padding: 20px;'><h1>Um novo relatório de Curso de Extensão foi submetido:</h1><br/><span><b>Título:</b> {relatorio.projeto_extensao}</span><br/><span><b>Coordenador(a):</b> {relatorio.projeto_extensao.coordenador}</span><br><span><b>Data de submissão:</b> {relatorio.projeto_extensao.data}</span><br/><br/><span>Para acessar clique <a href='http://cacc.unioeste-foz.br:8000{reverse('relatorio:detalhe', args=[relatorio.pk])}'>aqui</a></span></div>")
         return redirect('relatorio:consulta', relatorio.projeto_extensao.pk)
 
 
