@@ -1,6 +1,6 @@
 digraph model_graph {
   // Dotfile by Django-Extensions graph_models
-  // Created: 2017-07-09 17:29
+  // Created: 2017-08-08 16:10
   // Cli Options: --all-applications
 
   fontname = "Helvetica"
@@ -212,134 +212,6 @@ digraph model_graph {
   
     <TR><TD ALIGN="LEFT" BORDER="0">
     <FONT FACE="Helvetica ">nome</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">CharField</FONT>
-    </TD></TR>
-  
-    </TABLE>
-    >]
-
-  base_models_TipoServidor [label=<
-    <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
-    <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="olivedrab4">
-    <FONT FACE="Helvetica Bold" COLOR="white">
-    TipoServidor
-    </FONT></TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica Bold">id</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica Bold">AutoField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">nome</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">CharField</FONT>
-    </TD></TR>
-  
-    </TABLE>
-    >]
-
-  base_models_Servidor [label=<
-    <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
-    <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="olivedrab4">
-    <FONT FACE="Helvetica Bold" COLOR="white">
-    Servidor
-    </FONT></TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica Bold">id</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica Bold">AutoField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica Bold">campus</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica Bold">ForeignKey (id)</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica Bold">centro</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica Bold">ForeignKey (id)</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica Bold">tipo</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica Bold">ForeignKey (id)</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica Bold">unidade_administrativa</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica Bold">ForeignKey (id)</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">cep</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">IntegerField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">cidade</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">CharField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica ">colegiado</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica ">CharField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">complemento</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">CharField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">email</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">EmailField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">estado</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">CharField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">logradouro</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">CharField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">nome_completo</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">CharField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">pais</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">CharField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">regime_trabalho</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">IntegerField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">telefone</FONT>
     </TD><TD ALIGN="LEFT">
     <FONT FACE="Helvetica ">CharField</FONT>
     </TD></TR>
@@ -716,11 +588,11 @@ digraph model_graph {
     </TABLE>
     >]
 
-  curso_extensao_models_Servidor_CursoExtensao [label=<
+  curso_extensao_models_Docente_CursoExtensao [label=<
     <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
     <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="olivedrab4">
     <FONT FACE="Helvetica Bold" COLOR="white">
-    Servidor_CursoExtensao
+    Docente_CursoExtensao
     </FONT></TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
@@ -736,13 +608,13 @@ digraph model_graph {
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica Bold">funcao</FONT>
+    <FONT FACE="Helvetica Bold">docente</FONT>
     </TD><TD ALIGN="LEFT">
     <FONT FACE="Helvetica Bold">ForeignKey (id)</FONT>
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica Bold">servidor</FONT>
+    <FONT FACE="Helvetica Bold">funcao</FONT>
     </TD><TD ALIGN="LEFT">
     <FONT FACE="Helvetica Bold">ForeignKey (id)</FONT>
     </TD></TR>
@@ -755,6 +627,130 @@ digraph model_graph {
   
     <TR><TD ALIGN="LEFT" BORDER="0">
     <FONT FACE="Helvetica ">plano_trabalho</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    </TABLE>
+    >]
+
+  curso_extensao_models_AgenteUniversitario_CursoExtensao [label=<
+    <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="olivedrab4">
+    <FONT FACE="Helvetica Bold" COLOR="white">
+    AgenteUniversitario_CursoExtensao
+    </FONT></TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">id</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">AutoField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica Bold">campus</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica Bold">ForeignKey (id)</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">centro</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">ForeignKey (id)</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">curso</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">ForeignKey (id)</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">curso_extensao</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">ForeignKey (id)</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">funcao</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">ForeignKey (id)</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica Bold">unidade_administrativa</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica Bold">ForeignKey (id)</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">carga_horaria_dedicada</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">IntegerField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">cep</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">IntegerField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">cidade</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">colegiado</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">complemento</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT COLOR="#7B7B7B" FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">email</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">EmailField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">estado</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">logradouro</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">nome_completo</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">pais</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">plano_trabalho</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">telefone</FONT>
     </TD><TD ALIGN="LEFT">
     <FONT FACE="Helvetica ">CharField</FONT>
     </TD></TR>
@@ -933,6 +929,28 @@ digraph model_graph {
 
 
 
+  docente_models_TipoDocente [label=<
+    <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="olivedrab4">
+    <FONT FACE="Helvetica Bold" COLOR="white">
+    TipoDocente
+    </FONT></TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">id</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">AutoField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">nome</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    </TABLE>
+    >]
+
   docente_models_Docente [label=<
     <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
     <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="olivedrab4">
@@ -965,6 +983,12 @@ digraph model_graph {
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">tipo_docente</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">ForeignKey (id)</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
     <FONT FACE="Helvetica ">cep</FONT>
     </TD><TD ALIGN="LEFT">
     <FONT FACE="Helvetica ">IntegerField</FONT>
@@ -977,9 +1001,9 @@ digraph model_graph {
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica ">colegiado</FONT>
+    <FONT FACE="Helvetica ">colegiado</FONT>
     </TD><TD ALIGN="LEFT">
-    <FONT COLOR="#7B7B7B" FACE="Helvetica ">CharField</FONT>
+    <FONT FACE="Helvetica ">CharField</FONT>
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
@@ -1062,15 +1086,15 @@ digraph model_graph {
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Helvetica ">comentario</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">CharField</FONT>
-    </TD></TR>
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
     <FONT COLOR="#7B7B7B" FACE="Helvetica ">data</FONT>
     </TD><TD ALIGN="LEFT">
     <FONT COLOR="#7B7B7B" FACE="Helvetica ">DateTimeField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">numero_ata</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">CharField</FONT>
     </TD></TR>
   
     </TABLE>
@@ -1078,6 +1102,28 @@ digraph model_graph {
 
 
 
+
+  relatorio_models_EstadoRelatorio [label=<
+    <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="olivedrab4">
+    <FONT FACE="Helvetica Bold" COLOR="white">
+    EstadoRelatorio
+    </FONT></TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">id</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">AutoField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">nome</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    </TABLE>
+    >]
 
   relatorio_models_Relatorio [label=<
     <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
@@ -1090,6 +1136,12 @@ digraph model_graph {
     <FONT FACE="Helvetica Bold">id</FONT>
     </TD><TD ALIGN="LEFT">
     <FONT FACE="Helvetica Bold">AutoField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">estado</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">ForeignKey (id)</FONT>
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
@@ -1131,7 +1183,7 @@ digraph model_graph {
     <TR><TD ALIGN="LEFT" BORDER="0">
     <FONT FACE="Helvetica ">publico_atingido</FONT>
     </TD><TD ALIGN="LEFT">
-    <FONT FACE="Helvetica ">CharField</FONT>
+    <FONT FACE="Helvetica ">IntegerField</FONT>
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
@@ -1154,6 +1206,40 @@ digraph model_graph {
     <FONT FACE="Helvetica Bold">id</FONT>
     </TD><TD ALIGN="LEFT">
     <FONT FACE="Helvetica Bold">AutoField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">nome</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    </TABLE>
+    >]
+
+  relatorio_models_RelatorioFile [label=<
+    <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="olivedrab4">
+    <FONT FACE="Helvetica Bold" COLOR="white">
+    RelatorioFile
+    </FONT></TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">id</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">AutoField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">relatorio</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">ForeignKey (id)</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">file</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">FileField</FONT>
     </TD></TR>
   
     <TR><TD ALIGN="LEFT" BORDER="0">
@@ -1206,6 +1292,65 @@ digraph model_graph {
     <FONT FACE="Helvetica ">nome</FONT>
     </TD><TD ALIGN="LEFT">
     <FONT FACE="Helvetica ">CharField</FONT>
+    </TD></TR>
+  
+    </TABLE>
+    >]
+
+
+
+
+  comissao_models_Comissao [label=<
+    <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="olivedrab4">
+    <FONT FACE="Helvetica Bold" COLOR="white">
+    Comissao
+    </FONT></TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">id</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">AutoField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">fim</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">DateField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica ">inicio</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica ">DateField</FONT>
+    </TD></TR>
+  
+    </TABLE>
+    >]
+
+  comissao_models_Comissao_Docente [label=<
+    <TABLE BGCOLOR="palegoldenrod" BORDER="0" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD COLSPAN="2" CELLPADDING="4" ALIGN="CENTER" BGCOLOR="olivedrab4">
+    <FONT FACE="Helvetica Bold" COLOR="white">
+    Comissao_Docente
+    </FONT></TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">id</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">AutoField</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">comissao</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">ForeignKey (id)</FONT>
+    </TD></TR>
+  
+    <TR><TD ALIGN="LEFT" BORDER="0">
+    <FONT FACE="Helvetica Bold">docente</FONT>
+    </TD><TD ALIGN="LEFT">
+    <FONT FACE="Helvetica Bold">ForeignKey (id)</FONT>
     </TD></TR>
   
     </TABLE>
@@ -1566,25 +1711,13 @@ digraph model_graph {
 
   // Relations
 
-  base_models_Servidor -> base_models_TipoServidor
-  [label="tipo (servidor)"] [arrowhead=none, arrowtail=open, dir=both];
-
-  base_models_Servidor -> base_models_Centro
-  [label="centro (servidor)"] [arrowhead=none, arrowtail=open, dir=both];
-
-  base_models_Servidor -> base_models_UnidadeAdministrativa
-  [label="unidade_administrativa (servidor)"] [arrowhead=none, arrowtail=open, dir=both];
-
-  base_models_Servidor -> base_models_Campus
-  [label="campus (servidor)"] [arrowhead=none, arrowtail=open, dir=both];
-
   curso_extensao_models_CursoExtensao -> django_contrib_auth_models_User
   [label="user (cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
 
   curso_extensao_models_CursoExtensao -> base_models_EstadoProjeto
   [label="estado (cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
 
-  curso_extensao_models_CursoExtensao -> base_models_Servidor
+  curso_extensao_models_CursoExtensao -> docente_models_Docente
   [label="coordenador (coordenador)"] [arrowhead=none, arrowtail=open, dir=both];
 
   curso_extensao_models_CursoExtensao -> base_models_Programa
@@ -1620,14 +1753,32 @@ digraph model_graph {
   curso_extensao_models_PalavraChave_CursoExtensao -> curso_extensao_models_CursoExtensao
   [label="curso_extensao (palavrachave_cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
 
-  curso_extensao_models_Servidor_CursoExtensao -> base_models_Servidor
-  [label="servidor (servidor_cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
+  curso_extensao_models_Docente_CursoExtensao -> docente_models_Docente
+  [label="docente (docente_cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
 
-  curso_extensao_models_Servidor_CursoExtensao -> curso_extensao_models_CursoExtensao
-  [label="curso_extensao (servidor_cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
+  curso_extensao_models_Docente_CursoExtensao -> curso_extensao_models_CursoExtensao
+  [label="curso_extensao (docente_cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
 
-  curso_extensao_models_Servidor_CursoExtensao -> base_models_FuncaoServidor
-  [label="funcao (servidor_cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
+  curso_extensao_models_Docente_CursoExtensao -> base_models_FuncaoServidor
+  [label="funcao (docente_cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
+
+  curso_extensao_models_AgenteUniversitario_CursoExtensao -> curso_extensao_models_CursoExtensao
+  [label="curso_extensao (agenteuniversitario_cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
+
+  curso_extensao_models_AgenteUniversitario_CursoExtensao -> base_models_FuncaoServidor
+  [label="funcao (agenteuniversitario_cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
+
+  curso_extensao_models_AgenteUniversitario_CursoExtensao -> base_models_CursoUnioeste
+  [label="curso (agenteuniversitario_cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
+
+  curso_extensao_models_AgenteUniversitario_CursoExtensao -> base_models_Centro
+  [label="centro (agenteuniversitario_cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
+
+  curso_extensao_models_AgenteUniversitario_CursoExtensao -> base_models_UnidadeAdministrativa
+  [label="unidade_administrativa (agenteuniversitario_cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
+
+  curso_extensao_models_AgenteUniversitario_CursoExtensao -> base_models_Campus
+  [label="campus (agenteuniversitario_cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
 
   curso_extensao_models_Discente_CursoExtensao -> curso_extensao_models_CursoExtensao
   [label="curso_extensao (discente_cursoextensao)"] [arrowhead=none, arrowtail=open, dir=both];
@@ -1650,6 +1801,9 @@ digraph model_graph {
   docente_models_Docente -> base_models_Campus
   [label="campus (docente)"] [arrowhead=none, arrowtail=open, dir=both];
 
+  docente_models_Docente -> docente_models_TipoDocente
+  [label="tipo_docente (docente)"] [arrowhead=none, arrowtail=open, dir=both];
+
   parecer_models_Parecer -> curso_extensao_models_CursoExtensao
   [label="projeto_extensao (parecer)"] [arrowhead=none, arrowtail=open, dir=both];
 
@@ -1659,11 +1813,23 @@ digraph model_graph {
   relatorio_models_Relatorio -> curso_extensao_models_CursoExtensao
   [label="projeto_extensao (relatorio)"] [arrowhead=none, arrowtail=open, dir=both];
 
+  relatorio_models_Relatorio -> relatorio_models_EstadoRelatorio
+  [label="estado (relatorio)"] [arrowhead=none, arrowtail=open, dir=both];
+
+  relatorio_models_RelatorioFile -> relatorio_models_Relatorio
+  [label="relatorio (relatoriofile)"] [arrowhead=none, arrowtail=open, dir=both];
+
   relatorio_models_CertificadoRelatorio -> relatorio_models_Relatorio
   [label="relatorio (certificadorelatorio)"] [arrowhead=none, arrowtail=open, dir=both];
 
   relatorio_models_CertificadoRelatorio -> relatorio_models_FuncaoCertificado
   [label="funcao (certificadorelatorio)"] [arrowhead=none, arrowtail=open, dir=both];
+
+  comissao_models_Comissao_Docente -> comissao_models_Comissao
+  [label="comissao (comissao_docente)"] [arrowhead=none, arrowtail=open, dir=both];
+
+  comissao_models_Comissao_Docente -> docente_models_Docente
+  [label="docente (comissao_docente)"] [arrowhead=none, arrowtail=open, dir=both];
 
   django_contrib_admin_models_LogEntry -> django_contrib_auth_models_User
   [label="user (logentry)"] [arrowhead=none, arrowtail=open, dir=both];
