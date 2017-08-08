@@ -28,8 +28,7 @@ class NovoParecer(LoginRequiredMixin, View):
 
         parecer.projeto_extensao = get_object_or_404(CursoExtensao, pk=pk)
 
-        if parecer.projeto_extensao.user != request.user:
-            raise PermissionDenied
+        #TODO: verificar se .user pertence a comissao
 
         if form.is_valid():
             with transaction.atomic():
@@ -68,8 +67,7 @@ class DetalheParecer(LoginRequiredMixin, View):
 
         parecer = form.instance
 
-        if parecer.projeto_extensao.user != request.user:
-            raise PermissionDenied
+        #TODO: verificar se .user pertence a comissao
 
         if form.is_valid():
             with transaction.atomic():
@@ -88,8 +86,7 @@ class DeletarParecer(LoginRequiredMixin, View):
     def post(self, request):
         parecer = get_object_or_404(Parecer, pk=request.POST['pk'])
 
-        if parecer.projeto_extensao.user != request.user:
-            raise PermissionDenied
+        #TODO: verificar se .user pertence a comissao
 
         parecer.delete()
         return redirect('parecer:consulta', parecer.projeto_extensao.pk)

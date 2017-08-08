@@ -29,3 +29,6 @@ def send_email_comissao(subject, html_message):
             emails.add(comissao_docente.docente.email)
 
     send_mail(subject, '', EMAIL_HOST_USER, list(emails), html_message=html_message, fail_silently=False)
+
+def send_email_docente(docente, subject, html_message):
+    send_mail(subject, '', EMAIL_HOST_USER, [docente.email], html_message=html_message, fail_silently=False)
