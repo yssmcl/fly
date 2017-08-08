@@ -5,12 +5,14 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.encoding import smart_str
 from django.views import View, generic
+from django.urls import reverse
 from django.core.exceptions import PermissionDenied
 
 from .forms import ParecerForm
 from .models import Parecer
 from curso_extensao.models import CursoExtensao
 from parecer.pdfs import *
+from base.utils import send_email_docente
 
 class NovoParecer(LoginRequiredMixin, View):
     def get(self, request, pk):
@@ -35,6 +37,8 @@ class NovoParecer(LoginRequiredMixin, View):
                 form.save()
                 parecer.projeto_extensao.estado = parecer.estado_parecer
                 parecer.projeto_extensao.save()
+
+            send_email_docente(parecer.projeto_extensao.coordenador, "[SGPE] Submissão de parecer", 'Seu Curso de Extensão recebeu um parecer, acesse-o neste <a href="http://cacc.unioeste-foz.br:8000' + reverse('parecer:consulta', args=[pk]) + '">link</a>.')
 
             return redirect('parecer:consulta', pk)
         else:
