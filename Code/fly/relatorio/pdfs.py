@@ -108,12 +108,10 @@ def gerar_pdf_certificado(certificado):
                           'opacity=1',
                           'angle=0']
     doc.packages.add(Package('background', options=options_background))
+    doc.packages.add(Package('csquotes'))
+    doc.preamble.append(NoEscape(r'\MakeOuterQuote{"}')) # coverte aspas automaticamente, sem precisar de `` e ''
 
     # Configurações (preâmbulo)
-    # TODO: achar outra fonte
-    # doc.preamble.append(NoEscape('\setmainfont{Carlito}'))
-    doc.preamble.append(NoEscape('\setmainfont{Latin Modern Sans}[SizeFeatures={Size=16}]'))
-
     doc.preamble.append(NoEscape(r'''\renewcommand{\baselinestretch}{1.5}%
 \renewcommand\textbullet{\ensuremath{\bullet}}%
 \setlength{\parindent}{.35\textwidth}%
@@ -130,6 +128,11 @@ def gerar_pdf_certificado(certificado):
     doc.preamble.append(NoEscape(r'\graphicspath{{' + diretorio_img + '}}'))
 
     # Início do documento
+    # TODO: achar outra fonte
+    # doc.preamble.append(NoEscape('\setmainfont{Carlito}'))
+    # doc.append(NoEscape('\setmainfont{Latin Modern Sans}[SizeFeatures={Size=16}]'))
+    doc.append(NoEscape('\setmainfont{Latin Modern Sans}'))
+
     doc.append(NoEscape(r'''
 \pagestyle{empty}
 \BgThispage
@@ -146,10 +149,10 @@ def gerar_pdf_certificado(certificado):
     inicio = certificado.relatorio.periodo_inicio.strftime('%B/%Y').lower()
     fim = certificado.relatorio.periodo_inicio.strftime('%B/%Y').lower()
     # TODO: tá faltando coisa
-    if certificado.funcao == "Coordenador(a)":
+    if certificado.funcao == 'Coordenador(a)':
         texto_principal = r'''
 
-        Certificamos que \textbf{{{nome}}} participou como {funcao}, sob a coordenação de \textbf{{{coordenador}}}, no período de {inicio} a {fim}, com a atividade de extensão: ``\textbf{{{titulo}}}'', com carga horária de {carga_horaria_total} horas.
+        Certificamos que \textbf{{{nome}}} participou como {funcao}, sob a coordenação de \textbf{{{coordenador}}}, no período de {inicio} a {fim}, com a atividade de extensão: "\textbf{{{titulo}}}", com carga horária de {carga_horaria_total} horas.
 
         '''
         texto_principal = texto_principal.format(nome=escape_latex(certificado.nome),
@@ -162,7 +165,7 @@ def gerar_pdf_certificado(certificado):
     else:
         texto_principal = r'''
 
-        Certificamos que \textbf{{{nome}}} participou como {funcao}, no período de {inicio} a {fim}, com a atividade de extensão: ``\textbf{{{titulo}}}'', com carga horária de {carga_horaria_total} horas.
+        Certificamos que \textbf{{{nome}}} participou como {funcao}, no período de {inicio} a {fim}, com a atividade de extensão: "\textbf{{{titulo}}}", com carga horária de {carga_horaria_total} horas.
 
         '''
         texto_principal = texto_principal.format(nome=escape_latex(certificado.nome),
