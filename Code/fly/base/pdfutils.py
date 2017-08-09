@@ -41,7 +41,6 @@ def pacotes(doc):
     doc.packages.add(Package('titlesec'))
     doc.packages.add(Package('parskip'))
     doc.packages.add(Package('enumitem'))
-    # doc.packages.add(Package('helvet', options='scaled=0.92'))
     doc.packages.add(Package('tabularx'))
     doc.packages.add(Package('mdframed'))
     doc.packages.add(Package('eqparbox')) # similar a minipage

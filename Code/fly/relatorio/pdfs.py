@@ -95,7 +95,8 @@ def gerar_pdf_certificado(certificado):
     geometry_options = {'landscape': True,
                         'left': '2cm',
                         'right': '1cm'}
-    doc = Document(geometry_options=geometry_options, lmodern=False, document_options=['a4paper', 'brazil'])
+    doc = Document(geometry_options=geometry_options, lmodern=False, document_options=['a4paper', 'brazil'],
+                   inputenc=None, fontenc=None)
 
     # Pacotes
     doc.packages.add(Package('microtype'))
