@@ -18,7 +18,7 @@ WIDTH_ARGUMENT = NoEscape(r'\linewidth')
 MDFRAMED_OPTIONS = ['innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt']
 
 COMPILER = 'latexmk'
-COMPILER_ARGS = ['-lualatex', '-verbose']
+COMPILER_ARGS = ['-pdflatex=lualatex', '-pdf', '-verbose']
 
 
 def init_document():
@@ -27,7 +27,8 @@ def init_document():
                         'bottom': '2.5cm',
                         'top': '6.5cm',
                         'headheight': '4cm'}
-    doc = Document(geometry_options=geometry_options, lmodern=False, document_options=['12pt', 'a4paper', 'oneside', 'brazil'])
+    doc = Document(document_options=['12pt', 'a4paper', 'oneside', 'brazil'], geometry_options=geometry_options,
+                   inputenc=None, fontenc=None)
 
     return doc
 
@@ -81,7 +82,7 @@ def cabecalho(doc):
 \renewcommand{\headrulewidth}{0pt}%
 \renewcommand{\footrulewidth}{0pt}%
 \fancyhead[L]{%
-    \includegraphics[width=200px]{logo_unioeste.png}
+    \includegraphics[width=200px]{logo-unioeste.png}
     \newline
     {\footnotesize
         Reitoria -- CNPJ 78680337/0001-84 \\
@@ -91,7 +92,7 @@ def cabecalho(doc):
     }
 }
 \fancyhead[R]{%
-    \includegraphics[width=80px]{logo_governo.jpg}
+    \includegraphics[width=80px]{logo-governo.jpg}
 }
     '''))
 
@@ -119,7 +120,7 @@ def titulo(doc, titulo, subtitulo):
     %(subtitulo)s
 }
 \eqparbox{b}{
-    \includegraphics[width=100px]{logo_extensao_menor.jpg}
+    \includegraphics[width=100px]{logo-extensao-menor.jpg}
 }
     '''
 
