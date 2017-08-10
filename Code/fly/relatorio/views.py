@@ -1,7 +1,7 @@
 import os
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils.encoding import smart_str
@@ -224,10 +224,11 @@ class GeracaoPDFCertificado(LoginRequiredMixin, View):
 
         caminho = gerar_pdf_certificado(certificado) + '.pdf'
 
-        with open(caminho, 'rb') as arquivo_pdf:
-            response = HttpResponse(arquivo_pdf, content_type='application/pdf')
-            # Abre no visualizador de PDFs do navegador
+        try:
+            response = FileResponse(open(caminho, 'rb'), content_type='application/pdf')
             nome_arquivo = caminho.split(os.sep)[-1]
-            response['Content-Disposition'] = 'inline; filename={}'.format(smart_str(nome_arquivo))
-
+            # TODO: com inline ou sem inline?
+            response['Content-Disposition'] = 'filename={}'.format(nome_arquivo)
             return response
+        except FileNotFoundError:
+            raise Http404()

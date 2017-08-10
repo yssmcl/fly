@@ -2,8 +2,8 @@ Login:
 - Subitem de login no canto superior direito
 
 Curso:
-- Validar Unidade Administrativa e Campus na interface
 - Arrumar max_length dos CharField
+- Validar Unidade Administrativa e Campus na interface
 - Botão para excluir formulário de servidor, membro e discente, com mensagem de confirmação
 
 Relatório:
@@ -12,3 +12,7 @@ Relatório:
 Consulta:
 - Adicionar botão Voltar na tela de visualização de curso
 - Exibir os projetos de todos os docentes, mas deixar modificar somente os projetos próprios
+
+PDFs:
+- Testar caracteres especiais: & % $ # _ { } ~ ^ \
+- http://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-test.txt
