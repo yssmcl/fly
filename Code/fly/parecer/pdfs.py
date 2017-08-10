@@ -18,17 +18,14 @@ def gerar_pdf_parecer(parecer):
 
     pdfutils.cabecalho(doc)
 
-    texto_anexo = NoEscape(r'\texttt{ANEXO XI DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014.}')
-    pdfutils.rodape(doc, texto_anexo)
-    doc.append(texto_anexo)
+    frase_anexo = 'ANEXO XI DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014.'
+    pdfutils.rodape(doc, NoEscape(r'\texttt{' + frase_anexo + '}%'))
+    doc.append(NoEscape(r'{\normalsize\texttt{' + frase_anexo + '}}%'))
 
-    pdfutils.titulo(doc, 'RELATÓRIOS ESPECÍFICOS PARA ATIVIDADES DE EXTENSÃO',
-                    'FORMULÁRIO ÚNICO DE PARECER DE ATIVIDADES DE EXTENSÃO')
+    pdfutils.titulo(doc, 'RELATÓRIOS ESPECÍFICOS PARA ATIVIDADES DE EXTENSÃO', 'FORMULÁRIO ÚNICO DE PARECER DE ATIVIDADES DE EXTENSÃO')
 
     # Início do formulário
     with doc.create(Enumerate()) as enum:
-        doc.append(NoEscape(r'\footnotesize'))
-
         pdfutils.item(doc, enum, 'PARECER CONCLUSIVO DA COMISSÃO DE EXTENSÃO DE CENTRO')
 
     doc.append(bold('IDENTIFICAÇÃO:'))
@@ -56,11 +53,7 @@ def gerar_pdf_parecer(parecer):
 
     os.system('mkdir -p ' + PDF_DIR)
 
-    # TODO: UnicodeDecodeError
-    # try:
     filepath = '{}/parecer_{}_projeto_{}'.format(PDF_DIR, str(parecer.id), str(parecer.projeto_extensao.id))
     doc.generate_pdf(filepath, clean_tex=False, compiler=pdfutils.COMPILER, compiler_args=pdfutils.COMPILER_ARGS)
-    # except UnicodeDecodeError:
-        # pass
 
     return filepath

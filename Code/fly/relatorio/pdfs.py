@@ -5,6 +5,7 @@ import locale
 from django.utils import timezone
 from pylatex import Document, Package, Enumerate, NoEscape, NewLine, FlushRight, FlushLeft, \
      StandAloneGraphic, VerticalSpace, HorizontalSpace, LineBreak, LargeText, MiniPage, Center
+from pylatex.base_classes import Command
 from pylatex.utils import escape_latex
 
 from base import pdfutils
@@ -21,18 +22,16 @@ def gerar_pdf_relatorio(relatorio):
 
     pdfutils.cabecalho(doc)
 
-    texto_anexo = NoEscape(r'\texttt{ANEXO X DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014.}')
-    pdfutils.rodape(doc, texto_anexo)
-    doc.append(texto_anexo)
+    frase_anexo = 'ANEXO X DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014.'
+    pdfutils.rodape(doc, NoEscape(r'\texttt{' + frase_anexo + '}%'))
+    doc.append(NoEscape(r'{\normalsize\texttt{' + frase_anexo + '}}%'))
 
     pdfutils.titulo(doc, 'RELATÓRIOS ESPECÍFICOS PARA ATIVIDADES DE EXTENSÃO', 'RELATÓRIO DE EVENTOS E CURSOS')
 
-    doc.append(NoEscape('\hrulefill'))
+    doc.append(Command('hrulefill%'))
 
     # Início do formulário
     with doc.create(Enumerate()) as enum:
-        doc.append(NoEscape(r'\footnotesize'))
-
         pdfutils.item(doc, enum, 'TÍTULO DA ATIVIDADE: ', escape_latex(relatorio.projeto_extensao.titulo))
         with doc.create(Enumerate()) as subenum:
             subenum.add_item(NoEscape('Vinculada a algum Programa de Extensão? '))
@@ -88,15 +87,12 @@ def gerar_pdf_relatorio(relatorio):
 
 def gerar_pdf_certificado(certificado):
 
-    # Usado para o nome dos meses
-    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
-
     # Configurações da classe
     geometry_options = {'landscape': True,
                         'left': '2cm',
                         'right': '1cm'}
     doc = Document(geometry_options=geometry_options, lmodern=False, document_options=['a4paper', 'brazil'],
-                   inputenc=None, fontenc=None)
+                   inputenc=None, fontenc=None, font_size='footnotesize')
 
     # Pacotes
     doc.packages.add(Package('microtype'))
@@ -108,69 +104,65 @@ def gerar_pdf_certificado(certificado):
                           'opacity=1',
                           'angle=0']
     doc.packages.add(Package('background', options=options_background))
+    doc.packages.add(Package('csquotes'))
 
     # Configurações (preâmbulo)
-    # TODO: achar outra fonte
-    # doc.preamble.append(NoEscape('\setmainfont{Carlito}'))
-    doc.preamble.append(NoEscape('\setmainfont{Latin Modern Sans}[SizeFeatures={Size=16}]'))
-
-    doc.preamble.append(NoEscape(r'''\renewcommand{\baselinestretch}{1.5}%
-\renewcommand\textbullet{\ensuremath{\bullet}}%
-\setlength{\parindent}{.35\textwidth}%
-\setlength{\parskip}{0.2cm}%
-\setlength{\emergencystretch}{5pt}'''))
+    doc.preamble.append(Command('MakeOuterQuote', '\"')) # coverte aspas automaticamente, sem precisar de `` e ''
+    doc.preamble.append(Command('renewcommand', arguments=[Command('baselinestretch'), '1.5']))
+    doc.preamble.append(Command('setlength', arguments=[Command('parindent'), NoEscape(r'.35\textwidth')]))
+    doc.preamble.append(Command('setlength', arguments=[Command('parskip'), '0.2cm']))
+    doc.preamble.append(Command('setlength', arguments=[Command('emergencystretch'), '5pt']))
 
     # Imagem de fundo
-    doc.preamble.append(NoEscape(r'''\backgroundsetup{
-    contents=\includegraphics{modelo-certificado-20.pdf}
-}'''))
+    doc.preamble.append(NoEscape(r'\backgroundsetup{ contents=\includegraphics{modelo-certificado-20.pdf} }'))
 
     # Diretório das imagens
     diretorio_img = '{}/base/static/img/'.format(BASE_DIR) # necessário barra no final
     doc.preamble.append(NoEscape(r'\graphicspath{{' + diretorio_img + '}}'))
 
     # Início do documento
-    doc.append(NoEscape(r'''
-\pagestyle{empty}
-\BgThispage
-'''))
+    # TODO: achar outra fonte
+    # doc.preamble.append(NoEscape('\setmainfont{Carlito}'))
+    # doc.append(NoEscape('\setmainfont{Latin Modern Sans}[SizeFeatures={Size=16}]'))
+    doc.append(Command('setmainfont', 'Latin Modern Sans'))
+
+    doc.append(Command('pagestyle', 'empty'))
+    doc.append(Command('BgThispage'))
+
     doc.append(VerticalSpace(size='2cm', star=True))
 
     with doc.create(FlushRight()) as fr:
-        fr.append(StandAloneGraphic(image_options="width=6.5cm", filename='titulo-certificado.pdf'))
+        fr.append(StandAloneGraphic('titulo-certificado.pdf', 'width=6.5cm'))
         fr.append(LineBreak())
 
     doc.append(VerticalSpace(size=NoEscape('-1cm'), star=True))
-    doc.append(NoEscape('\Large%\n'))
+    doc.append(Command('Large'))
 
-    inicio = certificado.relatorio.periodo_inicio.strftime('%B/%Y').lower()
-    fim = certificado.relatorio.periodo_inicio.strftime('%B/%Y').lower()
+    # Usado para o nome dos meses ('%B')
+    locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+
+    inicio = certificado.relatorio.periodo_inicio.strftime('%d de %B de %Y').lower()
+    fim = certificado.relatorio.periodo_inicio.strftime('%d de %B de %Y').lower()
     # TODO: tá faltando coisa
-    if certificado.funcao == "Coordenador(a)":
-        texto_principal = r'''
+    texto_principal = r'''
 
-        Certificamos que \textbf{{{nome}}} participou como {funcao}, sob a coordenação de \textbf{{{coordenador}}}, no período de {inicio} a {fim}, com a atividade de extensão: ``\textbf{{{titulo}}}'', com carga horária de {carga_horaria_total} horas.
+    Certificamos que \textbf{{{nome}}} atuou como {funcao}, {sob_coordenacao}no período de {inicio} a {fim}, na cidade de Foz do Iguaçu -- Paraná, com a atividade de extensão: "\textbf{{{titulo}}}", com carga horária de {carga_horaria_total} horas.
 
-        '''
-        texto_principal = texto_principal.format(nome=escape_latex(certificado.nome),
-                                                 funcao=certificado.funcao.nome,
-                                                 coordenador=escape_latex(certificado.relatorio.projeto_extensao.coordenador.nome_completo),
-                                                 inicio=inicio,
-                                                 fim=fim,
-                                                 titulo=escape_latex(certificado.relatorio.projeto_extensao.titulo),
-                                                 carga_horaria_total=str(certificado.carga_horaria_total).split('.')[0])
+    '''
+
+    if certificado.funcao.nome == 'Coordenador(a)':
+        sob_coordenacao = ''
     else:
-        texto_principal = r'''
+        nome_coordenador = certificado.relatorio.projeto_extensao.coordenador.nome_completo
+        sob_coordenacao = r'sob a coordenação de \textbf{{{}}}, '.format(escape_latex(nome_coordenador))
 
-        Certificamos que \textbf{{{nome}}} participou como {funcao}, no período de {inicio} a {fim}, com a atividade de extensão: ``\textbf{{{titulo}}}'', com carga horária de {carga_horaria_total} horas.
-
-        '''
-        texto_principal = texto_principal.format(nome=escape_latex(certificado.nome),
-                                                 funcao=certificado.funcao.nome,
-                                                 inicio=inicio,
-                                                 fim=fim,
-                                                 titulo=escape_latex(certificado.relatorio.projeto_extensao.titulo),
-                                                 carga_horaria_total=str(certificado.carga_horaria_total).split('.')[0])
+    texto_principal = texto_principal.format(nome=escape_latex(certificado.nome),
+                                             funcao=certificado.funcao.nome.lower(),
+                                             sob_coordenacao=sob_coordenacao,
+                                             inicio=inicio,
+                                             fim=fim,
+                                             titulo=escape_latex(certificado.relatorio.projeto_extensao.titulo),
+                                             carga_horaria_total=str(certificado.carga_horaria_total).split('.')[0])
 
     # texto_principal = NoEscape(r'''
 
@@ -204,10 +196,6 @@ def gerar_pdf_certificado(certificado):
     os.system('mkdir -p ' + PDF_DIR)
 
     filepath = '{}/certificado_{}'.format(PDF_DIR, str(certificado.id))
-    from subprocess import CalledProcessError
-    try:
-        doc.generate_pdf(filepath, clean_tex=False, compiler=pdfutils.COMPILER, compiler_args=pdfutils.COMPILER_ARGS)
-    except CalledProcessError:
-        pass
+    doc.generate_pdf(filepath, clean_tex=False, compiler=pdfutils.COMPILER, compiler_args=pdfutils.COMPILER_ARGS)
 
     return filepath

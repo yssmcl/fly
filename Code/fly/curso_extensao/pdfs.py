@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from pylatex import Enumerate, NoEscape, NewLine
+from pylatex import Enumerate, NoEscape, NewLine, Command
 from pylatex.utils import escape_latex
 
 from base import pdfutils
@@ -18,13 +18,13 @@ def gerar_pdf_curso(curso):
 
     pdfutils.cabecalho(doc)
 
-    texto_anexo = NoEscape(r'\texttt{ANEXO V DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014.}')
-    pdfutils.rodape(doc, texto_anexo)
-    doc.append(texto_anexo)
+    frase_anexo = 'ANEXO V DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014.'
+    pdfutils.rodape(doc, NoEscape(r'\texttt{' + frase_anexo + '}%'))
+    doc.append(NoEscape(r'{\normalsize\texttt{' + frase_anexo + '}}%'))
 
     pdfutils.titulo(doc, 'FORMULÁRIO ESPECÍFICO PARA ATIVIDADES DE EXTENSÃO', 'MODALIDADE CURSO DE EXTENSÃO')
 
-    doc.append(NoEscape('\hrulefill'))
+    doc.append(NoEscape('\hrulefill%'))
 
     # Início do formulário
     with doc.create(Enumerate()) as enum:
@@ -99,11 +99,7 @@ def gerar_pdf_curso(curso):
 
     os.system('mkdir -p ' + PDF_DIR)
 
-    # TODO: UnicodeDecodeError
-    # try:
     filepath = '{}/curso-extensao_{}'.format(PDF_DIR, str(curso.id))
     doc.generate_pdf(filepath, clean_tex=False, compiler=pdfutils.COMPILER, compiler_args=pdfutils.COMPILER_ARGS)
-    # except UnicodeDecodeError:
-        # pass
 
     return filepath

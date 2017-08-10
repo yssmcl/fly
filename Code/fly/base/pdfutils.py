@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from pylatex import NoEscape, FlushRight, NewLine, MdFramed, Enumerate, Document, NewPage, HFill, \
-     Tabularx, LineBreak, MultiColumn, MultiRow, Package, Center, MiniPage
+     Tabularx, LineBreak, MultiColumn, MultiRow, Package, Center, MiniPage, StandAloneGraphic, FootnoteText, PageStyle, \
+     Head, Command
 from pylatex.utils import escape_latex, bold
+from pylatex.base_classes import Options
 
 from base.models import *
 from curso_extensao.models import *
@@ -14,7 +16,7 @@ from fly.settings import BASE_DIR
 TIMES = NoEscape(r'\ding{53}')
 PHANTOM = NoEscape(r'\phantom{\ding{53}}')
 
-WIDTH_ARGUMENT = NoEscape(r'\linewidth')
+WIDTH_ARGUMENT = Command('linewidth')
 MDFRAMED_OPTIONS = ['innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt']
 
 COMPILER = 'latexmk'
@@ -26,9 +28,10 @@ def init_document():
                         'right': '1.5cm',
                         'bottom': '2.5cm',
                         'top': '6.5cm',
-                        'headheight': '4cm'}
+                        'headheight': '4.5cm',
+                        'headsep': '10pt'}
     doc = Document(document_options=['12pt', 'a4paper', 'oneside', 'brazil'], geometry_options=geometry_options,
-                   inputenc=None, fontenc=None)
+                   inputenc=None, fontenc=None, font_size='footnotesize', lmodern=False)
 
     return doc
 
@@ -53,11 +56,9 @@ def pacotes(doc):
 
 
 def configuracoes_preambulo(doc):
-    # doc.preamble.append(NoEscape(r'\renewcommand{\familydefault}{\sfdefault}'))
-    # doc.append(NoEscape(r'\fontfamily{\sfdefault}\selectfont'))
-    doc.preamble.append(NoEscape(r'\setmainfont[Scale=0.9]{TeX Gyre Heros}')) # fonte parecida com Arial e Helvetica
+    doc.preamble.append(Command('setmainfont', options=Options('Scale=0.9'), arguments='TeX Gyre Heros'))
 
-    doc.preamble.append(NoEscape(r'\MakeOuterQuote{"}')) # coverte aspas automaticamente, sem precisar de `` e ''
+    doc.preamble.append(Command('MakeOuterQuote', '\"')) # coverte aspas automaticamente, sem precisar de `` e ''
 
     # Configuração das listas
     doc.preamble.append(NoEscape(r'''
@@ -65,41 +66,35 @@ def configuracoes_preambulo(doc):
 \setlist[enumerate, 2]{label*=\textbf{.\arabic*}, leftmargin=*}
     '''))
 
-    # Configuração dos cabeçalhos
-    doc.preamble.append(NoEscape('\pagestyle{fancy}'))
-
     # Diretório das imagens
-    diretorio_img = '{}/base/static/img/'.format(BASE_DIR) # necessário barra no final
-    doc.preamble.append(NoEscape(r'\graphicspath{{' + diretorio_img + '}}'))
+    img_dir = '{}/base/static/img/'.format(BASE_DIR) # necessário barra no final
+    doc.preamble.append(NoEscape(r'\graphicspath{{' + img_dir + '}}'))
 
-    # Tamanho da fonte
-    doc.append(NoEscape(r'\footnotesize'))
-
+    # Configuração dos cabeçalhos
+    doc.preamble.append(Command('pagestyle', 'fancy'))
 
 def cabecalho(doc):
-    doc.append(NoEscape(r'''
-\renewcommand{\headrulewidth}{0pt}%
-\renewcommand{\footrulewidth}{0pt}%
-\fancyhead[L]{%
-    \includegraphics[width=200px]{logo-unioeste.png}
-    \newline
-    {\footnotesize
-        Reitoria -- CNPJ 78680337/0001-84 \\
-        Rua Universitária, 1619 -- Fone: (45) 3220-3000 -- Fax: (45) 3324-4590 \\
-        Jardim Universitário -- Cx. P. 000701 -- CEP 85819-110 -- Cascavel -- Paraná \\
-        www.unioeste.br
-    }
-}
-\fancyhead[R]{%
-    \includegraphics[width=80px]{logo-governo.jpg}
-}
-    '''))
+    doc.append(Command('renewcommand', arguments=[Command('headrulewidth'), '0pt']))
+    doc.append(Command('renewcommand', arguments=[Command('footrulewidth'), '0pt']))
+
+    with doc.create(Head('L')) as cabecalho:
+        cabecalho.append(StandAloneGraphic('logo-unioeste.png', 'width=200px'))
+        cabecalho.append(NewLine())
+        cabecalho.append(NoEscape(r'''{\footnotesize
+Reitoria -- CNPJ 78680337/0001-84 \\
+Rua Universitária, 1619 -- Fone: (45) 3220-3000 -- Fax: (45) 3324-4590 \\
+Jardim Universitário -- Cx. P. 000701 -- CEP 85819-110 -- Cascavel -- Paraná \\
+www.unioeste.br
+}'''))
+
+    with doc.create(Head('R')) as cabecalho:
+        cabecalho.append(NoEscape(r'\parbox[b][120px][t]{\textwidth}{\raggedleft \includegraphics[width=80px]{logo-governo.jpg}}%')) # mágica
 
 
-def rodape(doc, texto):
+def rodape(doc, frase):
     rodape = r'''
 \fancyfoot[R]{
-    {\footnotesize %(texto)s}
+    {\footnotesize %(frase)s}
 }
 \fancyfoot[L]{
     \thepage
@@ -107,7 +102,7 @@ def rodape(doc, texto):
 \fancyfoot[C]{}
     '''
 
-    rodape = rodape % {'texto': texto}
+    rodape = rodape % {'frase': frase}
     doc.append(NoEscape(rodape))
 
 
