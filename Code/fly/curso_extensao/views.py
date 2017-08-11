@@ -9,15 +9,12 @@ from django.utils.encoding import smart_str
 from django.views import View, generic
 from django.urls import reverse
 from django.core.exceptions import PermissionDenied
-from fly.settings import PDF_DIR
 
 from .forms import CursoExtensaoForm, AgenteUniversitario_CursoExtensaoFormSet, Docente_CursoExtensaoFormSet, PalavraChave_CursoExtensaoFormSet, Discente_CursoExtensaoFormSet, MembroComunidade_CursoExtensaoFormSet, PrevisaoOrcamentaria_CursoExtensaoFormSet
 from .models import CursoExtensao
 from base.models import EstadoProjeto
 from base.utils import send_email_comissao
 from curso_extensao.pdfs import *
-
-import subprocess
 
 def validar_curso_extensao(main_form, palavras_formset, discentes_formset, docentes_formset, agentes_universitarios_formset, membros_comunidade_formset, previsao_orcamentaria_formset):
     coordenador = False

@@ -62,6 +62,7 @@ def configuracoes_preambulo(doc):
     doc.preamble.append(UnsafeCommand('graphicspath', '{{{}}}'.format(img_dir)))
 
     # Configuração das listas
+    # TODO: substituir por enumeration_symbol
     doc.preamble.append(NoEscape(r'''
 \setlist[enumerate, 1]{label*=\textbf{\arabic*}, leftmargin=*}
 \setlist[enumerate, 2]{label*=\textbf{.\arabic*}, leftmargin=*}
@@ -531,27 +532,44 @@ def tabela_previsao_orcamentaria(doc, enum, previsao_orcamentaria):
 
 
 def tabela_gestao_recursos_financeiros(doc, enum, previsao_orcamentaria):
-    item(doc, enum, NoEscape(r'GESTÃO DOS RECURSOS FINANCEIROS: \\'))
+    item(doc, enum, NoEscape(r'GESTÃO DOS RECURSOS FINANCEIROS: '))
+
+    doc.append(Command('noindent'))
+    with doc.create(Enumerate(options={'leftmargin': '7pt'})) as subenum:
+        subenum.add_item(bold(NoEscape(r'ÓRGÃO GESTOR DOS RECURSOS FINANCEIROS \\')))
 
     with doc.create(MdFramed(options=MDFRAMED_OPTIONS)):
-        doc.append(bold(NoEscape(r'ÓRGÃO GESTOR DOS RECURSOS FINANCEIROS \\')))
         doc.append(NoEscape(r'IDENTIFICAÇÃO: \\'))
 
         for tipo_gestao in TipoGestaoRecursosFinanceiros.objects.all():
-            if previsao_orcamentaria.identificacao and previsao_orcamentaria.identificacao.id == tipo_gestao.id:
-                doc.append(NoEscape(r'({}) {} \\'.format(TIMES, tipo_gestao.nome.upper())))
-            else:
-                doc.append(NoEscape(r'({}) {} \\'.format(PHANTOM, tipo_gestao.nome.upper())))
+            nome_tipo_gestao = tipo_gestao.nome.upper()
 
+            if previsao_orcamentaria.identificacao and previsao_orcamentaria.identificacao.id == tipo_gestao.id:
+                marcador = TIMES
+            else:
+                marcador = PHANTOM
+
+            if nome_tipo_gestao in ('PRAP', 'SECRETARIA FINANCEIRA', 'UNIOESTE'):
+                doc.append(NoEscape(r'({}) {} \\'.format(marcador, nome_tipo_gestao)))
+            elif nome_tipo_gestao in 'FUNDAÇÃO':
+                doc.append(NoEscape(r'({}) {}: '.format(marcador, bold(nome_tipo_gestao))))
+                if previsao_orcamentaria.fundacao:
+                    doc.append(escape_latex(previsao_orcamentaria.fundacao))
+                    doc.append(NewLine())
+            else:  # outros
+                doc.append(NoEscape(r'({}) {}: '.format(marcador, bold(nome_tipo_gestao))))
+                if previsao_orcamentaria.outro_orgao_gestor:
+                    doc.append(escape_latex(previsao_orcamentaria.outro_orgao_gestor))
+                    doc.append(NewLine())
 
 # Relatórios
 def tabela_certificados(doc, id=None):
     with doc.create(Enumerate()) as enum:
         enum.add_item(NoEscape(r'Relacionar o nome dos participantes com direito a certificados. \\'))
         table_spec = NoEscape(r'''|>{\centering\arraybackslash}X|
-                                  @{    }c@{    }|
-                                  @{    }c@{    }|
-                                  @{    }c@{    }|
+                                  @{  }c@{  }|
+                                  @{  }c@{  }|
+                                  @{  }c@{  }|
                               ''')
         cabecalho_tabela = ['NOME',
                             'FUNÇÃO',

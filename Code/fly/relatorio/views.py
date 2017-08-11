@@ -11,7 +11,7 @@ from base.utils import send_email_comissao
 from curso_extensao.models import CursoExtensao
 from relatorio.pdfs import *
 from .forms import RelatorioForm, RelatorioFileForm, CertificadoRelatorioFormSet
-from .models import Relatorio, RelatorioFile, EstadoRelatorio
+from .models import Relatorio, RelatorioFile, EstadoRelatorio, CertificadoRelatorio
 
 
 class NovoRelatorio(LoginRequiredMixin, View):

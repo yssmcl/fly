@@ -51,10 +51,9 @@ def gerar_pdf_curso(curso):
         pdfutils.tabela_area_tematica_principal(doc, enum, id=curso.area_tematica_principal.id)
 
         if curso.area_tematica_secundaria:
-            pdfutils.tabela_area_tematica_secundaria(doc, enum, curso.area_tematica_secundaria,
-                                                     id=curso.area_tematica_secundaria.id)
+            pdfutils.tabela_area_tematica_secundaria(doc, enum, id=curso.area_tematica_secundaria.id)
         else:
-            pdfutils.tabela_area_tematica_secundaria(doc, enum, curso.area_tematica_secundaria)
+            pdfutils.tabela_area_tematica_secundaria(doc, enum)
 
         pdfutils.tabela_linha_extensao(doc, enum, curso.linha_extensao, id=curso.linha_extensao.id)
 
@@ -77,13 +76,13 @@ def gerar_pdf_curso(curso):
         doc.append(escape_latex(programacao_fmt))
 
         pdfutils.item(doc, enum, NoEscape(r'EQUIPE DE TRABALHO: \\'))
-        pdfutils.mdframed_equipe_trabalho(doc, enum, curso)
+        pdfutils.mdframed_equipe_trabalho(doc, curso)
 
         pdfutils.item(doc, enum, NoEscape(r'DISCENTES UNIOESTE: \\'))
-        pdfutils.tabela_discentes(doc, enum, curso)
+        pdfutils.tabela_discentes(doc, curso)
 
         pdfutils.item(doc, enum, NoEscape(r'MEMBROS DA COMUNIDADE / PARTICIPANTES EXTERNOS: \\'))
-        pdfutils.tabela_membros(doc, enum, curso)
+        pdfutils.tabela_membros(doc, curso)
 
         # Checa antes pois a previsão orçamentária não é obrigatório
         if PrevisaoOrcamentaria_CursoExtensao.objects.filter(curso_extensao_id=curso.id):

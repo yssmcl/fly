@@ -82,7 +82,7 @@ Foo%
 de 07/08/2017 a 08/08/2017%
 \item%
 \textbf{INFORMAR: }%
-\begin{mdframed}[innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt]%
+\begin{mdframed}%
 \begin{enumerate}%
 \scriptsize%
 \item%
@@ -204,7 +204,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque id mi et enim i
 Aliquam erat volutpat. Sed et aliquet risus. Sed mattis eget felis nec placerat. Mauris imperdiet turpis sit amet lorem dictum, non fringilla tellus condimentum.%
 \item%
 \textbf{EQUIPE DE TRABALHO: \\}%
-\begin{mdframed}[innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt]%
+\begin{mdframed}%
 \textbf{SERVIDORES UNIOESTE \\}%
 Nome completo: Foo \\%
 (\ding{53}) Docente Efetivo %
@@ -216,7 +216,7 @@ Centro: CECA \\%
 E-mail: foo@foo.com \\%
 Telefone: 12345678 \\%
 Endereço: foo, foo -- foo -- foo \\%
-\begin{mdframed}[innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt]%
+\begin{mdframed}%
 Função: \\%
 \begin{tabularx}{\linewidth}{XXX}%
 (\ding{53}) Coordenador(a)&(\phantom{\ding{53}}) Subcoordenador(a) &(\phantom{\ding{53}}) Supervisor(a) \\%
@@ -231,7 +231,7 @@ Assinatura da chefia imediata: \hrulefill \\ \\%
 \textbf{PLANO DE TRABALHO: }%
 Quisque\% a\$ augue vel libero placerat vestibulum. In vitae nunc bibendum ante porttitor bibendum a eu risus. Duis lorem tortor, tempus et ipsum tincidunt, dignissim aliquam metus.%
 \end{mdframed}%
-\begin{mdframed}[innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt]%
+\begin{mdframed}%
 \textbf{SERVIDORES UNIOESTE \\}%
 Nome completo: Bar \\%
 (\phantom{\ding{53}}) Docente Efetivo %
@@ -243,7 +243,7 @@ Centro: CEL \\%
 E-mail: bar@bar.com \\%
 Telefone: 12345678 \\%
 Endereço: bar, bar -- bar -- bar \\%
-\begin{mdframed}[innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt]%
+\begin{mdframed}%
 Função: \\%
 \begin{tabularx}{\linewidth}{XXX}%
 (\phantom{\ding{53}}) Coordenador(a) &(\phantom{\ding{53}}) Subcoordenador(a) &(\phantom{\ding{53}}) Supervisor(a) \\%
@@ -258,7 +258,7 @@ Assinatura da chefia imediata: \hrulefill \\ \\%
 \textbf{PLANO DE TRABALHO: }%
 Quisque a augue vel libero placerat vestibulum. In vitae nunc bibendum ante porttitor bibendum a eu risus. Duis lorem tortor, tempus et ipsum tincidunt, dignissim aliquam metus.%
 \end{mdframed}%
-\begin{mdframed}[innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt]%
+\begin{mdframed}%
 \textbf{SERVIDORES UNIOESTE \\}%
 Nome completo: nome agente universitário 1 curso 1 \\%
 (\phantom{\ding{53}}) Docente Efetivo %
@@ -270,7 +270,7 @@ Centro: CECA \\%
 E-mail: emailagenteuniversitario1@email.com \\%
 Telefone: 35468798 \\%
 Endereço: Rua Igarapava, Foz do Iguaçu -- Paraná -- Brasil \\%
-\begin{mdframed}[innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt]%
+\begin{mdframed}%
 Função: \\%
 \begin{tabularx}{\linewidth}{XXX}%
 (\phantom{\ding{53}}) Coordenador(a) &(\phantom{\ding{53}}) Subcoordenador(a) &(\phantom{\ding{53}}) Supervisor(a) \\%
@@ -285,7 +285,7 @@ Assinatura da chefia imediata: \hrulefill \\ \\%
 \textbf{PLANO DE TRABALHO: }%
 Quisque a augue vel libero placerat vestibulum. In vitae nunc bibendum ante porttitor bibendum a eu risus. Duis lorem tortor, tempus et ipsum tincidunt, dignissim aliquam metus.%
 \end{mdframed}%
-\begin{mdframed}[innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt]%
+\begin{mdframed}%
 \textbf{SERVIDORES UNIOESTE \\}%
 Nome completo: nome agente universitário 2 curso 1 \\%
 (\phantom{\ding{53}}) Docente Efetivo %
@@ -297,7 +297,7 @@ Centro: CEL \\%
 E-mail: emailagenteuniversitario2@email.com \\%
 Telefone: 34564878 \\%
 Endereço: Rua Iguaçu, Foz do Iguaçu -- Paraná -- Brasil \\%
-\begin{mdframed}[innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt]%
+\begin{mdframed}%
 Função: \\%
 \begin{tabularx}{\linewidth}{XXX}%
 (\phantom{\ding{53}}) Coordenador(a) &(\phantom{\ding{53}}) Subcoordenador(a) &(\phantom{\ding{53}}) Supervisor(a) \\%
@@ -398,15 +398,23 @@ adasdad\\%
 \hline%
 \end{tabularx}%
 \item%
-\textbf{GESTÃO DOS RECURSOS FINANCEIROS: \\}%
-\begin{mdframed}[innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt]%
+\textbf{GESTÃO DOS RECURSOS FINANCEIROS: }%
+\noindent%
+\begin{enumerate}[leftmargin=7pt]%
+\item%
 \textbf{ÓRGÃO GESTOR DOS RECURSOS FINANCEIROS \\}%
+\end{enumerate}%
+\begin{mdframed}%
 IDENTIFICAÇÃO: \\%
-(\ding{53}) UNIOESTE \\%
+(\phantom{\ding{53}}) UNIOESTE \\%
 (\phantom{\ding{53}}) PRAP \\%
 (\phantom{\ding{53}}) SECRETARIA FINANCEIRA \\%
-(\phantom{\ding{53}}) FUNDAÇÃO \\%
-(\phantom{\ding{53}}) OUTROS \\%
+(\ding{53}) \textbf{FUNDAÇÃO}: %
+fundacao%
+\newline%
+(\phantom{\ding{53}}) \textbf{OUTROS}: %
+asd%
+\newline%
 \end{mdframed}%
 \end{enumerate}%
 \end{document}
