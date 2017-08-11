@@ -1,18 +1,18 @@
-import os
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.utils.encoding import smart_str
-from django.views import View, generic
 from django.urls import reverse
-from django.core.exceptions import PermissionDenied
+from django.utils.encoding import smart_str
+from django.views import View
 
-from .forms import ParecerForm
-from .models import Parecer
+from base.utils import send_email_docente
 from curso_extensao.models import CursoExtensao
 from parecer.pdfs import *
-from base.utils import send_email_docente
+from .forms import ParecerForm
+from .models import Parecer
+
 
 class NovoParecer(LoginRequiredMixin, View):
     def get(self, request, pk):

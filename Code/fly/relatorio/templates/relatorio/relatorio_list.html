@@ -56,7 +56,7 @@
 			<tbody>
 				{% for relatorio in object_list %}
 					<tr>
-						<td>{{ relatorio.periodo_inicio }} — {{relatorio.periodo_fim}}</td>
+						<td>{{ relatorio.periodo_inicio }} ‒ {{relatorio.periodo_fim}}</td>
 						<td>{{ relatorio.estado }}</td>
 						<td>
 							<a href="{% url 'relatorio:lista_arquivos' relatorio.pk %}"

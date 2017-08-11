@@ -8,6 +8,7 @@ class TipoDocente(models.Model):
     def __str__(self):
         return self.nome
 
+
 class Docente(models.Model):
     nome_completo = models.CharField(max_length=200)
     cpf = models.CharField(max_length=200)

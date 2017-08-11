@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 
-import os
 import locale
+import os
+
 from django.utils import timezone
-from pylatex import Document, Package, Enumerate, NoEscape, NewLine, FlushRight, FlushLeft, \
-     StandAloneGraphic, VerticalSpace, HorizontalSpace, LineBreak, LargeText, MiniPage, Center, Command, UnsafeCommand
+from pylatex import Document, Package, Enumerate, NoEscape, NewLine, FlushRight, StandAloneGraphic, VerticalSpace, \
+    HorizontalSpace, LineBreak, MiniPage, Center, Command, UnsafeCommand
 from pylatex.utils import escape_latex
 
 from base import pdfutils
-from relatorio.models import CertificadoRelatorio
 from fly.settings import PDF_DIR, BASE_DIR
+
 
 def gerar_pdf_relatorio(relatorio):
     doc = pdfutils.init_document()
@@ -22,12 +23,12 @@ def gerar_pdf_relatorio(relatorio):
     pdfutils.cabecalho(doc)
 
     frase_anexo = 'ANEXO X DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014.'
-    pdfutils.rodape(doc, NoEscape(r'\texttt{' + frase_anexo + '}%'))
-    doc.append(NoEscape(r'{\normalsize\texttt{' + frase_anexo + '}}%'))
+    pdfutils.rodape(doc, NoEscape(r'\texttt{' + frase_anexo + '}'))
+    doc.append(NoEscape(r'{\normalsize\texttt{' + frase_anexo + '}}'))
 
     pdfutils.titulo(doc, 'RELATÓRIOS ESPECÍFICOS PARA ATIVIDADES DE EXTENSÃO', 'RELATÓRIO DE EVENTOS E CURSOS')
 
-    doc.append(Command('hrulefill%'))
+    doc.append(Command('hrulefill'))
 
     # Início do formulário
     with doc.create(Enumerate()) as enum:
@@ -103,7 +104,7 @@ def gerar_pdf_certificado(certificado):
     doc.packages.add(Package('csquotes'))
 
     # Configurações (preâmbulo)
-    doc.preamble.append(Command('MakeOuterQuote', '\"')) # coverte aspas automaticamente, sem precisar de `` e ''
+    doc.preamble.append(Command('MakeOuterQuote', '\"'))  # coverte aspas automaticamente, sem precisar de `` e ''
     doc.preamble.append(Command('renewcommand', arguments=[Command('baselinestretch'), '1.5']))
     doc.preamble.append(Command('setlength', arguments=[Command('parindent'), NoEscape(r'.35\textwidth')]))
     doc.preamble.append(Command('setlength', arguments=[Command('parskip'), '0.2cm']))
@@ -113,7 +114,7 @@ def gerar_pdf_certificado(certificado):
     doc.preamble.append(NoEscape(r'\backgroundsetup{ contents=\includegraphics{modelo-certificado-20.pdf} }'))
 
     # Diretório das imagens
-    img_dir = '{}/base/static/img/'.format(BASE_DIR) # necessário barra no final
+    img_dir = '{}/base/static/img/'.format(BASE_DIR)  # necessário barra no final
     doc.preamble.append(UnsafeCommand('graphicspath', '{{{}}}'.format(img_dir)))
 
     # Início do documento

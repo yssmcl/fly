@@ -8,6 +8,7 @@ from base import pdfutils
 from base.models import EstadoProjeto
 from fly.settings import PDF_DIR
 
+
 def gerar_pdf_parecer(parecer):
     doc = pdfutils.init_document()
 
@@ -22,7 +23,8 @@ def gerar_pdf_parecer(parecer):
     pdfutils.rodape(doc, NoEscape(r'\texttt{' + frase_anexo + '}%'))
     doc.append(NoEscape(r'{\normalsize\texttt{' + frase_anexo + '}}%'))
 
-    pdfutils.titulo(doc, 'RELATÓRIOS ESPECÍFICOS PARA ATIVIDADES DE EXTENSÃO', 'FORMULÁRIO ÚNICO DE PARECER DE ATIVIDADES DE EXTENSÃO')
+    pdfutils.titulo(doc, 'RELATÓRIOS ESPECÍFICOS PARA ATIVIDADES DE EXTENSÃO',
+                    'FORMULÁRIO ÚNICO DE PARECER DE ATIVIDADES DE EXTENSÃO')
 
     # Início do formulário
     with doc.create(Enumerate()) as enum:

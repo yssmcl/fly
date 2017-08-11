@@ -8,6 +8,7 @@ from base import pdfutils
 from curso_extensao.models import PalavraChave_CursoExtensao, PrevisaoOrcamentaria_CursoExtensao
 from fly.settings import PDF_DIR
 
+
 def gerar_pdf_curso(curso):
     doc = pdfutils.init_document()
 

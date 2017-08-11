@@ -1,21 +1,18 @@
-import os
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.http import HttpResponse, FileResponse, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils.encoding import smart_str
-from django.views import View, generic
-from django.core.exceptions import PermissionDenied
+from django.views import View
 
-from .forms import RelatorioForm, RelatorioFileForm, CertificadoRelatorioFormSet
-from .models import Relatorio, RelatorioFile, EstadoRelatorio
 from base.utils import send_email_comissao
 from curso_extensao.models import CursoExtensao
-from fly.settings import PDF_DIR, MEDIA_ROOT
 from relatorio.pdfs import *
+from .forms import RelatorioForm, RelatorioFileForm, CertificadoRelatorioFormSet
+from .models import Relatorio, RelatorioFile, EstadoRelatorio
 
-import subprocess
 
 class NovoRelatorio(LoginRequiredMixin, View):
     def get(self, request, pk):
