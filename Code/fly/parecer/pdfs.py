@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from pylatex import Enumerate, NoEscape, NewLine, Center
+from pylatex import Enumerate, NoEscape, NewLine, Center, Command
 from pylatex.utils import escape_latex, bold
 
 from base import pdfutils
@@ -38,8 +38,7 @@ def gerar_pdf_parecer(parecer):
     # TODO: referente a portaria?
     # doc.append(NoEscape(r'Parecer referente a: \\ \\'))
 
-    doc.append(bold('COMENTÁRIOS:'))
-    doc.append(NewLine())
+    doc.append(bold(NoEscape(r'COMENTÁRIOS: \\')))
     pdfutils.tabela_alternativas(doc, EstadoProjeto, '|c|X|X|c|c|', id=parecer.estado_parecer.id)
     doc.append(NewLine())
     doc.append(NewLine())
@@ -48,7 +47,7 @@ def gerar_pdf_parecer(parecer):
     doc.append(NoEscape(r'Data: {} \\'.format(data)))
 
     texto = 'Carimbo e Assinatura do Coordenador(a) da Comissão de Extensão ou Representante Legal'
-    largura = r'\widthof{{{}}}'.format(texto)
+    largura = Command('widthof', texto).dumps()
     pdfutils.assinatura(doc, texto, largura, Center())
 
     os.system('mkdir -p ' + PDF_DIR)

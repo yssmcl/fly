@@ -8,25 +8,22 @@
 \usepackage{calc}%
 \usepackage{fontspec}%
 \usepackage[scale=1,opacity=1,angle=0]{background}%
+\usepackage{csquotes}%
 \usepackage{ragged2e}%
 %
-\setmainfont{Latin Modern Sans}[SizeFeatures={Size=16}]%
+\MakeOuterQuote{"}%
 \renewcommand{\baselinestretch}{1.5}%
-\renewcommand\textbullet{\ensuremath{\bullet}}%
 \setlength{\parindent}{.35\textwidth}%
 \setlength{\parskip}{0.2cm}%
 \setlength{\emergencystretch}{5pt}%
-\backgroundsetup{
-    contents=\includegraphics{modelo-certificado-20.pdf}
-}%
+\backgroundsetup{ contents=\includegraphics{modelo-certificado-20.pdf} }%
 \graphicspath{{/home/user/p/es2/trabalhos/fly/Code/fly/base/static/img/}}%
 %
 \begin{document}%
-\normalsize%
-
-\pagestyle{empty}
-\BgThispage
-%
+\footnotesize%
+\setmainfont[SizeFeatures={Size=16}]{Latin Modern Sans}%
+\pagestyle{empty}%
+\BgThispage%
 \vspace*{2cm}%
 \begin{flushright}%
 \includegraphics[width=6.5cm]{titulo-certificado.pdf}%
@@ -34,17 +31,16 @@
 \end{flushright}%
 \vspace*{-1cm}%
 \Large%
-%
 
 
-        Certificamos que \textbf{Foo} participou como Coordenador(a), no período de agosto/2017 a agosto/2017, com a atividade de "extensão": ``\textbf{título 2}'', com carga horária de 32 horas.
+    Certificamos que \textbf{Foo} atuou como coordenador(a), no período de 15 de agosto de 2017 a 15 de agosto de 2017, na cidade de Foz do Iguaçu -- Paraná, com a atividade de extensão: "\textbf{título 2}", com carga horária de 32 horas.
 
-        %
+    %
 \vspace*{1.5cm}%
 \hspace*{7cm}%
-\begin{minipage}{\widthof{Foz do Iguaçu, 09 de agosto de 2017}}%
+\begin{minipage}{\widthof{Foz do Iguaçu, 11 de agosto de 2017}}%
 \begin{center}%
-Foz do Iguaçu, 09 de agosto de 2017%
+Foz do Iguaçu, 11 de agosto de 2017%
 \newline%
 \newline%
 \newline%

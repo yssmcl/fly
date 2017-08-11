@@ -2,9 +2,8 @@
 
 from pylatex import NoEscape, FlushRight, NewLine, MdFramed, Enumerate, Document, NewPage, HFill, \
      Tabularx, LineBreak, MultiColumn, MultiRow, Package, Center, MiniPage, StandAloneGraphic, FootnoteText, PageStyle, \
-     Head, Command
+     Head, Command, UnsafeCommand, Foot
 from pylatex.utils import escape_latex, bold
-from pylatex.base_classes import Options
 
 from base.models import *
 from curso_extensao.models import *
@@ -13,8 +12,8 @@ from relatorio.models import *
 from fly.settings import BASE_DIR
 
 
-TIMES = NoEscape(r'\ding{53}')
-PHANTOM = NoEscape(r'\phantom{\ding{53}}')
+TIMES = Command('ding', '53').dumps()
+PHANTOM = Command('phantom', Command('ding', '53')).dumps()
 
 WIDTH_ARGUMENT = Command('linewidth')
 MDFRAMED_OPTIONS = ['innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt']
@@ -30,7 +29,7 @@ def init_document():
                         'top': '6.5cm',
                         'headheight': '4.5cm',
                         'headsep': '10pt'}
-    doc = Document(document_options=['12pt', 'a4paper', 'oneside', 'brazil'], geometry_options=geometry_options,
+    doc = Document(document_options=['12pt', 'a4paper', 'oneside'], geometry_options=geometry_options,
                    inputenc=None, fontenc=None, font_size='footnotesize', lmodern=False)
 
     return doc
@@ -56,9 +55,13 @@ def pacotes(doc):
 
 
 def configuracoes_preambulo(doc):
-    doc.preamble.append(Command('setmainfont', options=Options('Scale=0.9'), arguments='TeX Gyre Heros'))
+    doc.preamble.append(Command('setmainfont', 'TeX Gyre Heros', 'Scale=0.9'))
 
     doc.preamble.append(Command('MakeOuterQuote', '\"')) # coverte aspas automaticamente, sem precisar de `` e ''
+
+    # Diretório das imagens
+    img_dir = '{}/base/static/img/'.format(BASE_DIR) # necessário barra no final
+    doc.preamble.append(UnsafeCommand('graphicspath', '{{{}}}'.format(img_dir)))
 
     # Configuração das listas
     doc.preamble.append(NoEscape(r'''
@@ -66,16 +69,12 @@ def configuracoes_preambulo(doc):
 \setlist[enumerate, 2]{label*=\textbf{.\arabic*}, leftmargin=*}
     '''))
 
-    # Diretório das imagens
-    img_dir = '{}/base/static/img/'.format(BASE_DIR) # necessário barra no final
-    doc.preamble.append(NoEscape(r'\graphicspath{{' + img_dir + '}}'))
-
     # Configuração dos cabeçalhos
     doc.preamble.append(Command('pagestyle', 'fancy'))
 
 def cabecalho(doc):
+    # Remove linha horizontal no cabeçalho
     doc.append(Command('renewcommand', arguments=[Command('headrulewidth'), '0pt']))
-    doc.append(Command('renewcommand', arguments=[Command('footrulewidth'), '0pt']))
 
     with doc.create(Head('L')) as cabecalho:
         cabecalho.append(StandAloneGraphic('logo-unioeste.png', 'width=200px'))
@@ -87,41 +86,29 @@ Jardim Universitário -- Cx. P. 000701 -- CEP 85819-110 -- Cascavel -- Paraná \
 www.unioeste.br
 }'''))
 
-    with doc.create(Head('R')) as cabecalho:
-        cabecalho.append(NoEscape(r'\parbox[b][120px][t]{\textwidth}{\raggedleft \includegraphics[width=80px]{logo-governo.jpg}}%')) # mágica
+    doc.append(Head('R', data=NoEscape(r'\parbox[b][4.3cm][t]{\textwidth}{\raggedleft\includegraphics[width=80px]{logo-governo.jpg}}%'))) # mágica
 
 
 def rodape(doc, frase):
-    rodape = r'''
-\fancyfoot[R]{
-    {\footnotesize %(frase)s}
-}
-\fancyfoot[L]{
-    \thepage
-}
-\fancyfoot[C]{}
-    '''
-
-    rodape = rodape % {'frase': frase}
-    doc.append(NoEscape(rodape))
+    doc.append(Foot('R', data=FootnoteText(frase)))
+    doc.append(Foot('L', data=Command('thepage')))
+    doc.append(Foot('C', data=None))
 
 
 def titulo(doc, titulo, subtitulo):
     eqparbox = r'''
 \eqparbox{a}{\relax\ifvmode\raggedleft\fi
-    \underline{%(titulo)s} \\
+    \underline{%s} \\
     \bigskip
-    %(subtitulo)s
+    %s
 }
 \eqparbox{b}{
     \includegraphics[width=100px]{logo-extensao-menor.jpg}
 }
     '''
-
-    eqparbox = eqparbox % {'titulo': titulo, 'subtitulo': subtitulo}
-    flush_right = FlushRight()
-    flush_right.append(NoEscape(eqparbox))
-    doc.append(flush_right)
+    eqparbox = eqparbox % (titulo, subtitulo)
+    with doc.create(FlushRight()) as fr:
+        fr.append(NoEscape(eqparbox))
 
 
 def item(doc, enum, texto, dado=None):
@@ -134,7 +121,7 @@ def mdframed_informar(doc, enum, programa_extensao):
     with doc.create(MdFramed(options=MDFRAMED_OPTIONS)):
         item(doc, enum, 'INFORMAR: ')
         with doc.create(Enumerate()) as subenum:
-            doc.append(NoEscape('\scriptsize'))
+            doc.append(Command('scriptsize'))
 
             subenum.add_item(NoEscape('Esta atividade faz parte de algum Programa de Extensão? '))
             if programa_extensao:
@@ -148,31 +135,29 @@ Assinatura: \hrulefill \\
             '''))
 
             # TODO: ???
-            subenum.add_item(NoEscape(r'\
-                                      Esta Atividade de Extensão está articulada (quando for o caso): \
+            subenum.add_item(NoEscape(r'Esta Atividade de Extensão está articulada (quando for o caso): \
                                       ao Ensino ({}) à Pesquisa ({})'.format(PHANTOM, PHANTOM)))
 
 
 def tabela_unidade_administrativa(doc, enum, unidade_administrativa, campus):
-        item(doc, enum, 'UNIDADE ADMINISTRATIVA: ')
-        for unidade in UnidadeAdministrativa.objects.all():
-            if unidade_administrativa and unidade_administrativa.id == unidade.id:
-                doc.append(NoEscape(r'{} ({}) '.format(unidade.nome, TIMES)))
-            else:
-                doc.append(NoEscape(r'{} ({}) '.format(unidade.nome, PHANTOM)))
-        doc.append(NewLine())
+    item(doc, enum, 'UNIDADE ADMINISTRATIVA: ')
+    for unidade in UnidadeAdministrativa.objects.all():
+        if unidade_administrativa and unidade_administrativa.id == unidade.id:
+            doc.append(NoEscape(r'{} ({}) '.format(unidade.nome, TIMES)))
+        else:
+            doc.append(NoEscape(r'{} ({}) '.format(unidade.nome, PHANTOM)))
+    doc.append(NewLine())
 
-        doc.append(bold('CAMPUS DE: '))
-        for c in Campus.objects.all():
-            if campus and campus.id == c.id:
-                doc.append(NoEscape(r'{} ({}) '.format(c.nome, TIMES)))
-            else:
-                doc.append(NoEscape(r'{} ({}) '.format(c.nome, PHANTOM)))
+    doc.append(bold('CAMPUS DE: '))
+    for c in Campus.objects.all():
+        if campus and campus.id == c.id:
+            doc.append(NoEscape(r'{} ({}) '.format(c.nome, TIMES)))
+        else:
+            doc.append(NoEscape(r'{} ({}) '.format(c.nome, PHANTOM)))
 
 
 def tabela_centro(doc, enum, centro):
-    item(doc, enum, 'CENTRO: ')
-    doc.append(NewLine())
+    item(doc, enum, NoEscape(r'CENTRO: \\'))
     for c in Centro.objects.all():
         if centro and centro.id == c.id:
             doc.append(NoEscape(r'{} ({}) '.format(c.nome, TIMES)))
@@ -212,14 +197,12 @@ def tabela_alternativas(doc, model, table_spec, id=None, hline=True):
 
 
 def tabela_grande_area(doc, enum, id=None):
-    item(doc, enum, 'GRANDE ÁREA: ')
-    doc.append(NewLine())
+    item(doc, enum, NoEscape(r'GRANDE ÁREA: \\'))
     tabela_alternativas(doc, GrandeArea, '|X|X|X|', id=id)
 
 
 def tabela_palavras_chave(doc, enum, palavras):
-    item(doc, enum, 'PALAVRAS-CHAVE: ')
-    doc.append(NewLine())
+    item(doc, enum, NoEscape(r'PALAVRAS-CHAVE: \\'))
 
     nro_colunas = 3
     with doc.create(Tabularx('|X|X|X|', width_argument=WIDTH_ARGUMENT)) as tab:
@@ -242,22 +225,18 @@ def tabela_palavras_chave(doc, enum, palavras):
 
 
 def tabela_area_tematica_principal(doc, enum, id):
-    item(doc, enum, 'ÁREA TEMÁTICA PRINCIPAL: ')
-    doc.append(NewLine())
+    item(doc, enum, NoEscape(r'ÁREA TEMÁTICA PRINCIPAL: \\'))
     tabela_alternativas(doc, AreaTematica, '|X|X|X|', id=id)
 
 
 def tabela_area_tematica_secundaria(doc, enum, area_tematica_secundaria, id=None):
-    item(doc, enum, 'ÁREA TEMÁTICA SECUNDÁRIA: ')
-    doc.append(NewLine())
+    item(doc, enum, NoEscape(r'ÁREA TEMÁTICA SECUNDÁRIA: \\'))
     tabela_alternativas(doc, AreaTematica, '|X|X|X|', id=id)
 
 
 def tabela_linha_extensao(doc, enum, linha_extensao, id):
     doc.append(NewPage())
-    item(doc, enum, 'LINHA DE EXTENSÃO: ')
-    doc.append(NewLine())
-    doc.append(NewLine())
+    item(doc, enum, NoEscape(r'LINHA DE EXTENSÃO: \\ \\'))
     doc.append(NoEscape(r'{\scriptsize'))
     if linha_extensao:
         tabela_alternativas(doc, LinhaExtensao, 'X|X|X', id=id, hline=False)
@@ -266,47 +245,36 @@ def tabela_linha_extensao(doc, enum, linha_extensao, id):
 
 def popular_servidores(doc, servidor, docente_cursoextensao=None):
     with doc.create(MdFramed(options=MDFRAMED_OPTIONS)):
-        doc.append(bold('SERVIDORES UNIOESTE '))
-        doc.append(NewLine())
+        doc.append(bold(NoEscape(r'SERVIDORES UNIOESTE \\')))
 
-        doc.append(NoEscape('Nome completo: '))
-        doc.append(escape_latex(servidor.nome_completo))
-        doc.append(NewLine())
+        doc.append(NoEscape(r'Nome completo: {} \\'.format(escape_latex(servidor.nome_completo))))
 
-        if servidor.__class__ == Docente_CursoExtensao:
+        if servidor.__class__ == AgenteUniversitario_CursoExtensao:
             for tipo_docente in TipoDocente.objects.all():
-                if docente.tipo_docente.id == tipo_docente.id:
+                doc.append(NoEscape(r'({}) {} '.format(PHANTOM, tipo_docente.nome)))
+            doc.append(NoEscape(r'({}) {} \\'.format(TIMES, 'Agente Universitário')))
+        else:
+            for tipo_docente in TipoDocente.objects.all():
+                if docente_cursoextensao.docente.tipo_docente.id == tipo_docente.id:
                     doc.append(NoEscape(r'({}) {} '.format(TIMES, tipo_docente.nome)))
                 else:
                     doc.append(NoEscape(r'({}) {} '.format(PHANTOM, tipo_docente.nome)))
-            doc.append(NoEscape(r'({}) {} '.format(PHANTOM, 'Agente Universitário')))
-            doc.append(NewLine())
-        elif servidor.__class__ == AgenteUniversitario_CursoExtensao:
-            for tipo_docente in TipoDocente.objects.all():
-                doc.append(NoEscape(r'({}) {} '.format(PHANTOM, tipo_docente.nome)))
-            doc.append(NoEscape(r'({}) {} '.format(TIMES, 'Agente Universitário')))
-            doc.append(NewLine())
+            doc.append(NoEscape(r'({}) {} \\'.format(PHANTOM, 'Agente Universitário')))
 
         # TODO: regime_trabalho
         #  doc.append('Regime de trabalho: ')
         #  doc.append(servidor.regime_trabalho)
-        #  doc.append(NoEscape('\ hora(s) \hfill'))
+        #  doc.append(NoEscape('\ hora(s)'))
 
-        doc.append('Carga horária semanal dedicada à atividade: ')
         if docente_cursoextensao:
-            doc.append(docente_cursoextensao.carga_horaria_dedicada)
+            carga_horaria = docente_cursoextensao.carga_horaria_dedicada
         else:
-            doc.append(servidor.carga_horaria_dedicada)
-        doc.append(NoEscape('\ hora(s) \hfill'))
-        doc.append(NewLine())
+            carga_horaria = servidor.carga_horaria_dedicada
+        doc.append(NoEscape(r'Carga horária semanal dedicada à atividade: {} hora(s) \\'.format(carga_horaria)))
 
-        doc.append('Colegiado: ')
-        doc.append(escape_latex(servidor.colegiado))
-        doc.append(NewLine())
+        doc.append(NoEscape(r'Colegiado: {} \\'.format(escape_latex(servidor.colegiado))))
 
-        doc.append('Centro: ')
-        doc.append(servidor.centro.nome)
-        doc.append(NewLine())
+        doc.append(NoEscape(r'Centro: {} \\'.format(servidor.centro.nome)))
 
         # TODO: unidade_administrativa
         #  doc.append('Unidade Administrativa: ')
@@ -322,33 +290,24 @@ def popular_servidores(doc, servidor, docente_cursoextensao=None):
         #      doc.append(NoEscape(r'({}) CAMPUS DE: '.format(PHANTOM)))
         #  doc.append(NewLine())
 
-        doc.append(NoEscape('E-mail: '))
-        doc.append(escape_latex(servidor.email))
-        doc.append(NewLine())
+        doc.append(NoEscape(r'E-mail: {} \\'.format(escape_latex(servidor.email))))
 
-        doc.append('Telefone: ')
-        doc.append(escape_latex(servidor.telefone))
-        doc.append(NewLine())
+        doc.append(NoEscape(r'Telefone: {} \\'.format(escape_latex(servidor.telefone))))
 
-        doc.append('Endereço: ')
-        doc.append(NoEscape('{}, {} -- {} -- {}'.format(escape_latex(servidor.logradouro),
-                                                        escape_latex(servidor.cidade),
-                                                        escape_latex(servidor.estado),
-                                                        escape_latex(servidor.pais))))
-        doc.append(NewLine())
+        doc.append(NoEscape(r'Endereço: {}, {} -- {} -- {} \\'.format(escape_latex(servidor.logradouro),
+                                                                      escape_latex(servidor.cidade),
+                                                                      escape_latex(servidor.estado),
+                                                                      escape_latex(servidor.pais))))
 
         with doc.create(MdFramed(options=MDFRAMED_OPTIONS)):
-            doc.append('Função: ')
-            doc.append(NewLine())
+            doc.append(NoEscape(r'Função: \\'))
             if docente_cursoextensao:
-                tabela_alternativas(doc, FuncaoServidor, 'XXX',
-                                    id=docente_cursoextensao.funcao.id, hline=False)
+                tabela_alternativas(doc, FuncaoServidor, 'XXX', id=docente_cursoextensao.funcao.id, hline=False)
             else:
-                tabela_alternativas(doc, FuncaoServidor, 'XXX',
-                                    id=servidor.funcao.id, hline=False)
+                tabela_alternativas(doc, FuncaoServidor, 'XXX', id=servidor.funcao.id, hline=False)
 
-        doc.append(NoEscape(r'\bigskip'))
-        doc.append(NoEscape(r'\bigskip'))
+        doc.append(Command('bigskip'))
+        doc.append(Command('bigskip'))
         doc.append(NoEscape(r'Assinatura do participante: \hrulefill \\ \\ \\'))
         doc.append(NoEscape(r'Assinatura da chefia imediata: \hrulefill \\ \\'))
 
@@ -482,8 +441,7 @@ def tabela_discentes_membros(doc, enum, projeto_extensao):
 
 
 def tabela_previsao_orcamentaria(doc, enum, previsao_orcamentaria):
-        item(doc, enum, 'PREVISÃO ORÇAMENTÁRIA: ')
-        doc.append(NewLine())
+        item(doc, enum, NoEscape(r'PREVISÃO ORÇAMENTÁRIA: \\'))
 
         # TODO: blank=True para os DecimalField
         inscricoes           = previsao_orcamentaria.inscricoes           or 0
@@ -563,7 +521,7 @@ def tabela_previsao_orcamentaria(doc, enum, previsao_orcamentaria):
 
             tab.add_row(bold('Total'), total_receitas,
                         MultiRow(2, data=bold('Total')), MultiRow(2, data=total_despesas))
-            doc.append(NoEscape('\cline{1-2}'))
+            doc.append(UnsafeCommand('cline', '1-2'))
 
             # TODO: não tem atributo para saldo previsto na classe PrevisaoOrcamentaria_CursoExtensao
             tab.add_row(bold('Saldo previsto'), '', '', '')
@@ -571,28 +529,23 @@ def tabela_previsao_orcamentaria(doc, enum, previsao_orcamentaria):
 
 
 def tabela_gestao_recursos_financeiros(doc, enum, previsao_orcamentaria):
-        item(doc, enum, 'GESTÃO DOS RECURSOS FINANCEIROS: ')
-        doc.append(NewLine())
+        item(doc, enum, NoEscape(r'GESTÃO DOS RECURSOS FINANCEIROS: \\'))
 
         with doc.create(MdFramed(options=MDFRAMED_OPTIONS)):
-            doc.append(bold('ÓRGÃO GESTOR DOS RECURSOS FINANCEIROS '))
-            doc.append(NewLine())
-
+            doc.append(bold(NoEscape(r'ÓRGÃO GESTOR DOS RECURSOS FINANCEIROS \\')))
             doc.append(NoEscape(r'IDENTIFICAÇÃO: \\'))
 
             for tipo_gestao in TipoGestaoRecursosFinanceiros.objects.all():
                 if previsao_orcamentaria.identificacao and previsao_orcamentaria.identificacao.id == tipo_gestao.id:
-                    doc.append(NoEscape(r'({}) {}'.format(TIMES, tipo_gestao.nome.upper())))
+                    doc.append(NoEscape(r'({}) {} \\'.format(TIMES, tipo_gestao.nome.upper())))
                 else:
-                    doc.append(NoEscape(r'({}) {}'.format(PHANTOM, tipo_gestao.nome.upper())))
-                doc.append(NewLine())
+                    doc.append(NoEscape(r'({}) {} \\'.format(PHANTOM, tipo_gestao.nome.upper())))
 
 
 # Relatórios
 def tabela_certificados(doc, id=None):
     with doc.create(Enumerate()) as enum:
-        enum.add_item('Relacionar o nome dos participantes com direito a certificados.')
-        doc.append(NewLine())
+        enum.add_item(NoEscape(r'Relacionar o nome dos participantes com direito a certificados. \\'))
         table_spec = NoEscape(r'''|>{\centering\arraybackslash}X|
                                   @{    }c@{    }|
                                   @{    }c@{    }|
@@ -626,29 +579,29 @@ def tabela_certificados(doc, id=None):
 
 
 def local_data_assinatura(doc):
-    doc.append(NoEscape(r'\raggedleft'))
-    doc.append(NoEscape(r'\bigskip'))
+    doc.append(Command('raggedleft'))
+    doc.append(Command('bigskip'))
     with doc.create(MiniPage(width=r'.5\textwidth')):
         center = Center()
-        center.append(NoEscape('\hrulefill'))
+        center.append(Command('hrulefill'))
         center.append(NewLine())
-        center.append(NoEscape(r'\bigskip'))
-        center.append(NoEscape(r'\bigskip'))
+        center.append(Command('bigskip'))
+        center.append(Command('bigskip'))
         center.append(NoEscape(r'Local e data \\'))
-        center.append(NoEscape('\hrulefill'))
+        center.append(Command('hrulefill'))
         center.append(NewLine())
-        center.append(NoEscape(r'\bigskip'))
+        center.append(Command('bigskip'))
         center.append(NoEscape('Assinatura do(a) Coordenador(a) da Atividade'))
         doc.append(center)
 
 
 # TODO: usar essa pra substituir a de cima
 def assinatura(doc, texto, largura, pos_env):
-    doc.append(NoEscape(r'\bigskip'))
-    doc.append(NoEscape(r'\bigskip'))
-    doc.append(NoEscape(r'\bigskip'))
+    doc.append(Command('bigskip'))
+    doc.append(Command('bigskip'))
+    doc.append(Command('bigskip'))
     with doc.create(pos_env) as pos:
         with pos.create(MiniPage(width=largura)) as mini:
-            mini.append(NoEscape('\hrulefill'))
+            mini.append(Command('hrulefill'))
             mini.append(NewLine())
             mini.append(NoEscape(r'{}'.format(texto)))

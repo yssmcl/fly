@@ -4,8 +4,7 @@ import os
 import locale
 from django.utils import timezone
 from pylatex import Document, Package, Enumerate, NoEscape, NewLine, FlushRight, FlushLeft, \
-     StandAloneGraphic, VerticalSpace, HorizontalSpace, LineBreak, LargeText, MiniPage, Center
-from pylatex.base_classes import Command
+     StandAloneGraphic, VerticalSpace, HorizontalSpace, LineBreak, LargeText, MiniPage, Center, Command, UnsafeCommand
 from pylatex.utils import escape_latex
 
 from base import pdfutils
@@ -34,7 +33,7 @@ def gerar_pdf_relatorio(relatorio):
     with doc.create(Enumerate()) as enum:
         pdfutils.item(doc, enum, 'TÍTULO DA ATIVIDADE: ', escape_latex(relatorio.projeto_extensao.titulo))
         with doc.create(Enumerate()) as subenum:
-            subenum.add_item(NoEscape('Vinculada a algum Programa de Extensão? '))
+            subenum.add_item('Vinculada a algum Programa de Extensão? ')
             if relatorio.projeto_extensao.programa_extensao:
                 doc.append(NoEscape(r'Não ({}) Sim ({}): Qual? {}'.format(pdfutils.PHANTOM, pdfutils.TIMES,
                                                                            escape_latex(relatorio.projeto_extensao.programa_extensao.nome))))
@@ -60,18 +59,15 @@ def gerar_pdf_relatorio(relatorio):
         pdfutils.item(doc, enum, 'CERTIFICADOS: ')
         pdfutils.tabela_certificados(doc, id=relatorio.id)
 
-        pdfutils.item(doc, enum, 'RESUMO DA ATIVIDADE REALIZADA: ')
-        doc.append(NewLine())
+        pdfutils.item(doc, enum, NoEscape(r'RESUMO DA ATIVIDADE REALIZADA: \\'))
         resumo_fmt = escape_latex(relatorio.resumo.replace('\r', ''))
         doc.append(escape_latex(resumo_fmt))
 
-        pdfutils.item(doc, enum, 'RELACIONAR AS ATIVIDADES REALIZADAS OU A PROGRAMAÇÃO PARA CURSOS OU EVENTOS: ')
-        doc.append(NewLine())
+        pdfutils.item(doc, enum, NoEscape(r'RELACIONAR AS ATIVIDADES REALIZADAS OU A PROGRAMAÇÃO PARA CURSOS OU EVENTOS: \\'))
         atividades_fmt = relatorio.atividades_realizadas_programacao.replace('\r', '')
         doc.append(escape_latex(atividades_fmt))
 
-        pdfutils.item(doc, enum, 'RELACIONAR AS DIFICULDADES TÉCNICAS E/OU ADMINISTRATIVAS (se houver): ')
-        doc.append(NewLine())
+        pdfutils.item(doc, enum, NoEscape(r'RELACIONAR AS DIFICULDADES TÉCNICAS E/OU ADMINISTRATIVAS (se houver): \\'))
         dificuldades_fmt = relatorio.dificuldades.replace('\r', '')
         doc.append(escape_latex(dificuldades_fmt))
 
@@ -117,14 +113,11 @@ def gerar_pdf_certificado(certificado):
     doc.preamble.append(NoEscape(r'\backgroundsetup{ contents=\includegraphics{modelo-certificado-20.pdf} }'))
 
     # Diretório das imagens
-    diretorio_img = '{}/base/static/img/'.format(BASE_DIR) # necessário barra no final
-    doc.preamble.append(NoEscape(r'\graphicspath{{' + diretorio_img + '}}'))
+    img_dir = '{}/base/static/img/'.format(BASE_DIR) # necessário barra no final
+    doc.preamble.append(UnsafeCommand('graphicspath', '{{{}}}'.format(img_dir)))
 
     # Início do documento
-    # TODO: achar outra fonte
-    # doc.preamble.append(NoEscape('\setmainfont{Carlito}'))
-    # doc.append(NoEscape('\setmainfont{Latin Modern Sans}[SizeFeatures={Size=16}]'))
-    doc.append(Command('setmainfont', 'Latin Modern Sans'))
+    doc.append(UnsafeCommand('setmainfont', 'Latin Modern Sans', 'SizeFeatures={Size=16}'))
 
     doc.append(Command('pagestyle', 'empty'))
     doc.append(Command('BgThispage'))
@@ -179,8 +172,8 @@ def gerar_pdf_certificado(certificado):
     mes = timezone.now().strftime('%B')
     ano = timezone.now().strftime('%Y')
 
-    data = NoEscape(r'''Foz do Iguaçu, {} de {} de {}'''.format(dia, mes, ano))
-    largura = r'\widthof{{{}}}'.format(data)
+    data = NoEscape(r'Foz do Iguaçu, {} de {} de {}'.format(dia, mes, ano))
+    largura = Command('widthof', data).dumps()
     with doc.create(MiniPage(width=largura)) as mini:
         with mini.create(Center()) as center:
             center.append(data)

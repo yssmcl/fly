@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper,oneside,brazil]{article}%
+\documentclass[12pt,a4paper,oneside]{article}%
 \usepackage{textcomp}%
 \usepackage{lastpage}%
 \usepackage[left=3cm,right=1.5cm,bottom=2.5cm,top=6.5cm,headheight=4.5cm,headsep=10pt]{geometry}%
@@ -22,17 +22,16 @@
 %
 \setmainfont[Scale=0.9]{TeX Gyre Heros}%
 \MakeOuterQuote{"}%
+\graphicspath{{/home/user/p/es2/trabalhos/fly/Code/fly/base/static/img/}}%
 
 \setlist[enumerate, 1]{label*=\textbf{\arabic*}, leftmargin=*}
 \setlist[enumerate, 2]{label*=\textbf{.\arabic*}, leftmargin=*}
     %
-\graphicspath{{/home/user/p/es2/trabalhos/fly/Code/fly/base/static/img/}}%
 \pagestyle{fancy}%
 %
 \begin{document}%
 \footnotesize%
 \renewcommand{\headrulewidth}{0pt}%
-\renewcommand{\footrulewidth}{0pt}%
 \fancyhead[L]{ 
 \includegraphics[width=200px]{logo-unioeste.png}%
 \newline%
@@ -44,17 +43,18 @@ www.unioeste.br
 }
 }%
 \fancyhead[R]{ 
-\parbox[b][120px][t]{\textwidth}{\raggedleft \includegraphics[width=80px]{logo-governo.jpg}}%
+\parbox[b][4.3cm][t]{\textwidth}{\raggedleft\includegraphics[width=80px]{logo-governo.jpg}}%
 }%
-
-\fancyfoot[R]{
-    {\footnotesize \texttt{ANEXO X DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014.}}
-}
-\fancyfoot[L]{
-    \thepage
-}
-\fancyfoot[C]{}
-    %
+\fancyfoot[R]{ 
+\begin{footnotesize}%
+\texttt{ANEXO X DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014.}%%
+\end{footnotesize}
+}%
+\fancyfoot[L]{ 
+\thepage
+}%
+\fancyfoot[C]{ 
+}%
 {\normalsize\texttt{ANEXO X DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014.}}%%
 \begin{flushright}%
 
@@ -68,7 +68,7 @@ www.unioeste.br
 }
     %
 \end{flushright}%
-\hrulefill%
+\hrulefill%%
 \begin{enumerate}%
 \item%
 \textbf{TÍTULO DA ATIVIDADE: }%
@@ -96,8 +96,7 @@ Francisco Beltrão (\phantom{\ding{53}}) %
 Marechal Cândido Rondon (\phantom{\ding{53}}) %
 Toledo (\phantom{\ding{53}}) %
 \item%
-\textbf{CENTRO: }%
-\newline%
+\textbf{CENTRO: \\}%
 CECA (\ding{53}) %
 CCET (\phantom{\ding{53}}) %
 CCBS (\phantom{\ding{53}}) %
@@ -119,8 +118,7 @@ colegiado\_bar%
 \textbf{CERTIFICADOS: }%
 \begin{enumerate}%
 \item%
-Relacionar o nome dos participantes com direito a certificados.%
-\newline%
+Relacionar o nome dos participantes com direito a certificados. \\%
 \begin{tabularx}{\linewidth}{|>{\centering\arraybackslash}X|
                                   @{    }c@{    }|
                                   @{    }c@{    }|
@@ -138,16 +136,13 @@ Informar se os certificados devem ser emitidos: \\%
 (\phantom{\ding{53}}) pela PROEX \hfill (\phantom{\ding{53}}) pelo Centro da Coordenação ou Órgão Promotor%
 \end{enumerate}%
 \item%
-\textbf{RESUMO DA ATIVIDADE REALIZADA: }%
-\newline%
+\textbf{RESUMO DA ATIVIDADE REALIZADA: \\}%
 41%
 \item%
 \textbf{RELACIONAR AS ATIVIDADES REALIZADAS OU A PROGRAMAÇÃO PARA CURSOS OU EVENTOS: }%
-\newline%
 41%
 \item%
-\textbf{RELACIONAR AS DIFICULDADES TÉCNICAS E/OU ADMINISTRATIVAS (se houver): }%
-\newline%
+\textbf{RELACIONAR AS DIFICULDADES TÉCNICAS E/OU ADMINISTRATIVAS (se houver): \\}%
 123%
 \end{enumerate}%
 \raggedleft%
