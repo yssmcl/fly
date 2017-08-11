@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from pylatex import Enumerate, NoEscape, NewLine
+from pylatex import Enumerate, NoEscape, Command
 from pylatex.utils import escape_latex
 
 from base import pdfutils
@@ -18,13 +18,13 @@ def gerar_pdf_curso(curso):
 
     pdfutils.cabecalho(doc)
 
-    texto_anexo = NoEscape(r'\texttt{ANEXO V DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014.}')
-    pdfutils.rodape(doc, texto_anexo)
-    doc.append(texto_anexo)
+    frase_anexo = 'ANEXO V DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014.'
+    pdfutils.rodape(doc, NoEscape(r'\texttt{' + frase_anexo + '}'))
+    doc.append(NoEscape(r'{\normalsize\texttt{' + frase_anexo + '}}'))
 
     pdfutils.titulo(doc, 'FORMULÁRIO ESPECÍFICO PARA ATIVIDADES DE EXTENSÃO', 'MODALIDADE CURSO DE EXTENSÃO')
 
-    doc.append(NoEscape('\hrulefill'))
+    doc.append(Command('hrulefill'))
 
     # Início do formulário
     with doc.create(Enumerate()) as enum:
@@ -67,26 +67,21 @@ def gerar_pdf_curso(curso):
 
         pdfutils.item(doc, enum, 'LOCAL DA INSCRIÇÃO: ', escape_latex(curso.local_inscricao))
 
-        pdfutils.item(doc, enum, 'RESUMO: ')
-        doc.append(NewLine())
+        pdfutils.item(doc, enum, NoEscape(r'RESUMO: \\'))
         resumo_fmt = curso.resumo.replace('\r', '')
         doc.append(escape_latex(resumo_fmt))
 
-        pdfutils.item(doc, enum, 'PROGRAMAÇÃO: ')
-        doc.append(NewLine())
+        pdfutils.item(doc, enum, NoEscape(r'PROGRAMAÇÃO: \\'))
         programacao_fmt = curso.programacao.replace('\r', '')
         doc.append(escape_latex(programacao_fmt))
 
-        pdfutils.item(doc, enum, 'EQUIPE DE TRABALHO: ')
-        doc.append(NewLine())
+        pdfutils.item(doc, enum, NoEscape(r'EQUIPE DE TRABALHO: \\'))
         pdfutils.mdframed_equipe_trabalho(doc, enum, curso)
 
-        pdfutils.item(doc, enum, 'DISCENTES UNIOESTE: ')
-        doc.append(NewLine())
+        pdfutils.item(doc, enum, NoEscape(r'DISCENTES UNIOESTE: \\'))
         pdfutils.tabela_discentes(doc, enum, curso)
 
-        pdfutils.item(doc, enum, 'MEMBROS DA COMUNIDADE / PARTICIPANTES EXTERNOS: ')
-        doc.append(NewLine())
+        pdfutils.item(doc, enum, NoEscape(r'MEMBROS DA COMUNIDADE / PARTICIPANTES EXTERNOS: \\'))
         pdfutils.tabela_membros(doc, enum, curso)
 
         # Checa antes pois a previsão orçamentária não é obrigatório
@@ -99,11 +94,7 @@ def gerar_pdf_curso(curso):
 
     os.system('mkdir -p ' + PDF_DIR)
 
-    # TODO: UnicodeDecodeError
-    # try:
     filepath = '{}/curso-extensao_{}'.format(PDF_DIR, str(curso.id))
     doc.generate_pdf(filepath, clean_tex=False, compiler=pdfutils.COMPILER, compiler_args=pdfutils.COMPILER_ARGS)
-    # except UnicodeDecodeError:
-        # pass
 
     return filepath

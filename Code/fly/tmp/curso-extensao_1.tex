@@ -1,7 +1,7 @@
-\documentclass[12pt,a4paper,oneside,brazil]{article}%
+\documentclass[12pt,a4paper,oneside]{article}%
 \usepackage{textcomp}%
 \usepackage{lastpage}%
-\usepackage[left=3cm,right=1.5cm,bottom=2.5cm,top=6.5cm,headheight=4cm]{geometry}%
+\usepackage[left=3cm,right=1.5cm,bottom=2.5cm,top=6.5cm,headheight=4.5cm,headsep=10pt]{geometry}%
 \usepackage{microtype}%
 \usepackage{indentfirst}%
 \usepackage{graphicx}%
@@ -23,43 +23,40 @@
 %
 \setmainfont[Scale=0.9]{TeX Gyre Heros}%
 \MakeOuterQuote{"}%
+\graphicspath{{/home/user/p/es2/trabalhos/fly/Code/fly/base/static/img/}}%
 
 \setlist[enumerate, 1]{label*=\textbf{\arabic*}, leftmargin=*}
 \setlist[enumerate, 2]{label*=\textbf{.\arabic*}, leftmargin=*}
     %
 \pagestyle{fancy}%
-\graphicspath{{/home/user/p/es2/trabalhos/fly/Code/fly/base/static/img/}}%
 %
 \begin{document}%
-\normalsize%
 \footnotesize%
-
 \renewcommand{\headrulewidth}{0pt}%
-\renewcommand{\footrulewidth}{0pt}%
-\fancyhead[L]{%
-    \includegraphics[width=200px]{logo-unioeste.png}
-    \newline
-    {\footnotesize
-        Reitoria -- CNPJ 78680337/0001-84 \\
-        Rua Universitária, 1619 -- Fone: (45) 3220-3000 -- Fax: (45) 3324-4590 \\
-        Jardim Universitário -- Cx. P. 000701 -- CEP 85819-110 -- Cascavel -- Paraná \\
-        www.unioeste.br
-    }
+\fancyhead[L]{ 
+\includegraphics[width=200px]{logo-unioeste.png}%
+\newline%
+{\footnotesize
+Reitoria -- CNPJ 78680337/0001-84 \\
+Rua Universitária, 1619 -- Fone: (45) 3220-3000 -- Fax: (45) 3324-4590 \\
+Jardim Universitário -- Cx. P. 000701 -- CEP 85819-110 -- Cascavel -- Paraná \\
+www.unioeste.br
 }
-\fancyhead[R]{%
-    \includegraphics[width=80px]{logo-governo.jpg}
-}
-    %
-
-\fancyfoot[R]{
-    {\footnotesize \texttt{ANEXO V DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014.}}
-}
-\fancyfoot[L]{
-    \thepage
-}
-\fancyfoot[C]{}
-    %
+}%
+\fancyhead[R]{ 
+\parbox[b][4.3cm][t]{\textwidth}{\raggedleft\includegraphics[width=80px]{logo-governo.jpg}}%
+}%
+\fancyfoot[R]{ 
+\begin{footnotesize}%
 \texttt{ANEXO V DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014.}%
+\end{footnotesize}
+}%
+\fancyfoot[L]{ 
+\thepage
+}%
+\fancyfoot[C]{ 
+}%
+{\normalsize\texttt{ANEXO V DA RESOLUÇÃO Nº 236/2014-CEPE, DE 13 DE NOVEMBRO DE 2014.}}%
 \begin{flushright}%
 
 \eqparbox{a}{\relax\ifvmode\raggedleft\fi
@@ -96,8 +93,7 @@ Coordenador(a) do Programa: \\ \\ \\
 Assinatura: \hrulefill \\
             %
 \item%
-\
-                                      Esta Atividade de Extensão está articulada (quando for o caso): \
+Esta Atividade de Extensão está articulada (quando for o caso): \
                                       ao Ensino (\phantom{\ding{53}}) à Pesquisa (\phantom{\ding{53}})%
 \end{enumerate}%
 \end{mdframed}%
@@ -113,8 +109,7 @@ Francisco Beltrão (\phantom{\ding{53}}) %
 Marechal Cândido Rondon (\phantom{\ding{53}}) %
 Toledo (\phantom{\ding{53}}) %
 \item%
-\textbf{CENTRO: }%
-\newline%
+\textbf{CENTRO: \\}%
 CECA (\ding{53}) %
 CCET (\phantom{\ding{53}}) %
 CCBS (\phantom{\ding{53}}) %
@@ -127,8 +122,7 @@ CCA (\phantom{\ding{53}}) %
 CCHS (\phantom{\ding{53}}) %
 CEL (\phantom{\ding{53}}) %
 \item%
-\textbf{GRANDE ÁREA: }%
-\newline%
+\textbf{GRANDE ÁREA: \\}%
 \begin{tabularx}{\linewidth}{|X|X|X|}%
 \hline%
 (\ding{53}) Ciências Exatas e da Terra&(\phantom{\ding{53}}) Ciências Biológicas &(\phantom{\ding{53}}) Engenharias \\%
@@ -137,8 +131,7 @@ CEL (\phantom{\ding{53}}) %
 \hline%
 \end{tabularx}%
 \item%
-\textbf{PALAVRAS{-}CHAVE: }%
-\newline%
+\textbf{PALAVRAS-CHAVE: \\}%
 \begin{tabularx}{\linewidth}{|X|X|X|}%
 \hline%
 1 -- palavra{-}chave 1 curso 1&2 -- palavra{-}chave 2 curso 1&3 -- palavra{-}chave 3 curso 1\\%
@@ -146,8 +139,7 @@ CEL (\phantom{\ding{53}}) %
 \hline%
 \end{tabularx}%
 \item%
-\textbf{ÁREA TEMÁTICA PRINCIPAL: }%
-\newline%
+\textbf{ÁREA TEMÁTICA PRINCIPAL: \\}%
 \begin{tabularx}{\linewidth}{|X|X|X|}%
 \hline%
 (\ding{53}) Comunicação&(\phantom{\ding{53}}) Meio Ambiente &(\phantom{\ding{53}}) Cultura \\%
@@ -156,8 +148,7 @@ CEL (\phantom{\ding{53}}) %
 \hline%
 \end{tabularx}%
 \item%
-\textbf{ÁREA TEMÁTICA SECUNDÁRIA: }%
-\newline%
+\textbf{ÁREA TEMÁTICA SECUNDÁRIA: \\}%
 \begin{tabularx}{\linewidth}{|X|X|X|}%
 \hline%
 (\phantom{\ding{53}}) Comunicação &(\phantom{\ding{53}}) Meio Ambiente &(\phantom{\ding{53}}) Cultura \\%
@@ -167,9 +158,7 @@ CEL (\phantom{\ding{53}}) %
 \end{tabularx}%
 \newpage%
 \item%
-\textbf{LINHA DE EXTENSÃO: }%
-\newline%
-\newline%
+\textbf{LINHA DE EXTENSÃO: \\ \\}%
 {\scriptsize%
 \begin{tabularx}{\linewidth}{X|X|X}%
 (\ding{53}) Alfabetização, leitura e escrita&(\phantom{\ding{53}}) Artes cênicas &(\phantom{\ding{53}}) Artes integradas \\%
@@ -208,44 +197,27 @@ público alvo curso 1%
 \textbf{LOCAL DA INSCRIÇÃO: }%
 local de inscrição curso 1%
 \item%
-\textbf{RESUMO: }%
-\newline%
+\textbf{RESUMO: \\}%
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque id mi et enim iaculis finibus. Maecenas posuere dolor ac lacus venenatis efficitur. In vestibulum rutrum nulla.%
 \item%
-\textbf{PROGRAMAÇÃO: }%
-\newline%
+\textbf{PROGRAMAÇÃO: \\}%
 Aliquam erat volutpat. Sed et aliquet risus. Sed mattis eget felis nec placerat. Mauris imperdiet turpis sit amet lorem dictum, non fringilla tellus condimentum.%
 \item%
-\textbf{EQUIPE DE TRABALHO: }%
-\newline%
+\textbf{EQUIPE DE TRABALHO: \\}%
 \begin{mdframed}[innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt]%
-\textbf{SERVIDORES UNIOESTE }%
-\newline%
-Nome completo: %
-Foo%
-\newline%
-Carga horária semanal dedicada à atividade: %
-4%
-\ hora(s) \hfill%
-\newline%
-Colegiado: %
-colegiado\_foo%
-\newline%
-Centro: %
-CECA%
-\newline%
-E-mail: %
-foo@foo.com%
-\newline%
-Telefone: %
-12345678%
-\newline%
-Endereço: %
-foo, foo -- foo -- foo%
-\newline%
+\textbf{SERVIDORES UNIOESTE \\}%
+Nome completo: Foo \\%
+(\ding{53}) Docente Efetivo %
+(\phantom{\ding{53}}) Docente Temporário %
+(\phantom{\ding{53}}) Agente Universitário \\%
+Carga horária semanal dedicada à atividade: 4 hora(s) \\%
+Colegiado: colegiado\_foo \\%
+Centro: CECA \\%
+E-mail: foo@foo.com \\%
+Telefone: 12345678 \\%
+Endereço: foo, foo -- foo -- foo \\%
 \begin{mdframed}[innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt]%
-Função: %
-\newline%
+Função: \\%
 \begin{tabularx}{\linewidth}{XXX}%
 (\ding{53}) Coordenador(a)&(\phantom{\ding{53}}) Subcoordenador(a) &(\phantom{\ding{53}}) Supervisor(a) \\%
 (\phantom{\ding{53}}) Colaborador(a) &(\phantom{\ding{53}}) Autor(a) &(\phantom{\ding{53}}) Consultor(a) \\%
@@ -257,36 +229,22 @@ Função: %
 Assinatura do participante: \hrulefill \\ \\ \\%
 Assinatura da chefia imediata: \hrulefill \\ \\%
 \textbf{PLANO DE TRABALHO: }%
-Quisque a augue vel libero placerat vestibulum. In vitae nunc bibendum ante porttitor bibendum a eu risus. Duis lorem tortor, tempus et ipsum tincidunt, dignissim aliquam metus.%
+Quisque\% a\$ augue vel libero placerat vestibulum. In vitae nunc bibendum ante porttitor bibendum a eu risus. Duis lorem tortor, tempus et ipsum tincidunt, dignissim aliquam metus.%
 \end{mdframed}%
 \begin{mdframed}[innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt]%
-\textbf{SERVIDORES UNIOESTE }%
-\newline%
-Nome completo: %
-Bar%
-\newline%
-Carga horária semanal dedicada à atividade: %
-5%
-\ hora(s) \hfill%
-\newline%
-Colegiado: %
-colegiado\_bar%
-\newline%
-Centro: %
-CEL%
-\newline%
-E-mail: %
-bar@bar.com%
-\newline%
-Telefone: %
-12345678%
-\newline%
-Endereço: %
-bar, bar -- bar -- bar%
-\newline%
+\textbf{SERVIDORES UNIOESTE \\}%
+Nome completo: Bar \\%
+(\phantom{\ding{53}}) Docente Efetivo %
+(\ding{53}) Docente Temporário %
+(\phantom{\ding{53}}) Agente Universitário \\%
+Carga horária semanal dedicada à atividade: 5 hora(s) \\%
+Colegiado: colegiado\_bar \\%
+Centro: CEL \\%
+E-mail: bar@bar.com \\%
+Telefone: 12345678 \\%
+Endereço: bar, bar -- bar -- bar \\%
 \begin{mdframed}[innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt]%
-Função: %
-\newline%
+Função: \\%
 \begin{tabularx}{\linewidth}{XXX}%
 (\phantom{\ding{53}}) Coordenador(a) &(\phantom{\ding{53}}) Subcoordenador(a) &(\phantom{\ding{53}}) Supervisor(a) \\%
 (\phantom{\ding{53}}) Colaborador(a) &(\phantom{\ding{53}}) Autor(a) &(\phantom{\ding{53}}) Consultor(a) \\%
@@ -301,37 +259,19 @@ Assinatura da chefia imediata: \hrulefill \\ \\%
 Quisque a augue vel libero placerat vestibulum. In vitae nunc bibendum ante porttitor bibendum a eu risus. Duis lorem tortor, tempus et ipsum tincidunt, dignissim aliquam metus.%
 \end{mdframed}%
 \begin{mdframed}[innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt]%
-\textbf{SERVIDORES UNIOESTE }%
-\newline%
-Nome completo: %
-nome agente universitário 1 curso 1%
-\newline%
+\textbf{SERVIDORES UNIOESTE \\}%
+Nome completo: nome agente universitário 1 curso 1 \\%
 (\phantom{\ding{53}}) Docente Efetivo %
 (\phantom{\ding{53}}) Docente Temporário %
-(\ding{53}) Agente Universitário %
-\newline%
-Carga horária semanal dedicada à atividade: %
-4%
-\ hora(s) \hfill%
-\newline%
-Colegiado: %
-colegiado agente universitário 1%
-\newline%
-Centro: %
-CECA%
-\newline%
-E-mail: %
-emailagenteuniversitario1@email.com%
-\newline%
-Telefone: %
-35468798%
-\newline%
-Endereço: %
-Rua Igarapava, Foz do Iguaçu -- Paraná -- Brasil%
-\newline%
+(\ding{53}) Agente Universitário \\%
+Carga horária semanal dedicada à atividade: 4 hora(s) \\%
+Colegiado: colegiado agente universitário 1 \\%
+Centro: CECA \\%
+E-mail: emailagenteuniversitario1@email.com \\%
+Telefone: 35468798 \\%
+Endereço: Rua Igarapava, Foz do Iguaçu -- Paraná -- Brasil \\%
 \begin{mdframed}[innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt]%
-Função: %
-\newline%
+Função: \\%
 \begin{tabularx}{\linewidth}{XXX}%
 (\phantom{\ding{53}}) Coordenador(a) &(\phantom{\ding{53}}) Subcoordenador(a) &(\phantom{\ding{53}}) Supervisor(a) \\%
 (\phantom{\ding{53}}) Colaborador(a) &(\phantom{\ding{53}}) Autor(a) &(\phantom{\ding{53}}) Consultor(a) \\%
@@ -346,37 +286,19 @@ Assinatura da chefia imediata: \hrulefill \\ \\%
 Quisque a augue vel libero placerat vestibulum. In vitae nunc bibendum ante porttitor bibendum a eu risus. Duis lorem tortor, tempus et ipsum tincidunt, dignissim aliquam metus.%
 \end{mdframed}%
 \begin{mdframed}[innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt]%
-\textbf{SERVIDORES UNIOESTE }%
-\newline%
-Nome completo: %
-nome agente universitário 2 curso 1%
-\newline%
+\textbf{SERVIDORES UNIOESTE \\}%
+Nome completo: nome agente universitário 2 curso 1 \\%
 (\phantom{\ding{53}}) Docente Efetivo %
 (\phantom{\ding{53}}) Docente Temporário %
-(\ding{53}) Agente Universitário %
-\newline%
-Carga horária semanal dedicada à atividade: %
-8%
-\ hora(s) \hfill%
-\newline%
-Colegiado: %
-colegiado agente universitário 2%
-\newline%
-Centro: %
-CEL%
-\newline%
-E-mail: %
-emailagenteuniversitario2@email.com%
-\newline%
-Telefone: %
-34564878%
-\newline%
-Endereço: %
-Rua Iguaçu, Foz do Iguaçu -- Paraná -- Brasil%
-\newline%
+(\ding{53}) Agente Universitário \\%
+Carga horária semanal dedicada à atividade: 8 hora(s) \\%
+Colegiado: colegiado agente universitário 2 \\%
+Centro: CEL \\%
+E-mail: emailagenteuniversitario2@email.com \\%
+Telefone: 34564878 \\%
+Endereço: Rua Iguaçu, Foz do Iguaçu -- Paraná -- Brasil \\%
 \begin{mdframed}[innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt]%
-Função: %
-\newline%
+Função: \\%
 \begin{tabularx}{\linewidth}{XXX}%
 (\phantom{\ding{53}}) Coordenador(a) &(\phantom{\ding{53}}) Subcoordenador(a) &(\phantom{\ding{53}}) Supervisor(a) \\%
 (\phantom{\ding{53}}) Colaborador(a) &(\phantom{\ding{53}}) Autor(a) &(\phantom{\ding{53}}) Consultor(a) \\%
@@ -391,8 +313,7 @@ Assinatura da chefia imediata: \hrulefill \\ \\%
 Quisque a augue vel libero placerat vestibulum. In vitae nunc bibendum ante porttitor bibendum a eu risus. Duis lorem tortor, tempus et ipsum tincidunt, dignissim aliquam metus.%
 \end{mdframed}%
 \item%
-\textbf{DISCENTES UNIOESTE: }%
-\newline%
+\textbf{DISCENTES UNIOESTE: \\}%
 {\scriptsize%
 \begin{tabularx}{\linewidth}{|>{\centering\arraybackslash}X|
                               >{\centering\arraybackslash}X|
@@ -419,8 +340,7 @@ Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos
 \end{mdframed}%
 }%
 \item%
-\textbf{MEMBROS DA COMUNIDADE / PARTICIPANTES EXTERNOS: }%
-\newline%
+\textbf{MEMBROS DA COMUNIDADE / PARTICIPANTES EXTERNOS: \\}%
 {\scriptsize%
 \begin{tabularx}{\linewidth}{|>{\centering\arraybackslash}X|
                               >{\centering\arraybackslash}X|
@@ -448,8 +368,7 @@ Morbi nisl risus, dictum sed quam nec, convallis varius nisl. Aliquam vestibulum
 \end{mdframed}%
 }%
 \item%
-\textbf{PREVISÃO ORÇAMENTÁRIA: }%
-\newline%
+\textbf{PREVISÃO ORÇAMENTÁRIA: \\}%
 \begin{tabularx}{\linewidth}{|X|X|X|X|}%
 \hline%
 \multicolumn{2}{|c|}{\textbf{Receitas}}&\multicolumn{2}{c|}{\textbf{Despesas}}\\%
@@ -479,22 +398,15 @@ adasdad\\%
 \hline%
 \end{tabularx}%
 \item%
-\textbf{GESTÃO DOS RECURSOS FINANCEIROS: }%
-\newline%
+\textbf{GESTÃO DOS RECURSOS FINANCEIROS: \\}%
 \begin{mdframed}[innertopmargin=5pt, innerleftmargin=3pt, innerrightmargin=3pt]%
-\textbf{ÓRGÃO GESTOR DOS RECURSOS FINANCEIROS }%
-\newline%
+\textbf{ÓRGÃO GESTOR DOS RECURSOS FINANCEIROS \\}%
 IDENTIFICAÇÃO: \\%
-(\ding{53}) UNIOESTE%
-\newline%
-(\phantom{\ding{53}}) PRAP%
-\newline%
-(\phantom{\ding{53}}) SECRETARIA FINANCEIRA%
-\newline%
-(\phantom{\ding{53}}) FUNDAÇÃO%
-\newline%
-(\phantom{\ding{53}}) OUTROS%
-\newline%
+(\ding{53}) UNIOESTE \\%
+(\phantom{\ding{53}}) PRAP \\%
+(\phantom{\ding{53}}) SECRETARIA FINANCEIRA \\%
+(\phantom{\ding{53}}) FUNDAÇÃO \\%
+(\phantom{\ding{53}}) OUTROS \\%
 \end{mdframed}%
 \end{enumerate}%
 \end{document}
