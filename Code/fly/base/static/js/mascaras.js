@@ -3,7 +3,7 @@
 // });
 
 $(document).ready(function(){
-	// var id = 1;
-	// $("#id_membros-" + id + "-cpf").mask("999.999.999-99");
 	$("input[id$='-cpf']").mask("999.999.999-99");
+	$("input[id^='id_main-periodo_']").datepicker();
+	$("input[id$='data_nascimento']").datepicker();
 });

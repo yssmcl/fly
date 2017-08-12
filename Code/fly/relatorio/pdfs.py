@@ -118,7 +118,7 @@ def gerar_pdf_certificado(certificado):
     doc.preamble.append(UnsafeCommand('graphicspath', '{{{}}}'.format(img_dir)))
 
     # Início do documento
-    doc.append(UnsafeCommand('setmainfont', 'Latin Modern Sans', 'SizeFeatures={Size=16}'))
+    doc.append(UnsafeCommand('setmainfont', 'Latin Modern Sans', ['SizeFeatures={Size=16}', 'Ligatures=TeX']))
 
     doc.append(Command('pagestyle', 'empty'))
     doc.append(Command('BgThispage'))

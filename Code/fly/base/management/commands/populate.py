@@ -51,7 +51,7 @@ class Command(BaseCommand):
         for nome in list_:
             if not class_.objects.filter(nome=nome).exists():
                 class_(nome=nome).save()
-                print("  Adicionando '{} em '{}'".format(nome, class_.__name__))
+                print("  Adicionando '{}' em '{}'".format(nome, class_.__name__))
 
     def save_lists(self):
             campus_list = [

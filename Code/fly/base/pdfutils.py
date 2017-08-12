@@ -53,7 +53,7 @@ def pacotes(doc):
 
 
 def configuracoes_preambulo(doc):
-    doc.preamble.append(Command('setmainfont', 'TeX Gyre Heros', 'Scale=0.9'))
+    doc.preamble.append(Command('setmainfont', 'TeX Gyre Heros', ['Scale=0.9', 'Ligatures=TeX']))
 
     doc.preamble.append(Command('MakeOuterQuote', '\"'))  # coverte aspas automaticamente, sem precisar de `` e ''
 
